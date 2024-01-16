@@ -12,9 +12,5 @@ codegen:
 	go mod tidy
 
 .PHONY: build
-build: codegen
+build:
 	go build pkg/*.go
-
-clean:
-	rm -rf ${GENERATED_DIR}
-	rm go.*

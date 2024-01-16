@@ -1,0 +1,1455 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: support@digiseg.io
+  description: |
+    ### Digiseg API documentation
+
+    # Introduction
+
+    This API let you harness the power of Digisegs powerful and tracking-free segmentation
+    engine.
+
+    Audiences by Digiseg are available in 50+ countries, probablistically mapping
+    neighborhood characteristics to the IP addresses observed on the internet -
+    Household targeting & measurement for the post-cookie world.
+
+    For a catalog of Digisegs audiences, refer to the
+    [Audience list](https://digiseg.io/audiences-list).
+
+    There is also an interactive
+    [Audience builder](https://digiseg.io/cookieless-audience-builder/)
+    which lets you discover the targeting reach and power of combining
+    various household characteristics into composite audiences.
+  title: Digiseg API
+  version: 1.0.0
+  x-logo:
+    url: ./Digiseg-Logo.svg
+    altText: Digiseg
+servers:
+- description: Digiseg API - production
+  url: https://api.digiseg.net
+security:
+- bearerAuth: []
+- apiKeyHeaderAuth: []
+- apiKeyQueryParamAuth: []
+- oAuth: []
+tags:
+- description: |
+    Authentication with Digiseg APIs can be done in various ways. If you have received an
+    API key from Digiseg, the simplest way to authenticate is simply to place it in
+    the `X-API-KEY` header of your API requests, like this:
+
+    ```bash
+    curl -H "X-API-KEY: $APIKEY" https://api.digiseg.net/user
+    ```
+
+    If you do not have an API key, you need an _access token_. These are temporary
+    tokens that are placed as a bearer token in the `Authorization` header. You obtain
+    an access token through the `/auth/token` /
+    [Create Access token](#tag/auth/operation/createAccessToken)
+    endpoint, described in this section.
+  name: auth
+  x-displayName: Authentication
+- description: |
+    Services for managing users within your account. Access to user data
+    depends on your user role, and may therefore be restricted.
+  name: users
+  x-displayName: User management
+- description: |
+    Services for managing your account. Access to account and user data
+    depends on your user role, and may therefore be restricted.
+  name: accounts
+  x-displayName: Accounts management
+- description: |
+    Audiences are segments of households that you can target and measure. Use
+    the Audience API to identify specific segments that you wish to initiate
+    certain behaviour or actions from.
+  name: audiences
+  x-displayName: Audiences
+paths:
+  /accounts/{account_id}:
+    get:
+      operationId: getAccountById
+      parameters:
+      - explode: false
+        in: path
+        name: account_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAccountById_200_response'
+          description: OK
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: Get account
+      tags:
+      - accounts
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: $ACCESS_TOKEN" -X GET \
+          https://api.digiseg.net/accounts/$ACCOUNT_ID
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/accounts/\"+account_id, {\n  \"method\"\
+          : \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer \" + token},\n\
+          }).then(response => {\n  console.log(response);\n})"
+  /accounts/{account_id}/users:
+    get:
+      operationId: getUsersByAccountId
+      parameters:
+      - explode: false
+        in: path
+        name: account_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The desired page size
+        explode: true
+        in: query
+        name: "page[size]"
+        required: false
+        schema:
+          default: 100
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: |
+          Optional pagination parameter, indicating the previous cursor value to paginate beyond.
+          The value to provide here is opaque, but can be found in previous requests in the `meta.page.last_cursor` field.
+        explode: true
+        in: query
+        name: "page[after]"
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getUsersByAccountId_200_response'
+          description: OK
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: List users for account
+      tags:
+      - accounts
+      - users
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: $ACCESS_TOKEN" -X GET \
+          https://api.digiseg.net/accounts/$ACCOUNT_ID/users
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/accounts/\"+account_id+\"/users\"\
+          , {\n  \"method\": \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer\
+          \ \" + token},\n}).then(response => {\n  console.log(response);\n})"
+    post:
+      operationId: createUserInAccount
+      parameters:
+      - explode: false
+        in: path
+        name: account_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/UserCreationRequest'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createUserInAccount_201_response'
+          description: OK
+        "400":
+          description: Bad request
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: Create user
+      tags:
+      - accounts
+      - users
+  /users/{user_id}/apikeys:
+    get:
+      operationId: getApiKeysByUserId
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApiKeysByUserId_200_response'
+          description: OK
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: List API keys for user
+      tags:
+      - users
+      - auth
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: $ACCESS_TOKEN" -X GET \
+          https://api.digiseg.net/users/$USER_ID/apikeys
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/users/\"+user_id+\"/apikeys\", {\n\
+          \  \"method\": \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer \"\
+          \ + token},\n}).then(response => {\n  console.log(response);\n})"
+    post:
+      operationId: createApiKey
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/ApiKeyCreationRequest'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createApiKey_201_response'
+          description: OK
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: Create API key for user
+      tags:
+      - users
+      - auth
+  /users/{user_id}/apikeys/{key_id}:
+    delete:
+      operationId: deleteApiKeyById
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: key_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Object deleted
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: Delete API key
+      tags:
+      - users
+      - auth
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: $ACCESS_TOKEN" -X DELETE \
+          https://api.digiseg.net/users/$USER_ID/apikeys/$KEY_ID
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/users/\"+user_id+\"/apikeys/\"+key_id,\
+          \ {\n  \"method\": \"DELETE\", \n  \"headers\": {\"Authorization\": \"Bearer\
+          \ \" + token},\n}).then(response => {\n  console.log(response);\n})"
+    get:
+      operationId: getApiKeyById
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: key_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApiKeyById_200_response'
+          description: OK
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: Get API key
+      tags:
+      - users
+      - auth
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: $ACCESS_TOKEN" -X GET \
+          https://api.digiseg.net/users/$USER_ID/apikeys/$KEY_ID
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/users/\"+user_id+\"/apikeys/\"+key_id,\
+          \ {\n  \"method\": \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer\
+          \ \" + token},\n}).then(response => {\n  console.log(response);\n})"
+  /user:
+    get:
+      description: Get information about the currently authenticated user
+      operationId: getCurrentUser
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createUserInAccount_201_response'
+          description: OK
+        "403":
+          description: Forbidden
+      summary: Get current user
+      tags:
+      - users
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: $ACCESS_TOKEN" -X GET \
+          https://api.digiseg.net/user
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/user\", {\n  \"method\": \"GET\"\
+          , \n  \"headers\": {\"Authorization\": \"Bearer \" + token},\n}).then(response\
+          \ => {\n  console.log(response);\n})"
+  /users/{user_id}:
+    delete:
+      operationId: deleteUserById
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Object deleted
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: Delete user
+      tags:
+      - users
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: $ACCESS_TOKEN" -X DELETE \
+          https://api.digiseg.net/users/$USER_ID
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/users/\"+user_id, {\n  \"method\"\
+          : \"DELETE\", \n  \"headers\": {\"Authorization\": \"Bearer \" + token},\n\
+          }).then(response => {\n  console.log(response);\n})"
+    get:
+      operationId: getUserById
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createUserInAccount_201_response'
+          description: OK
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: Get user
+      tags:
+      - users
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: $ACCESS_TOKEN" -X GET \
+          https://api.digiseg.net/users/$USER_ID
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/users/\"+user_id, {\n  \"method\"\
+          : \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer \" + token},\n\
+          }).then(response => {\n  console.log(response);\n})"
+    put:
+      operationId: updateUserById
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/UserUpdateRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createUserInAccount_201_response'
+          description: OK
+        "400":
+          description: Bad request
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: Update user
+      tags:
+      - users
+  /auth/token:
+    post:
+      operationId: createAccessToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthTokenRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthTokenRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenResponse'
+          description: OK
+      security: []
+      summary: Authenticate and create access token
+      tags:
+      - auth
+  /audiences:
+    get:
+      operationId: resolveAudiencesOfClient
+      parameters:
+      - description: Optional parameter to set to `jsonp` if a JSONP response format
+          is needed.
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          example: jsonp
+          pattern: ^(jsonp)?$
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudienceResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal Server Error
+      summary: Get audiences of the API client
+      tags:
+      - audiences
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/audiences
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/audiences\", {\n  \"method\": \"\
+          GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response => {\n\
+          \  console.log(response);\n})"
+    post:
+      operationId: resolveAudiencesOfMultiple
+      requestBody:
+        $ref: '#/components/requestBodies/ResolveAudiencesOfMultipleRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResolveAudiencesOfMultipleResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal Server Error
+      summary: Get audiences for multiple IP addresses
+      tags:
+      - audiences
+  /audiences/{user_ip}:
+    get:
+      operationId: resolveAudiencesOfSingle
+      parameters:
+      - description: The IP address to look up.
+        example: 1.1.1.1
+        explode: false
+        in: path
+        name: user_ip
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudienceResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal Server Error
+      summary: Get audiences for a given IP address
+      tags:
+      - audiences
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/audiences/$USER_IP
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/audiences/\"+user_ip, {\n  \"method\"\
+          : \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response =>\
+          \ {\n  console.log(response);\n})"
+components:
+  requestBodies:
+    AccountCreationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountMutation'
+      required: true
+    AccountUpdateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountMutation'
+      required: true
+    ApiKeyCreationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiKeyMutation'
+      required: true
+    UserCreationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserMutation'
+      required: true
+    UserUpdateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserMutation'
+      required: true
+    ResolveAudiencesOfMultipleRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResolveAudiencesOfMultipleRequest'
+      required: true
+  responses:
+    AccountByIdResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getAccountById_200_response'
+      description: OK
+    AccountListResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              meta:
+                $ref: '#/components/schemas/ListPaginationMeta'
+              links:
+                $ref: '#/components/schemas/ListPaginationLinks'
+              data:
+                items:
+                  $ref: '#/components/schemas/AccountItem'
+                type: array
+            type: object
+      description: OK
+    ApiKeyByIdResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getApiKeyById_200_response'
+      description: OK
+    ApiKeyCreationResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createApiKey_201_response'
+      description: OK
+    ApiKeyListResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getApiKeysByUserId_200_response'
+      description: OK
+    UserByIdResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createUserInAccount_201_response'
+      description: OK
+    CurrentUserResponse:
+      $ref: '#/components/responses/UserByIdResponse'
+    UserListResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getUsersByAccountId_200_response'
+      description: OK
+    ForbiddenError:
+      description: Forbidden
+    NotFoundError:
+      description: Not found
+    BadRequestError:
+      description: Bad request
+    ObjectDeletedResponse:
+      description: Object deleted
+  schemas:
+    ListPaginationLinks:
+      example:
+        next: /path/to/next_page
+        first: /path/to/first_page
+      properties:
+        first:
+          description: Link to the first page of the list
+          example: /path/to/first_page
+          format: uri
+          type: string
+        next:
+          description: Link to the next page of the list
+          example: /path/to/next_page
+          format: uri
+          type: string
+      type: object
+    ListPaginationMeta:
+      example:
+        page:
+          first_cursor: first_cursor
+          total: 238
+          last_cursor: last_cursor
+      properties:
+        page:
+          $ref: '#/components/schemas/ListPaginationMetaPage'
+      type: object
+    ListPaginationMetaPage:
+      example:
+        first_cursor: first_cursor
+        total: 238
+        last_cursor: last_cursor
+      properties:
+        total:
+          description: The total amount of elements in the list (the returned `data`
+            can be paginated)
+          example: 238
+          type: integer
+        first_cursor:
+          type: string
+        last_cursor:
+          type: string
+      type: object
+    IdentifyableObject:
+      properties:
+        id:
+          description: Unique ID for the object
+          example: 4k3jKJ9D12kj0S4c
+          type: string
+      type: object
+    TimestampedObject:
+      properties:
+        created_at:
+          description: Date and time of the object creation
+          format: date-time
+          type: string
+        created_by:
+          description: ID of the user who created the object
+          type: string
+        updated_at:
+          description: Date and time of the latest update to the object
+          format: date-time
+          type: string
+        updated_by:
+          description: ID of the user who last updated the object
+          type: string
+      type: object
+    AccountBase:
+      properties:
+        name:
+          description: Human readable name of the account
+          example: Example Co.
+          type: string
+        slug:
+          description: A short human-readable name to identify the account. Must be
+            lower-case and between 4 and 16 characters.
+          maxLength: 12
+          minLength: 4
+          pattern: "^[a-z]{4,16}$"
+          type: string
+      type: object
+    AccountAux:
+      properties:
+        owner_id:
+          description: ID of the user who is the ultimate owner of the account
+          type: string
+      type: object
+    AccountItem:
+      allOf:
+      - $ref: '#/components/schemas/IdentifyableObject'
+      - $ref: '#/components/schemas/AccountBase'
+    AccountMutation:
+      allOf:
+      - $ref: '#/components/schemas/AccountBase'
+      - $ref: '#/components/schemas/AccountAux'
+    AccountFull:
+      allOf:
+      - $ref: '#/components/schemas/AccountItem'
+      - $ref: '#/components/schemas/AccountAux'
+      - $ref: '#/components/schemas/TimestampedObject'
+    AccountLinks:
+      example:
+        users: /accounts/4k3jKJ9D12kj0S4c/users
+      properties:
+        users:
+          description: Link for getting to the account's users
+          example: /accounts/4k3jKJ9D12kj0S4c/users
+          format: uri
+          type: string
+      type: object
+    PermissionScopes:
+      description: "Defines the scopes of a token or API key. If omitted, the default\
+        \ set of grants that are available to non-admin and non-owner users of the\
+        \ account will be added."
+      example:
+        country_data:
+        - '*'
+        - DE
+        - DK
+        - GB
+        - SE
+        origin_domains:
+        - '*'
+        - https://example.com
+        service_grants:
+        - audience-lookup
+        - analytics-impression
+        - analytics-click
+        - '*'
+      properties:
+        origin_domains:
+          description: "A list of origin domains that will be allowed access through\
+            \ CORS and Referrer checks with the token or API key. A missing value,\
+            \ empty array or the value `*` grants access from any domain."
+          example:
+          - '*'
+          - https://example.com
+          items:
+            description: Domain name or `*`
+            type: string
+          type: array
+        service_grants:
+          description: "A list of service grants to allow access to use. A missing\
+            \ value, empty array or the value `*` grants access to all of the services\
+            \ that are available to non-admin and non-owner users of the account."
+          example:
+          - audience-lookup
+          - analytics-impression
+          - analytics-click
+          - '*'
+          items:
+            description: Service name
+            type: string
+          type: array
+        country_data:
+          description: "A list of country-specific data sources to allow access to.\
+            \ A missing value, empty array or the value `*` grants access to any data\
+            \ source."
+          example:
+          - '*'
+          - DE
+          - DK
+          - GB
+          - SE
+          items:
+            description: 2-letter country code or `*`
+            type: string
+          type: array
+      type: object
+    ApiKeyToken:
+      description: Contains the generated API key which is only revealed right after
+        generation
+      properties:
+        token:
+          description: The actual API key token to use with the `X-API-KEY` header
+            to authenticate with the key
+          example: 3j51ds3kn4234m23l24km23
+          type: string
+      type: object
+    ApiKeyBase:
+      properties:
+        name:
+          description: Human readable name of the API key
+          example: CRM integration key
+          type: string
+        status:
+          enum:
+          - enabled
+          - disabled
+          - expired
+          type: string
+        expires_at:
+          description: Optional date/time that the key will expire
+          format: date-time
+          type: string
+        user_id:
+          description: The ID of the API key's user
+          type: string
+      type: object
+    ApiKeyAux:
+      properties:
+        scopes:
+          $ref: '#/components/schemas/PermissionScopes'
+      type: object
+    ApiKeyItem:
+      allOf:
+      - $ref: '#/components/schemas/IdentifyableObject'
+      - $ref: '#/components/schemas/ApiKeyBase'
+    ApiKeyMutation:
+      allOf:
+      - $ref: '#/components/schemas/ApiKeyBase'
+      - $ref: '#/components/schemas/ApiKeyAux'
+    ApiKeyFull:
+      allOf:
+      - $ref: '#/components/schemas/ApiKeyItem'
+      - $ref: '#/components/schemas/ApiKeyAux'
+      - $ref: '#/components/schemas/TimestampedObject'
+    ApiKeyFullWithToken:
+      allOf:
+      - $ref: '#/components/schemas/ApiKeyToken'
+      - $ref: '#/components/schemas/ApiKeyFull'
+    ApiKeyLinks:
+      example:
+        user: /user/4k3jKJ9D12kj0S4c
+      properties:
+        user:
+          description: Link for getting to the api key's user
+          example: /user/4k3jKJ9D12kj0S4c
+          format: uri
+          type: string
+      type: object
+    UserAccountRole:
+      description: Determines the role of a user within an account
+      enum:
+      - owner
+      - admin
+      - user
+      type: string
+    UserBase:
+      properties:
+        email:
+          description: The email of the user (used as username when authenticating
+            with password)
+          example: casey.doe@example.com
+          format: email
+          type: string
+        name:
+          description: Human readable name of the user
+          example: Casey Doe
+          type: string
+        roles:
+          description: The roles that the user has within the account
+          items:
+            $ref: '#/components/schemas/UserAccountRole'
+          type: array
+        avatar_url:
+          description: The URL to an avatar of the user
+          format: uri
+          type: string
+      type: object
+    UserCredentials:
+      properties:
+        password:
+          description: Password of the user
+          type: string
+      type: object
+    UserAux:
+      properties:
+        account_id:
+          description: ID of the account that this user pertains to
+          type: string
+        is_super_admin:
+          description: Determines if the user is a super admin of Digiseg API services
+          type: boolean
+      type: object
+    UserMutation:
+      allOf:
+      - $ref: '#/components/schemas/UserBase'
+      - $ref: '#/components/schemas/UserAux'
+      - $ref: '#/components/schemas/UserCredentials'
+    UserItem:
+      allOf:
+      - $ref: '#/components/schemas/IdentifyableObject'
+      - $ref: '#/components/schemas/UserBase'
+    UserFull:
+      allOf:
+      - $ref: '#/components/schemas/UserItem'
+      - $ref: '#/components/schemas/UserAux'
+      - $ref: '#/components/schemas/TimestampedObject'
+    UserLinks:
+      example:
+        apikeys: /users/4k3jKJ9D12kj0S4c/apikeys
+        account: /accounts/4k3jKJ9D12kj0S4c
+      properties:
+        account:
+          description: Link for getting to the user's account
+          example: /accounts/4k3jKJ9D12kj0S4c
+          format: uri
+          type: string
+        apikeys:
+          description: Link for getting to the user's api keys
+          example: /users/4k3jKJ9D12kj0S4c/apikeys
+          format: uri
+          type: string
+      type: object
+    AuthTokenRequest:
+      example:
+        refresh_token: refresh_token
+        password: password
+        scopes:
+          country_data:
+          - '*'
+          - DE
+          - DK
+          - GB
+          - SE
+          origin_domains:
+          - '*'
+          - https://example.com
+          service_grants:
+          - audience-lookup
+          - analytics-impression
+          - analytics-click
+          - '*'
+        username: username
+      properties:
+        username:
+          description: The username (typically an email address) of the user to authenticate
+          type: string
+        password:
+          description: The password for the given username
+          type: string
+        refresh_token:
+          description: A previously issued refresh token for the given username
+          type: string
+        scopes:
+          $ref: '#/components/schemas/PermissionScopes'
+      required:
+      - username
+      type: object
+    AuthTokenResponse:
+      example:
+        access_token: 5k32n423kn4234m23l24km23
+        refresh_token: IwOGYzYTlmM2YxOTQ5MGE3YmNmMDFkNTVk
+        token_type: Bearer
+        expires_in: 3600
+      properties:
+        access_token:
+          description: A short-lived token (usable for 1 hour) to be used in subsequent
+            requests
+          example: 5k32n423kn4234m23l24km23
+          type: string
+        token_type:
+          description: The type of access token returned
+          example: Bearer
+          type: string
+        expires_in:
+          description: The duration of time (in seconds) the access token is granted
+            for
+          example: 3600
+          type: integer
+        refresh_token:
+          description: A long-lived token that can be used to generate new access
+            tokens even after the returned access token expires.
+          example: IwOGYzYTlmM2YxOTQ5MGE3YmNmMDFkNTVk
+          type: string
+      required:
+      - access_token
+      - expires_in
+      - token_type
+      type: object
+    ResolveAudiencesOfMultipleRequest:
+      example:
+        queries:
+        - id: kbj423lt439hcdsijh432i
+          ip_address: 1.1.1.1
+        - id: kbj423lt439hcdsijh432i
+          ip_address: 1.1.1.1
+        - id: kbj423lt439hcdsijh432i
+          ip_address: 1.1.1.1
+        - id: kbj423lt439hcdsijh432i
+          ip_address: 1.1.1.1
+        - id: kbj423lt439hcdsijh432i
+          ip_address: 1.1.1.1
+      properties:
+        queries:
+          items:
+            $ref: '#/components/schemas/ResolveAudiencesOfMultipleRequestItem'
+          maxItems: 100
+          minItems: 1
+          type: array
+      required:
+      - queries
+      type: object
+    ResolveAudiencesOfMultipleRequestItem:
+      example:
+        id: kbj423lt439hcdsijh432i
+        ip_address: 1.1.1.1
+      properties:
+        id:
+          description: An optional identifier for the item. The identifier will also
+            be available in the response.
+          example: kbj423lt439hcdsijh432i
+          type: string
+        ip_address:
+          description: The IP address to resolve audiences for
+          example: 1.1.1.1
+          type: string
+      required:
+      - ip_address
+      type: object
+    ResolveAudiencesOfMultipleResponse:
+      example:
+        results:
+        - audiences:
+          - category: home_type
+            code: a2
+            name: Home Type > House
+          - category: household_children
+            code: e1
+            name: Children in the Household > No children
+          - category: education
+            code: f1
+            name: Education > Basic
+          - category: neighbourhood_type
+            code: g1
+            name: Neighbourhood Type > Countryside
+          - category: household_income
+            code: h1
+            name: Household Income > Lowest 20%
+          - category: building_age
+            code: k1
+            name: Building Age > Pre 1945
+          - category: household_techlevel
+            code: n1
+            name: Tech-Level in Household > Basic
+          id: kbj423lt439hcdsijh432i
+          status: null
+        - audiences:
+          - category: home_type
+            code: a2
+            name: Home Type > House
+          - category: household_children
+            code: e1
+            name: Children in the Household > No children
+          - category: education
+            code: f1
+            name: Education > Basic
+          - category: neighbourhood_type
+            code: g1
+            name: Neighbourhood Type > Countryside
+          - category: household_income
+            code: h1
+            name: Household Income > Lowest 20%
+          - category: building_age
+            code: k1
+            name: Building Age > Pre 1945
+          - category: household_techlevel
+            code: n1
+            name: Tech-Level in Household > Basic
+          id: kbj423lt439hcdsijh432i
+          status: null
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/ResolveAudiencesOfMultipleResponseItem'
+          type: array
+      type: object
+    ResolveAudiencesOfMultipleResponseItem:
+      example:
+        audiences:
+        - category: home_type
+          code: a2
+          name: Home Type > House
+        - category: household_children
+          code: e1
+          name: Children in the Household > No children
+        - category: education
+          code: f1
+          name: Education > Basic
+        - category: neighbourhood_type
+          code: g1
+          name: Neighbourhood Type > Countryside
+        - category: household_income
+          code: h1
+          name: Household Income > Lowest 20%
+        - category: building_age
+          code: k1
+          name: Building Age > Pre 1945
+        - category: household_techlevel
+          code: n1
+          name: Tech-Level in Household > Basic
+        id: kbj423lt439hcdsijh432i
+        status: null
+      properties:
+        id:
+          description: The identifier (if provided) of the item as it was provided
+            in the request.
+          example: kbj423lt439hcdsijh432i
+          type: string
+        audiences:
+          example:
+          - category: home_type
+            code: a2
+            name: Home Type > House
+          - category: household_children
+            code: e1
+            name: Children in the Household > No children
+          - category: education
+            code: f1
+            name: Education > Basic
+          - category: neighbourhood_type
+            code: g1
+            name: Neighbourhood Type > Countryside
+          - category: household_income
+            code: h1
+            name: Household Income > Lowest 20%
+          - category: building_age
+            code: k1
+            name: Building Age > Pre 1945
+          - category: household_techlevel
+            code: n1
+            name: Tech-Level in Household > Basic
+          items:
+            $ref: '#/components/schemas/Audience'
+          type: array
+        status:
+          $ref: '#/components/schemas/AudienceResponseStatus'
+      required:
+      - status
+      type: object
+    AudienceResponse:
+      example:
+        audiences:
+        - category: home_type
+          code: a2
+          name: Home Type > House
+        - category: household_children
+          code: e1
+          name: Children in the Household > No children
+        - category: education
+          code: f1
+          name: Education > Basic
+        - category: neighbourhood_type
+          code: g1
+          name: Neighbourhood Type > Countryside
+        - category: household_income
+          code: h1
+          name: Household Income > Lowest 20%
+        - category: building_age
+          code: k1
+          name: Building Age > Pre 1945
+        - category: household_techlevel
+          code: n1
+          name: Tech-Level in Household > Basic
+        status: null
+      properties:
+        audiences:
+          example:
+          - category: home_type
+            code: a2
+            name: Home Type > House
+          - category: household_children
+            code: e1
+            name: Children in the Household > No children
+          - category: education
+            code: f1
+            name: Education > Basic
+          - category: neighbourhood_type
+            code: g1
+            name: Neighbourhood Type > Countryside
+          - category: household_income
+            code: h1
+            name: Household Income > Lowest 20%
+          - category: building_age
+            code: k1
+            name: Building Age > Pre 1945
+          - category: household_techlevel
+            code: n1
+            name: Tech-Level in Household > Basic
+          items:
+            $ref: '#/components/schemas/Audience'
+          type: array
+        status:
+          $ref: '#/components/schemas/AudienceResponseStatus'
+      required:
+      - status
+      type: object
+    AudienceResponseStatus:
+      description: |
+        Describes the result of resolving the audiences of an IP address.
+        `resolved` means that the IP was resolved and audiences are returned.
+        `unresolved` means that the IP could not be resolved and no audiences are returned.
+        `forbidden` means that the authenticated user did not have grants to resolve audiences in the country of the IP.
+      enum:
+      - resolved
+      - unresolved
+      - forbidden
+      type: string
+    ErrorResponse:
+      properties:
+        code:
+          type: integer
+        message:
+          description: A human-readable error message
+          type: string
+      required:
+      - code
+      - message
+      type: object
+    AudienceArray:
+      example:
+      - category: home_type
+        code: a2
+        name: Home Type > House
+      - category: household_children
+        code: e1
+        name: Children in the Household > No children
+      - category: education
+        code: f1
+        name: Education > Basic
+      - category: neighbourhood_type
+        code: g1
+        name: Neighbourhood Type > Countryside
+      - category: household_income
+        code: h1
+        name: Household Income > Lowest 20%
+      - category: building_age
+        code: k1
+        name: Building Age > Pre 1945
+      - category: household_techlevel
+        code: n1
+        name: Tech-Level in Household > Basic
+      items:
+        $ref: '#/components/schemas/Audience'
+      type: array
+    Audience:
+      description: An object that represents an audience matched to the request
+      properties:
+        category:
+          description: The audience category
+          example: lifecycle
+          type: string
+        code:
+          description: The unique audience code
+          example: c5
+          type: string
+        name:
+          description: "The name of the audience, typically of the form \"{category\
+            \ name} > {audience name}\""
+          example: Lifecycle > Pensioners
+          type: string
+      type: object
+    getAccountById_200_response:
+      example:
+        data: null
+        links:
+          users: /accounts/4k3jKJ9D12kj0S4c/users
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountFull'
+        links:
+          $ref: '#/components/schemas/AccountLinks'
+      type: object
+    getUsersByAccountId_200_response:
+      example:
+        data:
+        - null
+        - null
+        meta:
+          page:
+            first_cursor: first_cursor
+            total: 238
+            last_cursor: last_cursor
+        links:
+          next: /path/to/next_page
+          first: /path/to/first_page
+      properties:
+        meta:
+          $ref: '#/components/schemas/ListPaginationMeta'
+        links:
+          $ref: '#/components/schemas/ListPaginationLinks'
+        data:
+          items:
+            $ref: '#/components/schemas/UserItem'
+          type: array
+      type: object
+    createUserInAccount_201_response:
+      example:
+        data: null
+        links:
+          apikeys: /users/4k3jKJ9D12kj0S4c/apikeys
+          account: /accounts/4k3jKJ9D12kj0S4c
+      properties:
+        data:
+          $ref: '#/components/schemas/UserFull'
+        links:
+          $ref: '#/components/schemas/UserLinks'
+      type: object
+    getApiKeysByUserId_200_response:
+      example:
+        data:
+        - null
+        - null
+        meta:
+          page:
+            first_cursor: first_cursor
+            total: 238
+            last_cursor: last_cursor
+        links:
+          next: /path/to/next_page
+          first: /path/to/first_page
+      properties:
+        meta:
+          $ref: '#/components/schemas/ListPaginationMeta'
+        links:
+          $ref: '#/components/schemas/ListPaginationLinks'
+        data:
+          items:
+            $ref: '#/components/schemas/ApiKeyItem'
+          type: array
+      type: object
+    createApiKey_201_response:
+      example:
+        data: null
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiKeyFullWithToken'
+      type: object
+    getApiKeyById_200_response:
+      example:
+        data: null
+        links:
+          user: /user/4k3jKJ9D12kj0S4c
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiKeyFull'
+        links:
+          $ref: '#/components/schemas/ApiKeyLinks'
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+    apiKeyHeaderAuth:
+      in: header
+      name: X-API-KEY
+      type: apiKey
+    apiKeyQueryParamAuth:
+      in: query
+      name: api_key
+      type: apiKey
+    oAuth:
+      flows:
+        password:
+          refreshUrl: /auth/token
+          scopes: {}
+          tokenUrl: /auth/token
+      type: oauth2
+x-tagGroups:
+- name: Segmentation
+  tags:
+  - auth
+  - audiences
+  - analytics
+- name: Administration
+  tags:
+  - users
+  - accounts

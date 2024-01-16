@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	digiseg "github.com/digiseg-labs/api-client-go/pkg"
+	digiseg "github.com/digiseg-labs/api-client-go/openapi"
 )
 
 func Authenticate() (string, error) {

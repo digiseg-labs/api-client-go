@@ -13,3 +13,7 @@ To regenerate, run:
 ```sh
 make codegen
 ```
+
+## Examples
+
+Code examples for how to use this module can be found in the `examples` directory.

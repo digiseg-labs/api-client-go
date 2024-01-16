@@ -1,6 +1,7 @@
 GENERATED_DIR=pkg
 
 codegen:
+	rm -rf ${GENERATED_DIR}
 	openapi-generator generate \
 		-i https://developer.digiseg.net/openapi.json \
 		-g go -o ${GENERATED_DIR} \
@@ -9,6 +10,8 @@ codegen:
 		--git-repo-id api-client-go
 	mv ${GENERATED_DIR}/go.* .
 	rm -rf ${GENERATED_DIR}/test
+	go mod tidy
+	go get -u ./...
 	go mod tidy
 
 .PHONY: build

@@ -17,3 +17,4 @@ codegen:
 .PHONY: build
 build:
 	go build pkg/*.go
+	go build examples/*.go

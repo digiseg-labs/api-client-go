@@ -17,4 +17,5 @@ codegen:
 .PHONY: build
 build:
 	go build ${GENERATED_DIR}/*.go
-	go build examples/*.go
+	go build -o bin/authenticate_and_get_audiences examples/authenticate_and_get_audiences/*.go
+	go build -o bin/use_api_key_to_get_audiences examples/use_api_key_to_get_audiences/*.go

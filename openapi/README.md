@@ -11,6 +11,25 @@ Audiences by Digiseg are available in 50+ countries, probablistically mapping
 neighborhood characteristics to the IP addresses observed on the internet -
 Household targeting & measurement for the post-cookie world.
 
+## Developer SDKs
+
+In addition to using these APIs directly through any HTTP client, we provide a set
+of API client SDKs for popular programming languages:
+
+<div class=\"api-clients\">
+  <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">
+    <i class=\"api-client-sdk-logo devicon-python-plain\"></i>
+    <p>API client for Python</p>
+  </a>
+  <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">
+    <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>
+    <p>API client for Go</p>
+  </a>
+</div>
+<div class=\"api-clients-breaker\" />
+
+## Audience taxonomy
+
 For a catalog of Digisegs audiences, refer to the
 [Audience list](https://digiseg.io/audiences-list).
 
@@ -107,6 +126,12 @@ Class | Method | HTTP request | Description
 *AuthAPI* | [**DeleteApiKeyById**](docs/AuthAPI.md#deleteapikeybyid) | **Delete** /users/{user_id}/apikeys/{key_id} | Delete API key
 *AuthAPI* | [**GetApiKeyById**](docs/AuthAPI.md#getapikeybyid) | **Get** /users/{user_id}/apikeys/{key_id} | Get API key
 *AuthAPI* | [**GetApiKeysByUserId**](docs/AuthAPI.md#getapikeysbyuserid) | **Get** /users/{user_id}/apikeys | List API keys for user
+*CampaignsAPI* | [**CreateCampaign**](docs/CampaignsAPI.md#createcampaign) | **Post** /campaigns | Create campaign
+*CampaignsAPI* | [**DeleteCampaignById**](docs/CampaignsAPI.md#deletecampaignbyid) | **Delete** /campaigns/{campaign_id} | Delete campaign
+*CampaignsAPI* | [**GetCampaignById**](docs/CampaignsAPI.md#getcampaignbyid) | **Get** /campaigns/{campaign_id} | Get campaign
+*CampaignsAPI* | [**ListCampaigns**](docs/CampaignsAPI.md#listcampaigns) | **Get** /campaigns | List campaigns
+*CampaignsAPI* | [**QueryCampaignCountryStats**](docs/CampaignsAPI.md#querycampaigncountrystats) | **Get** /campaigns/{campaign_id}/stats/countries | Country statistics for campaign
+*CampaignsAPI* | [**UpdateCampaignById**](docs/CampaignsAPI.md#updatecampaignbyid) | **Put** /campaigns/{campaign_id} | Update campaign
 *UsersAPI* | [**CreateApiKey**](docs/UsersAPI.md#createapikey) | **Post** /users/{user_id}/apikeys | Create API key for user
 *UsersAPI* | [**CreateUserInAccount**](docs/UsersAPI.md#createuserinaccount) | **Post** /accounts/{account_id}/users | Create user
 *UsersAPI* | [**DeleteApiKeyById**](docs/UsersAPI.md#deleteapikeybyid) | **Delete** /users/{user_id}/apikeys/{key_id} | Delete API key
@@ -136,27 +161,66 @@ Class | Method | HTTP request | Description
  - [ApiKeyMutation](docs/ApiKeyMutation.md)
  - [ApiKeyToken](docs/ApiKeyToken.md)
  - [Audience](docs/Audience.md)
+ - [AudienceCategoryStats](docs/AudienceCategoryStats.md)
  - [AudienceResponse](docs/AudienceResponse.md)
  - [AudienceResponseStatus](docs/AudienceResponseStatus.md)
+ - [AudienceStats](docs/AudienceStats.md)
  - [AuthTokenRequest](docs/AuthTokenRequest.md)
  - [AuthTokenResponse](docs/AuthTokenResponse.md)
+ - [BusinessAudienceStats](docs/BusinessAudienceStats.md)
+ - [BusinessAudienceStatsAllOfAudienceCategories](docs/BusinessAudienceStatsAllOfAudienceCategories.md)
+ - [CampaignAudienceStats](docs/CampaignAudienceStats.md)
+ - [CampaignAudienceStatsCategory](docs/CampaignAudienceStatsCategory.md)
+ - [CampaignAux](docs/CampaignAux.md)
+ - [CampaignBase](docs/CampaignBase.md)
+ - [CampaignCountryStats](docs/CampaignCountryStats.md)
+ - [CampaignCreation](docs/CampaignCreation.md)
+ - [CampaignCreationData](docs/CampaignCreationData.md)
+ - [CampaignEventLink](docs/CampaignEventLink.md)
+ - [CampaignEventLinkParameterInfo](docs/CampaignEventLinkParameterInfo.md)
+ - [CampaignEventLinks](docs/CampaignEventLinks.md)
+ - [CampaignEventSet](docs/CampaignEventSet.md)
+ - [CampaignFrequencyStats](docs/CampaignFrequencyStats.md)
+ - [CampaignFull](docs/CampaignFull.md)
+ - [CampaignIngestionStatus](docs/CampaignIngestionStatus.md)
+ - [CampaignItem](docs/CampaignItem.md)
+ - [CampaignLifecycleStage](docs/CampaignLifecycleStage.md)
+ - [CampaignLinks](docs/CampaignLinks.md)
+ - [CampaignMutation](docs/CampaignMutation.md)
+ - [CampaignTimingStats](docs/CampaignTimingStats.md)
+ - [Comparison](docs/Comparison.md)
+ - [ComparisonsContainer](docs/ComparisonsContainer.md)
+ - [CountryStats](docs/CountryStats.md)
  - [CreateApiKey201Response](docs/CreateApiKey201Response.md)
+ - [CreateCampaign201Response](docs/CreateCampaign201Response.md)
  - [CreateUserInAccount201Response](docs/CreateUserInAccount201Response.md)
+ - [DayOfMonthStats](docs/DayOfMonthStats.md)
+ - [DayOfWeekStats](docs/DayOfWeekStats.md)
  - [ErrorResponse](docs/ErrorResponse.md)
+ - [FrequencyStats](docs/FrequencyStats.md)
  - [GetAccountById200Response](docs/GetAccountById200Response.md)
  - [GetApiKeyById200Response](docs/GetApiKeyById200Response.md)
  - [GetApiKeysByUserId200Response](docs/GetApiKeysByUserId200Response.md)
  - [GetUsersByAccountId200Response](docs/GetUsersByAccountId200Response.md)
+ - [HourOfDayStats](docs/HourOfDayStats.md)
  - [IdentifyableObject](docs/IdentifyableObject.md)
+ - [IdentifyableObject1](docs/IdentifyableObject1.md)
+ - [ListCampaigns200Response](docs/ListCampaigns200Response.md)
  - [ListPaginationLinks](docs/ListPaginationLinks.md)
  - [ListPaginationMeta](docs/ListPaginationMeta.md)
  - [ListPaginationMetaPage](docs/ListPaginationMetaPage.md)
+ - [Measurement](docs/Measurement.md)
+ - [MeasurementsContainer](docs/MeasurementsContainer.md)
  - [PermissionScopes](docs/PermissionScopes.md)
+ - [PrivateAudienceStats](docs/PrivateAudienceStats.md)
+ - [PrivateAudienceStatsAllOfAudienceCategories](docs/PrivateAudienceStatsAllOfAudienceCategories.md)
+ - [QueryCampaignCountryStats200Response](docs/QueryCampaignCountryStats200Response.md)
  - [ResolveAudiencesOfMultipleRequest](docs/ResolveAudiencesOfMultipleRequest.md)
  - [ResolveAudiencesOfMultipleRequestItem](docs/ResolveAudiencesOfMultipleRequestItem.md)
  - [ResolveAudiencesOfMultipleResponse](docs/ResolveAudiencesOfMultipleResponse.md)
  - [ResolveAudiencesOfMultipleResponseItem](docs/ResolveAudiencesOfMultipleResponseItem.md)
  - [TimestampedObject](docs/TimestampedObject.md)
+ - [TimestampedObject1](docs/TimestampedObject1.md)
  - [UserAccountRole](docs/UserAccountRole.md)
  - [UserAux](docs/UserAux.md)
  - [UserBase](docs/UserBase.md)

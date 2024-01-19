@@ -14,6 +14,25 @@ info:
     neighborhood characteristics to the IP addresses observed on the internet -
     Household targeting & measurement for the post-cookie world.
 
+    ## Developer SDKs
+
+    In addition to using these APIs directly through any HTTP client, we provide a set
+    of API client SDKs for popular programming languages:
+
+    <div class="api-clients">
+      <a class="api-client-box" href="https://github.com/digiseg-labs/api-client-python">
+        <i class="api-client-sdk-logo devicon-python-plain"></i>
+        <p>API client for Python</p>
+      </a>
+      <a class="api-client-box" href="https://github.com/digiseg-labs/api-client-go">
+        <i class="api-client-sdk-logo devicon-go-original-wordmark"></i>
+        <p>API client for Go</p>
+      </a>
+    </div>
+    <div class="api-clients-breaker" />
+
+    ## Audience taxonomy
+
     For a catalog of Digisegs audiences, refer to the
     [Audience list](https://digiseg.io/audiences-list).
 
@@ -67,6 +86,13 @@ tags:
     certain behaviour or actions from.
   name: audiences
   x-displayName: Audiences
+- description: |
+    Campaigns can be managed and measured in order to evaluate performance,
+    reach and targeting power. Use the campaigns API to create campaigns,
+    instrument them in your campaign creatives, and access statistics about
+    the impressions, clicks and other events of the campaign.
+  name: campaigns
+  x-displayName: Campaigns
 paths:
   /accounts/{account_id}:
     get:
@@ -583,6 +609,223 @@ paths:
         source: "fetch(\"https://api.digiseg.net/audiences/\"+user_ip, {\n  \"method\"\
           : \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response =>\
           \ {\n  console.log(response);\n})"
+  /campaigns:
+    get:
+      description: |
+        List campaigns that the user has access to
+      operationId: listCampaigns
+      parameters:
+      - description: Optional parameter used to filter by campaign label
+        example: CTV
+        explode: true
+        in: query
+        name: "filter[label]"
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Optional parameter used to search for campaigns where the name
+          contains a substring (case insensitive)
+        example: acme
+        explode: true
+        in: query
+        name: "filter[name][contains]"
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          Optional parameter used to query campaigns by specific account IDs (only available to super admins).
+          The value `*` is synonymous for "all accounts".
+        examples:
+          single:
+            description: A specific account ID
+            value: 4k3jKJ9D12kj0S4c
+          multiple:
+            description: Multiple accounts
+            value: "4k3jKJ9D12kj0S4c,5k3jKJ9D12kj0S4c,6k3jKJ9D12kj0S4c"
+          all:
+            description: All accounts
+            value: '*'
+        explode: true
+        in: query
+        name: "filter[account_id]"
+        required: false
+        schema:
+          default: The user's account ID
+          type: string
+        style: form
+      - description: The desired page size
+        explode: true
+        in: query
+        name: "page[size]"
+        required: false
+        schema:
+          default: 100
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: |
+          Optional pagination parameter, indicating the previous cursor value to paginate beyond.
+          The value to provide here is opaque, but can be found in previous requests in the `meta.page.last_cursor` field.
+        explode: true
+        in: query
+        name: "page[after]"
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCampaigns_200_response'
+          description: OK
+      summary: List campaigns
+      tags:
+      - campaigns
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/campaigns
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/campaigns\", {\n  \"method\": \"\
+          GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response => {\n\
+          \  console.log(response);\n})"
+    post:
+      description: Create a new campaign
+      operationId: createCampaign
+      requestBody:
+        $ref: '#/components/requestBodies/CampaignCreationRequest'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createCampaign_201_response'
+          description: OK
+      summary: Create campaign
+      tags:
+      - campaigns
+  /campaigns/{campaign_id}:
+    delete:
+      description: |
+        Deletes a campaign
+      operationId: deleteCampaignById
+      parameters:
+      - explode: false
+        in: path
+        name: campaign_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Object deleted
+      summary: Delete campaign
+      tags:
+      - campaigns
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X DELETE \
+          https://api.digiseg.net/campaigns/$CAMPAIGN_ID
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id, {\n  \"\
+          method\": \"DELETE\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response\
+          \ => {\n  console.log(response);\n})"
+    get:
+      description: |
+        Get campaign information for a specific campaign
+      operationId: getCampaignById
+      parameters:
+      - explode: false
+        in: path
+        name: campaign_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createCampaign_201_response'
+          description: OK
+      summary: Get campaign
+      tags:
+      - campaigns
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/campaigns/$CAMPAIGN_ID
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id, {\n  \"\
+          method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response\
+          \ => {\n  console.log(response);\n})"
+    put:
+      description: |
+        Updates properties of a campaign
+      operationId: updateCampaignById
+      parameters:
+      - explode: false
+        in: path
+        name: campaign_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/CampaignUpdateRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createCampaign_201_response'
+          description: OK
+      summary: Update campaign
+      tags:
+      - campaigns
+  /campaigns/{campaign_id}/stats/countries:
+    get:
+      description: |
+        Query the country statistics for a campaign, enabling the user
+        to see where the campaign is being delivered.
+      operationId: queryCampaignCountryStats
+      parameters:
+      - explode: false
+        in: path
+        name: campaign_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/queryCampaignCountryStats_200_response'
+          description: OK
+      summary: Country statistics for campaign
+      tags:
+      - campaigns
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/campaigns/$CAMPAIGN_ID/stats/countries
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/stats/countries\"\
+          , {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
+          }).then(response => {\n  console.log(response);\n})"
 components:
   requestBodies:
     AccountCreationRequest:
@@ -620,6 +863,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ResolveAudiencesOfMultipleRequest'
+      required: true
+    CampaignCreationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CampaignCreation'
+      required: true
+    CampaignUpdateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CampaignMutation'
       required: true
   responses:
     AccountByIdResponse:
@@ -683,6 +938,51 @@ components:
       description: Bad request
     ObjectDeletedResponse:
       description: Object deleted
+    CampaignListResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/listCampaigns_200_response'
+      description: OK
+    CampaignByIdResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createCampaign_201_response'
+      description: OK
+    CampaignAudienceStatsResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: '#/components/schemas/CampaignAudienceStats'
+            type: object
+      description: OK
+    CampaignCountryStatsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/queryCampaignCountryStats_200_response'
+      description: OK
+    CampaignTimingStatsResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: '#/components/schemas/CampaignTimingStats'
+            type: object
+      description: OK
+    CampaignFrequencyStatsResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: '#/components/schemas/CampaignFrequencyStats'
+            type: object
+      description: OK
   schemas:
     ListPaginationLinks:
       example:
@@ -1336,6 +1636,824 @@ components:
           example: Lifecycle > Pensioners
           type: string
       type: object
+    CampaignLinks:
+      example:
+        stats_timing: /campaigns/2c9jKJ9D12kj0S4c/stats/timing
+        stats_frequencies: /campaigns/2c9jKJ9D12kj0S4c/stats/frequencies
+        stats_countries: /campaigns/2c9jKJ9D12kj0S4c/stats/countries
+        stats_audiences: /campaigns/2c9jKJ9D12kj0S4c/stats/audiences
+      properties:
+        stats_countries:
+          description: Link to the country statistics for the campaign
+          example: /campaigns/2c9jKJ9D12kj0S4c/stats/countries
+          format: uri
+          type: string
+        stats_audiences:
+          description: Link to the audience statistics for the campaign
+          example: /campaigns/2c9jKJ9D12kj0S4c/stats/audiences
+          format: uri
+          type: string
+        stats_timing:
+          description: Link to the timing statistics for the campaign
+          example: /campaigns/2c9jKJ9D12kj0S4c/stats/timing
+          format: uri
+          type: string
+        stats_frequencies:
+          description: Link to the frequency statistics for the campaign
+          example: /campaigns/2c9jKJ9D12kj0S4c/stats/frequencies
+          format: uri
+          type: string
+      type: object
+    IdentifyableObject1:
+      properties:
+        id:
+          description: Unique ID for the object
+          example: 2c9jKJ9D12kj0S4c
+          type: string
+      required:
+      - id
+      type: object
+    TimestampedObject1:
+      properties:
+        created_at:
+          description: Date and time of the object creation
+          format: date-time
+          type: string
+        created_by:
+          description: ID of the user who created the object
+          example: 3u1jKJ9D12kj0S4c
+          type: string
+        updated_at:
+          description: Date and time of the latest update to the object
+          format: date-time
+          type: string
+        updated_by:
+          description: ID of the user who last updated the object
+          example: 3u1jKJ9D12kj0S4c
+          type: string
+      required:
+      - created_at
+      - created_by
+      type: object
+    CampaignEventLinks:
+      additionalProperties:
+        $ref: '#/components/schemas/CampaignEventLink'
+      description: |
+        Links to trigger activity and events in this campaign.
+        Two events are well-known and available in every campaign: impression and click.
+      example:
+        impression:
+          link: //subdomain.digiseg.net/path/to/pix.gif
+        click:
+          link: //subdomain.digiseg.net/path/to/click
+          parameters:
+            destination:
+              description: URL to redirect to
+      properties:
+        impression:
+          $ref: '#/components/schemas/CampaignEventLink'
+        click:
+          $ref: '#/components/schemas/CampaignEventLink'
+      readOnly: true
+      type: object
+    CampaignEventLink:
+      properties:
+        link:
+          description: The base URI of the link to an event
+          format: uri
+          type: string
+        parameters:
+          additionalProperties:
+            $ref: '#/components/schemas/CampaignEventLinkParameterInfo'
+          description: Describes any parameters that can be added to the event link
+          type: object
+      type: object
+    CampaignEventLinkParameterInfo:
+      properties:
+        description:
+          description: A description of what the parameter is used for
+          type: string
+      type: object
+    CampaignBase:
+      properties:
+        name:
+          example: Acme Summer 2024 brand awareness
+          type: string
+        labels:
+          description: |
+            A set of labels that users can use to categorize their campaigns.
+            Can be used to indicate type of campaign, customer names or other
+            traits.
+          example:
+          - Acme
+          - CTV
+          - Seasonal
+          items:
+            type: string
+          maxItems: 5
+          type: array
+        account_id:
+          description: The ID of the account that owns this campaign
+          example: 4k3jKJ9D12kj0S4c
+          readOnly: true
+          type: string
+        start_date:
+          description: The date for which the campaign and its data ingestion will
+            start.
+          format: date-time
+          readOnly: true
+          type: string
+        life_cycle_stage:
+          $ref: '#/components/schemas/CampaignLifecycleStage'
+        ingestion_status:
+          $ref: '#/components/schemas/CampaignIngestionStatus'
+      type: object
+    CampaignIngestionStatus:
+      description: |
+        The status of the data collection of the campaign, indicating whether stats are available and representative.
+
+        * `no_data` means that the campaign has been created but no data has been received.
+        * `active_ramping_up` means that data has been received, but not enough to provide meaningful stats yet.
+        * `active_fulfilled` means that the campaign has received a good amount of data, but more data can still be added.
+        * `finished_complete` means that the campaign has finished and is no longer open to receive data.
+        * `finished_expired` means that the campaign has finished but not enough data was collected to provide meaningful stats.
+      enum:
+      - no_data
+      - active_ramping_up
+      - active_fulfilled
+      - finished_complete
+      - finished_expired
+      readOnly: true
+      type: string
+    CampaignLifecycleStage:
+      description: |
+        The life cycle stage of the campaign.
+      enum:
+      - pending
+      - active
+      - paused
+      - finished
+      readOnly: true
+      type: string
+    CampaignAux:
+      properties:
+        event_links:
+          $ref: '#/components/schemas/CampaignEventLinks'
+      type: object
+    CampaignCreationData:
+      properties:
+        event_set:
+          $ref: '#/components/schemas/CampaignEventSet'
+      type: object
+    CampaignEventSet:
+      description: |
+        The set of events to create for the campaign.
+      enum:
+      - impressions_only
+      - impressions_and_clicks
+      type: string
+    CampaignItem:
+      allOf:
+      - $ref: '#/components/schemas/IdentifyableObject1'
+      - $ref: '#/components/schemas/CampaignBase'
+    CampaignFull:
+      allOf:
+      - $ref: '#/components/schemas/CampaignItem'
+      - $ref: '#/components/schemas/CampaignAux'
+      - $ref: '#/components/schemas/TimestampedObject1'
+    CampaignCreation:
+      allOf:
+      - $ref: '#/components/schemas/CampaignBase'
+      - $ref: '#/components/schemas/CampaignCreationData'
+      required:
+      - name
+    CampaignMutation:
+      allOf:
+      - $ref: '#/components/schemas/CampaignBase'
+    FractionOfTotal:
+      description: |
+        The fraction of events that fall within this object compared to the total of the
+        category or segment (usually represented by the measurement's parent's parent).
+        For example, if the measurement is "impression" on the `home_type` "Apartment" object,
+        then the `fraction_of_total` represents the number of impressions on apartments compared
+        to impressions from other `home_type` values.
+      example: 0.17
+      format: double
+      maximum: 1
+      minimum: 0
+      type: number
+    Measurement:
+      description: Represents a single measurement
+      properties:
+        event:
+          description: "The event that triggered the measurement, typically `impression`\
+            \ or `click`"
+          example: impression
+          type: string
+        count:
+          description: "The real value of the measurement, typically a counter value\
+            \ (integer)"
+          type: integer
+        fraction_of_total:
+          description: |
+            The fraction of events that fall within this object compared to the total of the
+            category or segment (usually represented by the measurement's parent's parent).
+            For example, if the measurement is "impression" on the `home_type` "Apartment" object,
+            then the `fraction_of_total` represents the number of impressions on apartments compared
+            to impressions from other `home_type` values.
+          example: 0.17
+          format: double
+          maximum: 1
+          minimum: 0
+          type: number
+        conversion_rate:
+          description: |
+            The rate of conversion to this measurement. Typically applies to measurements like
+            "click" where it will represent the rate of impressions that turn into a click.
+          example: 0.0053
+          format: double
+          maximum: 1
+          minimum: 0
+          type: number
+      readOnly: true
+      type: object
+    MeasurementsContainer:
+      description: An object containing measurements
+      properties:
+        measurements:
+          description: Measurements related to this object
+          example:
+          - event: impression
+            count: 7280791
+            fraction_of_total: 0.54
+          - event: click
+            count: 23522
+            fraction_of_total: 0.5
+            conversion_rate: 0.00323
+          items:
+            $ref: '#/components/schemas/Measurement'
+          type: array
+      type: object
+    Comparison:
+      description: Represents a comparison of measurements with another source
+      properties:
+        name:
+          description: The name of the comparison source
+          example: Average Internet Population
+          type: string
+        code:
+          description: The code of the comparison source
+          example: aip
+          type: string
+        fraction_of_total:
+          description: |
+            The "fraction of total" value that is being compared with.
+          example: 0.16
+          format: double
+          maximum: 1
+          minimum: 0
+          type: number
+        index:
+          description: |
+            The comparison index where 100 means that the measurement is completely
+            aligned with the compared metric. Values below 100 means that the measurement
+            is below the compared metric, and values above 100 means that the measurement
+            is above the compared metric.
+          example: 97
+          minimum: 0
+          type: integer
+      required:
+      - code
+      - fraction_of_total
+      - index
+      - name
+      type: object
+    ComparisonsContainer:
+      description: An object containing comparisons
+      properties:
+        comparisons:
+          items:
+            $ref: '#/components/schemas/Comparison'
+          type: array
+      type: object
+    AudienceCategoryStats:
+      properties:
+        name:
+          example: Home type
+          type: string
+        audiences:
+          items:
+            $ref: '#/components/schemas/AudienceStats'
+          type: array
+      type: object
+    AudienceStats:
+      allOf:
+      - properties:
+          name:
+            description: The name of the audience
+            example: Apartment
+            type: string
+          code:
+            description: The code of the audience
+            example: a1
+            type: string
+        type: object
+      - $ref: '#/components/schemas/MeasurementsContainer'
+      - $ref: '#/components/schemas/ComparisonsContainer'
+    BusinessAudienceStats:
+      allOf:
+      - properties:
+          audience_categories:
+            $ref: '#/components/schemas/BusinessAudienceStats_allOf_audience_categories'
+        type: object
+      - $ref: '#/components/schemas/MeasurementsContainer'
+      description: Measurements (overall and per audience) for traffic resolved as
+        business users
+      example:
+        measurements:
+        - event: impression
+          count: 7280791
+          fraction_of_total: 0.54
+        - event: click
+          count: 23522
+          fraction_of_total: 0.5
+          conversion_rate: 0.00323069292
+        audience_categories:
+          size:
+            name: Business size
+            audiences:
+            - name: Small Business
+              code: ba1
+              measurements:
+              - event: impression
+                count: 2877715
+                fraction_of_total: 0.17
+              - event: click
+                count: 3917
+                fraction_of_total: 0.17
+                conversion_rate: 0.00136114938
+            - name: Medium Business
+              code: ba2
+              measurements:
+              - event: impression
+                count: 2962674
+                fraction_of_total: 0.17
+              - event: click
+                count: 4016
+                fraction_of_total: 0.17
+                conversion_rate: 0.00135553219
+            - name: Large Business
+              code: ba3
+              measurements:
+              - event: impression
+                count: 11181673
+                fraction_of_total: 0.66
+              - event: click
+                count: 15589
+                fraction_of_total: 0.66
+                conversion_rate: 0.00139415631
+    PrivateAudienceStats:
+      allOf:
+      - properties:
+          audience_categories:
+            $ref: '#/components/schemas/PrivateAudienceStats_allOf_audience_categories'
+        type: object
+      - $ref: '#/components/schemas/MeasurementsContainer'
+      description: Measurements (overall and per audience) for traffic resolved as
+        private users
+      example:
+        measurements:
+        - event: impression
+          count: 7327205
+          fraction_of_total: 0.23
+        - event: click
+          count: 11024
+          fraction_of_total: 0.23
+          conversion_rate: 0.00150453
+        audience_categories:
+          home_type:
+            name: Home type
+            audiences:
+            - name: Apartment
+              code: a1
+              measurements:
+              - event: impression
+                count: 2401671
+                fraction_of_total: 0.33
+              - event: click
+                count: 3449
+                fraction_of_total: 0.31
+                conversion_rate: 0.001436
+              comparisons:
+              - name: Average Internet Population
+                code: aip
+                compared_to: impression
+                index: 90
+                fraction_of_total: 0.41
+            - name: House / Semi Detached
+              code: a2
+              measurements:
+              - event: impression
+                count: 4925534
+                fraction_of_total: 0.67
+              - event: click
+                count: 7575
+                fraction_of_total: 0.69
+                conversion_rate: 0.0015379
+              comparisons:
+              - name: Average Internet Population
+                code: aip
+                compared_to: impression
+                index: 104
+                fraction_of_total: 0.59
+          savings: {}
+          lifecycle: {}
+          cars: {}
+          children: {}
+          education: {}
+          neighbourhood_type: {}
+          income: {}
+          home_ownership: {}
+          building_age: {}
+          living_space: {}
+          tech_level: {}
+    CampaignAudienceStats:
+      properties:
+        not_resolved:
+          $ref: '#/components/schemas/MeasurementsContainer'
+        business:
+          $ref: '#/components/schemas/BusinessAudienceStats'
+        private:
+          $ref: '#/components/schemas/PrivateAudienceStats'
+      type: object
+    CampaignAudienceStatsCategory:
+      properties:
+        code:
+          type: string
+          example: null
+        name:
+          type: string
+      type: object
+    CampaignCountryStats:
+      example:
+        predominant_country: DK
+        countries:
+        - code: DK
+          measurements:
+          - event: impression
+            count: 201732
+            fraction_of_total: 0.84
+          - event: click
+            count: 2017
+            conversion_rate: 0.009998
+        - code: SE
+          measurements:
+          - event: impression
+            count: 21614
+            fraction_of_total: 0.9
+        - code: "NO"
+          measurements:
+          - event: impression
+            count: 9606
+            fraction_of_total: 0.4
+        - code: DE
+          measurements:
+          - event: impression
+            count: 4803
+            fraction_of_total: 0.2
+        - code: GB
+          measurements:
+          - event: impression
+            count: 2402
+            fraction_of_total: 0.1
+        resolved:
+          measurements:
+          - event: impression
+            count: 240157
+            fraction_of_total: 0.68
+          - event: click
+            count: 4102
+            fraction_of_total: 0.63
+            conversion_rate: 0.01708049317
+        not_resolved:
+          measurements:
+          - event: impression
+            count: 112192
+            fraction_of_total: 0.32
+          - event: click
+            count: 2402
+            fraction_of_total: 0.37
+            conversion_rate: 0.02140972618
+      properties:
+        predominant_country:
+          description: The country code of the predominant country of the campaign
+          type: string
+        countries:
+          description: A listing of each countries observed and the relevant measurements
+            for each
+          items:
+            $ref: '#/components/schemas/CountryStats'
+          type: array
+        resolved:
+          $ref: '#/components/schemas/MeasurementsContainer'
+        not_resolved:
+          $ref: '#/components/schemas/MeasurementsContainer'
+      type: object
+    CountryStats:
+      allOf:
+      - properties:
+          code:
+            description: Country code of the country
+            example: DK
+            type: string
+        type: object
+      - $ref: '#/components/schemas/MeasurementsContainer'
+    CampaignTimingStats:
+      properties:
+        hour_of_day:
+          $ref: '#/components/schemas/HourOfDayStats'
+        day_of_week:
+          $ref: '#/components/schemas/DayOfWeekStats'
+        day_of_month:
+          $ref: '#/components/schemas/DayOfMonthStats'
+      type: object
+    HourOfDayStats:
+      description: |
+        Contains statistics about the time of day that campaign activity has been measured.
+        The 24 hour time format is used to represent measurements for each hour.
+        The time zone used to record these measurements is the time zone of the measured
+        user, or UTC if the user's location cannot be resolved.
+      example:
+        "10":
+          measurements:
+          - event: impression
+            count: 19329
+            fraction_of_total: 0.28
+          - event: click
+            count: 1920
+            fraction_of_total: 0.29
+            conversion_rate: 0.09933260903
+        "08":
+          measurements:
+          - event: impression
+            count: 21614
+            fraction_of_total: 0.32
+          - event: click
+            count: 1823
+            fraction_of_total: 0.27
+            conversion_rate: 0.08434348107
+        "09":
+          measurements:
+          - event: impression
+            count: 27329
+            fraction_of_total: 0.4
+          - event: click
+            count: 2931
+            fraction_of_total: 0.44
+            conversion_rate: 0.10724871016
+      properties:
+        "10":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "11":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "12":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "13":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "14":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "15":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "16":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "17":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "18":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "19":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "20":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "21":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "22":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "23":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "00":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "01":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "02":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "03":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "04":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "05":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "06":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "07":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "08":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "09":
+          $ref: '#/components/schemas/MeasurementsContainer'
+      type: object
+    DayOfWeekStats:
+      description: |
+        Contains statistics about the week days that campaign activity has been measured.
+        The time zone used to record these measurements is the time zone of the measured
+        user, or UTC if the user's location cannot be resolved.
+      example:
+        Tuesday:
+          measurements:
+          - event: impression
+            count: 21614
+            fraction_of_total: 0.32
+          - event: click
+            count: 1823
+            fraction_of_total: 0.27
+            conversion_rate: 0.08434348107
+        Wednesday:
+          measurements:
+          - event: impression
+            count: 27329
+            fraction_of_total: 0.4
+          - event: click
+            count: 2931
+            fraction_of_total: 0.44
+            conversion_rate: 0.10724871016
+        Thursday:
+          measurements:
+          - event: impression
+            count: 19329
+            fraction_of_total: 0.28
+          - event: click
+            count: 1920
+            fraction_of_total: 0.29
+            conversion_rate: 0.09933260903
+      properties:
+        Monday:
+          $ref: '#/components/schemas/MeasurementsContainer'
+        Tuesday:
+          $ref: '#/components/schemas/MeasurementsContainer'
+        Wednesday:
+          $ref: '#/components/schemas/MeasurementsContainer'
+        Thursday:
+          $ref: '#/components/schemas/MeasurementsContainer'
+        Friday:
+          $ref: '#/components/schemas/MeasurementsContainer'
+        Saturday:
+          $ref: '#/components/schemas/MeasurementsContainer'
+        Sunday:
+          $ref: '#/components/schemas/MeasurementsContainer'
+      type: object
+    DayOfMonthStats:
+      description: |
+        Contains statistics about the day of the month that campaign activity has been measured.
+        The time zone used to record these measurements is the time zone of the measured
+        user, or UTC if the user's location cannot be resolved.
+      example:
+        "4":
+          measurements:
+          - event: impression
+            count: 21614
+            fraction_of_total: 0.32
+          - event: click
+            count: 1823
+            fraction_of_total: 0.27
+            conversion_rate: 0.08434348107
+        "5":
+          measurements:
+          - event: impression
+            count: 27329
+            fraction_of_total: 0.4
+          - event: click
+            count: 2931
+            fraction_of_total: 0.44
+            conversion_rate: 0.10724871016
+        "6":
+          measurements:
+          - event: impression
+            count: 19329
+            fraction_of_total: 0.28
+          - event: click
+            count: 1920
+            fraction_of_total: 0.29
+            conversion_rate: 0.09933260903
+      properties:
+        "0":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "1":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "2":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "3":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "4":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "5":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "6":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "7":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "8":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "9":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "10":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "11":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "12":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "13":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "14":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "15":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "16":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "17":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "18":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "19":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "20":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "21":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "22":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "23":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "24":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "25":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "26":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "27":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "28":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "29":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "30":
+          $ref: '#/components/schemas/MeasurementsContainer'
+        "31":
+          $ref: '#/components/schemas/MeasurementsContainer'
+      type: object
+    CampaignFrequencyStats:
+      example:
+        frequencies:
+        - frequency: 1
+          count: 4327843
+        - frequency: 2
+          count: 1337207
+        - frequency: 3
+          count: 38447
+        - frequency: 4
+          count: 4383
+        - frequency: 5
+          count: 1238
+        count_above_cap: 27
+      properties:
+        average_frequency:
+          description: |
+            The average frequency of impressions per user
+          type: number
+        frequencies:
+          description: |
+            A listing of each frequency observed and the relevant measurements for each
+          items:
+            $ref: '#/components/schemas/FrequencyStats'
+          type: array
+        count_above_cap:
+          description: |
+            The number of users that have generated impressions at a frequency value greater
+            than those represented in `frequencies`.
+          type: integer
+      type: object
+    FrequencyStats:
+      properties:
+        frequency:
+          description: |
+            A frequency of campaign impressions to users.
+            * The value 1 means that the campaign has been exposed just once.
+            * The value 2 means that the campaign has been exposed twice.
+            * And so on...
+          type: integer
+        count:
+          description: The number of users that have generated impressions at the
+            corresponding frequency
+          type: integer
+      type: object
     getAccountById_200_response:
       example:
         data: null
@@ -1423,6 +2541,132 @@ components:
         links:
           $ref: '#/components/schemas/ApiKeyLinks'
       type: object
+    listCampaigns_200_response:
+      example:
+        data:
+        - null
+        - null
+        meta:
+          page:
+            first_cursor: first_cursor
+            total: 238
+            last_cursor: last_cursor
+        links:
+          next: /path/to/next_page
+          first: /path/to/first_page
+      properties:
+        meta:
+          $ref: '#/components/schemas/ListPaginationMeta'
+        data:
+          items:
+            $ref: '#/components/schemas/CampaignItem'
+          type: array
+        links:
+          $ref: '#/components/schemas/ListPaginationLinks'
+      type: object
+    createCampaign_201_response:
+      example:
+        data: null
+        links:
+          stats_timing: /campaigns/2c9jKJ9D12kj0S4c/stats/timing
+          stats_frequencies: /campaigns/2c9jKJ9D12kj0S4c/stats/frequencies
+          stats_countries: /campaigns/2c9jKJ9D12kj0S4c/stats/countries
+          stats_audiences: /campaigns/2c9jKJ9D12kj0S4c/stats/audiences
+      properties:
+        data:
+          $ref: '#/components/schemas/CampaignFull'
+        links:
+          $ref: '#/components/schemas/CampaignLinks'
+      type: object
+    queryCampaignCountryStats_200_response:
+      example:
+        data:
+          predominant_country: DK
+          countries:
+          - code: DK
+            measurements:
+            - event: impression
+              count: 201732
+              fraction_of_total: 0.84
+            - event: click
+              count: 2017
+              conversion_rate: 0.009998
+          - code: SE
+            measurements:
+            - event: impression
+              count: 21614
+              fraction_of_total: 0.9
+          - code: "NO"
+            measurements:
+            - event: impression
+              count: 9606
+              fraction_of_total: 0.4
+          - code: DE
+            measurements:
+            - event: impression
+              count: 4803
+              fraction_of_total: 0.2
+          - code: GB
+            measurements:
+            - event: impression
+              count: 2402
+              fraction_of_total: 0.1
+          resolved:
+            measurements:
+            - event: impression
+              count: 240157
+              fraction_of_total: 0.68
+            - event: click
+              count: 4102
+              fraction_of_total: 0.63
+              conversion_rate: 0.01708049317
+          not_resolved:
+            measurements:
+            - event: impression
+              count: 112192
+              fraction_of_total: 0.32
+            - event: click
+              count: 2402
+              fraction_of_total: 0.37
+              conversion_rate: 0.02140972618
+      properties:
+        data:
+          $ref: '#/components/schemas/CampaignCountryStats'
+      type: object
+    BusinessAudienceStats_allOf_audience_categories:
+      properties:
+        size:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+      type: object
+      example: null
+    PrivateAudienceStats_allOf_audience_categories:
+      properties:
+        home_type:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        savings:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        lifecycle:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        cars:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        children:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        education:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        neighbourhood_type:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        income:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        home_ownership:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        building_age:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        living_space:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        tech_level:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+      type: object
+      example: null
   securitySchemes:
     bearerAuth:
       bearerFormat: JWT
@@ -1448,7 +2692,7 @@ x-tagGroups:
   tags:
   - auth
   - audiences
-  - analytics
+  - campaigns
 - name: Administration
   tags:
   - users

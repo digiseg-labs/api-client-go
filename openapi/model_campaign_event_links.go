@@ -132,10 +132,10 @@ func (o CampaignEventLinks) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *CampaignEventLinks) UnmarshalJSON(bytes []byte) (err error) {
+func (o *CampaignEventLinks) UnmarshalJSON(data []byte) (err error) {
 	varCampaignEventLinks := _CampaignEventLinks{}
 
-	err = json.Unmarshal(bytes, &varCampaignEventLinks)
+	err = json.Unmarshal(data, &varCampaignEventLinks)
 
 	if err != nil {
 		return err
@@ -145,7 +145,7 @@ func (o *CampaignEventLinks) UnmarshalJSON(bytes []byte) (err error) {
 
 	additionalProperties := make(map[string]interface{})
 
-	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "impression")
 		delete(additionalProperties, "click")
 		o.AdditionalProperties = additionalProperties

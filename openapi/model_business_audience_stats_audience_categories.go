@@ -17,60 +17,59 @@ import (
 	"fmt"
 )
 
-// checks if the IdentifyableObject1 type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &IdentifyableObject1{}
+// checks if the BusinessAudienceStatsAudienceCategories type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BusinessAudienceStatsAudienceCategories{}
 
-// IdentifyableObject1 struct for IdentifyableObject1
-type IdentifyableObject1 struct {
-	// Unique ID for the object
-	Id string `json:"id"`
+// BusinessAudienceStatsAudienceCategories struct for BusinessAudienceStatsAudienceCategories
+type BusinessAudienceStatsAudienceCategories struct {
+	Size AudienceCategoryStats `json:"size"`
 }
 
-type _IdentifyableObject1 IdentifyableObject1
+type _BusinessAudienceStatsAudienceCategories BusinessAudienceStatsAudienceCategories
 
-// NewIdentifyableObject1 instantiates a new IdentifyableObject1 object
+// NewBusinessAudienceStatsAudienceCategories instantiates a new BusinessAudienceStatsAudienceCategories object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewIdentifyableObject1(id string) *IdentifyableObject1 {
-	this := IdentifyableObject1{}
-	this.Id = id
+func NewBusinessAudienceStatsAudienceCategories(size AudienceCategoryStats) *BusinessAudienceStatsAudienceCategories {
+	this := BusinessAudienceStatsAudienceCategories{}
+	this.Size = size
 	return &this
 }
 
-// NewIdentifyableObject1WithDefaults instantiates a new IdentifyableObject1 object
+// NewBusinessAudienceStatsAudienceCategoriesWithDefaults instantiates a new BusinessAudienceStatsAudienceCategories object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewIdentifyableObject1WithDefaults() *IdentifyableObject1 {
-	this := IdentifyableObject1{}
+func NewBusinessAudienceStatsAudienceCategoriesWithDefaults() *BusinessAudienceStatsAudienceCategories {
+	this := BusinessAudienceStatsAudienceCategories{}
 	return &this
 }
 
-// GetId returns the Id field value
-func (o *IdentifyableObject1) GetId() string {
+// GetSize returns the Size field value
+func (o *BusinessAudienceStatsAudienceCategories) GetSize() AudienceCategoryStats {
 	if o == nil {
-		var ret string
+		var ret AudienceCategoryStats
 		return ret
 	}
 
-	return o.Id
+	return o.Size
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetSizeOk returns a tuple with the Size field value
 // and a boolean to check if the value has been set.
-func (o *IdentifyableObject1) GetIdOk() (*string, bool) {
+func (o *BusinessAudienceStatsAudienceCategories) GetSizeOk() (*AudienceCategoryStats, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Id, true
+	return &o.Size, true
 }
 
-// SetId sets field value
-func (o *IdentifyableObject1) SetId(v string) {
-	o.Id = v
+// SetSize sets field value
+func (o *BusinessAudienceStatsAudienceCategories) SetSize(v AudienceCategoryStats) {
+	o.Size = v
 }
 
-func (o IdentifyableObject1) MarshalJSON() ([]byte, error) {
+func (o BusinessAudienceStatsAudienceCategories) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -78,18 +77,18 @@ func (o IdentifyableObject1) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o IdentifyableObject1) ToMap() (map[string]interface{}, error) {
+func (o BusinessAudienceStatsAudienceCategories) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
+	toSerialize["size"] = o.Size
 	return toSerialize, nil
 }
 
-func (o *IdentifyableObject1) UnmarshalJSON(data []byte) (err error) {
+func (o *BusinessAudienceStatsAudienceCategories) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"id",
+		"size",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -106,53 +105,53 @@ func (o *IdentifyableObject1) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varIdentifyableObject1 := _IdentifyableObject1{}
+	varBusinessAudienceStatsAudienceCategories := _BusinessAudienceStatsAudienceCategories{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varIdentifyableObject1)
+	err = decoder.Decode(&varBusinessAudienceStatsAudienceCategories)
 
 	if err != nil {
 		return err
 	}
 
-	*o = IdentifyableObject1(varIdentifyableObject1)
+	*o = BusinessAudienceStatsAudienceCategories(varBusinessAudienceStatsAudienceCategories)
 
 	return err
 }
 
-type NullableIdentifyableObject1 struct {
-	value *IdentifyableObject1
+type NullableBusinessAudienceStatsAudienceCategories struct {
+	value *BusinessAudienceStatsAudienceCategories
 	isSet bool
 }
 
-func (v NullableIdentifyableObject1) Get() *IdentifyableObject1 {
+func (v NullableBusinessAudienceStatsAudienceCategories) Get() *BusinessAudienceStatsAudienceCategories {
 	return v.value
 }
 
-func (v *NullableIdentifyableObject1) Set(val *IdentifyableObject1) {
+func (v *NullableBusinessAudienceStatsAudienceCategories) Set(val *BusinessAudienceStatsAudienceCategories) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableIdentifyableObject1) IsSet() bool {
+func (v NullableBusinessAudienceStatsAudienceCategories) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableIdentifyableObject1) Unset() {
+func (v *NullableBusinessAudienceStatsAudienceCategories) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableIdentifyableObject1(val *IdentifyableObject1) *NullableIdentifyableObject1 {
-	return &NullableIdentifyableObject1{value: val, isSet: true}
+func NewNullableBusinessAudienceStatsAudienceCategories(val *BusinessAudienceStatsAudienceCategories) *NullableBusinessAudienceStatsAudienceCategories {
+	return &NullableBusinessAudienceStatsAudienceCategories{value: val, isSet: true}
 }
 
-func (v NullableIdentifyableObject1) MarshalJSON() ([]byte, error) {
+func (v NullableBusinessAudienceStatsAudienceCategories) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableIdentifyableObject1) UnmarshalJSON(src []byte) error {
+func (v *NullableBusinessAudienceStatsAudienceCategories) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

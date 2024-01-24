@@ -35,9 +35,8 @@ docs/AuthAPI.md
 docs/AuthTokenRequest.md
 docs/AuthTokenResponse.md
 docs/BusinessAudienceStats.md
-docs/BusinessAudienceStatsAllOfAudienceCategories.md
+docs/BusinessAudienceStatsAudienceCategories.md
 docs/CampaignAudienceStats.md
-docs/CampaignAudienceStatsCategory.md
 docs/CampaignAux.md
 docs/CampaignBase.md
 docs/CampaignCountryStats.md
@@ -81,8 +80,10 @@ docs/Measurement.md
 docs/MeasurementsContainer.md
 docs/PermissionScopes.md
 docs/PrivateAudienceStats.md
-docs/PrivateAudienceStatsAllOfAudienceCategories.md
+docs/PrivateAudienceStatsAudienceCategories.md
+docs/QueryCampaignAudienceStats200Response.md
 docs/QueryCampaignCountryStats200Response.md
+docs/QueryCampaignTimingStats200Response.md
 docs/ResolveAudiencesOfMultipleRequest.md
 docs/ResolveAudiencesOfMultipleRequestItem.md
 docs/ResolveAudiencesOfMultipleResponse.md
@@ -123,9 +124,8 @@ model_audience_stats.go
 model_auth_token_request.go
 model_auth_token_response.go
 model_business_audience_stats.go
-model_business_audience_stats_all_of_audience_categories.go
+model_business_audience_stats_audience_categories.go
 model_campaign_audience_stats.go
-model_campaign_audience_stats_category.go
 model_campaign_aux.go
 model_campaign_base.go
 model_campaign_country_stats.go
@@ -168,8 +168,10 @@ model_measurement.go
 model_measurements_container.go
 model_permission_scopes.go
 model_private_audience_stats.go
-model_private_audience_stats_all_of_audience_categories.go
+model_private_audience_stats_audience_categories.go
+model_query_campaign_audience_stats_200_response.go
 model_query_campaign_country_stats_200_response.go
+model_query_campaign_timing_stats_200_response.go
 model_resolve_audiences_of_multiple_request.go
 model_resolve_audiences_of_multiple_request_item.go
 model_resolve_audiences_of_multiple_response.go

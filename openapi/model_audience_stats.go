@@ -23,8 +23,6 @@ type AudienceStats struct {
 	// Measurements related to this object
 	Measurements []Measurement `json:"measurements,omitempty"`
 	Comparisons []Comparison `json:"comparisons,omitempty"`
-	// The name of the audience
-	Name *string `json:"name,omitempty"`
 	// The code of the audience
 	Code *string `json:"code,omitempty"`
 }
@@ -110,38 +108,6 @@ func (o *AudienceStats) SetComparisons(v []Comparison) {
 	o.Comparisons = v
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
-func (o *AudienceStats) GetName() string {
-	if o == nil || IsNil(o.Name) {
-		var ret string
-		return ret
-	}
-	return *o.Name
-}
-
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AudienceStats) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
-		return nil, false
-	}
-	return o.Name, true
-}
-
-// HasName returns a boolean if a field has been set.
-func (o *AudienceStats) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
-func (o *AudienceStats) SetName(v string) {
-	o.Name = &v
-}
-
 // GetCode returns the Code field value if set, zero value otherwise.
 func (o *AudienceStats) GetCode() string {
 	if o == nil || IsNil(o.Code) {
@@ -189,9 +155,6 @@ func (o AudienceStats) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Comparisons) {
 		toSerialize["comparisons"] = o.Comparisons
-	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
 	}
 	if !IsNil(o.Code) {
 		toSerialize["code"] = o.Code

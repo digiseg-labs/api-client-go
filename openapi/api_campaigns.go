@@ -418,11 +418,18 @@ func (a *CampaignsAPIService) GetCampaignByIdExecute(r CampaignsAPIGetCampaignBy
 type CampaignsAPIListCampaignsRequest struct {
 	ctx context.Context
 	ApiService *CampaignsAPIService
+	sort *string
 	filterLabel *string
 	filterNameContains *string
 	filterAccountId *string
 	pageSize *int32
 	pageAfter *string
+}
+
+// Defines the field to sort the result items by. Ascending order is applied by default, but the minus character can be used to indicate descending order instead. 
+func (r CampaignsAPIListCampaignsRequest) Sort(sort string) CampaignsAPIListCampaignsRequest {
+	r.sort = &sort
+	return r
 }
 
 // Optional parameter used to filter by campaign label
@@ -496,6 +503,12 @@ func (a *CampaignsAPIService) ListCampaignsExecute(r CampaignsAPIListCampaignsRe
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+	} else {
+		var defaultValue string = "created_at"
+		r.sort = &defaultValue
+	}
 	if r.filterLabel != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[label]", r.filterLabel, "")
 	}
@@ -517,6 +530,142 @@ func (a *CampaignsAPIService) ListCampaignsExecute(r CampaignsAPIListCampaignsRe
 	if r.pageAfter != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page[after]", r.pageAfter, "")
 	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type CampaignsAPIQueryCampaignAudienceStatsRequest struct {
+	ctx context.Context
+	ApiService *CampaignsAPIService
+	campaignId string
+}
+
+func (r CampaignsAPIQueryCampaignAudienceStatsRequest) Execute() (*QueryCampaignAudienceStats200Response, *http.Response, error) {
+	return r.ApiService.QueryCampaignAudienceStatsExecute(r)
+}
+
+/*
+QueryCampaignAudienceStats Audience statistics for campaign
+
+Query the audience statistics for a campaign, enabling the user
+to see the representation of matched household characteristics
+to impressions and clicks. These statistics can be compared to
+the Average Internet Population (globally or for a specific country),
+or to the audience stats of other campaigns.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param campaignId
+ @return CampaignsAPIQueryCampaignAudienceStatsRequest
+*/
+func (a *CampaignsAPIService) QueryCampaignAudienceStats(ctx context.Context, campaignId string) CampaignsAPIQueryCampaignAudienceStatsRequest {
+	return CampaignsAPIQueryCampaignAudienceStatsRequest{
+		ApiService: a,
+		ctx: ctx,
+		campaignId: campaignId,
+	}
+}
+
+// Execute executes the request
+//  @return QueryCampaignAudienceStats200Response
+func (a *CampaignsAPIService) QueryCampaignAudienceStatsExecute(r CampaignsAPIQueryCampaignAudienceStatsRequest) (*QueryCampaignAudienceStats200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *QueryCampaignAudienceStats200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CampaignsAPIService.QueryCampaignAudienceStats")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/campaigns/{campaign_id}/stats/audiences"
+	localVarPath = strings.Replace(localVarPath, "{"+"campaign_id"+"}", url.PathEscape(parameterValueToString(r.campaignId, "campaignId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -644,6 +793,140 @@ func (a *CampaignsAPIService) QueryCampaignCountryStatsExecute(r CampaignsAPIQue
 	}
 
 	localVarPath := localBasePath + "/campaigns/{campaign_id}/stats/countries"
+	localVarPath = strings.Replace(localVarPath, "{"+"campaign_id"+"}", url.PathEscape(parameterValueToString(r.campaignId, "campaignId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type CampaignsAPIQueryCampaignTimingStatsRequest struct {
+	ctx context.Context
+	ApiService *CampaignsAPIService
+	campaignId string
+}
+
+func (r CampaignsAPIQueryCampaignTimingStatsRequest) Execute() (*QueryCampaignTimingStats200Response, *http.Response, error) {
+	return r.ApiService.QueryCampaignTimingStatsExecute(r)
+}
+
+/*
+QueryCampaignTimingStats Timing statistics for campaign
+
+Query the timing statistics for a campaign, enabling the user
+to see campaign performance and delivery figures at different
+times of day, days of the week and days of the month.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param campaignId
+ @return CampaignsAPIQueryCampaignTimingStatsRequest
+*/
+func (a *CampaignsAPIService) QueryCampaignTimingStats(ctx context.Context, campaignId string) CampaignsAPIQueryCampaignTimingStatsRequest {
+	return CampaignsAPIQueryCampaignTimingStatsRequest{
+		ApiService: a,
+		ctx: ctx,
+		campaignId: campaignId,
+	}
+}
+
+// Execute executes the request
+//  @return QueryCampaignTimingStats200Response
+func (a *CampaignsAPIService) QueryCampaignTimingStatsExecute(r CampaignsAPIQueryCampaignTimingStatsRequest) (*QueryCampaignTimingStats200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *QueryCampaignTimingStats200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CampaignsAPIService.QueryCampaignTimingStats")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/campaigns/{campaign_id}/stats/timing"
 	localVarPath = strings.Replace(localVarPath, "{"+"campaign_id"+"}", url.PathEscape(parameterValueToString(r.campaignId, "campaignId")), -1)
 
 	localVarHeaderParams := make(map[string]string)

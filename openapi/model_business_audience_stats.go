@@ -22,7 +22,7 @@ var _ MappedNullable = &BusinessAudienceStats{}
 type BusinessAudienceStats struct {
 	// Measurements related to this object
 	Measurements []Measurement `json:"measurements,omitempty"`
-	AudienceCategories *BusinessAudienceStatsAllOfAudienceCategories `json:"audience_categories,omitempty"`
+	AudienceCategories *BusinessAudienceStatsAudienceCategories `json:"audience_categories,omitempty"`
 }
 
 // NewBusinessAudienceStats instantiates a new BusinessAudienceStats object
@@ -75,9 +75,9 @@ func (o *BusinessAudienceStats) SetMeasurements(v []Measurement) {
 }
 
 // GetAudienceCategories returns the AudienceCategories field value if set, zero value otherwise.
-func (o *BusinessAudienceStats) GetAudienceCategories() BusinessAudienceStatsAllOfAudienceCategories {
+func (o *BusinessAudienceStats) GetAudienceCategories() BusinessAudienceStatsAudienceCategories {
 	if o == nil || IsNil(o.AudienceCategories) {
-		var ret BusinessAudienceStatsAllOfAudienceCategories
+		var ret BusinessAudienceStatsAudienceCategories
 		return ret
 	}
 	return *o.AudienceCategories
@@ -85,7 +85,7 @@ func (o *BusinessAudienceStats) GetAudienceCategories() BusinessAudienceStatsAll
 
 // GetAudienceCategoriesOk returns a tuple with the AudienceCategories field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BusinessAudienceStats) GetAudienceCategoriesOk() (*BusinessAudienceStatsAllOfAudienceCategories, bool) {
+func (o *BusinessAudienceStats) GetAudienceCategoriesOk() (*BusinessAudienceStatsAudienceCategories, bool) {
 	if o == nil || IsNil(o.AudienceCategories) {
 		return nil, false
 	}
@@ -101,8 +101,8 @@ func (o *BusinessAudienceStats) HasAudienceCategories() bool {
 	return false
 }
 
-// SetAudienceCategories gets a reference to the given BusinessAudienceStatsAllOfAudienceCategories and assigns it to the AudienceCategories field.
-func (o *BusinessAudienceStats) SetAudienceCategories(v BusinessAudienceStatsAllOfAudienceCategories) {
+// SetAudienceCategories gets a reference to the given BusinessAudienceStatsAudienceCategories and assigns it to the AudienceCategories field.
+func (o *BusinessAudienceStats) SetAudienceCategories(v BusinessAudienceStatsAudienceCategories) {
 	o.AudienceCategories = &v
 }
 

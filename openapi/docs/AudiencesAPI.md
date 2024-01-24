@@ -22,24 +22,24 @@ Get audiences of the API client
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    type_ := "jsonp" // string | Optional parameter to set to `jsonp` if a JSONP response format is needed. (optional)
+	type_ := "jsonp" // string | Optional parameter to set to `jsonp` if a JSONP response format is needed. (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AudiencesAPI.ResolveAudiencesOfClient(context.Background()).Type_(type_).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `AudiencesAPI.ResolveAudiencesOfClient``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ResolveAudiencesOfClient`: AudienceResponse
-    fmt.Fprintf(os.Stdout, "Response from `AudiencesAPI.ResolveAudiencesOfClient`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AudiencesAPI.ResolveAudiencesOfClient(context.Background()).Type_(type_).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AudiencesAPI.ResolveAudiencesOfClient``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ResolveAudiencesOfClient`: AudienceResponse
+	fmt.Fprintf(os.Stdout, "Response from `AudiencesAPI.ResolveAudiencesOfClient`: %v\n", resp)
 }
 ```
 
@@ -86,24 +86,24 @@ Get audiences for multiple IP addresses
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    resolveAudiencesOfMultipleRequest := *openapiclient.NewResolveAudiencesOfMultipleRequest([]openapiclient.ResolveAudiencesOfMultipleRequestItem{*openapiclient.NewResolveAudiencesOfMultipleRequestItem("1.1.1.1")}) // ResolveAudiencesOfMultipleRequest | 
+	resolveAudiencesOfMultipleRequest := *openapiclient.NewResolveAudiencesOfMultipleRequest([]openapiclient.ResolveAudiencesOfMultipleRequestItem{*openapiclient.NewResolveAudiencesOfMultipleRequestItem("1.1.1.1")}) // ResolveAudiencesOfMultipleRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AudiencesAPI.ResolveAudiencesOfMultiple(context.Background()).ResolveAudiencesOfMultipleRequest(resolveAudiencesOfMultipleRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `AudiencesAPI.ResolveAudiencesOfMultiple``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ResolveAudiencesOfMultiple`: ResolveAudiencesOfMultipleResponse
-    fmt.Fprintf(os.Stdout, "Response from `AudiencesAPI.ResolveAudiencesOfMultiple`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AudiencesAPI.ResolveAudiencesOfMultiple(context.Background()).ResolveAudiencesOfMultipleRequest(resolveAudiencesOfMultipleRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AudiencesAPI.ResolveAudiencesOfMultiple``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ResolveAudiencesOfMultiple`: ResolveAudiencesOfMultipleResponse
+	fmt.Fprintf(os.Stdout, "Response from `AudiencesAPI.ResolveAudiencesOfMultiple`: %v\n", resp)
 }
 ```
 
@@ -150,24 +150,24 @@ Get audiences for a given IP address
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    userIp := "1.1.1.1" // string | The IP address to look up.
+	userIp := "1.1.1.1" // string | The IP address to look up.
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AudiencesAPI.ResolveAudiencesOfSingle(context.Background(), userIp).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `AudiencesAPI.ResolveAudiencesOfSingle``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ResolveAudiencesOfSingle`: AudienceResponse
-    fmt.Fprintf(os.Stdout, "Response from `AudiencesAPI.ResolveAudiencesOfSingle`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AudiencesAPI.ResolveAudiencesOfSingle(context.Background(), userIp).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AudiencesAPI.ResolveAudiencesOfSingle``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ResolveAudiencesOfSingle`: AudienceResponse
+	fmt.Fprintf(os.Stdout, "Response from `AudiencesAPI.ResolveAudiencesOfSingle`: %v\n", resp)
 }
 ```
 

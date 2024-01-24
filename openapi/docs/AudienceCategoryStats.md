@@ -4,14 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | Pointer to **string** |  | [optional] 
-**Audiences** | Pointer to [**[]AudienceStats**](AudienceStats.md) |  | [optional] 
+**Audiences** | [**[]AudienceStats**](AudienceStats.md) |  | 
 
 ## Methods
 
 ### NewAudienceCategoryStats
 
-`func NewAudienceCategoryStats() *AudienceCategoryStats`
+`func NewAudienceCategoryStats(audiences []AudienceStats, ) *AudienceCategoryStats`
 
 NewAudienceCategoryStats instantiates a new AudienceCategoryStats object
 This constructor will assign default values to properties that have it defined,
@@ -25,31 +24,6 @@ will change when the set of required properties is changed
 NewAudienceCategoryStatsWithDefaults instantiates a new AudienceCategoryStats object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetName
-
-`func (o *AudienceCategoryStats) GetName() string`
-
-GetName returns the Name field if non-nil, zero value otherwise.
-
-### GetNameOk
-
-`func (o *AudienceCategoryStats) GetNameOk() (*string, bool)`
-
-GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetName
-
-`func (o *AudienceCategoryStats) SetName(v string)`
-
-SetName sets Name field to given value.
-
-### HasName
-
-`func (o *AudienceCategoryStats) HasName() bool`
-
-HasName returns a boolean if a field has been set.
 
 ### GetAudiences
 
@@ -70,11 +44,6 @@ and a boolean to check if the value has been set.
 
 SetAudiences sets Audiences field to given value.
 
-### HasAudiences
-
-`func (o *AudienceCategoryStats) HasAudiences() bool`
-
-HasAudiences returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

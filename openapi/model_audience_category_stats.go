@@ -13,6 +13,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AudienceCategoryStats type satisfies the MappedNullable interface at compile time
@@ -20,16 +22,18 @@ var _ MappedNullable = &AudienceCategoryStats{}
 
 // AudienceCategoryStats struct for AudienceCategoryStats
 type AudienceCategoryStats struct {
-	Name *string `json:"name,omitempty"`
-	Audiences []AudienceStats `json:"audiences,omitempty"`
+	Audiences []AudienceStats `json:"audiences"`
 }
+
+type _AudienceCategoryStats AudienceCategoryStats
 
 // NewAudienceCategoryStats instantiates a new AudienceCategoryStats object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAudienceCategoryStats() *AudienceCategoryStats {
+func NewAudienceCategoryStats(audiences []AudienceStats) *AudienceCategoryStats {
 	this := AudienceCategoryStats{}
+	this.Audiences = audiences
 	return &this
 }
 
@@ -41,66 +45,26 @@ func NewAudienceCategoryStatsWithDefaults() *AudienceCategoryStats {
 	return &this
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
-func (o *AudienceCategoryStats) GetName() string {
-	if o == nil || IsNil(o.Name) {
-		var ret string
-		return ret
-	}
-	return *o.Name
-}
-
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AudienceCategoryStats) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
-		return nil, false
-	}
-	return o.Name, true
-}
-
-// HasName returns a boolean if a field has been set.
-func (o *AudienceCategoryStats) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
-func (o *AudienceCategoryStats) SetName(v string) {
-	o.Name = &v
-}
-
-// GetAudiences returns the Audiences field value if set, zero value otherwise.
+// GetAudiences returns the Audiences field value
 func (o *AudienceCategoryStats) GetAudiences() []AudienceStats {
-	if o == nil || IsNil(o.Audiences) {
+	if o == nil {
 		var ret []AudienceStats
 		return ret
 	}
+
 	return o.Audiences
 }
 
-// GetAudiencesOk returns a tuple with the Audiences field value if set, nil otherwise
+// GetAudiencesOk returns a tuple with the Audiences field value
 // and a boolean to check if the value has been set.
 func (o *AudienceCategoryStats) GetAudiencesOk() ([]AudienceStats, bool) {
-	if o == nil || IsNil(o.Audiences) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Audiences, true
 }
 
-// HasAudiences returns a boolean if a field has been set.
-func (o *AudienceCategoryStats) HasAudiences() bool {
-	if o != nil && !IsNil(o.Audiences) {
-		return true
-	}
-
-	return false
-}
-
-// SetAudiences gets a reference to the given []AudienceStats and assigns it to the Audiences field.
+// SetAudiences sets field value
 func (o *AudienceCategoryStats) SetAudiences(v []AudienceStats) {
 	o.Audiences = v
 }
@@ -115,13 +79,45 @@ func (o AudienceCategoryStats) MarshalJSON() ([]byte, error) {
 
 func (o AudienceCategoryStats) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
-	if !IsNil(o.Audiences) {
-		toSerialize["audiences"] = o.Audiences
-	}
+	toSerialize["audiences"] = o.Audiences
 	return toSerialize, nil
+}
+
+func (o *AudienceCategoryStats) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"audiences",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAudienceCategoryStats := _AudienceCategoryStats{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAudienceCategoryStats)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AudienceCategoryStats(varAudienceCategoryStats)
+
+	return err
 }
 
 type NullableAudienceCategoryStats struct {

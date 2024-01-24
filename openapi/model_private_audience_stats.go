@@ -13,6 +13,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the PrivateAudienceStats type satisfies the MappedNullable interface at compile time
@@ -22,15 +24,18 @@ var _ MappedNullable = &PrivateAudienceStats{}
 type PrivateAudienceStats struct {
 	// Measurements related to this object
 	Measurements []Measurement `json:"measurements,omitempty"`
-	AudienceCategories *PrivateAudienceStatsAllOfAudienceCategories `json:"audience_categories,omitempty"`
+	AudienceCategories PrivateAudienceStatsAudienceCategories `json:"audience_categories"`
 }
+
+type _PrivateAudienceStats PrivateAudienceStats
 
 // NewPrivateAudienceStats instantiates a new PrivateAudienceStats object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPrivateAudienceStats() *PrivateAudienceStats {
+func NewPrivateAudienceStats(audienceCategories PrivateAudienceStatsAudienceCategories) *PrivateAudienceStats {
 	this := PrivateAudienceStats{}
+	this.AudienceCategories = audienceCategories
 	return &this
 }
 
@@ -74,36 +79,28 @@ func (o *PrivateAudienceStats) SetMeasurements(v []Measurement) {
 	o.Measurements = v
 }
 
-// GetAudienceCategories returns the AudienceCategories field value if set, zero value otherwise.
-func (o *PrivateAudienceStats) GetAudienceCategories() PrivateAudienceStatsAllOfAudienceCategories {
-	if o == nil || IsNil(o.AudienceCategories) {
-		var ret PrivateAudienceStatsAllOfAudienceCategories
+// GetAudienceCategories returns the AudienceCategories field value
+func (o *PrivateAudienceStats) GetAudienceCategories() PrivateAudienceStatsAudienceCategories {
+	if o == nil {
+		var ret PrivateAudienceStatsAudienceCategories
 		return ret
 	}
-	return *o.AudienceCategories
+
+	return o.AudienceCategories
 }
 
-// GetAudienceCategoriesOk returns a tuple with the AudienceCategories field value if set, nil otherwise
+// GetAudienceCategoriesOk returns a tuple with the AudienceCategories field value
 // and a boolean to check if the value has been set.
-func (o *PrivateAudienceStats) GetAudienceCategoriesOk() (*PrivateAudienceStatsAllOfAudienceCategories, bool) {
-	if o == nil || IsNil(o.AudienceCategories) {
+func (o *PrivateAudienceStats) GetAudienceCategoriesOk() (*PrivateAudienceStatsAudienceCategories, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.AudienceCategories, true
+	return &o.AudienceCategories, true
 }
 
-// HasAudienceCategories returns a boolean if a field has been set.
-func (o *PrivateAudienceStats) HasAudienceCategories() bool {
-	if o != nil && !IsNil(o.AudienceCategories) {
-		return true
-	}
-
-	return false
-}
-
-// SetAudienceCategories gets a reference to the given PrivateAudienceStatsAllOfAudienceCategories and assigns it to the AudienceCategories field.
-func (o *PrivateAudienceStats) SetAudienceCategories(v PrivateAudienceStatsAllOfAudienceCategories) {
-	o.AudienceCategories = &v
+// SetAudienceCategories sets field value
+func (o *PrivateAudienceStats) SetAudienceCategories(v PrivateAudienceStatsAudienceCategories) {
+	o.AudienceCategories = v
 }
 
 func (o PrivateAudienceStats) MarshalJSON() ([]byte, error) {
@@ -119,10 +116,45 @@ func (o PrivateAudienceStats) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Measurements) {
 		toSerialize["measurements"] = o.Measurements
 	}
-	if !IsNil(o.AudienceCategories) {
-		toSerialize["audience_categories"] = o.AudienceCategories
-	}
+	toSerialize["audience_categories"] = o.AudienceCategories
 	return toSerialize, nil
+}
+
+func (o *PrivateAudienceStats) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"audience_categories",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varPrivateAudienceStats := _PrivateAudienceStats{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varPrivateAudienceStats)
+
+	if err != nil {
+		return err
+	}
+
+	*o = PrivateAudienceStats(varPrivateAudienceStats)
+
+	return err
 }
 
 type NullablePrivateAudienceStats struct {

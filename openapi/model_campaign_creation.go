@@ -14,6 +14,7 @@ package openapi
 import (
 	"encoding/json"
 	"time"
+	"bytes"
 	"fmt"
 )
 
@@ -302,8 +303,8 @@ func (o CampaignCreation) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *CampaignCreation) UnmarshalJSON(bytes []byte) (err error) {
-    // This validates that all required properties are included in the JSON object
+func (o *CampaignCreation) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
@@ -312,7 +313,7 @@ func (o *CampaignCreation) UnmarshalJSON(bytes []byte) (err error) {
 
 	allProperties := make(map[string]interface{})
 
-	err = json.Unmarshal(bytes, &allProperties)
+	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
 		return err;
@@ -326,7 +327,9 @@ func (o *CampaignCreation) UnmarshalJSON(bytes []byte) (err error) {
 
 	varCampaignCreation := _CampaignCreation{}
 
-	err = json.Unmarshal(bytes, &varCampaignCreation)
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCampaignCreation)
 
 	if err != nil {
 		return err

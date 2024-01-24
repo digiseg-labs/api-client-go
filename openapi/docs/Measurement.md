@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Event** | Pointer to **string** | The event that triggered the measurement, typically &#x60;impression&#x60; or &#x60;click&#x60; | [optional] 
+**Event** | **string** | The event that triggered the measurement, typically &#x60;impression&#x60; or &#x60;click&#x60; | 
 **Count** | Pointer to **int32** | The real value of the measurement, typically a counter value (integer) | [optional] 
 **FractionOfTotal** | Pointer to **float64** | The fraction of events that fall within this object compared to the total of the category or segment (usually represented by the measurement&#39;s parent&#39;s parent). For example, if the measurement is \&quot;impression\&quot; on the &#x60;home_type&#x60; \&quot;Apartment\&quot; object, then the &#x60;fraction_of_total&#x60; represents the number of impressions on apartments compared to impressions from other &#x60;home_type&#x60; values.  | [optional] 
 **ConversionRate** | Pointer to **float64** | The rate of conversion to this measurement. Typically applies to measurements like \&quot;click\&quot; where it will represent the rate of impressions that turn into a click.  | [optional] 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewMeasurement
 
-`func NewMeasurement() *Measurement`
+`func NewMeasurement(event string, ) *Measurement`
 
 NewMeasurement instantiates a new Measurement object
 This constructor will assign default values to properties that have it defined,
@@ -47,11 +47,6 @@ and a boolean to check if the value has been set.
 
 SetEvent sets Event field to given value.
 
-### HasEvent
-
-`func (o *Measurement) HasEvent() bool`
-
-HasEvent returns a boolean if a field has been set.
 
 ### GetCount
 

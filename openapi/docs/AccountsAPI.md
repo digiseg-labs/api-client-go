@@ -22,25 +22,25 @@ Create user
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    accountId := "accountId_example" // string | 
-    userMutation := *openapiclient.NewUserMutation() // UserMutation | 
+	accountId := "accountId_example" // string | 
+	userMutation := *openapiclient.NewUserMutation() // UserMutation | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AccountsAPI.CreateUserInAccount(context.Background(), accountId).UserMutation(userMutation).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `AccountsAPI.CreateUserInAccount``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `CreateUserInAccount`: CreateUserInAccount201Response
-    fmt.Fprintf(os.Stdout, "Response from `AccountsAPI.CreateUserInAccount`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AccountsAPI.CreateUserInAccount(context.Background(), accountId).UserMutation(userMutation).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AccountsAPI.CreateUserInAccount``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateUserInAccount`: CreateUserInAccount201Response
+	fmt.Fprintf(os.Stdout, "Response from `AccountsAPI.CreateUserInAccount`: %v\n", resp)
 }
 ```
 
@@ -92,24 +92,24 @@ Get account
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    accountId := "accountId_example" // string | 
+	accountId := "accountId_example" // string | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AccountsAPI.GetAccountById(context.Background(), accountId).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `AccountsAPI.GetAccountById``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetAccountById`: GetAccountById200Response
-    fmt.Fprintf(os.Stdout, "Response from `AccountsAPI.GetAccountById`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AccountsAPI.GetAccountById(context.Background(), accountId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AccountsAPI.GetAccountById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAccountById`: GetAccountById200Response
+	fmt.Fprintf(os.Stdout, "Response from `AccountsAPI.GetAccountById`: %v\n", resp)
 }
 ```
 
@@ -160,26 +160,26 @@ List users for account
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    accountId := "accountId_example" // string | 
-    pageSize := int32(56) // int32 | The desired page size (optional) (default to 100)
-    pageAfter := "pageAfter_example" // string | Optional pagination parameter, indicating the previous cursor value to paginate beyond. The value to provide here is opaque, but can be found in previous requests in the `meta.page.last_cursor` field.  (optional)
+	accountId := "accountId_example" // string | 
+	pageSize := int32(56) // int32 | The desired page size (optional) (default to 100)
+	pageAfter := "pageAfter_example" // string | Optional pagination parameter, indicating the previous cursor value to paginate beyond. The value to provide here is opaque, but can be found in previous requests in the `meta.page.last_cursor` field.  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AccountsAPI.GetUsersByAccountId(context.Background(), accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `AccountsAPI.GetUsersByAccountId``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetUsersByAccountId`: GetUsersByAccountId200Response
-    fmt.Fprintf(os.Stdout, "Response from `AccountsAPI.GetUsersByAccountId`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AccountsAPI.GetUsersByAccountId(context.Background(), accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AccountsAPI.GetUsersByAccountId``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetUsersByAccountId`: GetUsersByAccountId200Response
+	fmt.Fprintf(os.Stdout, "Response from `AccountsAPI.GetUsersByAccountId`: %v\n", resp)
 }
 ```
 

@@ -24,24 +24,24 @@ Authenticate and create access token
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    authTokenRequest := *openapiclient.NewAuthTokenRequest("Username_example") // AuthTokenRequest | 
+	authTokenRequest := *openapiclient.NewAuthTokenRequest("Username_example") // AuthTokenRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AuthAPI.CreateAccessToken(context.Background()).AuthTokenRequest(authTokenRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.CreateAccessToken``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `CreateAccessToken`: AuthTokenResponse
-    fmt.Fprintf(os.Stdout, "Response from `AuthAPI.CreateAccessToken`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AuthAPI.CreateAccessToken(context.Background()).AuthTokenRequest(authTokenRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.CreateAccessToken``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateAccessToken`: AuthTokenResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthAPI.CreateAccessToken`: %v\n", resp)
 }
 ```
 
@@ -88,25 +88,25 @@ Create API key for user
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    userId := "userId_example" // string | 
-    apiKeyMutation := *openapiclient.NewApiKeyMutation() // ApiKeyMutation | 
+	userId := "userId_example" // string | 
+	apiKeyMutation := *openapiclient.NewApiKeyMutation() // ApiKeyMutation | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AuthAPI.CreateApiKey(context.Background(), userId).ApiKeyMutation(apiKeyMutation).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.CreateApiKey``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `CreateApiKey`: CreateApiKey201Response
-    fmt.Fprintf(os.Stdout, "Response from `AuthAPI.CreateApiKey`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AuthAPI.CreateApiKey(context.Background(), userId).ApiKeyMutation(apiKeyMutation).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.CreateApiKey``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateApiKey`: CreateApiKey201Response
+	fmt.Fprintf(os.Stdout, "Response from `AuthAPI.CreateApiKey`: %v\n", resp)
 }
 ```
 
@@ -158,23 +158,23 @@ Delete API key
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    userId := "userId_example" // string | 
-    keyId := "keyId_example" // string | 
+	userId := "userId_example" // string | 
+	keyId := "keyId_example" // string | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.AuthAPI.DeleteApiKeyById(context.Background(), userId, keyId).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.DeleteApiKeyById``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.AuthAPI.DeleteApiKeyById(context.Background(), userId, keyId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.DeleteApiKeyById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -227,25 +227,25 @@ Get API key
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    userId := "userId_example" // string | 
-    keyId := "keyId_example" // string | 
+	userId := "userId_example" // string | 
+	keyId := "keyId_example" // string | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AuthAPI.GetApiKeyById(context.Background(), userId, keyId).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.GetApiKeyById``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetApiKeyById`: GetApiKeyById200Response
-    fmt.Fprintf(os.Stdout, "Response from `AuthAPI.GetApiKeyById`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AuthAPI.GetApiKeyById(context.Background(), userId, keyId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.GetApiKeyById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetApiKeyById`: GetApiKeyById200Response
+	fmt.Fprintf(os.Stdout, "Response from `AuthAPI.GetApiKeyById`: %v\n", resp)
 }
 ```
 
@@ -298,24 +298,24 @@ List API keys for user
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    userId := "userId_example" // string | 
+	userId := "userId_example" // string | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AuthAPI.GetApiKeysByUserId(context.Background(), userId).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.GetApiKeysByUserId``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetApiKeysByUserId`: GetApiKeysByUserId200Response
-    fmt.Fprintf(os.Stdout, "Response from `AuthAPI.GetApiKeysByUserId`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AuthAPI.GetApiKeysByUserId(context.Background(), userId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.GetApiKeysByUserId``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetApiKeysByUserId`: GetApiKeysByUserId200Response
+	fmt.Fprintf(os.Stdout, "Response from `AuthAPI.GetApiKeysByUserId`: %v\n", resp)
 }
 ```
 

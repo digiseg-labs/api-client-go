@@ -615,6 +615,24 @@ paths:
         List campaigns that the user has access to
       operationId: listCampaigns
       parameters:
+      - description: |
+          Defines the field to sort the result items by.
+          Ascending order is applied by default, but the minus character
+          can be used to indicate descending order instead.
+        example: -created_at
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          default: created_at
+          enum:
+          - created_at
+          - -created_at
+          - name
+          - -name
+          type: string
+        style: form
       - description: Optional parameter used to filter by campaign label
         example: CTV
         explode: true
@@ -793,6 +811,42 @@ paths:
       summary: Update campaign
       tags:
       - campaigns
+  /campaigns/{campaign_id}/stats/audiences:
+    get:
+      description: |
+        Query the audience statistics for a campaign, enabling the user
+        to see the representation of matched household characteristics
+        to impressions and clicks. These statistics can be compared to
+        the Average Internet Population (globally or for a specific country),
+        or to the audience stats of other campaigns.
+      operationId: queryCampaignAudienceStats
+      parameters:
+      - explode: false
+        in: path
+        name: campaign_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/queryCampaignAudienceStats_200_response'
+          description: OK
+      summary: Audience statistics for campaign
+      tags:
+      - campaigns
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/campaigns/$CAMPAIGN_ID/stats/audiences
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/stats/audiences\"\
+          , {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
+          }).then(response => {\n  console.log(response);\n})"
   /campaigns/{campaign_id}/stats/countries:
     get:
       description: |
@@ -824,6 +878,40 @@ paths:
           https://api.digiseg.net/campaigns/$CAMPAIGN_ID/stats/countries
       - lang: JavaScript
         source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/stats/countries\"\
+          , {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
+          }).then(response => {\n  console.log(response);\n})"
+  /campaigns/{campaign_id}/stats/timing:
+    get:
+      description: |
+        Query the timing statistics for a campaign, enabling the user
+        to see campaign performance and delivery figures at different
+        times of day, days of the week and days of the month.
+      operationId: queryCampaignTimingStats
+      parameters:
+      - explode: false
+        in: path
+        name: campaign_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/queryCampaignTimingStats_200_response'
+          description: OK
+      summary: Timing statistics for campaign
+      tags:
+      - campaigns
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/campaigns/$CAMPAIGN_ID/stats/timing
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/stats/timing\"\
           , {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
           }).then(response => {\n  console.log(response);\n})"
 components:
@@ -954,10 +1042,7 @@ components:
       content:
         application/json:
           schema:
-            properties:
-              data:
-                $ref: '#/components/schemas/CampaignAudienceStats'
-            type: object
+            $ref: '#/components/schemas/queryCampaignAudienceStats_200_response'
       description: OK
     CampaignCountryStatsResponse:
       content:
@@ -969,10 +1054,7 @@ components:
       content:
         application/json:
           schema:
-            properties:
-              data:
-                $ref: '#/components/schemas/CampaignTimingStats'
-            type: object
+            $ref: '#/components/schemas/queryCampaignTimingStats_200_response'
       description: OK
     CampaignFrequencyStatsResponse:
       content:
@@ -1876,9 +1958,20 @@ components:
           minimum: 0
           type: number
       readOnly: true
+      required:
+      - event
       type: object
     MeasurementsContainer:
       description: An object containing measurements
+      example:
+        measurements:
+        - event: impression
+          count: 7280791
+          fraction_of_total: 0.54
+        - event: click
+          count: 23522
+          fraction_of_total: 0.5
+          conversion_rate: 0.00323
       properties:
         measurements:
           description: Measurements related to this object
@@ -1938,21 +2031,16 @@ components:
       type: object
     AudienceCategoryStats:
       properties:
-        name:
-          example: Home type
-          type: string
         audiences:
           items:
             $ref: '#/components/schemas/AudienceStats'
           type: array
+      required:
+      - audiences
       type: object
     AudienceStats:
       allOf:
       - properties:
-          name:
-            description: The name of the audience
-            example: Apartment
-            type: string
           code:
             description: The code of the audience
             example: a1
@@ -1964,7 +2052,7 @@ components:
       allOf:
       - properties:
           audience_categories:
-            $ref: '#/components/schemas/BusinessAudienceStats_allOf_audience_categories'
+            $ref: '#/components/schemas/BusinessAudienceStatsAudienceCategories'
         type: object
       - $ref: '#/components/schemas/MeasurementsContainer'
       description: Measurements (overall and per audience) for traffic resolved as
@@ -1980,10 +2068,8 @@ components:
           conversion_rate: 0.00323069292
         audience_categories:
           size:
-            name: Business size
             audiences:
-            - name: Small Business
-              code: ba1
+            - code: ba1
               measurements:
               - event: impression
                 count: 2877715
@@ -1992,8 +2078,7 @@ components:
                 count: 3917
                 fraction_of_total: 0.17
                 conversion_rate: 0.00136114938
-            - name: Medium Business
-              code: ba2
+            - code: ba2
               measurements:
               - event: impression
                 count: 2962674
@@ -2002,8 +2087,7 @@ components:
                 count: 4016
                 fraction_of_total: 0.17
                 conversion_rate: 0.00135553219
-            - name: Large Business
-              code: ba3
+            - code: ba3
               measurements:
               - event: impression
                 count: 11181673
@@ -2012,11 +2096,20 @@ components:
                 count: 15589
                 fraction_of_total: 0.66
                 conversion_rate: 0.00139415631
+    BusinessAudienceStatsAudienceCategories:
+      properties:
+        size:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+      required:
+      - size
+      type: object
     PrivateAudienceStats:
       allOf:
       - properties:
           audience_categories:
-            $ref: '#/components/schemas/PrivateAudienceStats_allOf_audience_categories'
+            $ref: '#/components/schemas/PrivateAudienceStatsAudienceCategories'
+        required:
+        - audience_categories
         type: object
       - $ref: '#/components/schemas/MeasurementsContainer'
       description: Measurements (overall and per audience) for traffic resolved as
@@ -2032,10 +2125,8 @@ components:
           conversion_rate: 0.00150453
         audience_categories:
           home_type:
-            name: Home type
             audiences:
-            - name: Apartment
-              code: a1
+            - code: a1
               measurements:
               - event: impression
                 count: 2401671
@@ -2050,8 +2141,7 @@ components:
                 compared_to: impression
                 index: 90
                 fraction_of_total: 0.41
-            - name: House / Semi Detached
-              code: a2
+            - code: a2
               measurements:
               - event: impression
                 count: 4925534
@@ -2077,7 +2167,149 @@ components:
           building_age: {}
           living_space: {}
           tech_level: {}
+    PrivateAudienceStatsAudienceCategories:
+      properties:
+        home_type:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        savings:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        lifecycle:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        cars:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        children:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        education:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        neighbourhood_type:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        income:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        home_ownership:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        building_age:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        living_space:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+        tech_level:
+          $ref: '#/components/schemas/AudienceCategoryStats'
+      required:
+      - building_age
+      - cars
+      - children
+      - education
+      - home_ownership
+      - home_type
+      - income
+      - lifecycle
+      - living_space
+      - neighbourhood_type
+      - savings
+      - tech_level
+      type: object
     CampaignAudienceStats:
+      example:
+        private:
+          measurements:
+          - event: impression
+            count: 7327205
+            fraction_of_total: 0.23
+          - event: click
+            count: 11024
+            fraction_of_total: 0.23
+            conversion_rate: 0.00150453
+          audience_categories:
+            home_type:
+              audiences:
+              - code: a1
+                measurements:
+                - event: impression
+                  count: 2401671
+                  fraction_of_total: 0.33
+                - event: click
+                  count: 3449
+                  fraction_of_total: 0.31
+                  conversion_rate: 0.001436
+                comparisons:
+                - name: Average Internet Population
+                  code: aip
+                  compared_to: impression
+                  index: 90
+                  fraction_of_total: 0.41
+              - code: a2
+                measurements:
+                - event: impression
+                  count: 4925534
+                  fraction_of_total: 0.67
+                - event: click
+                  count: 7575
+                  fraction_of_total: 0.69
+                  conversion_rate: 0.0015379
+                comparisons:
+                - name: Average Internet Population
+                  code: aip
+                  compared_to: impression
+                  index: 104
+                  fraction_of_total: 0.59
+            savings: {}
+            lifecycle: {}
+            cars: {}
+            children: {}
+            education: {}
+            neighbourhood_type: {}
+            income: {}
+            home_ownership: {}
+            building_age: {}
+            living_space: {}
+            tech_level: {}
+        business:
+          measurements:
+          - event: impression
+            count: 7280791
+            fraction_of_total: 0.54
+          - event: click
+            count: 23522
+            fraction_of_total: 0.5
+            conversion_rate: 0.00323069292
+          audience_categories:
+            size:
+              audiences:
+              - code: ba1
+                measurements:
+                - event: impression
+                  count: 2877715
+                  fraction_of_total: 0.17
+                - event: click
+                  count: 3917
+                  fraction_of_total: 0.17
+                  conversion_rate: 0.00136114938
+              - code: ba2
+                measurements:
+                - event: impression
+                  count: 2962674
+                  fraction_of_total: 0.17
+                - event: click
+                  count: 4016
+                  fraction_of_total: 0.17
+                  conversion_rate: 0.00135553219
+              - code: ba3
+                measurements:
+                - event: impression
+                  count: 11181673
+                  fraction_of_total: 0.66
+                - event: click
+                  count: 15589
+                  fraction_of_total: 0.66
+                  conversion_rate: 0.00139415631
+        not_resolved:
+          measurements:
+          - event: impression
+            count: 7280791
+            fraction_of_total: 0.54
+          - event: click
+            count: 23522
+            fraction_of_total: 0.5
+            conversion_rate: 0.00323
       properties:
         not_resolved:
           $ref: '#/components/schemas/MeasurementsContainer'
@@ -2085,14 +2317,6 @@ components:
           $ref: '#/components/schemas/BusinessAudienceStats'
         private:
           $ref: '#/components/schemas/PrivateAudienceStats'
-      type: object
-    CampaignAudienceStatsCategory:
-      properties:
-        code:
-          type: string
-          example: null
-        name:
-          type: string
       type: object
     CampaignCountryStats:
       example:
@@ -2169,6 +2393,91 @@ components:
         type: object
       - $ref: '#/components/schemas/MeasurementsContainer'
     CampaignTimingStats:
+      example:
+        day_of_month:
+          "4":
+            measurements:
+            - event: impression
+              count: 21614
+              fraction_of_total: 0.32
+            - event: click
+              count: 1823
+              fraction_of_total: 0.27
+              conversion_rate: 0.08434348107
+          "5":
+            measurements:
+            - event: impression
+              count: 27329
+              fraction_of_total: 0.4
+            - event: click
+              count: 2931
+              fraction_of_total: 0.44
+              conversion_rate: 0.10724871016
+          "6":
+            measurements:
+            - event: impression
+              count: 19329
+              fraction_of_total: 0.28
+            - event: click
+              count: 1920
+              fraction_of_total: 0.29
+              conversion_rate: 0.09933260903
+        hour_of_day:
+          "10":
+            measurements:
+            - event: impression
+              count: 19329
+              fraction_of_total: 0.28
+            - event: click
+              count: 1920
+              fraction_of_total: 0.29
+              conversion_rate: 0.09933260903
+          "08":
+            measurements:
+            - event: impression
+              count: 21614
+              fraction_of_total: 0.32
+            - event: click
+              count: 1823
+              fraction_of_total: 0.27
+              conversion_rate: 0.08434348107
+          "09":
+            measurements:
+            - event: impression
+              count: 27329
+              fraction_of_total: 0.4
+            - event: click
+              count: 2931
+              fraction_of_total: 0.44
+              conversion_rate: 0.10724871016
+        day_of_week:
+          Tuesday:
+            measurements:
+            - event: impression
+              count: 21614
+              fraction_of_total: 0.32
+            - event: click
+              count: 1823
+              fraction_of_total: 0.27
+              conversion_rate: 0.08434348107
+          Wednesday:
+            measurements:
+            - event: impression
+              count: 27329
+              fraction_of_total: 0.4
+            - event: click
+              count: 2931
+              fraction_of_total: 0.44
+              conversion_rate: 0.10724871016
+          Thursday:
+            measurements:
+            - event: impression
+              count: 19329
+              fraction_of_total: 0.28
+            - event: click
+              count: 1920
+              fraction_of_total: 0.29
+              conversion_rate: 0.09933260903
       properties:
         hour_of_day:
           $ref: '#/components/schemas/HourOfDayStats'
@@ -2578,6 +2887,114 @@ components:
         links:
           $ref: '#/components/schemas/CampaignLinks'
       type: object
+    queryCampaignAudienceStats_200_response:
+      example:
+        data:
+          private:
+            measurements:
+            - event: impression
+              count: 7327205
+              fraction_of_total: 0.23
+            - event: click
+              count: 11024
+              fraction_of_total: 0.23
+              conversion_rate: 0.00150453
+            audience_categories:
+              home_type:
+                audiences:
+                - code: a1
+                  measurements:
+                  - event: impression
+                    count: 2401671
+                    fraction_of_total: 0.33
+                  - event: click
+                    count: 3449
+                    fraction_of_total: 0.31
+                    conversion_rate: 0.001436
+                  comparisons:
+                  - name: Average Internet Population
+                    code: aip
+                    compared_to: impression
+                    index: 90
+                    fraction_of_total: 0.41
+                - code: a2
+                  measurements:
+                  - event: impression
+                    count: 4925534
+                    fraction_of_total: 0.67
+                  - event: click
+                    count: 7575
+                    fraction_of_total: 0.69
+                    conversion_rate: 0.0015379
+                  comparisons:
+                  - name: Average Internet Population
+                    code: aip
+                    compared_to: impression
+                    index: 104
+                    fraction_of_total: 0.59
+              savings: {}
+              lifecycle: {}
+              cars: {}
+              children: {}
+              education: {}
+              neighbourhood_type: {}
+              income: {}
+              home_ownership: {}
+              building_age: {}
+              living_space: {}
+              tech_level: {}
+          business:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323069292
+            audience_categories:
+              size:
+                audiences:
+                - code: ba1
+                  measurements:
+                  - event: impression
+                    count: 2877715
+                    fraction_of_total: 0.17
+                  - event: click
+                    count: 3917
+                    fraction_of_total: 0.17
+                    conversion_rate: 0.00136114938
+                - code: ba2
+                  measurements:
+                  - event: impression
+                    count: 2962674
+                    fraction_of_total: 0.17
+                  - event: click
+                    count: 4016
+                    fraction_of_total: 0.17
+                    conversion_rate: 0.00135553219
+                - code: ba3
+                  measurements:
+                  - event: impression
+                    count: 11181673
+                    fraction_of_total: 0.66
+                  - event: click
+                    count: 15589
+                    fraction_of_total: 0.66
+                    conversion_rate: 0.00139415631
+          not_resolved:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323
+      properties:
+        data:
+          $ref: '#/components/schemas/CampaignAudienceStats'
+      type: object
     queryCampaignCountryStats_200_response:
       example:
         data:
@@ -2633,40 +3050,97 @@ components:
         data:
           $ref: '#/components/schemas/CampaignCountryStats'
       type: object
-    BusinessAudienceStats_allOf_audience_categories:
+    queryCampaignTimingStats_200_response:
+      example:
+        data:
+          day_of_month:
+            "4":
+              measurements:
+              - event: impression
+                count: 21614
+                fraction_of_total: 0.32
+              - event: click
+                count: 1823
+                fraction_of_total: 0.27
+                conversion_rate: 0.08434348107
+            "5":
+              measurements:
+              - event: impression
+                count: 27329
+                fraction_of_total: 0.4
+              - event: click
+                count: 2931
+                fraction_of_total: 0.44
+                conversion_rate: 0.10724871016
+            "6":
+              measurements:
+              - event: impression
+                count: 19329
+                fraction_of_total: 0.28
+              - event: click
+                count: 1920
+                fraction_of_total: 0.29
+                conversion_rate: 0.09933260903
+          hour_of_day:
+            "10":
+              measurements:
+              - event: impression
+                count: 19329
+                fraction_of_total: 0.28
+              - event: click
+                count: 1920
+                fraction_of_total: 0.29
+                conversion_rate: 0.09933260903
+            "08":
+              measurements:
+              - event: impression
+                count: 21614
+                fraction_of_total: 0.32
+              - event: click
+                count: 1823
+                fraction_of_total: 0.27
+                conversion_rate: 0.08434348107
+            "09":
+              measurements:
+              - event: impression
+                count: 27329
+                fraction_of_total: 0.4
+              - event: click
+                count: 2931
+                fraction_of_total: 0.44
+                conversion_rate: 0.10724871016
+          day_of_week:
+            Tuesday:
+              measurements:
+              - event: impression
+                count: 21614
+                fraction_of_total: 0.32
+              - event: click
+                count: 1823
+                fraction_of_total: 0.27
+                conversion_rate: 0.08434348107
+            Wednesday:
+              measurements:
+              - event: impression
+                count: 27329
+                fraction_of_total: 0.4
+              - event: click
+                count: 2931
+                fraction_of_total: 0.44
+                conversion_rate: 0.10724871016
+            Thursday:
+              measurements:
+              - event: impression
+                count: 19329
+                fraction_of_total: 0.28
+              - event: click
+                count: 1920
+                fraction_of_total: 0.29
+                conversion_rate: 0.09933260903
       properties:
-        size:
-          $ref: '#/components/schemas/AudienceCategoryStats'
+        data:
+          $ref: '#/components/schemas/CampaignTimingStats'
       type: object
-      example: null
-    PrivateAudienceStats_allOf_audience_categories:
-      properties:
-        home_type:
-          $ref: '#/components/schemas/AudienceCategoryStats'
-        savings:
-          $ref: '#/components/schemas/AudienceCategoryStats'
-        lifecycle:
-          $ref: '#/components/schemas/AudienceCategoryStats'
-        cars:
-          $ref: '#/components/schemas/AudienceCategoryStats'
-        children:
-          $ref: '#/components/schemas/AudienceCategoryStats'
-        education:
-          $ref: '#/components/schemas/AudienceCategoryStats'
-        neighbourhood_type:
-          $ref: '#/components/schemas/AudienceCategoryStats'
-        income:
-          $ref: '#/components/schemas/AudienceCategoryStats'
-        home_ownership:
-          $ref: '#/components/schemas/AudienceCategoryStats'
-        building_age:
-          $ref: '#/components/schemas/AudienceCategoryStats'
-        living_space:
-          $ref: '#/components/schemas/AudienceCategoryStats'
-        tech_level:
-          $ref: '#/components/schemas/AudienceCategoryStats'
-      type: object
-      example: null
   securitySchemes:
     bearerAuth:
       bearerFormat: JWT

@@ -13,6 +13,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the Measurement type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &Measurement{}
 // Measurement Represents a single measurement
 type Measurement struct {
 	// The event that triggered the measurement, typically `impression` or `click`
-	Event *string `json:"event,omitempty"`
+	Event string `json:"event"`
 	// The real value of the measurement, typically a counter value (integer)
 	Count *int32 `json:"count,omitempty"`
 	// The fraction of events that fall within this object compared to the total of the category or segment (usually represented by the measurement's parent's parent). For example, if the measurement is \"impression\" on the `home_type` \"Apartment\" object, then the `fraction_of_total` represents the number of impressions on apartments compared to impressions from other `home_type` values. 
@@ -30,12 +32,15 @@ type Measurement struct {
 	ConversionRate *float64 `json:"conversion_rate,omitempty"`
 }
 
+type _Measurement Measurement
+
 // NewMeasurement instantiates a new Measurement object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMeasurement() *Measurement {
+func NewMeasurement(event string) *Measurement {
 	this := Measurement{}
+	this.Event = event
 	return &this
 }
 
@@ -47,36 +52,28 @@ func NewMeasurementWithDefaults() *Measurement {
 	return &this
 }
 
-// GetEvent returns the Event field value if set, zero value otherwise.
+// GetEvent returns the Event field value
 func (o *Measurement) GetEvent() string {
-	if o == nil || IsNil(o.Event) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Event
+
+	return o.Event
 }
 
-// GetEventOk returns a tuple with the Event field value if set, nil otherwise
+// GetEventOk returns a tuple with the Event field value
 // and a boolean to check if the value has been set.
 func (o *Measurement) GetEventOk() (*string, bool) {
-	if o == nil || IsNil(o.Event) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Event, true
+	return &o.Event, true
 }
 
-// HasEvent returns a boolean if a field has been set.
-func (o *Measurement) HasEvent() bool {
-	if o != nil && !IsNil(o.Event) {
-		return true
-	}
-
-	return false
-}
-
-// SetEvent gets a reference to the given string and assigns it to the Event field.
+// SetEvent sets field value
 func (o *Measurement) SetEvent(v string) {
-	o.Event = &v
+	o.Event = v
 }
 
 // GetCount returns the Count field value if set, zero value otherwise.
@@ -185,9 +182,7 @@ func (o Measurement) MarshalJSON() ([]byte, error) {
 
 func (o Measurement) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Event) {
-		toSerialize["event"] = o.Event
-	}
+	toSerialize["event"] = o.Event
 	if !IsNil(o.Count) {
 		toSerialize["count"] = o.Count
 	}
@@ -198,6 +193,43 @@ func (o Measurement) ToMap() (map[string]interface{}, error) {
 		toSerialize["conversion_rate"] = o.ConversionRate
 	}
 	return toSerialize, nil
+}
+
+func (o *Measurement) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"event",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varMeasurement := _Measurement{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varMeasurement)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Measurement(varMeasurement)
+
+	return err
 }
 
 type NullableMeasurement struct {

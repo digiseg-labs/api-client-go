@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Measurements** | Pointer to [**[]Measurement**](Measurement.md) | Measurements related to this object | [optional] 
-**AudienceCategories** | Pointer to [**BusinessAudienceStatsAllOfAudienceCategories**](BusinessAudienceStatsAllOfAudienceCategories.md) |  | [optional] 
+**AudienceCategories** | Pointer to [**BusinessAudienceStatsAudienceCategories**](BusinessAudienceStatsAudienceCategories.md) |  | [optional] 
 
 ## Methods
 
@@ -53,20 +53,20 @@ HasMeasurements returns a boolean if a field has been set.
 
 ### GetAudienceCategories
 
-`func (o *BusinessAudienceStats) GetAudienceCategories() BusinessAudienceStatsAllOfAudienceCategories`
+`func (o *BusinessAudienceStats) GetAudienceCategories() BusinessAudienceStatsAudienceCategories`
 
 GetAudienceCategories returns the AudienceCategories field if non-nil, zero value otherwise.
 
 ### GetAudienceCategoriesOk
 
-`func (o *BusinessAudienceStats) GetAudienceCategoriesOk() (*BusinessAudienceStatsAllOfAudienceCategories, bool)`
+`func (o *BusinessAudienceStats) GetAudienceCategoriesOk() (*BusinessAudienceStatsAudienceCategories, bool)`
 
 GetAudienceCategoriesOk returns a tuple with the AudienceCategories field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAudienceCategories
 
-`func (o *BusinessAudienceStats) SetAudienceCategories(v BusinessAudienceStatsAllOfAudienceCategories)`
+`func (o *BusinessAudienceStats) SetAudienceCategories(v BusinessAudienceStatsAudienceCategories)`
 
 SetAudienceCategories sets AudienceCategories field to given value.
 

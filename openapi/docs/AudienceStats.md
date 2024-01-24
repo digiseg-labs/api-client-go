@@ -6,7 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Measurements** | Pointer to [**[]Measurement**](Measurement.md) | Measurements related to this object | [optional] 
 **Comparisons** | Pointer to [**[]Comparison**](Comparison.md) |  | [optional] 
-**Name** | Pointer to **string** | The name of the audience | [optional] 
 **Code** | Pointer to **string** | The code of the audience | [optional] 
 
 ## Methods
@@ -77,31 +76,6 @@ SetComparisons sets Comparisons field to given value.
 `func (o *AudienceStats) HasComparisons() bool`
 
 HasComparisons returns a boolean if a field has been set.
-
-### GetName
-
-`func (o *AudienceStats) GetName() string`
-
-GetName returns the Name field if non-nil, zero value otherwise.
-
-### GetNameOk
-
-`func (o *AudienceStats) GetNameOk() (*string, bool)`
-
-GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetName
-
-`func (o *AudienceStats) SetName(v string)`
-
-SetName sets Name field to given value.
-
-### HasName
-
-`func (o *AudienceStats) HasName() bool`
-
-HasName returns a boolean if a field has been set.
 
 ### GetCode
 

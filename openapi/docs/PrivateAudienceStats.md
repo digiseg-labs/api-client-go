@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Measurements** | Pointer to [**[]Measurement**](Measurement.md) | Measurements related to this object | [optional] 
-**AudienceCategories** | Pointer to [**PrivateAudienceStatsAllOfAudienceCategories**](PrivateAudienceStatsAllOfAudienceCategories.md) |  | [optional] 
+**AudienceCategories** | [**PrivateAudienceStatsAudienceCategories**](PrivateAudienceStatsAudienceCategories.md) |  | 
 
 ## Methods
 
 ### NewPrivateAudienceStats
 
-`func NewPrivateAudienceStats() *PrivateAudienceStats`
+`func NewPrivateAudienceStats(audienceCategories PrivateAudienceStatsAudienceCategories, ) *PrivateAudienceStats`
 
 NewPrivateAudienceStats instantiates a new PrivateAudienceStats object
 This constructor will assign default values to properties that have it defined,
@@ -53,28 +53,23 @@ HasMeasurements returns a boolean if a field has been set.
 
 ### GetAudienceCategories
 
-`func (o *PrivateAudienceStats) GetAudienceCategories() PrivateAudienceStatsAllOfAudienceCategories`
+`func (o *PrivateAudienceStats) GetAudienceCategories() PrivateAudienceStatsAudienceCategories`
 
 GetAudienceCategories returns the AudienceCategories field if non-nil, zero value otherwise.
 
 ### GetAudienceCategoriesOk
 
-`func (o *PrivateAudienceStats) GetAudienceCategoriesOk() (*PrivateAudienceStatsAllOfAudienceCategories, bool)`
+`func (o *PrivateAudienceStats) GetAudienceCategoriesOk() (*PrivateAudienceStatsAudienceCategories, bool)`
 
 GetAudienceCategoriesOk returns a tuple with the AudienceCategories field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAudienceCategories
 
-`func (o *PrivateAudienceStats) SetAudienceCategories(v PrivateAudienceStatsAllOfAudienceCategories)`
+`func (o *PrivateAudienceStats) SetAudienceCategories(v PrivateAudienceStatsAudienceCategories)`
 
 SetAudienceCategories sets AudienceCategories field to given value.
 
-### HasAudienceCategories
-
-`func (o *PrivateAudienceStats) HasAudienceCategories() bool`
-
-HasAudienceCategories returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

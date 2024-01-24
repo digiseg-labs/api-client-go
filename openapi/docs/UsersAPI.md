@@ -29,25 +29,25 @@ Create API key for user
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    userId := "userId_example" // string | 
-    apiKeyMutation := *openapiclient.NewApiKeyMutation() // ApiKeyMutation | 
+	userId := "userId_example" // string | 
+	apiKeyMutation := *openapiclient.NewApiKeyMutation() // ApiKeyMutation | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.UsersAPI.CreateApiKey(context.Background(), userId).ApiKeyMutation(apiKeyMutation).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.CreateApiKey``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `CreateApiKey`: CreateApiKey201Response
-    fmt.Fprintf(os.Stdout, "Response from `UsersAPI.CreateApiKey`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.CreateApiKey(context.Background(), userId).ApiKeyMutation(apiKeyMutation).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.CreateApiKey``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateApiKey`: CreateApiKey201Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.CreateApiKey`: %v\n", resp)
 }
 ```
 
@@ -99,25 +99,25 @@ Create user
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    accountId := "accountId_example" // string | 
-    userMutation := *openapiclient.NewUserMutation() // UserMutation | 
+	accountId := "accountId_example" // string | 
+	userMutation := *openapiclient.NewUserMutation() // UserMutation | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.UsersAPI.CreateUserInAccount(context.Background(), accountId).UserMutation(userMutation).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.CreateUserInAccount``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `CreateUserInAccount`: CreateUserInAccount201Response
-    fmt.Fprintf(os.Stdout, "Response from `UsersAPI.CreateUserInAccount`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.CreateUserInAccount(context.Background(), accountId).UserMutation(userMutation).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.CreateUserInAccount``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateUserInAccount`: CreateUserInAccount201Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.CreateUserInAccount`: %v\n", resp)
 }
 ```
 
@@ -169,23 +169,23 @@ Delete API key
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    userId := "userId_example" // string | 
-    keyId := "keyId_example" // string | 
+	userId := "userId_example" // string | 
+	keyId := "keyId_example" // string | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.UsersAPI.DeleteApiKeyById(context.Background(), userId, keyId).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.DeleteApiKeyById``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.UsersAPI.DeleteApiKeyById(context.Background(), userId, keyId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.DeleteApiKeyById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -238,22 +238,22 @@ Delete user
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    userId := "userId_example" // string | 
+	userId := "userId_example" // string | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.UsersAPI.DeleteUserById(context.Background(), userId).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.DeleteUserById``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.UsersAPI.DeleteUserById(context.Background(), userId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.DeleteUserById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -304,25 +304,25 @@ Get API key
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    userId := "userId_example" // string | 
-    keyId := "keyId_example" // string | 
+	userId := "userId_example" // string | 
+	keyId := "keyId_example" // string | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.UsersAPI.GetApiKeyById(context.Background(), userId, keyId).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetApiKeyById``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetApiKeyById`: GetApiKeyById200Response
-    fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetApiKeyById`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.GetApiKeyById(context.Background(), userId, keyId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetApiKeyById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetApiKeyById`: GetApiKeyById200Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetApiKeyById`: %v\n", resp)
 }
 ```
 
@@ -375,24 +375,24 @@ List API keys for user
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    userId := "userId_example" // string | 
+	userId := "userId_example" // string | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.UsersAPI.GetApiKeysByUserId(context.Background(), userId).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetApiKeysByUserId``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetApiKeysByUserId`: GetApiKeysByUserId200Response
-    fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetApiKeysByUserId`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.GetApiKeysByUserId(context.Background(), userId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetApiKeysByUserId``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetApiKeysByUserId`: GetApiKeysByUserId200Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetApiKeysByUserId`: %v\n", resp)
 }
 ```
 
@@ -445,23 +445,23 @@ Get current user
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.UsersAPI.GetCurrentUser(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetCurrentUser``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetCurrentUser`: CreateUserInAccount201Response
-    fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetCurrentUser`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.GetCurrentUser(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetCurrentUser``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetCurrentUser`: CreateUserInAccount201Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetCurrentUser`: %v\n", resp)
 }
 ```
 
@@ -504,24 +504,24 @@ Get user
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    userId := "userId_example" // string | 
+	userId := "userId_example" // string | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.UsersAPI.GetUserById(context.Background(), userId).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetUserById``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetUserById`: CreateUserInAccount201Response
-    fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetUserById`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.GetUserById(context.Background(), userId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetUserById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetUserById`: CreateUserInAccount201Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetUserById`: %v\n", resp)
 }
 ```
 
@@ -572,26 +572,26 @@ List users for account
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    accountId := "accountId_example" // string | 
-    pageSize := int32(56) // int32 | The desired page size (optional) (default to 100)
-    pageAfter := "pageAfter_example" // string | Optional pagination parameter, indicating the previous cursor value to paginate beyond. The value to provide here is opaque, but can be found in previous requests in the `meta.page.last_cursor` field.  (optional)
+	accountId := "accountId_example" // string | 
+	pageSize := int32(56) // int32 | The desired page size (optional) (default to 100)
+	pageAfter := "pageAfter_example" // string | Optional pagination parameter, indicating the previous cursor value to paginate beyond. The value to provide here is opaque, but can be found in previous requests in the `meta.page.last_cursor` field.  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.UsersAPI.GetUsersByAccountId(context.Background(), accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetUsersByAccountId``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetUsersByAccountId`: GetUsersByAccountId200Response
-    fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetUsersByAccountId`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.GetUsersByAccountId(context.Background(), accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetUsersByAccountId``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetUsersByAccountId`: GetUsersByAccountId200Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetUsersByAccountId`: %v\n", resp)
 }
 ```
 
@@ -644,25 +644,25 @@ Update user
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/digiseg-labs/api-client-go"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
 )
 
 func main() {
-    userId := "userId_example" // string | 
-    userMutation := *openapiclient.NewUserMutation() // UserMutation | 
+	userId := "userId_example" // string | 
+	userMutation := *openapiclient.NewUserMutation() // UserMutation | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.UsersAPI.UpdateUserById(context.Background(), userId).UserMutation(userMutation).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.UpdateUserById``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `UpdateUserById`: CreateUserInAccount201Response
-    fmt.Fprintf(os.Stdout, "Response from `UsersAPI.UpdateUserById`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.UpdateUserById(context.Background(), userId).UserMutation(userMutation).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.UpdateUserById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateUserById`: CreateUserInAccount201Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.UpdateUserById`: %v\n", resp)
 }
 ```
 

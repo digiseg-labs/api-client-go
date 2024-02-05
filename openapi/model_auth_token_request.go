@@ -24,6 +24,8 @@ var _ MappedNullable = &AuthTokenRequest{}
 type AuthTokenRequest struct {
 	// The username (typically an email address) of the user to authenticate
 	Username string `json:"username"`
+	// A one-time password provided to perform passwordless auth
+	Otp *string `json:"otp,omitempty"`
 	// The password for the given username
 	Password *string `json:"password,omitempty"`
 	// A previously issued refresh token for the given username
@@ -73,6 +75,38 @@ func (o *AuthTokenRequest) GetUsernameOk() (*string, bool) {
 // SetUsername sets field value
 func (o *AuthTokenRequest) SetUsername(v string) {
 	o.Username = v
+}
+
+// GetOtp returns the Otp field value if set, zero value otherwise.
+func (o *AuthTokenRequest) GetOtp() string {
+	if o == nil || IsNil(o.Otp) {
+		var ret string
+		return ret
+	}
+	return *o.Otp
+}
+
+// GetOtpOk returns a tuple with the Otp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AuthTokenRequest) GetOtpOk() (*string, bool) {
+	if o == nil || IsNil(o.Otp) {
+		return nil, false
+	}
+	return o.Otp, true
+}
+
+// HasOtp returns a boolean if a field has been set.
+func (o *AuthTokenRequest) HasOtp() bool {
+	if o != nil && !IsNil(o.Otp) {
+		return true
+	}
+
+	return false
+}
+
+// SetOtp gets a reference to the given string and assigns it to the Otp field.
+func (o *AuthTokenRequest) SetOtp(v string) {
+	o.Otp = &v
 }
 
 // GetPassword returns the Password field value if set, zero value otherwise.
@@ -182,6 +216,9 @@ func (o AuthTokenRequest) MarshalJSON() ([]byte, error) {
 func (o AuthTokenRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["username"] = o.Username
+	if !IsNil(o.Otp) {
+		toSerialize["otp"] = o.Otp
+	}
 	if !IsNil(o.Password) {
 		toSerialize["password"] = o.Password
 	}

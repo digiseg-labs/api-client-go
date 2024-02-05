@@ -13,6 +13,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ListPaginationMetaPage type satisfies the MappedNullable interface at compile time
@@ -20,18 +22,24 @@ var _ MappedNullable = &ListPaginationMetaPage{}
 
 // ListPaginationMetaPage struct for ListPaginationMetaPage
 type ListPaginationMetaPage struct {
-	// The total amount of elements in the list (the returned `data` can be paginated)
+	// The total amount of elements in the list (the returned `data` may be paginated)
 	Total *int32 `json:"total,omitempty"`
 	FirstCursor *string `json:"first_cursor,omitempty"`
+	// Indicates the cursor value to use in `page[after]`, when paginating to the next page
 	LastCursor *string `json:"last_cursor,omitempty"`
+	// Indicates whether the list has been truncated (ie. more items can be queried using pagination)
+	RangeTruncated bool `json:"rangeTruncated"`
 }
+
+type _ListPaginationMetaPage ListPaginationMetaPage
 
 // NewListPaginationMetaPage instantiates a new ListPaginationMetaPage object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewListPaginationMetaPage() *ListPaginationMetaPage {
+func NewListPaginationMetaPage(rangeTruncated bool) *ListPaginationMetaPage {
 	this := ListPaginationMetaPage{}
+	this.RangeTruncated = rangeTruncated
 	return &this
 }
 
@@ -139,6 +147,30 @@ func (o *ListPaginationMetaPage) SetLastCursor(v string) {
 	o.LastCursor = &v
 }
 
+// GetRangeTruncated returns the RangeTruncated field value
+func (o *ListPaginationMetaPage) GetRangeTruncated() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.RangeTruncated
+}
+
+// GetRangeTruncatedOk returns a tuple with the RangeTruncated field value
+// and a boolean to check if the value has been set.
+func (o *ListPaginationMetaPage) GetRangeTruncatedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.RangeTruncated, true
+}
+
+// SetRangeTruncated sets field value
+func (o *ListPaginationMetaPage) SetRangeTruncated(v bool) {
+	o.RangeTruncated = v
+}
+
 func (o ListPaginationMetaPage) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -158,7 +190,45 @@ func (o ListPaginationMetaPage) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LastCursor) {
 		toSerialize["last_cursor"] = o.LastCursor
 	}
+	toSerialize["rangeTruncated"] = o.RangeTruncated
 	return toSerialize, nil
+}
+
+func (o *ListPaginationMetaPage) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"rangeTruncated",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varListPaginationMetaPage := _ListPaginationMetaPage{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varListPaginationMetaPage)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ListPaginationMetaPage(varListPaginationMetaPage)
+
+	return err
 }
 
 type NullableListPaginationMetaPage struct {

@@ -117,15 +117,16 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AccountsAPI* | [**CreateUserInAccount**](docs/AccountsAPI.md#createuserinaccount) | **Post** /accounts/{account_id}/users | Create user
 *AccountsAPI* | [**GetAccountById**](docs/AccountsAPI.md#getaccountbyid) | **Get** /accounts/{account_id} | Get account
-*AccountsAPI* | [**GetUsersByAccountId**](docs/AccountsAPI.md#getusersbyaccountid) | **Get** /accounts/{account_id}/users | List users for account
+*AccountsAPI* | [**ListUsersByAccountId**](docs/AccountsAPI.md#listusersbyaccountid) | **Get** /accounts/{account_id}/users | List users for account
+*AccountsAPI* | [**UpdateAccountById**](docs/AccountsAPI.md#updateaccountbyid) | **Put** /accounts/{account_id} | Update account
 *AudiencesAPI* | [**ResolveAudiencesOfClient**](docs/AudiencesAPI.md#resolveaudiencesofclient) | **Get** /audiences | Get audiences of the API client
 *AudiencesAPI* | [**ResolveAudiencesOfMultiple**](docs/AudiencesAPI.md#resolveaudiencesofmultiple) | **Post** /audiences | Get audiences for multiple IP addresses
 *AudiencesAPI* | [**ResolveAudiencesOfSingle**](docs/AudiencesAPI.md#resolveaudiencesofsingle) | **Get** /audiences/{user_ip} | Get audiences for a given IP address
 *AuthAPI* | [**CreateAccessToken**](docs/AuthAPI.md#createaccesstoken) | **Post** /auth/token | Authenticate and create access token
-*AuthAPI* | [**CreateApiKey**](docs/AuthAPI.md#createapikey) | **Post** /users/{user_id}/apikeys | Create API key for user
+*AuthAPI* | [**CreateApiKey**](docs/AuthAPI.md#createapikey) | **Post** /users/{user_id}/apikeys | Create API key
 *AuthAPI* | [**DeleteApiKeyById**](docs/AuthAPI.md#deleteapikeybyid) | **Delete** /users/{user_id}/apikeys/{key_id} | Delete API key
 *AuthAPI* | [**GetApiKeyById**](docs/AuthAPI.md#getapikeybyid) | **Get** /users/{user_id}/apikeys/{key_id} | Get API key
-*AuthAPI* | [**GetApiKeysByUserId**](docs/AuthAPI.md#getapikeysbyuserid) | **Get** /users/{user_id}/apikeys | List API keys for user
+*AuthAPI* | [**ListApiKeysByUserId**](docs/AuthAPI.md#listapikeysbyuserid) | **Get** /users/{user_id}/apikeys | List API keys for user
 *CampaignsAPI* | [**CreateCampaign**](docs/CampaignsAPI.md#createcampaign) | **Post** /campaigns | Create campaign
 *CampaignsAPI* | [**DeleteCampaignById**](docs/CampaignsAPI.md#deletecampaignbyid) | **Delete** /campaigns/{campaign_id} | Delete campaign
 *CampaignsAPI* | [**GetCampaignById**](docs/CampaignsAPI.md#getcampaignbyid) | **Get** /campaigns/{campaign_id} | Get campaign
@@ -134,26 +135,32 @@ Class | Method | HTTP request | Description
 *CampaignsAPI* | [**QueryCampaignCountryStats**](docs/CampaignsAPI.md#querycampaigncountrystats) | **Get** /campaigns/{campaign_id}/stats/countries | Country statistics for campaign
 *CampaignsAPI* | [**QueryCampaignTimingStats**](docs/CampaignsAPI.md#querycampaigntimingstats) | **Get** /campaigns/{campaign_id}/stats/timing | Timing statistics for campaign
 *CampaignsAPI* | [**UpdateCampaignById**](docs/CampaignsAPI.md#updatecampaignbyid) | **Put** /campaigns/{campaign_id} | Update campaign
-*UsersAPI* | [**CreateApiKey**](docs/UsersAPI.md#createapikey) | **Post** /users/{user_id}/apikeys | Create API key for user
+*PopulationsAPI* | [**GetPopuplationByKey**](docs/PopulationsAPI.md#getpopuplationbykey) | **Get** /populations/{category_key}/{population_key} | Get Population by key
+*PopulationsAPI* | [**ListPopuplations**](docs/PopulationsAPI.md#listpopuplations) | **Get** /populations/{category_key} | List populations of category
+*UsersAPI* | [**CreateApiKey**](docs/UsersAPI.md#createapikey) | **Post** /users/{user_id}/apikeys | Create API key
 *UsersAPI* | [**CreateUserInAccount**](docs/UsersAPI.md#createuserinaccount) | **Post** /accounts/{account_id}/users | Create user
 *UsersAPI* | [**DeleteApiKeyById**](docs/UsersAPI.md#deleteapikeybyid) | **Delete** /users/{user_id}/apikeys/{key_id} | Delete API key
 *UsersAPI* | [**DeleteUserById**](docs/UsersAPI.md#deleteuserbyid) | **Delete** /users/{user_id} | Delete user
 *UsersAPI* | [**GetApiKeyById**](docs/UsersAPI.md#getapikeybyid) | **Get** /users/{user_id}/apikeys/{key_id} | Get API key
-*UsersAPI* | [**GetApiKeysByUserId**](docs/UsersAPI.md#getapikeysbyuserid) | **Get** /users/{user_id}/apikeys | List API keys for user
 *UsersAPI* | [**GetCurrentUser**](docs/UsersAPI.md#getcurrentuser) | **Get** /user | Get current user
 *UsersAPI* | [**GetUserById**](docs/UsersAPI.md#getuserbyid) | **Get** /users/{user_id} | Get user
-*UsersAPI* | [**GetUsersByAccountId**](docs/UsersAPI.md#getusersbyaccountid) | **Get** /accounts/{account_id}/users | List users for account
+*UsersAPI* | [**ListApiKeysByUserId**](docs/UsersAPI.md#listapikeysbyuserid) | **Get** /users/{user_id}/apikeys | List API keys for user
+*UsersAPI* | [**ListUsersByAccountId**](docs/UsersAPI.md#listusersbyaccountid) | **Get** /accounts/{account_id}/users | List users for account
 *UsersAPI* | [**UpdateUserById**](docs/UsersAPI.md#updateuserbyid) | **Put** /users/{user_id} | Update user
 
 
 ## Documentation For Models
 
+ - [AccessTokenData](docs/AccessTokenData.md)
  - [AccountAux](docs/AccountAux.md)
  - [AccountBase](docs/AccountBase.md)
+ - [AccountCreation](docs/AccountCreation.md)
+ - [AccountCreationAux](docs/AccountCreationAux.md)
  - [AccountFull](docs/AccountFull.md)
  - [AccountItem](docs/AccountItem.md)
  - [AccountLinks](docs/AccountLinks.md)
  - [AccountMutation](docs/AccountMutation.md)
+ - [AccountOwnerCreation](docs/AccountOwnerCreation.md)
  - [ApiKeyAux](docs/ApiKeyAux.md)
  - [ApiKeyBase](docs/ApiKeyBase.md)
  - [ApiKeyFull](docs/ApiKeyFull.md)
@@ -189,6 +196,7 @@ Class | Method | HTTP request | Description
  - [CampaignLinks](docs/CampaignLinks.md)
  - [CampaignMutation](docs/CampaignMutation.md)
  - [CampaignTimingStats](docs/CampaignTimingStats.md)
+ - [CategoryPopulationsFull](docs/CategoryPopulationsFull.md)
  - [Comparison](docs/Comparison.md)
  - [ComparisonsContainer](docs/ComparisonsContainer.md)
  - [CountryStats](docs/CountryStats.md)
@@ -201,23 +209,53 @@ Class | Method | HTTP request | Description
  - [FrequencyStats](docs/FrequencyStats.md)
  - [GetAccountById200Response](docs/GetAccountById200Response.md)
  - [GetApiKeyById200Response](docs/GetApiKeyById200Response.md)
- - [GetApiKeysByUserId200Response](docs/GetApiKeysByUserId200Response.md)
- - [GetUsersByAccountId200Response](docs/GetUsersByAccountId200Response.md)
+ - [GetPopuplationByKey200Response](docs/GetPopuplationByKey200Response.md)
  - [HourOfDayStats](docs/HourOfDayStats.md)
  - [IdentifyableObject](docs/IdentifyableObject.md)
  - [IdentifyableObject1](docs/IdentifyableObject1.md)
+ - [ListApiKeysByUserId200Response](docs/ListApiKeysByUserId200Response.md)
  - [ListCampaigns200Response](docs/ListCampaigns200Response.md)
  - [ListPaginationLinks](docs/ListPaginationLinks.md)
  - [ListPaginationMeta](docs/ListPaginationMeta.md)
  - [ListPaginationMetaPage](docs/ListPaginationMetaPage.md)
+ - [ListPopuplations200Response](docs/ListPopuplations200Response.md)
+ - [ListUsersByAccountId200Response](docs/ListUsersByAccountId200Response.md)
  - [Measurement](docs/Measurement.md)
  - [MeasurementsContainer](docs/MeasurementsContainer.md)
+ - [PasswordlessAuthRequest](docs/PasswordlessAuthRequest.md)
  - [PermissionScopes](docs/PermissionScopes.md)
+ - [PopulationAudienceCategorySetSection](docs/PopulationAudienceCategorySetSection.md)
+ - [PopulationFull](docs/PopulationFull.md)
+ - [PopulationItem](docs/PopulationItem.md)
+ - [PopulationSource](docs/PopulationSource.md)
+ - [PopulationSourceBusinessCategorySet](docs/PopulationSourceBusinessCategorySet.md)
+ - [PopulationSourceBusinessCategorySetSize](docs/PopulationSourceBusinessCategorySetSize.md)
+ - [PopulationSourceBusinessSection](docs/PopulationSourceBusinessSection.md)
+ - [PopulationSourceNotResolvedSection](docs/PopulationSourceNotResolvedSection.md)
+ - [PopulationSourcePrivateCategorySet](docs/PopulationSourcePrivateCategorySet.md)
+ - [PopulationSourcePrivateCategorySetBuildingAge](docs/PopulationSourcePrivateCategorySetBuildingAge.md)
+ - [PopulationSourcePrivateCategorySetCars](docs/PopulationSourcePrivateCategorySetCars.md)
+ - [PopulationSourcePrivateCategorySetChildren](docs/PopulationSourcePrivateCategorySetChildren.md)
+ - [PopulationSourcePrivateCategorySetEducation](docs/PopulationSourcePrivateCategorySetEducation.md)
+ - [PopulationSourcePrivateCategorySetHomeOwnership](docs/PopulationSourcePrivateCategorySetHomeOwnership.md)
+ - [PopulationSourcePrivateCategorySetHomeType](docs/PopulationSourcePrivateCategorySetHomeType.md)
+ - [PopulationSourcePrivateCategorySetIncome](docs/PopulationSourcePrivateCategorySetIncome.md)
+ - [PopulationSourcePrivateCategorySetLifecycle](docs/PopulationSourcePrivateCategorySetLifecycle.md)
+ - [PopulationSourcePrivateCategorySetLivingSpace](docs/PopulationSourcePrivateCategorySetLivingSpace.md)
+ - [PopulationSourcePrivateCategorySetNeighbourhoodType](docs/PopulationSourcePrivateCategorySetNeighbourhoodType.md)
+ - [PopulationSourcePrivateCategorySetSavings](docs/PopulationSourcePrivateCategorySetSavings.md)
+ - [PopulationSourcePrivateCategorySetTechLevel](docs/PopulationSourcePrivateCategorySetTechLevel.md)
+ - [PopulationSourcePrivateSection](docs/PopulationSourcePrivateSection.md)
  - [PrivateAudienceStats](docs/PrivateAudienceStats.md)
  - [PrivateAudienceStatsAudienceCategories](docs/PrivateAudienceStatsAudienceCategories.md)
  - [QueryCampaignAudienceStats200Response](docs/QueryCampaignAudienceStats200Response.md)
  - [QueryCampaignCountryStats200Response](docs/QueryCampaignCountryStats200Response.md)
  - [QueryCampaignTimingStats200Response](docs/QueryCampaignTimingStats200Response.md)
+ - [RegistrationByIdResponseData](docs/RegistrationByIdResponseData.md)
+ - [RegistrationCreationResponseData](docs/RegistrationCreationResponseData.md)
+ - [RegistrationRequest](docs/RegistrationRequest.md)
+ - [RegistrationVerificationResponseData](docs/RegistrationVerificationResponseData.md)
+ - [RegistrationVerificationResponseLinks](docs/RegistrationVerificationResponseLinks.md)
  - [ResolveAudiencesOfMultipleRequest](docs/ResolveAudiencesOfMultipleRequest.md)
  - [ResolveAudiencesOfMultipleRequestItem](docs/ResolveAudiencesOfMultipleRequestItem.md)
  - [ResolveAudiencesOfMultipleResponse](docs/ResolveAudiencesOfMultipleResponse.md)

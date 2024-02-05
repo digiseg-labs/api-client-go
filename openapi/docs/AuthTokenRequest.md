@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Username** | **string** | The username (typically an email address) of the user to authenticate | 
+**Otp** | Pointer to **string** | A one-time password provided to perform passwordless auth | [optional] 
 **Password** | Pointer to **string** | The password for the given username | [optional] 
 **RefreshToken** | Pointer to **string** | A previously issued refresh token for the given username | [optional] 
 **Scopes** | Pointer to [**PermissionScopes**](PermissionScopes.md) |  | [optional] 
@@ -47,6 +48,31 @@ and a boolean to check if the value has been set.
 
 SetUsername sets Username field to given value.
 
+
+### GetOtp
+
+`func (o *AuthTokenRequest) GetOtp() string`
+
+GetOtp returns the Otp field if non-nil, zero value otherwise.
+
+### GetOtpOk
+
+`func (o *AuthTokenRequest) GetOtpOk() (*string, bool)`
+
+GetOtpOk returns a tuple with the Otp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOtp
+
+`func (o *AuthTokenRequest) SetOtp(v string)`
+
+SetOtp sets Otp field to given value.
+
+### HasOtp
+
+`func (o *AuthTokenRequest) HasOtp() bool`
+
+HasOtp returns a boolean if a field has been set.
 
 ### GetPassword
 

@@ -15,35 +15,35 @@ import (
 	"encoding/json"
 )
 
-// checks if the GetUsersByAccountId200Response type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &GetUsersByAccountId200Response{}
+// checks if the ListUsersByAccountId200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ListUsersByAccountId200Response{}
 
-// GetUsersByAccountId200Response struct for GetUsersByAccountId200Response
-type GetUsersByAccountId200Response struct {
+// ListUsersByAccountId200Response struct for ListUsersByAccountId200Response
+type ListUsersByAccountId200Response struct {
 	Meta *ListPaginationMeta `json:"meta,omitempty"`
 	Links *ListPaginationLinks `json:"links,omitempty"`
 	Data []UserItem `json:"data,omitempty"`
 }
 
-// NewGetUsersByAccountId200Response instantiates a new GetUsersByAccountId200Response object
+// NewListUsersByAccountId200Response instantiates a new ListUsersByAccountId200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetUsersByAccountId200Response() *GetUsersByAccountId200Response {
-	this := GetUsersByAccountId200Response{}
+func NewListUsersByAccountId200Response() *ListUsersByAccountId200Response {
+	this := ListUsersByAccountId200Response{}
 	return &this
 }
 
-// NewGetUsersByAccountId200ResponseWithDefaults instantiates a new GetUsersByAccountId200Response object
+// NewListUsersByAccountId200ResponseWithDefaults instantiates a new ListUsersByAccountId200Response object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewGetUsersByAccountId200ResponseWithDefaults() *GetUsersByAccountId200Response {
-	this := GetUsersByAccountId200Response{}
+func NewListUsersByAccountId200ResponseWithDefaults() *ListUsersByAccountId200Response {
+	this := ListUsersByAccountId200Response{}
 	return &this
 }
 
 // GetMeta returns the Meta field value if set, zero value otherwise.
-func (o *GetUsersByAccountId200Response) GetMeta() ListPaginationMeta {
+func (o *ListUsersByAccountId200Response) GetMeta() ListPaginationMeta {
 	if o == nil || IsNil(o.Meta) {
 		var ret ListPaginationMeta
 		return ret
@@ -53,7 +53,7 @@ func (o *GetUsersByAccountId200Response) GetMeta() ListPaginationMeta {
 
 // GetMetaOk returns a tuple with the Meta field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetUsersByAccountId200Response) GetMetaOk() (*ListPaginationMeta, bool) {
+func (o *ListUsersByAccountId200Response) GetMetaOk() (*ListPaginationMeta, bool) {
 	if o == nil || IsNil(o.Meta) {
 		return nil, false
 	}
@@ -61,7 +61,7 @@ func (o *GetUsersByAccountId200Response) GetMetaOk() (*ListPaginationMeta, bool)
 }
 
 // HasMeta returns a boolean if a field has been set.
-func (o *GetUsersByAccountId200Response) HasMeta() bool {
+func (o *ListUsersByAccountId200Response) HasMeta() bool {
 	if o != nil && !IsNil(o.Meta) {
 		return true
 	}
@@ -70,12 +70,12 @@ func (o *GetUsersByAccountId200Response) HasMeta() bool {
 }
 
 // SetMeta gets a reference to the given ListPaginationMeta and assigns it to the Meta field.
-func (o *GetUsersByAccountId200Response) SetMeta(v ListPaginationMeta) {
+func (o *ListUsersByAccountId200Response) SetMeta(v ListPaginationMeta) {
 	o.Meta = &v
 }
 
 // GetLinks returns the Links field value if set, zero value otherwise.
-func (o *GetUsersByAccountId200Response) GetLinks() ListPaginationLinks {
+func (o *ListUsersByAccountId200Response) GetLinks() ListPaginationLinks {
 	if o == nil || IsNil(o.Links) {
 		var ret ListPaginationLinks
 		return ret
@@ -85,7 +85,7 @@ func (o *GetUsersByAccountId200Response) GetLinks() ListPaginationLinks {
 
 // GetLinksOk returns a tuple with the Links field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetUsersByAccountId200Response) GetLinksOk() (*ListPaginationLinks, bool) {
+func (o *ListUsersByAccountId200Response) GetLinksOk() (*ListPaginationLinks, bool) {
 	if o == nil || IsNil(o.Links) {
 		return nil, false
 	}
@@ -93,7 +93,7 @@ func (o *GetUsersByAccountId200Response) GetLinksOk() (*ListPaginationLinks, boo
 }
 
 // HasLinks returns a boolean if a field has been set.
-func (o *GetUsersByAccountId200Response) HasLinks() bool {
+func (o *ListUsersByAccountId200Response) HasLinks() bool {
 	if o != nil && !IsNil(o.Links) {
 		return true
 	}
@@ -102,12 +102,12 @@ func (o *GetUsersByAccountId200Response) HasLinks() bool {
 }
 
 // SetLinks gets a reference to the given ListPaginationLinks and assigns it to the Links field.
-func (o *GetUsersByAccountId200Response) SetLinks(v ListPaginationLinks) {
+func (o *ListUsersByAccountId200Response) SetLinks(v ListPaginationLinks) {
 	o.Links = &v
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *GetUsersByAccountId200Response) GetData() []UserItem {
+func (o *ListUsersByAccountId200Response) GetData() []UserItem {
 	if o == nil || IsNil(o.Data) {
 		var ret []UserItem
 		return ret
@@ -117,7 +117,7 @@ func (o *GetUsersByAccountId200Response) GetData() []UserItem {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetUsersByAccountId200Response) GetDataOk() ([]UserItem, bool) {
+func (o *ListUsersByAccountId200Response) GetDataOk() ([]UserItem, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -125,7 +125,7 @@ func (o *GetUsersByAccountId200Response) GetDataOk() ([]UserItem, bool) {
 }
 
 // HasData returns a boolean if a field has been set.
-func (o *GetUsersByAccountId200Response) HasData() bool {
+func (o *ListUsersByAccountId200Response) HasData() bool {
 	if o != nil && !IsNil(o.Data) {
 		return true
 	}
@@ -134,11 +134,11 @@ func (o *GetUsersByAccountId200Response) HasData() bool {
 }
 
 // SetData gets a reference to the given []UserItem and assigns it to the Data field.
-func (o *GetUsersByAccountId200Response) SetData(v []UserItem) {
+func (o *ListUsersByAccountId200Response) SetData(v []UserItem) {
 	o.Data = v
 }
 
-func (o GetUsersByAccountId200Response) MarshalJSON() ([]byte, error) {
+func (o ListUsersByAccountId200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -146,7 +146,7 @@ func (o GetUsersByAccountId200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o GetUsersByAccountId200Response) ToMap() (map[string]interface{}, error) {
+func (o ListUsersByAccountId200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Meta) {
 		toSerialize["meta"] = o.Meta
@@ -160,38 +160,38 @@ func (o GetUsersByAccountId200Response) ToMap() (map[string]interface{}, error) 
 	return toSerialize, nil
 }
 
-type NullableGetUsersByAccountId200Response struct {
-	value *GetUsersByAccountId200Response
+type NullableListUsersByAccountId200Response struct {
+	value *ListUsersByAccountId200Response
 	isSet bool
 }
 
-func (v NullableGetUsersByAccountId200Response) Get() *GetUsersByAccountId200Response {
+func (v NullableListUsersByAccountId200Response) Get() *ListUsersByAccountId200Response {
 	return v.value
 }
 
-func (v *NullableGetUsersByAccountId200Response) Set(val *GetUsersByAccountId200Response) {
+func (v *NullableListUsersByAccountId200Response) Set(val *ListUsersByAccountId200Response) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableGetUsersByAccountId200Response) IsSet() bool {
+func (v NullableListUsersByAccountId200Response) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableGetUsersByAccountId200Response) Unset() {
+func (v *NullableListUsersByAccountId200Response) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableGetUsersByAccountId200Response(val *GetUsersByAccountId200Response) *NullableGetUsersByAccountId200Response {
-	return &NullableGetUsersByAccountId200Response{value: val, isSet: true}
+func NewNullableListUsersByAccountId200Response(val *ListUsersByAccountId200Response) *NullableListUsersByAccountId200Response {
+	return &NullableListUsersByAccountId200Response{value: val, isSet: true}
 }
 
-func (v NullableGetUsersByAccountId200Response) MarshalJSON() ([]byte, error) {
+func (v NullableListUsersByAccountId200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableGetUsersByAccountId200Response) UnmarshalJSON(src []byte) error {
+func (v *NullableListUsersByAccountId200Response) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

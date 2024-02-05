@@ -15,35 +15,35 @@ import (
 	"encoding/json"
 )
 
-// checks if the GetApiKeysByUserId200Response type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &GetApiKeysByUserId200Response{}
+// checks if the ListApiKeysByUserId200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ListApiKeysByUserId200Response{}
 
-// GetApiKeysByUserId200Response struct for GetApiKeysByUserId200Response
-type GetApiKeysByUserId200Response struct {
+// ListApiKeysByUserId200Response struct for ListApiKeysByUserId200Response
+type ListApiKeysByUserId200Response struct {
 	Meta *ListPaginationMeta `json:"meta,omitempty"`
 	Links *ListPaginationLinks `json:"links,omitempty"`
 	Data []ApiKeyItem `json:"data,omitempty"`
 }
 
-// NewGetApiKeysByUserId200Response instantiates a new GetApiKeysByUserId200Response object
+// NewListApiKeysByUserId200Response instantiates a new ListApiKeysByUserId200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetApiKeysByUserId200Response() *GetApiKeysByUserId200Response {
-	this := GetApiKeysByUserId200Response{}
+func NewListApiKeysByUserId200Response() *ListApiKeysByUserId200Response {
+	this := ListApiKeysByUserId200Response{}
 	return &this
 }
 
-// NewGetApiKeysByUserId200ResponseWithDefaults instantiates a new GetApiKeysByUserId200Response object
+// NewListApiKeysByUserId200ResponseWithDefaults instantiates a new ListApiKeysByUserId200Response object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewGetApiKeysByUserId200ResponseWithDefaults() *GetApiKeysByUserId200Response {
-	this := GetApiKeysByUserId200Response{}
+func NewListApiKeysByUserId200ResponseWithDefaults() *ListApiKeysByUserId200Response {
+	this := ListApiKeysByUserId200Response{}
 	return &this
 }
 
 // GetMeta returns the Meta field value if set, zero value otherwise.
-func (o *GetApiKeysByUserId200Response) GetMeta() ListPaginationMeta {
+func (o *ListApiKeysByUserId200Response) GetMeta() ListPaginationMeta {
 	if o == nil || IsNil(o.Meta) {
 		var ret ListPaginationMeta
 		return ret
@@ -53,7 +53,7 @@ func (o *GetApiKeysByUserId200Response) GetMeta() ListPaginationMeta {
 
 // GetMetaOk returns a tuple with the Meta field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetApiKeysByUserId200Response) GetMetaOk() (*ListPaginationMeta, bool) {
+func (o *ListApiKeysByUserId200Response) GetMetaOk() (*ListPaginationMeta, bool) {
 	if o == nil || IsNil(o.Meta) {
 		return nil, false
 	}
@@ -61,7 +61,7 @@ func (o *GetApiKeysByUserId200Response) GetMetaOk() (*ListPaginationMeta, bool) 
 }
 
 // HasMeta returns a boolean if a field has been set.
-func (o *GetApiKeysByUserId200Response) HasMeta() bool {
+func (o *ListApiKeysByUserId200Response) HasMeta() bool {
 	if o != nil && !IsNil(o.Meta) {
 		return true
 	}
@@ -70,12 +70,12 @@ func (o *GetApiKeysByUserId200Response) HasMeta() bool {
 }
 
 // SetMeta gets a reference to the given ListPaginationMeta and assigns it to the Meta field.
-func (o *GetApiKeysByUserId200Response) SetMeta(v ListPaginationMeta) {
+func (o *ListApiKeysByUserId200Response) SetMeta(v ListPaginationMeta) {
 	o.Meta = &v
 }
 
 // GetLinks returns the Links field value if set, zero value otherwise.
-func (o *GetApiKeysByUserId200Response) GetLinks() ListPaginationLinks {
+func (o *ListApiKeysByUserId200Response) GetLinks() ListPaginationLinks {
 	if o == nil || IsNil(o.Links) {
 		var ret ListPaginationLinks
 		return ret
@@ -85,7 +85,7 @@ func (o *GetApiKeysByUserId200Response) GetLinks() ListPaginationLinks {
 
 // GetLinksOk returns a tuple with the Links field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetApiKeysByUserId200Response) GetLinksOk() (*ListPaginationLinks, bool) {
+func (o *ListApiKeysByUserId200Response) GetLinksOk() (*ListPaginationLinks, bool) {
 	if o == nil || IsNil(o.Links) {
 		return nil, false
 	}
@@ -93,7 +93,7 @@ func (o *GetApiKeysByUserId200Response) GetLinksOk() (*ListPaginationLinks, bool
 }
 
 // HasLinks returns a boolean if a field has been set.
-func (o *GetApiKeysByUserId200Response) HasLinks() bool {
+func (o *ListApiKeysByUserId200Response) HasLinks() bool {
 	if o != nil && !IsNil(o.Links) {
 		return true
 	}
@@ -102,12 +102,12 @@ func (o *GetApiKeysByUserId200Response) HasLinks() bool {
 }
 
 // SetLinks gets a reference to the given ListPaginationLinks and assigns it to the Links field.
-func (o *GetApiKeysByUserId200Response) SetLinks(v ListPaginationLinks) {
+func (o *ListApiKeysByUserId200Response) SetLinks(v ListPaginationLinks) {
 	o.Links = &v
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *GetApiKeysByUserId200Response) GetData() []ApiKeyItem {
+func (o *ListApiKeysByUserId200Response) GetData() []ApiKeyItem {
 	if o == nil || IsNil(o.Data) {
 		var ret []ApiKeyItem
 		return ret
@@ -117,7 +117,7 @@ func (o *GetApiKeysByUserId200Response) GetData() []ApiKeyItem {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetApiKeysByUserId200Response) GetDataOk() ([]ApiKeyItem, bool) {
+func (o *ListApiKeysByUserId200Response) GetDataOk() ([]ApiKeyItem, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -125,7 +125,7 @@ func (o *GetApiKeysByUserId200Response) GetDataOk() ([]ApiKeyItem, bool) {
 }
 
 // HasData returns a boolean if a field has been set.
-func (o *GetApiKeysByUserId200Response) HasData() bool {
+func (o *ListApiKeysByUserId200Response) HasData() bool {
 	if o != nil && !IsNil(o.Data) {
 		return true
 	}
@@ -134,11 +134,11 @@ func (o *GetApiKeysByUserId200Response) HasData() bool {
 }
 
 // SetData gets a reference to the given []ApiKeyItem and assigns it to the Data field.
-func (o *GetApiKeysByUserId200Response) SetData(v []ApiKeyItem) {
+func (o *ListApiKeysByUserId200Response) SetData(v []ApiKeyItem) {
 	o.Data = v
 }
 
-func (o GetApiKeysByUserId200Response) MarshalJSON() ([]byte, error) {
+func (o ListApiKeysByUserId200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -146,7 +146,7 @@ func (o GetApiKeysByUserId200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o GetApiKeysByUserId200Response) ToMap() (map[string]interface{}, error) {
+func (o ListApiKeysByUserId200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Meta) {
 		toSerialize["meta"] = o.Meta
@@ -160,38 +160,38 @@ func (o GetApiKeysByUserId200Response) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableGetApiKeysByUserId200Response struct {
-	value *GetApiKeysByUserId200Response
+type NullableListApiKeysByUserId200Response struct {
+	value *ListApiKeysByUserId200Response
 	isSet bool
 }
 
-func (v NullableGetApiKeysByUserId200Response) Get() *GetApiKeysByUserId200Response {
+func (v NullableListApiKeysByUserId200Response) Get() *ListApiKeysByUserId200Response {
 	return v.value
 }
 
-func (v *NullableGetApiKeysByUserId200Response) Set(val *GetApiKeysByUserId200Response) {
+func (v *NullableListApiKeysByUserId200Response) Set(val *ListApiKeysByUserId200Response) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableGetApiKeysByUserId200Response) IsSet() bool {
+func (v NullableListApiKeysByUserId200Response) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableGetApiKeysByUserId200Response) Unset() {
+func (v *NullableListApiKeysByUserId200Response) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableGetApiKeysByUserId200Response(val *GetApiKeysByUserId200Response) *NullableGetApiKeysByUserId200Response {
-	return &NullableGetApiKeysByUserId200Response{value: val, isSet: true}
+func NewNullableListApiKeysByUserId200Response(val *ListApiKeysByUserId200Response) *NullableListApiKeysByUserId200Response {
+	return &NullableListApiKeysByUserId200Response{value: val, isSet: true}
 }
 
-func (v NullableGetApiKeysByUserId200Response) MarshalJSON() ([]byte, error) {
+func (v NullableListApiKeysByUserId200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableGetApiKeysByUserId200Response) UnmarshalJSON(src []byte) error {
+func (v *NullableListApiKeysByUserId200Response) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

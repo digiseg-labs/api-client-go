@@ -149,7 +149,15 @@ func (r AuthAPICreateApiKeyRequest) Execute() (*CreateApiKey201Response, *http.R
 }
 
 /*
-CreateApiKey Create API key for user
+CreateApiKey Create API key
+
+Create API key for the given user.
+When an API key is created, the `token` value will be exposed
+in the response. This token can be passed as the `X-API-KEY`
+header value for future requests. It is not obtainable in other
+API requests (ie. the client must decide how to keep the API key
+token in e.g. a vault or similar).
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param userId
@@ -527,25 +535,25 @@ func (a *AuthAPIService) GetApiKeyByIdExecute(r AuthAPIGetApiKeyByIdRequest) (*G
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type AuthAPIGetApiKeysByUserIdRequest struct {
+type AuthAPIListApiKeysByUserIdRequest struct {
 	ctx context.Context
 	ApiService *AuthAPIService
 	userId string
 }
 
-func (r AuthAPIGetApiKeysByUserIdRequest) Execute() (*GetApiKeysByUserId200Response, *http.Response, error) {
-	return r.ApiService.GetApiKeysByUserIdExecute(r)
+func (r AuthAPIListApiKeysByUserIdRequest) Execute() (*ListApiKeysByUserId200Response, *http.Response, error) {
+	return r.ApiService.ListApiKeysByUserIdExecute(r)
 }
 
 /*
-GetApiKeysByUserId List API keys for user
+ListApiKeysByUserId List API keys for user
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param userId
- @return AuthAPIGetApiKeysByUserIdRequest
+ @return AuthAPIListApiKeysByUserIdRequest
 */
-func (a *AuthAPIService) GetApiKeysByUserId(ctx context.Context, userId string) AuthAPIGetApiKeysByUserIdRequest {
-	return AuthAPIGetApiKeysByUserIdRequest{
+func (a *AuthAPIService) ListApiKeysByUserId(ctx context.Context, userId string) AuthAPIListApiKeysByUserIdRequest {
+	return AuthAPIListApiKeysByUserIdRequest{
 		ApiService: a,
 		ctx: ctx,
 		userId: userId,
@@ -553,16 +561,16 @@ func (a *AuthAPIService) GetApiKeysByUserId(ctx context.Context, userId string) 
 }
 
 // Execute executes the request
-//  @return GetApiKeysByUserId200Response
-func (a *AuthAPIService) GetApiKeysByUserIdExecute(r AuthAPIGetApiKeysByUserIdRequest) (*GetApiKeysByUserId200Response, *http.Response, error) {
+//  @return ListApiKeysByUserId200Response
+func (a *AuthAPIService) ListApiKeysByUserIdExecute(r AuthAPIListApiKeysByUserIdRequest) (*ListApiKeysByUserId200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetApiKeysByUserId200Response
+		localVarReturnValue  *ListApiKeysByUserId200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthAPIService.GetApiKeysByUserId")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthAPIService.ListApiKeysByUserId")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

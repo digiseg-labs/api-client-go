@@ -4,15 +4,15 @@ All URIs are relative to *https://api.digiseg.net*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateApiKey**](UsersAPI.md#CreateApiKey) | **Post** /users/{user_id}/apikeys | Create API key for user
+[**CreateApiKey**](UsersAPI.md#CreateApiKey) | **Post** /users/{user_id}/apikeys | Create API key
 [**CreateUserInAccount**](UsersAPI.md#CreateUserInAccount) | **Post** /accounts/{account_id}/users | Create user
 [**DeleteApiKeyById**](UsersAPI.md#DeleteApiKeyById) | **Delete** /users/{user_id}/apikeys/{key_id} | Delete API key
 [**DeleteUserById**](UsersAPI.md#DeleteUserById) | **Delete** /users/{user_id} | Delete user
 [**GetApiKeyById**](UsersAPI.md#GetApiKeyById) | **Get** /users/{user_id}/apikeys/{key_id} | Get API key
-[**GetApiKeysByUserId**](UsersAPI.md#GetApiKeysByUserId) | **Get** /users/{user_id}/apikeys | List API keys for user
 [**GetCurrentUser**](UsersAPI.md#GetCurrentUser) | **Get** /user | Get current user
 [**GetUserById**](UsersAPI.md#GetUserById) | **Get** /users/{user_id} | Get user
-[**GetUsersByAccountId**](UsersAPI.md#GetUsersByAccountId) | **Get** /accounts/{account_id}/users | List users for account
+[**ListApiKeysByUserId**](UsersAPI.md#ListApiKeysByUserId) | **Get** /users/{user_id}/apikeys | List API keys for user
+[**ListUsersByAccountId**](UsersAPI.md#ListUsersByAccountId) | **Get** /accounts/{account_id}/users | List users for account
 [**UpdateUserById**](UsersAPI.md#UpdateUserById) | **Put** /users/{user_id} | Update user
 
 
@@ -21,7 +21,9 @@ Method | HTTP request | Description
 
 > CreateApiKey201Response CreateApiKey(ctx, userId).ApiKeyMutation(apiKeyMutation).Execute()
 
-Create API key for user
+Create API key
+
+
 
 ### Example
 
@@ -92,6 +94,8 @@ Name | Type | Description  | Notes
 > CreateUserInAccount201Response CreateUserInAccount(ctx, accountId).UserMutation(userMutation).Execute()
 
 Create user
+
+
 
 ### Example
 
@@ -363,74 +367,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetApiKeysByUserId
-
-> GetApiKeysByUserId200Response GetApiKeysByUserId(ctx, userId).Execute()
-
-List API keys for user
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/digiseg-labs/api-client-go"
-)
-
-func main() {
-	userId := "userId_example" // string | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UsersAPI.GetApiKeysByUserId(context.Background(), userId).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetApiKeysByUserId``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `GetApiKeysByUserId`: GetApiKeysByUserId200Response
-	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetApiKeysByUserId`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**userId** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetApiKeysByUserIdRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
-[**GetApiKeysByUserId200Response**](GetApiKeysByUserId200Response.md)
-
-### Authorization
-
-[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## GetCurrentUser
 
 > CreateUserInAccount201Response GetCurrentUser(ctx).Execute()
@@ -560,9 +496,77 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetUsersByAccountId
+## ListApiKeysByUserId
 
-> GetUsersByAccountId200Response GetUsersByAccountId(ctx, accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
+> ListApiKeysByUserId200Response ListApiKeysByUserId(ctx, userId).Execute()
+
+List API keys for user
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	userId := "userId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.ListApiKeysByUserId(context.Background(), userId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.ListApiKeysByUserId``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListApiKeysByUserId`: ListApiKeysByUserId200Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.ListApiKeysByUserId`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**userId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListApiKeysByUserIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ListApiKeysByUserId200Response**](ListApiKeysByUserId200Response.md)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListUsersByAccountId
+
+> ListUsersByAccountId200Response ListUsersByAccountId(ctx, accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
 
 List users for account
 
@@ -585,13 +589,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UsersAPI.GetUsersByAccountId(context.Background(), accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
+	resp, r, err := apiClient.UsersAPI.ListUsersByAccountId(context.Background(), accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetUsersByAccountId``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.ListUsersByAccountId``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetUsersByAccountId`: GetUsersByAccountId200Response
-	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetUsersByAccountId`: %v\n", resp)
+	// response from `ListUsersByAccountId`: ListUsersByAccountId200Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.ListUsersByAccountId`: %v\n", resp)
 }
 ```
 
@@ -605,7 +609,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetUsersByAccountIdRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListUsersByAccountIdRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -616,7 +620,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetUsersByAccountId200Response**](GetUsersByAccountId200Response.md)
+[**ListUsersByAccountId200Response**](ListUsersByAccountId200Response.md)
 
 ### Authorization
 

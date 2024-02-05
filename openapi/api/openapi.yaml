@@ -87,12 +87,18 @@ tags:
   name: audiences
   x-displayName: Audiences
 - description: |
-    Campaigns can be managed and measured in order to evaluate performance,
-    reach and targeting power. Use the campaigns API to create campaigns,
-    instrument them in your campaign creatives, and access statistics about
-    the impressions, clicks and other events of the campaign.
+    Campaign- and website tags can be managed and measured in order to evaluate
+    performance, reach and targeting power. Use the campaigns API to create groups
+    of tags, instrument them in your campaign creatives or on a webpage, and access
+    statistics about the impressions, clicks and other events of the campaign.
   name: campaigns
   x-displayName: Campaigns
+- description: |
+    Populations represent benchmark numbers that can be used to compare your
+    audience profile with. Digiseg produces a large set of populations called the
+    Average Internet Population, made available in the population category `aip`.
+  name: populations
+  x-displayName: Populations
 paths:
   /accounts/{account_id}:
     get:
@@ -128,9 +134,37 @@ paths:
         source: "fetch(\"https://api.digiseg.net/accounts/\"+account_id, {\n  \"method\"\
           : \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer \" + token},\n\
           }).then(response => {\n  console.log(response);\n})"
+    put:
+      operationId: updateAccountById
+      parameters:
+      - explode: false
+        in: path
+        name: account_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/AccountUpdateRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAccountById_200_response'
+          description: OK
+        "400":
+          description: Bad request
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: Update account
+      tags:
+      - accounts
   /accounts/{account_id}/users:
     get:
-      operationId: getUsersByAccountId
+      operationId: listUsersByAccountId
       parameters:
       - explode: false
         in: path
@@ -165,7 +199,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getUsersByAccountId_200_response'
+                $ref: '#/components/schemas/listUsersByAccountId_200_response'
           description: OK
         "403":
           description: Forbidden
@@ -185,6 +219,8 @@ paths:
           , {\n  \"method\": \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer\
           \ \" + token},\n}).then(response => {\n  console.log(response);\n})"
     post:
+      description: |
+        Create a user within the referenced account.
       operationId: createUserInAccount
       parameters:
       - explode: false
@@ -215,7 +251,7 @@ paths:
       - users
   /users/{user_id}/apikeys:
     get:
-      operationId: getApiKeysByUserId
+      operationId: listApiKeysByUserId
       parameters:
       - explode: false
         in: path
@@ -229,7 +265,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getApiKeysByUserId_200_response'
+                $ref: '#/components/schemas/listApiKeysByUserId_200_response'
           description: OK
         "403":
           description: Forbidden
@@ -249,6 +285,13 @@ paths:
           \  \"method\": \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer \"\
           \ + token},\n}).then(response => {\n  console.log(response);\n})"
     post:
+      description: |
+        Create API key for the given user.
+        When an API key is created, the `token` value will be exposed
+        in the response. This token can be passed as the `X-API-KEY`
+        header value for future requests. It is not obtainable in other
+        API requests (ie. the client must decide how to keep the API key
+        token in e.g. a vault or similar).
       operationId: createApiKey
       parameters:
       - explode: false
@@ -271,7 +314,7 @@ paths:
           description: Forbidden
         "404":
           description: Not found
-      summary: Create API key for user
+      summary: Create API key
       tags:
       - users
       - auth
@@ -914,13 +957,88 @@ paths:
         source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/stats/timing\"\
           , {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
           }).then(response => {\n  console.log(response);\n})"
+  /populations/{category_key}:
+    get:
+      description: List all populations within a category
+      operationId: listPopuplations
+      parameters:
+      - description: An identifier for the category
+        explode: false
+        in: path
+        name: category_key
+        required: true
+        schema:
+          example: aip
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listPopuplations_200_response'
+          description: OK
+      summary: List populations of category
+      tags:
+      - populations
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/populations/$CATEGORY_KEY
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/populations/\"+category_key, {\n\
+          \  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response\
+          \ => {\n  console.log(response);\n})"
+  /populations/{category_key}/{population_key}:
+    get:
+      description: Get population data referenced by a specific key.
+      operationId: getPopuplationByKey
+      parameters:
+      - description: An identifier for the category
+        explode: false
+        in: path
+        name: category_key
+        required: true
+        schema:
+          example: aip
+          type: string
+        style: simple
+      - description: An identifier for the population
+        explode: false
+        in: path
+        name: population_key
+        required: true
+        schema:
+          example: dk
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getPopuplationByKey_200_response'
+          description: OK
+      summary: Get Population by key
+      tags:
+      - populations
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/populations/$CATEGORY_KEY/$POPULATION_KEY
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/populations/\"+category_key+\"/\"\
+          +population_key, {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\"\
+          : apikey},\n}).then(response => {\n  console.log(response);\n})"
 components:
   requestBodies:
     AccountCreationRequest:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AccountMutation'
+            $ref: '#/components/schemas/AccountCreation'
       required: true
     AccountUpdateRequest:
       content:
@@ -965,6 +1083,35 @@ components:
             $ref: '#/components/schemas/CampaignMutation'
       required: true
   responses:
+    RegistrationCreationResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: '#/components/schemas/RegistrationCreationResponseData'
+            type: object
+      description: Created
+    RegistrationVerificationResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: '#/components/schemas/RegistrationVerificationResponseData'
+              links:
+                $ref: '#/components/schemas/RegistrationVerificationResponseLinks'
+            type: object
+      description: OK
+    RegistrationByIdResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: '#/components/schemas/RegistrationByIdResponseData'
+            type: object
+      description: OK
     AccountByIdResponse:
       content:
         application/json:
@@ -1002,7 +1149,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/getApiKeysByUserId_200_response'
+            $ref: '#/components/schemas/listApiKeysByUserId_200_response'
       description: OK
     UserByIdResponse:
       content:
@@ -1016,7 +1163,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/getUsersByAccountId_200_response'
+            $ref: '#/components/schemas/listUsersByAccountId_200_response'
       description: OK
     ForbiddenError:
       description: Forbidden
@@ -1065,7 +1212,80 @@ components:
                 $ref: '#/components/schemas/CampaignFrequencyStats'
             type: object
       description: OK
+    ListPopulationsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/listPopuplations_200_response'
+      description: OK
+    PopulationResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getPopuplationByKey_200_response'
+      description: OK
+    PopulationSourceResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: '#/components/schemas/PopulationSource'
+            type: object
+      description: OK
   schemas:
+    PasswordlessAuthRequest:
+      properties:
+        email:
+          description: The email of the user
+          format: email
+          type: string
+      required:
+      - email
+      type: object
+    RegistrationRequest:
+      properties:
+        account_name:
+          description: The name of the account to create
+          type: string
+        owner_email:
+          description: The email of the account owner
+          format: email
+          type: string
+        owner_name:
+          description: The name of the account owner
+          type: string
+      required:
+      - account_name
+      - owner_email
+      - owner_name
+      type: object
+    RegistrationByIdResponseData:
+      properties:
+        id:
+          description: The ID of the registration
+          type: string
+        request:
+          $ref: '#/components/schemas/RegistrationRequest'
+        expires_at:
+          description: Date and time of the registration expiry
+          format: date-time
+          type: string
+        verified_at:
+          description: "Date and time of the verification, if verified"
+          format: date-time
+          type: string
+        verification_code:
+          description: The code needed to verify this registration
+          type: string
+      type: object
+    RegistrationCreationResponseData:
+      properties:
+        id:
+          type: string
+        email_sent:
+          type: boolean
+      type: object
     ListPaginationLinks:
       example:
         next: /path/to/next_page
@@ -1088,6 +1308,7 @@ components:
           first_cursor: first_cursor
           total: 238
           last_cursor: last_cursor
+          rangeTruncated: true
       properties:
         page:
           $ref: '#/components/schemas/ListPaginationMetaPage'
@@ -1097,16 +1318,25 @@ components:
         first_cursor: first_cursor
         total: 238
         last_cursor: last_cursor
+        rangeTruncated: true
       properties:
         total:
           description: The total amount of elements in the list (the returned `data`
-            can be paginated)
+            may be paginated)
           example: 238
           type: integer
         first_cursor:
           type: string
         last_cursor:
+          description: "Indicates the cursor value to use in `page[after]`, when paginating\
+            \ to the next page"
           type: string
+        rangeTruncated:
+          description: Indicates whether the list has been truncated (ie. more items
+            can be queried using pagination)
+          type: boolean
+      required:
+      - rangeTruncated
       type: object
     IdentifyableObject:
       properties:
@@ -1146,6 +1376,28 @@ components:
           pattern: "^[a-z]{4,16}$"
           type: string
       type: object
+    AccountCreationAux:
+      properties:
+        owner:
+          $ref: '#/components/schemas/AccountOwnerCreation'
+      type: object
+    AccountOwnerCreation:
+      properties:
+        name:
+          description: The account owner's name
+          type: string
+        email:
+          description: The account owner's email
+          example: casey.doe@example.com
+          format: email
+          type: string
+        password:
+          description: The account owner's password
+          type: string
+      required:
+      - email
+      - name
+      type: object
     AccountAux:
       properties:
         owner_id:
@@ -1156,6 +1408,11 @@ components:
       allOf:
       - $ref: '#/components/schemas/IdentifyableObject'
       - $ref: '#/components/schemas/AccountBase'
+    AccountCreation:
+      allOf:
+      - $ref: '#/components/schemas/AccountBase'
+      - $ref: '#/components/schemas/AccountAux'
+      - $ref: '#/components/schemas/AccountCreationAux'
     AccountMutation:
       allOf:
       - $ref: '#/components/schemas/AccountBase'
@@ -1374,6 +1631,7 @@ components:
       example:
         refresh_token: refresh_token
         password: password
+        otp: otp
         scopes:
           country_data:
           - '*'
@@ -1394,6 +1652,9 @@ components:
         username:
           description: The username (typically an email address) of the user to authenticate
           type: string
+        otp:
+          description: A one-time password provided to perform passwordless auth
+          type: string
         password:
           description: The password for the given username
           type: string
@@ -1405,12 +1666,7 @@ components:
       required:
       - username
       type: object
-    AuthTokenResponse:
-      example:
-        access_token: 5k32n423kn4234m23l24km23
-        refresh_token: IwOGYzYTlmM2YxOTQ5MGE3YmNmMDFkNTVk
-        token_type: Bearer
-        expires_in: 3600
+    AccessTokenData:
       properties:
         access_token:
           description: A short-lived token (usable for 1 hour) to be used in subsequent
@@ -1435,6 +1691,25 @@ components:
       - access_token
       - expires_in
       - token_type
+      type: object
+    AuthTokenResponse:
+      allOf:
+      - $ref: '#/components/schemas/AccessTokenData'
+    RegistrationVerificationResponseData:
+      allOf:
+      - $ref: '#/components/schemas/AccessTokenData'
+    RegistrationVerificationResponseLinks:
+      properties:
+        user:
+          description: Link of the created user
+          example: /user/4k3jKJ9D12kj0S4c
+          format: uri
+          type: string
+        account:
+          description: Link of the created account
+          example: /accounts/4k3jKJ9D12kj0S4c
+          format: uri
+          type: string
       type: object
     ResolveAudiencesOfMultipleRequest:
       example:
@@ -2763,6 +3038,173 @@ components:
             corresponding frequency
           type: integer
       type: object
+    CategoryPopulationsFull:
+      example:
+        populations:
+        - key: key
+        - key: key
+      properties:
+        populations:
+          items:
+            $ref: '#/components/schemas/PopulationItem'
+          type: array
+      type: object
+    PopulationItem:
+      example:
+        key: key
+      properties:
+        key:
+          description: A unique key for the population
+          type: string
+      required:
+      - key
+      type: object
+    PopulationFull:
+      description: |
+        Describes the audience composition of a population. Every metric is delivered
+        in relative measures (ie. fractions of total rather than counts) to make enable the
+        comparison or adjustment of populations.
+      example:
+        private:
+          audience_categories:
+            key: null
+          fraction_of_total: 0.17
+        business:
+          audience_categories:
+            key: null
+          fraction_of_total: 0.17
+        name: name
+      properties:
+        name:
+          description: A humanly readable name of the population
+          type: string
+        private:
+          $ref: '#/components/schemas/PopulationAudienceCategorySetSection'
+        business:
+          $ref: '#/components/schemas/PopulationAudienceCategorySetSection'
+      readOnly: true
+      type: object
+    PopulationAudienceCategorySetSection:
+      example:
+        audience_categories:
+          key: null
+        fraction_of_total: 0.17
+      properties:
+        fraction_of_total:
+          description: |
+            The fraction of events that fall within this object compared to the total of the
+            category or segment (usually represented by the measurement's parent's parent).
+            For example, if the measurement is "impression" on the `home_type` "Apartment" object,
+            then the `fraction_of_total` represents the number of impressions on apartments compared
+            to impressions from other `home_type` values.
+          example: 0.17
+          format: double
+          maximum: 1
+          minimum: 0
+          type: number
+        audience_categories:
+          additionalProperties:
+            $ref: '#/components/schemas/PopulationAudienceCategorySection'
+          description: "An object with category codes as keys, objects with audience\
+            \ codes and fractions of totals as keys."
+          type: object
+      type: object
+    PopulationAudienceCategorySection:
+      additionalProperties:
+        $ref: '#/components/schemas/FractionOfTotal'
+      description: An object representing an audience category. Property keys represent
+        audiences and property values represent fractions of totals.
+      type: object
+    PopulationSource:
+      description: Source data for a population
+      properties:
+        name:
+          description: A humanly readable name of the population
+          type: string
+        source:
+          description: Name or description of the data source
+          type: string
+        meta:
+          type: object
+        not_resolved:
+          $ref: '#/components/schemas/PopulationSourceNotResolvedSection'
+        private:
+          $ref: '#/components/schemas/PopulationSourcePrivateSection'
+        business:
+          $ref: '#/components/schemas/PopulationSourceBusinessSection'
+      required:
+      - business
+      - meta
+      - name
+      - private
+      - source
+      type: object
+    PopulationSourceNotResolvedSection:
+      properties:
+        count:
+          type: integer
+      type: object
+    PopulationSourcePrivateSection:
+      properties:
+        audience_categories:
+          $ref: '#/components/schemas/PopulationSourcePrivateCategorySet'
+        count:
+          type: integer
+      type: object
+    PopulationSourceBusinessSection:
+      properties:
+        audience_categories:
+          $ref: '#/components/schemas/PopulationSourceBusinessCategorySet'
+        count:
+          type: integer
+      type: object
+    PopulationSourcePrivateCategorySet:
+      properties:
+        home_type:
+          $ref: '#/components/schemas/PopulationSourcePrivateCategorySet_home_type'
+        savings:
+          $ref: '#/components/schemas/PopulationSourcePrivateCategorySet_savings'
+        lifecycle:
+          $ref: '#/components/schemas/PopulationSourcePrivateCategorySet_lifecycle'
+        cars:
+          $ref: '#/components/schemas/PopulationSourcePrivateCategorySet_cars'
+        children:
+          $ref: '#/components/schemas/PopulationSourcePrivateCategorySet_children'
+        education:
+          $ref: '#/components/schemas/PopulationSourcePrivateCategorySet_education'
+        neighbourhood_type:
+          $ref: '#/components/schemas/PopulationSourcePrivateCategorySet_neighbourhood_type'
+        income:
+          $ref: '#/components/schemas/PopulationSourcePrivateCategorySet_income'
+        home_ownership:
+          $ref: '#/components/schemas/PopulationSourcePrivateCategorySet_home_ownership'
+        building_age:
+          $ref: '#/components/schemas/PopulationSourcePrivateCategorySet_building_age'
+        living_space:
+          $ref: '#/components/schemas/PopulationSourcePrivateCategorySet_living_space'
+        tech_level:
+          $ref: '#/components/schemas/PopulationSourcePrivateCategorySet_tech_level'
+      required:
+      - building_age
+      - cars
+      - children
+      - education
+      - home_ownership
+      - home_type
+      - income
+      - lifecycle
+      - living_space
+      - neighbourhood_type
+      - savings
+      - tech_level
+      type: object
+    PopulationSourceBusinessCategorySet:
+      properties:
+        size:
+          $ref: '#/components/schemas/PopulationSourceBusinessCategorySet_size'
+      required:
+      - size
+      type: object
     getAccountById_200_response:
       example:
         data: null
@@ -2774,7 +3216,7 @@ components:
         links:
           $ref: '#/components/schemas/AccountLinks'
       type: object
-    getUsersByAccountId_200_response:
+    listUsersByAccountId_200_response:
       example:
         data:
         - null
@@ -2784,6 +3226,7 @@ components:
             first_cursor: first_cursor
             total: 238
             last_cursor: last_cursor
+            rangeTruncated: true
         links:
           next: /path/to/next_page
           first: /path/to/first_page
@@ -2809,7 +3252,7 @@ components:
         links:
           $ref: '#/components/schemas/UserLinks'
       type: object
-    getApiKeysByUserId_200_response:
+    listApiKeysByUserId_200_response:
       example:
         data:
         - null
@@ -2819,6 +3262,7 @@ components:
             first_cursor: first_cursor
             total: 238
             last_cursor: last_cursor
+            rangeTruncated: true
         links:
           next: /path/to/next_page
           first: /path/to/first_page
@@ -2860,6 +3304,7 @@ components:
             first_cursor: first_cursor
             total: 238
             last_cursor: last_cursor
+            rangeTruncated: true
         links:
           next: /path/to/next_page
           first: /path/to/first_page
@@ -3141,6 +3586,210 @@ components:
         data:
           $ref: '#/components/schemas/CampaignTimingStats'
       type: object
+    listPopuplations_200_response:
+      example:
+        data:
+          populations:
+          - key: key
+          - key: key
+      properties:
+        data:
+          $ref: '#/components/schemas/CategoryPopulationsFull'
+      type: object
+    getPopuplationByKey_200_response:
+      example:
+        data:
+          private:
+            audience_categories:
+              key: null
+            fraction_of_total: 0.17
+          business:
+            audience_categories:
+              key: null
+            fraction_of_total: 0.17
+          name: name
+      properties:
+        data:
+          $ref: '#/components/schemas/PopulationFull'
+      type: object
+    PopulationSourcePrivateCategorySet_home_type:
+      properties:
+        a1:
+          type: integer
+        a2:
+          type: integer
+      required:
+      - a1
+      - a2
+      type: object
+    PopulationSourcePrivateCategorySet_savings:
+      properties:
+        b1:
+          type: integer
+        b2:
+          type: integer
+        b3:
+          type: integer
+      required:
+      - b1
+      - b2
+      - b3
+      type: object
+    PopulationSourcePrivateCategorySet_lifecycle:
+      properties:
+        c1:
+          type: integer
+        c2:
+          type: integer
+        c3:
+          type: integer
+        c4:
+          type: integer
+        c5:
+          type: integer
+      required:
+      - c1
+      - c2
+      - c3
+      - c4
+      - c5
+      type: object
+    PopulationSourcePrivateCategorySet_cars:
+      properties:
+        d1:
+          type: integer
+        d2:
+          type: integer
+        d3:
+          type: integer
+      required:
+      - d1
+      - d2
+      - d3
+      type: object
+    PopulationSourcePrivateCategorySet_children:
+      properties:
+        e1:
+          type: integer
+        e2:
+          type: integer
+        e3:
+          type: integer
+      required:
+      - e1
+      - e2
+      - e3
+      type: object
+    PopulationSourcePrivateCategorySet_education:
+      properties:
+        f1:
+          type: integer
+        f2:
+          type: integer
+        f3:
+          type: integer
+      required:
+      - f1
+      - f2
+      - f3
+      type: object
+    PopulationSourcePrivateCategorySet_neighbourhood_type:
+      properties:
+        g1:
+          type: integer
+        g2:
+          type: integer
+        g3:
+          type: integer
+        g4:
+          type: integer
+      required:
+      - g1
+      - g2
+      - g3
+      - g4
+      type: object
+    PopulationSourcePrivateCategorySet_income:
+      properties:
+        h1:
+          type: integer
+        h2:
+          type: integer
+        h3:
+          type: integer
+        h4:
+          type: integer
+        h5:
+          type: integer
+      required:
+      - h1
+      - h2
+      - h3
+      - h4
+      - h5
+      type: object
+    PopulationSourcePrivateCategorySet_home_ownership:
+      properties:
+        j1:
+          type: integer
+        j2:
+          type: integer
+      required:
+      - j1
+      - j2
+      type: object
+    PopulationSourcePrivateCategorySet_building_age:
+      properties:
+        k1:
+          type: integer
+        k2:
+          type: integer
+        k3:
+          type: integer
+      required:
+      - k1
+      - k2
+      - k3
+      type: object
+    PopulationSourcePrivateCategorySet_living_space:
+      properties:
+        l1:
+          type: integer
+        l2:
+          type: integer
+        l3:
+          type: integer
+      required:
+      - l1
+      - l2
+      - l3
+      type: object
+    PopulationSourcePrivateCategorySet_tech_level:
+      properties:
+        n1:
+          type: integer
+        n2:
+          type: integer
+        n3:
+          type: integer
+      required:
+      - n1
+      - n2
+      - n3
+      type: object
+    PopulationSourceBusinessCategorySet_size:
+      properties:
+        ba1:
+          type: integer
+        ba2:
+          type: integer
+        ba3:
+          type: integer
+      required:
+      - ba1
+      - ba2
+      - ba3
+      type: object
   securitySchemes:
     bearerAuth:
       bearerFormat: JWT
@@ -3162,12 +3811,15 @@ components:
           tokenUrl: /auth/token
       type: oauth2
 x-tagGroups:
-- name: Segmentation
+- name: Audience Data
   tags:
-  - auth
   - audiences
+- name: Measurement
+  tags:
   - campaigns
+  - populations
 - name: Administration
   tags:
+  - auth
   - users
   - accounts

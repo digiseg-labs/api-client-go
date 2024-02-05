@@ -6,7 +6,8 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateUserInAccount**](AccountsAPI.md#CreateUserInAccount) | **Post** /accounts/{account_id}/users | Create user
 [**GetAccountById**](AccountsAPI.md#GetAccountById) | **Get** /accounts/{account_id} | Get account
-[**GetUsersByAccountId**](AccountsAPI.md#GetUsersByAccountId) | **Get** /accounts/{account_id}/users | List users for account
+[**ListUsersByAccountId**](AccountsAPI.md#ListUsersByAccountId) | **Get** /accounts/{account_id}/users | List users for account
+[**UpdateAccountById**](AccountsAPI.md#UpdateAccountById) | **Put** /accounts/{account_id} | Update account
 
 
 
@@ -15,6 +16,8 @@ Method | HTTP request | Description
 > CreateUserInAccount201Response CreateUserInAccount(ctx, accountId).UserMutation(userMutation).Execute()
 
 Create user
+
+
 
 ### Example
 
@@ -148,9 +151,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetUsersByAccountId
+## ListUsersByAccountId
 
-> GetUsersByAccountId200Response GetUsersByAccountId(ctx, accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
+> ListUsersByAccountId200Response ListUsersByAccountId(ctx, accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
 
 List users for account
 
@@ -173,13 +176,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AccountsAPI.GetUsersByAccountId(context.Background(), accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
+	resp, r, err := apiClient.AccountsAPI.ListUsersByAccountId(context.Background(), accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `AccountsAPI.GetUsersByAccountId``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `AccountsAPI.ListUsersByAccountId``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetUsersByAccountId`: GetUsersByAccountId200Response
-	fmt.Fprintf(os.Stdout, "Response from `AccountsAPI.GetUsersByAccountId`: %v\n", resp)
+	// response from `ListUsersByAccountId`: ListUsersByAccountId200Response
+	fmt.Fprintf(os.Stdout, "Response from `AccountsAPI.ListUsersByAccountId`: %v\n", resp)
 }
 ```
 
@@ -193,7 +196,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetUsersByAccountIdRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListUsersByAccountIdRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -204,7 +207,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetUsersByAccountId200Response**](GetUsersByAccountId200Response.md)
+[**ListUsersByAccountId200Response**](ListUsersByAccountId200Response.md)
 
 ### Authorization
 
@@ -213,6 +216,76 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateAccountById
+
+> GetAccountById200Response UpdateAccountById(ctx, accountId).AccountMutation(accountMutation).Execute()
+
+Update account
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	accountId := "accountId_example" // string | 
+	accountMutation := *openapiclient.NewAccountMutation() // AccountMutation | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AccountsAPI.UpdateAccountById(context.Background(), accountId).AccountMutation(accountMutation).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AccountsAPI.UpdateAccountById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateAccountById`: GetAccountById200Response
+	fmt.Fprintf(os.Stdout, "Response from `AccountsAPI.UpdateAccountById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**accountId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateAccountByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **accountMutation** | [**AccountMutation**](AccountMutation.md) |  | 
+
+### Return type
+
+[**GetAccountById200Response**](GetAccountById200Response.md)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

@@ -43,6 +43,9 @@ func (r AccountsAPICreateUserInAccountRequest) Execute() (*CreateUserInAccount20
 /*
 CreateUserInAccount Create user
 
+Create a user within the referenced account.
+
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param accountId
  @return AccountsAPICreateUserInAccountRequest
@@ -293,7 +296,7 @@ func (a *AccountsAPIService) GetAccountByIdExecute(r AccountsAPIGetAccountByIdRe
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type AccountsAPIGetUsersByAccountIdRequest struct {
+type AccountsAPIListUsersByAccountIdRequest struct {
 	ctx context.Context
 	ApiService *AccountsAPIService
 	accountId string
@@ -302,30 +305,30 @@ type AccountsAPIGetUsersByAccountIdRequest struct {
 }
 
 // The desired page size
-func (r AccountsAPIGetUsersByAccountIdRequest) PageSize(pageSize int32) AccountsAPIGetUsersByAccountIdRequest {
+func (r AccountsAPIListUsersByAccountIdRequest) PageSize(pageSize int32) AccountsAPIListUsersByAccountIdRequest {
 	r.pageSize = &pageSize
 	return r
 }
 
 // Optional pagination parameter, indicating the previous cursor value to paginate beyond. The value to provide here is opaque, but can be found in previous requests in the &#x60;meta.page.last_cursor&#x60; field. 
-func (r AccountsAPIGetUsersByAccountIdRequest) PageAfter(pageAfter string) AccountsAPIGetUsersByAccountIdRequest {
+func (r AccountsAPIListUsersByAccountIdRequest) PageAfter(pageAfter string) AccountsAPIListUsersByAccountIdRequest {
 	r.pageAfter = &pageAfter
 	return r
 }
 
-func (r AccountsAPIGetUsersByAccountIdRequest) Execute() (*GetUsersByAccountId200Response, *http.Response, error) {
-	return r.ApiService.GetUsersByAccountIdExecute(r)
+func (r AccountsAPIListUsersByAccountIdRequest) Execute() (*ListUsersByAccountId200Response, *http.Response, error) {
+	return r.ApiService.ListUsersByAccountIdExecute(r)
 }
 
 /*
-GetUsersByAccountId List users for account
+ListUsersByAccountId List users for account
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param accountId
- @return AccountsAPIGetUsersByAccountIdRequest
+ @return AccountsAPIListUsersByAccountIdRequest
 */
-func (a *AccountsAPIService) GetUsersByAccountId(ctx context.Context, accountId string) AccountsAPIGetUsersByAccountIdRequest {
-	return AccountsAPIGetUsersByAccountIdRequest{
+func (a *AccountsAPIService) ListUsersByAccountId(ctx context.Context, accountId string) AccountsAPIListUsersByAccountIdRequest {
+	return AccountsAPIListUsersByAccountIdRequest{
 		ApiService: a,
 		ctx: ctx,
 		accountId: accountId,
@@ -333,16 +336,16 @@ func (a *AccountsAPIService) GetUsersByAccountId(ctx context.Context, accountId 
 }
 
 // Execute executes the request
-//  @return GetUsersByAccountId200Response
-func (a *AccountsAPIService) GetUsersByAccountIdExecute(r AccountsAPIGetUsersByAccountIdRequest) (*GetUsersByAccountId200Response, *http.Response, error) {
+//  @return ListUsersByAccountId200Response
+func (a *AccountsAPIService) ListUsersByAccountIdExecute(r AccountsAPIListUsersByAccountIdRequest) (*ListUsersByAccountId200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetUsersByAccountId200Response
+		localVarReturnValue  *ListUsersByAccountId200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.GetUsersByAccountId")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.ListUsersByAccountId")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -380,6 +383,146 @@ func (a *AccountsAPIService) GetUsersByAccountIdExecute(r AccountsAPIGetUsersByA
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type AccountsAPIUpdateAccountByIdRequest struct {
+	ctx context.Context
+	ApiService *AccountsAPIService
+	accountId string
+	accountMutation *AccountMutation
+}
+
+func (r AccountsAPIUpdateAccountByIdRequest) AccountMutation(accountMutation AccountMutation) AccountsAPIUpdateAccountByIdRequest {
+	r.accountMutation = &accountMutation
+	return r
+}
+
+func (r AccountsAPIUpdateAccountByIdRequest) Execute() (*GetAccountById200Response, *http.Response, error) {
+	return r.ApiService.UpdateAccountByIdExecute(r)
+}
+
+/*
+UpdateAccountById Update account
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param accountId
+ @return AccountsAPIUpdateAccountByIdRequest
+*/
+func (a *AccountsAPIService) UpdateAccountById(ctx context.Context, accountId string) AccountsAPIUpdateAccountByIdRequest {
+	return AccountsAPIUpdateAccountByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		accountId: accountId,
+	}
+}
+
+// Execute executes the request
+//  @return GetAccountById200Response
+func (a *AccountsAPIService) UpdateAccountByIdExecute(r AccountsAPIUpdateAccountByIdRequest) (*GetAccountById200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetAccountById200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.UpdateAccountById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/accounts/{account_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"account_id"+"}", url.PathEscape(parameterValueToString(r.accountId, "accountId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.accountMutation == nil {
+		return localVarReturnValue, nil, reportError("accountMutation is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.accountMutation
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

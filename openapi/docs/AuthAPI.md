@@ -5,10 +5,10 @@ All URIs are relative to *https://api.digiseg.net*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateAccessToken**](AuthAPI.md#CreateAccessToken) | **Post** /auth/token | Authenticate and create access token
-[**CreateApiKey**](AuthAPI.md#CreateApiKey) | **Post** /users/{user_id}/apikeys | Create API key for user
+[**CreateApiKey**](AuthAPI.md#CreateApiKey) | **Post** /users/{user_id}/apikeys | Create API key
 [**DeleteApiKeyById**](AuthAPI.md#DeleteApiKeyById) | **Delete** /users/{user_id}/apikeys/{key_id} | Delete API key
 [**GetApiKeyById**](AuthAPI.md#GetApiKeyById) | **Get** /users/{user_id}/apikeys/{key_id} | Get API key
-[**GetApiKeysByUserId**](AuthAPI.md#GetApiKeysByUserId) | **Get** /users/{user_id}/apikeys | List API keys for user
+[**ListApiKeysByUserId**](AuthAPI.md#ListApiKeysByUserId) | **Get** /users/{user_id}/apikeys | List API keys for user
 
 
 
@@ -80,7 +80,9 @@ No authorization required
 
 > CreateApiKey201Response CreateApiKey(ctx, userId).ApiKeyMutation(apiKeyMutation).Execute()
 
-Create API key for user
+Create API key
+
+
 
 ### Example
 
@@ -286,9 +288,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetApiKeysByUserId
+## ListApiKeysByUserId
 
-> GetApiKeysByUserId200Response GetApiKeysByUserId(ctx, userId).Execute()
+> ListApiKeysByUserId200Response ListApiKeysByUserId(ctx, userId).Execute()
 
 List API keys for user
 
@@ -309,13 +311,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthAPI.GetApiKeysByUserId(context.Background(), userId).Execute()
+	resp, r, err := apiClient.AuthAPI.ListApiKeysByUserId(context.Background(), userId).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.GetApiKeysByUserId``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.ListApiKeysByUserId``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetApiKeysByUserId`: GetApiKeysByUserId200Response
-	fmt.Fprintf(os.Stdout, "Response from `AuthAPI.GetApiKeysByUserId`: %v\n", resp)
+	// response from `ListApiKeysByUserId`: ListApiKeysByUserId200Response
+	fmt.Fprintf(os.Stdout, "Response from `AuthAPI.ListApiKeysByUserId`: %v\n", resp)
 }
 ```
 
@@ -329,7 +331,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetApiKeysByUserIdRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListApiKeysByUserIdRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -338,7 +340,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetApiKeysByUserId200Response**](GetApiKeysByUserId200Response.md)
+[**ListApiKeysByUserId200Response**](ListApiKeysByUserId200Response.md)
 
 ### Authorization
 

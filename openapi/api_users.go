@@ -41,7 +41,15 @@ func (r UsersAPICreateApiKeyRequest) Execute() (*CreateApiKey201Response, *http.
 }
 
 /*
-CreateApiKey Create API key for user
+CreateApiKey Create API key
+
+Create API key for the given user.
+When an API key is created, the `token` value will be exposed
+in the response. This token can be passed as the `X-API-KEY`
+header value for future requests. It is not obtainable in other
+API requests (ie. the client must decide how to keep the API key
+token in e.g. a vault or similar).
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param userId
@@ -182,6 +190,9 @@ func (r UsersAPICreateUserInAccountRequest) Execute() (*CreateUserInAccount201Re
 
 /*
 CreateUserInAccount Create user
+
+Create a user within the referenced account.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param accountId
@@ -677,135 +688,6 @@ func (a *UsersAPIService) GetApiKeyByIdExecute(r UsersAPIGetApiKeyByIdRequest) (
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type UsersAPIGetApiKeysByUserIdRequest struct {
-	ctx context.Context
-	ApiService *UsersAPIService
-	userId string
-}
-
-func (r UsersAPIGetApiKeysByUserIdRequest) Execute() (*GetApiKeysByUserId200Response, *http.Response, error) {
-	return r.ApiService.GetApiKeysByUserIdExecute(r)
-}
-
-/*
-GetApiKeysByUserId List API keys for user
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param userId
- @return UsersAPIGetApiKeysByUserIdRequest
-*/
-func (a *UsersAPIService) GetApiKeysByUserId(ctx context.Context, userId string) UsersAPIGetApiKeysByUserIdRequest {
-	return UsersAPIGetApiKeysByUserIdRequest{
-		ApiService: a,
-		ctx: ctx,
-		userId: userId,
-	}
-}
-
-// Execute executes the request
-//  @return GetApiKeysByUserId200Response
-func (a *UsersAPIService) GetApiKeysByUserIdExecute(r UsersAPIGetApiKeysByUserIdRequest) (*GetApiKeysByUserId200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetApiKeysByUserId200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.GetApiKeysByUserId")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/users/{user_id}/apikeys"
-	localVarPath = strings.Replace(localVarPath, "{"+"user_id"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-API-KEY"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarQueryParams.Add("api_key", key)
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type UsersAPIGetCurrentUserRequest struct {
 	ctx context.Context
 	ApiService *UsersAPIService
@@ -1062,7 +944,136 @@ func (a *UsersAPIService) GetUserByIdExecute(r UsersAPIGetUserByIdRequest) (*Cre
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type UsersAPIGetUsersByAccountIdRequest struct {
+type UsersAPIListApiKeysByUserIdRequest struct {
+	ctx context.Context
+	ApiService *UsersAPIService
+	userId string
+}
+
+func (r UsersAPIListApiKeysByUserIdRequest) Execute() (*ListApiKeysByUserId200Response, *http.Response, error) {
+	return r.ApiService.ListApiKeysByUserIdExecute(r)
+}
+
+/*
+ListApiKeysByUserId List API keys for user
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param userId
+ @return UsersAPIListApiKeysByUserIdRequest
+*/
+func (a *UsersAPIService) ListApiKeysByUserId(ctx context.Context, userId string) UsersAPIListApiKeysByUserIdRequest {
+	return UsersAPIListApiKeysByUserIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		userId: userId,
+	}
+}
+
+// Execute executes the request
+//  @return ListApiKeysByUserId200Response
+func (a *UsersAPIService) ListApiKeysByUserIdExecute(r UsersAPIListApiKeysByUserIdRequest) (*ListApiKeysByUserId200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListApiKeysByUserId200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.ListApiKeysByUserId")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/users/{user_id}/apikeys"
+	localVarPath = strings.Replace(localVarPath, "{"+"user_id"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type UsersAPIListUsersByAccountIdRequest struct {
 	ctx context.Context
 	ApiService *UsersAPIService
 	accountId string
@@ -1071,30 +1082,30 @@ type UsersAPIGetUsersByAccountIdRequest struct {
 }
 
 // The desired page size
-func (r UsersAPIGetUsersByAccountIdRequest) PageSize(pageSize int32) UsersAPIGetUsersByAccountIdRequest {
+func (r UsersAPIListUsersByAccountIdRequest) PageSize(pageSize int32) UsersAPIListUsersByAccountIdRequest {
 	r.pageSize = &pageSize
 	return r
 }
 
 // Optional pagination parameter, indicating the previous cursor value to paginate beyond. The value to provide here is opaque, but can be found in previous requests in the &#x60;meta.page.last_cursor&#x60; field. 
-func (r UsersAPIGetUsersByAccountIdRequest) PageAfter(pageAfter string) UsersAPIGetUsersByAccountIdRequest {
+func (r UsersAPIListUsersByAccountIdRequest) PageAfter(pageAfter string) UsersAPIListUsersByAccountIdRequest {
 	r.pageAfter = &pageAfter
 	return r
 }
 
-func (r UsersAPIGetUsersByAccountIdRequest) Execute() (*GetUsersByAccountId200Response, *http.Response, error) {
-	return r.ApiService.GetUsersByAccountIdExecute(r)
+func (r UsersAPIListUsersByAccountIdRequest) Execute() (*ListUsersByAccountId200Response, *http.Response, error) {
+	return r.ApiService.ListUsersByAccountIdExecute(r)
 }
 
 /*
-GetUsersByAccountId List users for account
+ListUsersByAccountId List users for account
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param accountId
- @return UsersAPIGetUsersByAccountIdRequest
+ @return UsersAPIListUsersByAccountIdRequest
 */
-func (a *UsersAPIService) GetUsersByAccountId(ctx context.Context, accountId string) UsersAPIGetUsersByAccountIdRequest {
-	return UsersAPIGetUsersByAccountIdRequest{
+func (a *UsersAPIService) ListUsersByAccountId(ctx context.Context, accountId string) UsersAPIListUsersByAccountIdRequest {
+	return UsersAPIListUsersByAccountIdRequest{
 		ApiService: a,
 		ctx: ctx,
 		accountId: accountId,
@@ -1102,16 +1113,16 @@ func (a *UsersAPIService) GetUsersByAccountId(ctx context.Context, accountId str
 }
 
 // Execute executes the request
-//  @return GetUsersByAccountId200Response
-func (a *UsersAPIService) GetUsersByAccountIdExecute(r UsersAPIGetUsersByAccountIdRequest) (*GetUsersByAccountId200Response, *http.Response, error) {
+//  @return ListUsersByAccountId200Response
+func (a *UsersAPIService) ListUsersByAccountIdExecute(r UsersAPIListUsersByAccountIdRequest) (*ListUsersByAccountId200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetUsersByAccountId200Response
+		localVarReturnValue  *ListUsersByAccountId200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.GetUsersByAccountId")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.ListUsersByAccountId")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

@@ -128,7 +128,7 @@ paths:
       x-codeSamples:
       - lang: Shell
         source: |-
-          curl -H "Authorization: $ACCESS_TOKEN" -X GET \
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X GET \
           https://api.digiseg.net/accounts/$ACCOUNT_ID
       - lang: JavaScript
         source: "fetch(\"https://api.digiseg.net/accounts/\"+account_id, {\n  \"method\"\
@@ -212,7 +212,7 @@ paths:
       x-codeSamples:
       - lang: Shell
         source: |-
-          curl -H "Authorization: $ACCESS_TOKEN" -X GET \
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X GET \
           https://api.digiseg.net/accounts/$ACCOUNT_ID/users
       - lang: JavaScript
         source: "fetch(\"https://api.digiseg.net/accounts/\"+account_id+\"/users\"\
@@ -278,7 +278,7 @@ paths:
       x-codeSamples:
       - lang: Shell
         source: |-
-          curl -H "Authorization: $ACCESS_TOKEN" -X GET \
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X GET \
           https://api.digiseg.net/users/$USER_ID/apikeys
       - lang: JavaScript
         source: "fetch(\"https://api.digiseg.net/users/\"+user_id+\"/apikeys\", {\n\
@@ -350,7 +350,7 @@ paths:
       x-codeSamples:
       - lang: Shell
         source: |-
-          curl -H "Authorization: $ACCESS_TOKEN" -X DELETE \
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X DELETE \
           https://api.digiseg.net/users/$USER_ID/apikeys/$KEY_ID
       - lang: JavaScript
         source: "fetch(\"https://api.digiseg.net/users/\"+user_id+\"/apikeys/\"+key_id,\
@@ -391,7 +391,7 @@ paths:
       x-codeSamples:
       - lang: Shell
         source: |-
-          curl -H "Authorization: $ACCESS_TOKEN" -X GET \
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X GET \
           https://api.digiseg.net/users/$USER_ID/apikeys/$KEY_ID
       - lang: JavaScript
         source: "fetch(\"https://api.digiseg.net/users/\"+user_id+\"/apikeys/\"+key_id,\
@@ -416,7 +416,7 @@ paths:
       x-codeSamples:
       - lang: Shell
         source: |-
-          curl -H "Authorization: $ACCESS_TOKEN" -X GET \
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X GET \
           https://api.digiseg.net/user
       - lang: JavaScript
         source: "fetch(\"https://api.digiseg.net/user\", {\n  \"method\": \"GET\"\
@@ -446,7 +446,7 @@ paths:
       x-codeSamples:
       - lang: Shell
         source: |-
-          curl -H "Authorization: $ACCESS_TOKEN" -X DELETE \
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X DELETE \
           https://api.digiseg.net/users/$USER_ID
       - lang: JavaScript
         source: "fetch(\"https://api.digiseg.net/users/\"+user_id, {\n  \"method\"\
@@ -479,7 +479,7 @@ paths:
       x-codeSamples:
       - lang: Shell
         source: |-
-          curl -H "Authorization: $ACCESS_TOKEN" -X GET \
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X GET \
           https://api.digiseg.net/users/$USER_ID
       - lang: JavaScript
         source: "fetch(\"https://api.digiseg.net/users/\"+user_id, {\n  \"method\"\
@@ -957,6 +957,42 @@ paths:
         source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/stats/timing\"\
           , {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
           }).then(response => {\n  console.log(response);\n})"
+  /campaigns/{campaign_id}/stats/frequencies:
+    get:
+      description: |
+        Query the frequency statistics for a campaign. Frequency
+        statistics are helpful to identify the frequency of impressions
+        per user, or distinct reach of a campaign. It can also be helpful
+        to identify how multiple impressions for the same users may or
+        may not generate more clicks.
+      operationId: queryCampaignFrequencyStats
+      parameters:
+      - explode: false
+        in: path
+        name: campaign_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/queryCampaignFrequencyStats_200_response'
+          description: OK
+      summary: Frequency statistics for campaign
+      tags:
+      - campaigns
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/campaigns/$CAMPAIGN_ID/stats/frequencies
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/stats/frequencies\"\
+          , {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
+          }).then(response => {\n  console.log(response);\n})"
   /populations/{category_key}:
     get:
       description: List all populations within a category
@@ -1207,10 +1243,7 @@ components:
       content:
         application/json:
           schema:
-            properties:
-              data:
-                $ref: '#/components/schemas/CampaignFrequencyStats'
-            type: object
+            $ref: '#/components/schemas/queryCampaignFrequencyStats_200_response'
       description: OK
     ListPopulationsResponse:
       content:
@@ -3010,11 +3043,12 @@ components:
       properties:
         average_frequency:
           description: |
-            The average frequency of impressions per user
+            The average frequency of impressions per user.
           type: number
         frequencies:
           description: |
-            A listing of each frequency observed and the relevant measurements for each
+            A listing of frequencies observed and the relevant measurements for each. The returned list
+            may be truncated to cut off the "long tail" of frequency values.
           items:
             $ref: '#/components/schemas/FrequencyStats'
           type: array
@@ -3585,6 +3619,25 @@ components:
       properties:
         data:
           $ref: '#/components/schemas/CampaignTimingStats'
+      type: object
+    queryCampaignFrequencyStats_200_response:
+      example:
+        data:
+          frequencies:
+          - frequency: 1
+            count: 4327843
+          - frequency: 2
+            count: 1337207
+          - frequency: 3
+            count: 38447
+          - frequency: 4
+            count: 4383
+          - frequency: 5
+            count: 1238
+          count_above_cap: 27
+      properties:
+        data:
+          $ref: '#/components/schemas/CampaignFrequencyStats'
       type: object
     listPopuplations_200_response:
       example:

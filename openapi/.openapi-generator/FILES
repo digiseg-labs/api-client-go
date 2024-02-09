@@ -115,6 +115,7 @@ docs/PrivateAudienceStats.md
 docs/PrivateAudienceStatsAudienceCategories.md
 docs/QueryCampaignAudienceStats200Response.md
 docs/QueryCampaignCountryStats200Response.md
+docs/QueryCampaignFrequencyStats200Response.md
 docs/QueryCampaignTimingStats200Response.md
 docs/RegistrationByIdResponseData.md
 docs/RegistrationCreationResponseData.md
@@ -238,6 +239,7 @@ model_private_audience_stats.go
 model_private_audience_stats_audience_categories.go
 model_query_campaign_audience_stats_200_response.go
 model_query_campaign_country_stats_200_response.go
+model_query_campaign_frequency_stats_200_response.go
 model_query_campaign_timing_stats_200_response.go
 model_registration_by_id_response_data.go
 model_registration_creation_response_data.go

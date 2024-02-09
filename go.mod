@@ -2,7 +2,7 @@ module github.com/digiseg-labs/api-client-go
 
 go 1.18
 
-require golang.org/x/oauth2 v0.16.0
+require golang.org/x/oauth2 v0.17.0
 
 require (
 	github.com/golang/protobuf v1.5.3 // indirect

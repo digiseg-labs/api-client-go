@@ -133,6 +133,7 @@ Class | Method | HTTP request | Description
 *CampaignsAPI* | [**ListCampaigns**](docs/CampaignsAPI.md#listcampaigns) | **Get** /campaigns | List campaigns
 *CampaignsAPI* | [**QueryCampaignAudienceStats**](docs/CampaignsAPI.md#querycampaignaudiencestats) | **Get** /campaigns/{campaign_id}/stats/audiences | Audience statistics for campaign
 *CampaignsAPI* | [**QueryCampaignCountryStats**](docs/CampaignsAPI.md#querycampaigncountrystats) | **Get** /campaigns/{campaign_id}/stats/countries | Country statistics for campaign
+*CampaignsAPI* | [**QueryCampaignFrequencyStats**](docs/CampaignsAPI.md#querycampaignfrequencystats) | **Get** /campaigns/{campaign_id}/stats/frequencies | Frequency statistics for campaign
 *CampaignsAPI* | [**QueryCampaignTimingStats**](docs/CampaignsAPI.md#querycampaigntimingstats) | **Get** /campaigns/{campaign_id}/stats/timing | Timing statistics for campaign
 *CampaignsAPI* | [**UpdateCampaignById**](docs/CampaignsAPI.md#updatecampaignbyid) | **Put** /campaigns/{campaign_id} | Update campaign
 *PopulationsAPI* | [**GetPopuplationByKey**](docs/PopulationsAPI.md#getpopuplationbykey) | **Get** /populations/{category_key}/{population_key} | Get Population by key
@@ -250,6 +251,7 @@ Class | Method | HTTP request | Description
  - [PrivateAudienceStatsAudienceCategories](docs/PrivateAudienceStatsAudienceCategories.md)
  - [QueryCampaignAudienceStats200Response](docs/QueryCampaignAudienceStats200Response.md)
  - [QueryCampaignCountryStats200Response](docs/QueryCampaignCountryStats200Response.md)
+ - [QueryCampaignFrequencyStats200Response](docs/QueryCampaignFrequencyStats200Response.md)
  - [QueryCampaignTimingStats200Response](docs/QueryCampaignTimingStats200Response.md)
  - [RegistrationByIdResponseData](docs/RegistrationByIdResponseData.md)
  - [RegistrationCreationResponseData](docs/RegistrationCreationResponseData.md)

@@ -20,9 +20,9 @@ var _ MappedNullable = &CampaignFrequencyStats{}
 
 // CampaignFrequencyStats struct for CampaignFrequencyStats
 type CampaignFrequencyStats struct {
-	// The average frequency of impressions per user 
+	// The average frequency of impressions per user. 
 	AverageFrequency *float32 `json:"average_frequency,omitempty"`
-	// A listing of each frequency observed and the relevant measurements for each 
+	// A listing of frequencies observed and the relevant measurements for each. The returned list may be truncated to cut off the \"long tail\" of frequency values. 
 	Frequencies []FrequencyStats `json:"frequencies,omitempty"`
 	// The number of users that have generated impressions at a frequency value greater than those represented in `frequencies`. 
 	CountAboveCap *int32 `json:"count_above_cap,omitempty"`

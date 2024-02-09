@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AverageFrequency** | Pointer to **float32** | The average frequency of impressions per user  | [optional] 
-**Frequencies** | Pointer to [**[]FrequencyStats**](FrequencyStats.md) | A listing of each frequency observed and the relevant measurements for each  | [optional] 
+**AverageFrequency** | Pointer to **float32** | The average frequency of impressions per user.  | [optional] 
+**Frequencies** | Pointer to [**[]FrequencyStats**](FrequencyStats.md) | A listing of frequencies observed and the relevant measurements for each. The returned list may be truncated to cut off the \&quot;long tail\&quot; of frequency values.  | [optional] 
 **CountAboveCap** | Pointer to **int32** | The number of users that have generated impressions at a frequency value greater than those represented in &#x60;frequencies&#x60;.  | [optional] 
 
 ## Methods

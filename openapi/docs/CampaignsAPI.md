@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**ListCampaigns**](CampaignsAPI.md#ListCampaigns) | **Get** /campaigns | List campaigns
 [**QueryCampaignAudienceStats**](CampaignsAPI.md#QueryCampaignAudienceStats) | **Get** /campaigns/{campaign_id}/stats/audiences | Audience statistics for campaign
 [**QueryCampaignCountryStats**](CampaignsAPI.md#QueryCampaignCountryStats) | **Get** /campaigns/{campaign_id}/stats/countries | Country statistics for campaign
+[**QueryCampaignFrequencyStats**](CampaignsAPI.md#QueryCampaignFrequencyStats) | **Get** /campaigns/{campaign_id}/stats/frequencies | Frequency statistics for campaign
 [**QueryCampaignTimingStats**](CampaignsAPI.md#QueryCampaignTimingStats) | **Get** /campaigns/{campaign_id}/stats/timing | Timing statistics for campaign
 [**UpdateCampaignById**](CampaignsAPI.md#UpdateCampaignById) | **Put** /campaigns/{campaign_id} | Update campaign
 
@@ -420,6 +421,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**QueryCampaignCountryStats200Response**](QueryCampaignCountryStats200Response.md)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## QueryCampaignFrequencyStats
+
+> QueryCampaignFrequencyStats200Response QueryCampaignFrequencyStats(ctx, campaignId).Execute()
+
+Frequency statistics for campaign
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	campaignId := "campaignId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CampaignsAPI.QueryCampaignFrequencyStats(context.Background(), campaignId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CampaignsAPI.QueryCampaignFrequencyStats``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `QueryCampaignFrequencyStats`: QueryCampaignFrequencyStats200Response
+	fmt.Fprintf(os.Stdout, "Response from `CampaignsAPI.QueryCampaignFrequencyStats`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**campaignId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiQueryCampaignFrequencyStatsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**QueryCampaignFrequencyStats200Response**](QueryCampaignFrequencyStats200Response.md)
 
 ### Authorization
 

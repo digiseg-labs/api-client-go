@@ -22,18 +22,10 @@ import (
 // create API client
 api := digiseg.NewAPIClient(digiseg.NewConfiguration())
 
-// authenticate with username+password
-req := api.AuthAPI.CreateAccessToken(context.Background()).AuthTokenRequest(digiseg.AuthTokenRequest{
-    Username: username,
-    Password: &password,
-})
-authResp, _, err := req.Execute()
-if err != nil {
-    return "", err
-}
-
 // look up audiences
-ctx := context.WithValue(context.Background(), digiseg.ContextAccessToken, *authResp.AccessToken)
+ctx := context.WithValue(context.Background(), digiseg.ContextAPIKeys, map[string]digiseg.APIKey{
+    "apiKeyHeaderAuth": {Key: apiKey},
+})
 req = api.AudiencesAPI.ResolveAudiencesOfSingle(ctx, ipAddress)
 audiencesResponse, _, err := req.Execute()
 ```

@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Measurements** | Pointer to [**[]Measurement**](Measurement.md) | Measurements related to this object | [optional] 
-**Code** | Pointer to **string** | Country code of the country | [optional] 
+**Measurements** | [**[]Measurement**](Measurement.md) | Measurements related to this object | 
+**Code** | **string** | Country code of the country | 
 
 ## Methods
 
 ### NewCountryStats
 
-`func NewCountryStats() *CountryStats`
+`func NewCountryStats(measurements []Measurement, code string, ) *CountryStats`
 
 NewCountryStats instantiates a new CountryStats object
 This constructor will assign default values to properties that have it defined,
@@ -45,11 +45,6 @@ and a boolean to check if the value has been set.
 
 SetMeasurements sets Measurements field to given value.
 
-### HasMeasurements
-
-`func (o *CountryStats) HasMeasurements() bool`
-
-HasMeasurements returns a boolean if a field has been set.
 
 ### GetCode
 
@@ -70,11 +65,6 @@ and a boolean to check if the value has been set.
 
 SetCode sets Code field to given value.
 
-### HasCode
-
-`func (o *CountryStats) HasCode() bool`
-
-HasCode returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

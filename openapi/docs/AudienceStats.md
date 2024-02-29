@@ -4,15 +4,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Measurements** | Pointer to [**[]Measurement**](Measurement.md) | Measurements related to this object | [optional] 
+**Measurements** | [**[]Measurement**](Measurement.md) | Measurements related to this object | 
 **Comparisons** | Pointer to [**[]Comparison**](Comparison.md) |  | [optional] 
-**Code** | Pointer to **string** | The code of the audience | [optional] 
+**Code** | **string** | The code of the audience | 
+**Name** | **string** | The name of the audience | 
 
 ## Methods
 
 ### NewAudienceStats
 
-`func NewAudienceStats() *AudienceStats`
+`func NewAudienceStats(measurements []Measurement, code string, name string, ) *AudienceStats`
 
 NewAudienceStats instantiates a new AudienceStats object
 This constructor will assign default values to properties that have it defined,
@@ -46,11 +47,6 @@ and a boolean to check if the value has been set.
 
 SetMeasurements sets Measurements field to given value.
 
-### HasMeasurements
-
-`func (o *AudienceStats) HasMeasurements() bool`
-
-HasMeasurements returns a boolean if a field has been set.
 
 ### GetComparisons
 
@@ -96,11 +92,26 @@ and a boolean to check if the value has been set.
 
 SetCode sets Code field to given value.
 
-### HasCode
 
-`func (o *AudienceStats) HasCode() bool`
+### GetName
 
-HasCode returns a boolean if a field has been set.
+`func (o *AudienceStats) GetName() string`
+
+GetName returns the Name field if non-nil, zero value otherwise.
+
+### GetNameOk
+
+`func (o *AudienceStats) GetNameOk() (*string, bool)`
+
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetName
+
+`func (o *AudienceStats) SetName(v string)`
+
+SetName sets Name field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

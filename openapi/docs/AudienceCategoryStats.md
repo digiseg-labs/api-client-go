@@ -4,13 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Name** | **string** | The name of the audience category | 
 **Audiences** | [**[]AudienceStats**](AudienceStats.md) |  | 
 
 ## Methods
 
 ### NewAudienceCategoryStats
 
-`func NewAudienceCategoryStats(audiences []AudienceStats, ) *AudienceCategoryStats`
+`func NewAudienceCategoryStats(name string, audiences []AudienceStats, ) *AudienceCategoryStats`
 
 NewAudienceCategoryStats instantiates a new AudienceCategoryStats object
 This constructor will assign default values to properties that have it defined,
@@ -24,6 +25,26 @@ will change when the set of required properties is changed
 NewAudienceCategoryStatsWithDefaults instantiates a new AudienceCategoryStats object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetName
+
+`func (o *AudienceCategoryStats) GetName() string`
+
+GetName returns the Name field if non-nil, zero value otherwise.
+
+### GetNameOk
+
+`func (o *AudienceCategoryStats) GetNameOk() (*string, bool)`
+
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetName
+
+`func (o *AudienceCategoryStats) SetName(v string)`
+
+SetName sets Name field to given value.
+
 
 ### GetAudiences
 

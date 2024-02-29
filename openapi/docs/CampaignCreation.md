@@ -5,18 +5,23 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  | 
-**Labels** | Pointer to **[]string** | A set of labels that users can use to categorize their campaigns. Can be used to indicate type of campaign, customer names or other traits.  | [optional] 
+**Labels** | Pointer to **[]string** | A set of labels that users can use to categorize their measurements. Can be used to indicate type of campaign, customer names or other traits.  | [optional] 
 **AccountId** | Pointer to **string** | The ID of the account that owns this campaign | [optional] [readonly] 
 **StartDate** | Pointer to **time.Time** | The date for which the campaign and its data ingestion will start. | [optional] [readonly] 
 **LifeCycleStage** | Pointer to [**CampaignLifecycleStage**](CampaignLifecycleStage.md) |  | [optional] 
 **IngestionStatus** | Pointer to [**CampaignIngestionStatus**](CampaignIngestionStatus.md) |  | [optional] 
-**EventSet** | Pointer to [**CampaignEventSet**](CampaignEventSet.md) |  | [optional] 
+**EventLinks** | Pointer to [**CampaignEventLinks**](CampaignEventLinks.md) |  | [optional] 
+**IntegrationPlatform** | Pointer to [**CampaignIntegrationPlatform**](CampaignIntegrationPlatform.md) |  | [optional] 
+**BannerImageUrl** | Pointer to **string** | The URL to a banner image for the campaign. Note that the banner image is used only for Digiseg campaign reporting and presentation, it does NOT represent any delivered banner ad creatives or similar.  | [optional] [readonly] 
+**Client** | Pointer to [**MeasurementClientItem**](MeasurementClientItem.md) |  | [optional] 
+**EventSet** | [**CampaignEventSet**](CampaignEventSet.md) |  | 
+**ClientId** | Pointer to **string** | The ID of the measurement client that this campaign is for | [optional] 
 
 ## Methods
 
 ### NewCampaignCreation
 
-`func NewCampaignCreation(name string, ) *CampaignCreation`
+`func NewCampaignCreation(name string, eventSet CampaignEventSet, ) *CampaignCreation`
 
 NewCampaignCreation instantiates a new CampaignCreation object
 This constructor will assign default values to properties that have it defined,
@@ -176,6 +181,106 @@ SetIngestionStatus sets IngestionStatus field to given value.
 
 HasIngestionStatus returns a boolean if a field has been set.
 
+### GetEventLinks
+
+`func (o *CampaignCreation) GetEventLinks() CampaignEventLinks`
+
+GetEventLinks returns the EventLinks field if non-nil, zero value otherwise.
+
+### GetEventLinksOk
+
+`func (o *CampaignCreation) GetEventLinksOk() (*CampaignEventLinks, bool)`
+
+GetEventLinksOk returns a tuple with the EventLinks field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEventLinks
+
+`func (o *CampaignCreation) SetEventLinks(v CampaignEventLinks)`
+
+SetEventLinks sets EventLinks field to given value.
+
+### HasEventLinks
+
+`func (o *CampaignCreation) HasEventLinks() bool`
+
+HasEventLinks returns a boolean if a field has been set.
+
+### GetIntegrationPlatform
+
+`func (o *CampaignCreation) GetIntegrationPlatform() CampaignIntegrationPlatform`
+
+GetIntegrationPlatform returns the IntegrationPlatform field if non-nil, zero value otherwise.
+
+### GetIntegrationPlatformOk
+
+`func (o *CampaignCreation) GetIntegrationPlatformOk() (*CampaignIntegrationPlatform, bool)`
+
+GetIntegrationPlatformOk returns a tuple with the IntegrationPlatform field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIntegrationPlatform
+
+`func (o *CampaignCreation) SetIntegrationPlatform(v CampaignIntegrationPlatform)`
+
+SetIntegrationPlatform sets IntegrationPlatform field to given value.
+
+### HasIntegrationPlatform
+
+`func (o *CampaignCreation) HasIntegrationPlatform() bool`
+
+HasIntegrationPlatform returns a boolean if a field has been set.
+
+### GetBannerImageUrl
+
+`func (o *CampaignCreation) GetBannerImageUrl() string`
+
+GetBannerImageUrl returns the BannerImageUrl field if non-nil, zero value otherwise.
+
+### GetBannerImageUrlOk
+
+`func (o *CampaignCreation) GetBannerImageUrlOk() (*string, bool)`
+
+GetBannerImageUrlOk returns a tuple with the BannerImageUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBannerImageUrl
+
+`func (o *CampaignCreation) SetBannerImageUrl(v string)`
+
+SetBannerImageUrl sets BannerImageUrl field to given value.
+
+### HasBannerImageUrl
+
+`func (o *CampaignCreation) HasBannerImageUrl() bool`
+
+HasBannerImageUrl returns a boolean if a field has been set.
+
+### GetClient
+
+`func (o *CampaignCreation) GetClient() MeasurementClientItem`
+
+GetClient returns the Client field if non-nil, zero value otherwise.
+
+### GetClientOk
+
+`func (o *CampaignCreation) GetClientOk() (*MeasurementClientItem, bool)`
+
+GetClientOk returns a tuple with the Client field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetClient
+
+`func (o *CampaignCreation) SetClient(v MeasurementClientItem)`
+
+SetClient sets Client field to given value.
+
+### HasClient
+
+`func (o *CampaignCreation) HasClient() bool`
+
+HasClient returns a boolean if a field has been set.
+
 ### GetEventSet
 
 `func (o *CampaignCreation) GetEventSet() CampaignEventSet`
@@ -195,11 +300,31 @@ and a boolean to check if the value has been set.
 
 SetEventSet sets EventSet field to given value.
 
-### HasEventSet
 
-`func (o *CampaignCreation) HasEventSet() bool`
+### GetClientId
 
-HasEventSet returns a boolean if a field has been set.
+`func (o *CampaignCreation) GetClientId() string`
+
+GetClientId returns the ClientId field if non-nil, zero value otherwise.
+
+### GetClientIdOk
+
+`func (o *CampaignCreation) GetClientIdOk() (*string, bool)`
+
+GetClientIdOk returns a tuple with the ClientId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetClientId
+
+`func (o *CampaignCreation) SetClientId(v string)`
+
+SetClientId sets ClientId field to given value.
+
+### HasClientId
+
+`func (o *CampaignCreation) HasClientId() bool`
+
+HasClientId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** | Unique ID for the object | 
 **Name** | Pointer to **string** |  | [optional] 
-**Labels** | Pointer to **[]string** | A set of labels that users can use to categorize their campaigns. Can be used to indicate type of campaign, customer names or other traits.  | [optional] 
+**Labels** | Pointer to **[]string** | A set of labels that users can use to categorize their measurements. Can be used to indicate type of campaign, customer names or other traits.  | [optional] 
 **AccountId** | Pointer to **string** | The ID of the account that owns this campaign | [optional] [readonly] 
 **StartDate** | Pointer to **time.Time** | The date for which the campaign and its data ingestion will start. | [optional] [readonly] 
 **LifeCycleStage** | Pointer to [**CampaignLifecycleStage**](CampaignLifecycleStage.md) |  | [optional] 

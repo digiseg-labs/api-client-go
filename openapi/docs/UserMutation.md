@@ -6,9 +6,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Email** | Pointer to **string** | The email of the user (used as username when authenticating with password) | [optional] 
 **Name** | Pointer to **string** | Human readable name of the user | [optional] 
+**AccountId** | Pointer to **string** | ID of the account that this user pertains to. If the user has multiple account memberships, this account ID will represent the primary account of the user.  | [optional] 
 **Roles** | Pointer to [**[]UserAccountRole**](UserAccountRole.md) | The roles that the user has within the account | [optional] 
 **AvatarUrl** | Pointer to **string** | The URL to an avatar of the user | [optional] 
-**AccountId** | Pointer to **string** | ID of the account that this user pertains to | [optional] 
+**AccountMemberships** | Pointer to [**[]UserAccountMembership**](UserAccountMembership.md) |  | [optional] [readonly] 
 **IsSuperAdmin** | Pointer to **bool** | Determines if the user is a super admin of Digiseg API services | [optional] 
 **Password** | Pointer to **string** | Password of the user | [optional] 
 
@@ -81,6 +82,31 @@ SetName sets Name field to given value.
 
 HasName returns a boolean if a field has been set.
 
+### GetAccountId
+
+`func (o *UserMutation) GetAccountId() string`
+
+GetAccountId returns the AccountId field if non-nil, zero value otherwise.
+
+### GetAccountIdOk
+
+`func (o *UserMutation) GetAccountIdOk() (*string, bool)`
+
+GetAccountIdOk returns a tuple with the AccountId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccountId
+
+`func (o *UserMutation) SetAccountId(v string)`
+
+SetAccountId sets AccountId field to given value.
+
+### HasAccountId
+
+`func (o *UserMutation) HasAccountId() bool`
+
+HasAccountId returns a boolean if a field has been set.
+
 ### GetRoles
 
 `func (o *UserMutation) GetRoles() []UserAccountRole`
@@ -131,30 +157,30 @@ SetAvatarUrl sets AvatarUrl field to given value.
 
 HasAvatarUrl returns a boolean if a field has been set.
 
-### GetAccountId
+### GetAccountMemberships
 
-`func (o *UserMutation) GetAccountId() string`
+`func (o *UserMutation) GetAccountMemberships() []UserAccountMembership`
 
-GetAccountId returns the AccountId field if non-nil, zero value otherwise.
+GetAccountMemberships returns the AccountMemberships field if non-nil, zero value otherwise.
 
-### GetAccountIdOk
+### GetAccountMembershipsOk
 
-`func (o *UserMutation) GetAccountIdOk() (*string, bool)`
+`func (o *UserMutation) GetAccountMembershipsOk() (*[]UserAccountMembership, bool)`
 
-GetAccountIdOk returns a tuple with the AccountId field if it's non-nil, zero value otherwise
+GetAccountMembershipsOk returns a tuple with the AccountMemberships field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAccountId
+### SetAccountMemberships
 
-`func (o *UserMutation) SetAccountId(v string)`
+`func (o *UserMutation) SetAccountMemberships(v []UserAccountMembership)`
 
-SetAccountId sets AccountId field to given value.
+SetAccountMemberships sets AccountMemberships field to given value.
 
-### HasAccountId
+### HasAccountMemberships
 
-`func (o *UserMutation) HasAccountId() bool`
+`func (o *UserMutation) HasAccountMemberships() bool`
 
-HasAccountId returns a boolean if a field has been set.
+HasAccountMemberships returns a boolean if a field has been set.
 
 ### GetIsSuperAdmin
 

@@ -30,8 +30,59 @@ of API client SDKs for popular programming languages:
 
 ## Audience taxonomy
 
-For a catalog of Digisegs audiences, refer to the
-[Audience list](https://digiseg.io/audiences-list).
+Digiseg audiences are grouped into private and business audiences. In each group
+there are categories that then contain the audiences. The API endpoints that
+communicate audiences and household characteristics, audience codes are being used.
+
+The following table can be used as a reference for audience codes. Note that Digiseg
+will at times update names of audiences for purposes of internationalization, clarity
+or other such purposes - but the codes will remain as-is and should be considered a
+stable point of reference for the audience.
+
+| Group | Category | Audience Code | Audience Name |
+|-------|----------|---------------|---------------|
+| private | home_type | a1 | Apartment |
+|  |  | a2 | House |
+|  | savings | b1 | No Savings |
+|  |  | b2 | Smaller Savings |
+|  |  | b3 | Larger Savings |
+|  | lifecycle | c1 | Young singles and couples |
+|  |  | c2 | Young couples with children |
+|  |  | c3 | Families with school children |
+|  |  | c4 | Older families |
+|  |  | c5 | Pensioners |
+|  | cars | d1 | No cars |
+|  |  | d2 | 1 car |
+|  |  | d3 | 2 or more cars |
+|  | children | e1 | No children |
+|  |  | e2 | 1 child |
+|  |  | e3 | 2 or more children |
+|  | education | f1 | Basic |
+|  |  | f2 | Medium |
+|  |  | f3 | Higher |
+|  | neighbourhood_type | g1 | Countryside |
+|  |  | g2 | Village |
+|  |  | g3 | Suburban |
+|  |  | g4 | City |
+|  | income | h1 | Lowest 20% |
+|  |  | h2 | Lowest 20-40% |
+|  |  | h3 | Middle 40-60% |
+|  |  | h4 | Highest 60-80% |
+|  |  | h5 | Top 20% |
+|  | home_ownership | j1 | Rent |
+|  |  | j2 | Own |
+|  | building_age | k1 | Pre 1945 |
+|  |  | k2 | 1945-1989 |
+|  |  | k3 | 1990 until today |
+|  | living_space | l1 | Up to 80 m² |
+|  |  | l2 | 80-119 m² |
+|  |  | l3 | Above 120 m² |
+|  | tech_level | n1 | Basic |
+|  |  | n2 | Medium |
+|  |  | n3 | High |
+| business | size | ba1 | Small Business |
+|  |  | ba2 | Medium Business |
+|  |  | ba3 | Larger Business |
 
 There is also an interactive
 [Audience builder](https://digiseg.io/cookieless-audience-builder/)
@@ -117,6 +168,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AccountsAPI* | [**CreateUserInAccount**](docs/AccountsAPI.md#createuserinaccount) | **Post** /accounts/{account_id}/users | Create user
 *AccountsAPI* | [**GetAccountById**](docs/AccountsAPI.md#getaccountbyid) | **Get** /accounts/{account_id} | Get account
+*AccountsAPI* | [**ListApiKeysByAccountId**](docs/AccountsAPI.md#listapikeysbyaccountid) | **Get** /accounts/{account_id}/apikeys | List API keys for account
 *AccountsAPI* | [**ListUsersByAccountId**](docs/AccountsAPI.md#listusersbyaccountid) | **Get** /accounts/{account_id}/users | List users for account
 *AccountsAPI* | [**UpdateAccountById**](docs/AccountsAPI.md#updateaccountbyid) | **Put** /accounts/{account_id} | Update account
 *AudiencesAPI* | [**ResolveAudiencesOfClient**](docs/AudiencesAPI.md#resolveaudiencesofclient) | **Get** /audiences | Get audiences of the API client
@@ -126,9 +178,13 @@ Class | Method | HTTP request | Description
 *AuthAPI* | [**CreateApiKey**](docs/AuthAPI.md#createapikey) | **Post** /users/{user_id}/apikeys | Create API key
 *AuthAPI* | [**DeleteApiKeyById**](docs/AuthAPI.md#deleteapikeybyid) | **Delete** /users/{user_id}/apikeys/{key_id} | Delete API key
 *AuthAPI* | [**GetApiKeyById**](docs/AuthAPI.md#getapikeybyid) | **Get** /users/{user_id}/apikeys/{key_id} | Get API key
+*AuthAPI* | [**ListApiKeysByAccountId**](docs/AuthAPI.md#listapikeysbyaccountid) | **Get** /accounts/{account_id}/apikeys | List API keys for account
 *AuthAPI* | [**ListApiKeysByUserId**](docs/AuthAPI.md#listapikeysbyuserid) | **Get** /users/{user_id}/apikeys | List API keys for user
+*AuthAPI* | [**UpdateApiKeyById**](docs/AuthAPI.md#updateapikeybyid) | **Put** /users/{user_id}/apikeys/{key_id} | Update API key
 *CampaignsAPI* | [**CreateCampaign**](docs/CampaignsAPI.md#createcampaign) | **Post** /campaigns | Create campaign
+*CampaignsAPI* | [**DeleteCampaignBannerImage**](docs/CampaignsAPI.md#deletecampaignbannerimage) | **Delete** /campaigns/{campaign_id}/assets/banner_image | Delete campaign banner image logo
 *CampaignsAPI* | [**DeleteCampaignById**](docs/CampaignsAPI.md#deletecampaignbyid) | **Delete** /campaigns/{campaign_id} | Delete campaign
+*CampaignsAPI* | [**GetCampaignBannerImage**](docs/CampaignsAPI.md#getcampaignbannerimage) | **Get** /campaigns/{campaign_id}/assets/banner_image | Get campaign banner image
 *CampaignsAPI* | [**GetCampaignById**](docs/CampaignsAPI.md#getcampaignbyid) | **Get** /campaigns/{campaign_id} | Get campaign
 *CampaignsAPI* | [**ListCampaigns**](docs/CampaignsAPI.md#listcampaigns) | **Get** /campaigns | List campaigns
 *CampaignsAPI* | [**QueryCampaignAudienceStats**](docs/CampaignsAPI.md#querycampaignaudiencestats) | **Get** /campaigns/{campaign_id}/stats/audiences | Audience statistics for campaign
@@ -136,6 +192,16 @@ Class | Method | HTTP request | Description
 *CampaignsAPI* | [**QueryCampaignFrequencyStats**](docs/CampaignsAPI.md#querycampaignfrequencystats) | **Get** /campaigns/{campaign_id}/stats/frequencies | Frequency statistics for campaign
 *CampaignsAPI* | [**QueryCampaignTimingStats**](docs/CampaignsAPI.md#querycampaigntimingstats) | **Get** /campaigns/{campaign_id}/stats/timing | Timing statistics for campaign
 *CampaignsAPI* | [**UpdateCampaignById**](docs/CampaignsAPI.md#updatecampaignbyid) | **Put** /campaigns/{campaign_id} | Update campaign
+*CampaignsAPI* | [**UploadCampaignBannerImage**](docs/CampaignsAPI.md#uploadcampaignbannerimage) | **Put** /campaigns/{campaign_id}/assets/banner_image | Upload campaign banner image
+*MeasurementClientsAPI* | [**CreateMeasurementClient**](docs/MeasurementClientsAPI.md#createmeasurementclient) | **Post** /measurement/clients | Create measurement client
+*MeasurementClientsAPI* | [**DeleteClientLogo**](docs/MeasurementClientsAPI.md#deleteclientlogo) | **Delete** /measurement/clients/{client_id}/assets/logo | Delete measurement client logo
+*MeasurementClientsAPI* | [**DeleteMeasurementClientById**](docs/MeasurementClientsAPI.md#deletemeasurementclientbyid) | **Delete** /measurement/clients/{client_id} | Delete measurement client
+*MeasurementClientsAPI* | [**GetClientLogo**](docs/MeasurementClientsAPI.md#getclientlogo) | **Get** /measurement/clients/{client_id}/assets/logo | Get measurement client logo
+*MeasurementClientsAPI* | [**GetMeasurementClientById**](docs/MeasurementClientsAPI.md#getmeasurementclientbyid) | **Get** /measurement/clients/{client_id} | Get measurement client
+*MeasurementClientsAPI* | [**ListMeasurementClients**](docs/MeasurementClientsAPI.md#listmeasurementclients) | **Get** /measurement/clients | List measurement clients
+*MeasurementClientsAPI* | [**UpdateMeasurementClientById**](docs/MeasurementClientsAPI.md#updatemeasurementclientbyid) | **Put** /measurement/clients/{client_id} | Update measurement client
+*MeasurementClientsAPI* | [**UploadClientLogo**](docs/MeasurementClientsAPI.md#uploadclientlogo) | **Put** /measurement/clients/{client_id}/assets/logo | Upload measurement client logo
+*MeasurementLabelsAPI* | [**ListMeasurementLabels**](docs/MeasurementLabelsAPI.md#listmeasurementlabels) | **Get** /measurement/labels | List measurement labels
 *PopulationsAPI* | [**GetPopuplationByKey**](docs/PopulationsAPI.md#getpopuplationbykey) | **Get** /populations/{category_key}/{population_key} | Get Population by key
 *PopulationsAPI* | [**ListPopuplations**](docs/PopulationsAPI.md#listpopuplations) | **Get** /populations/{category_key} | List populations of category
 *UsersAPI* | [**CreateApiKey**](docs/UsersAPI.md#createapikey) | **Post** /users/{user_id}/apikeys | Create API key
@@ -147,6 +213,7 @@ Class | Method | HTTP request | Description
 *UsersAPI* | [**GetUserById**](docs/UsersAPI.md#getuserbyid) | **Get** /users/{user_id} | Get user
 *UsersAPI* | [**ListApiKeysByUserId**](docs/UsersAPI.md#listapikeysbyuserid) | **Get** /users/{user_id}/apikeys | List API keys for user
 *UsersAPI* | [**ListUsersByAccountId**](docs/UsersAPI.md#listusersbyaccountid) | **Get** /accounts/{account_id}/users | List users for account
+*UsersAPI* | [**UpdateApiKeyById**](docs/UsersAPI.md#updateapikeybyid) | **Put** /users/{user_id}/apikeys/{key_id} | Update API key
 *UsersAPI* | [**UpdateUserById**](docs/UsersAPI.md#updateuserbyid) | **Put** /users/{user_id} | Update user
 
 
@@ -164,11 +231,13 @@ Class | Method | HTTP request | Description
  - [AccountOwnerCreation](docs/AccountOwnerCreation.md)
  - [ApiKeyAux](docs/ApiKeyAux.md)
  - [ApiKeyBase](docs/ApiKeyBase.md)
+ - [ApiKeyCreation](docs/ApiKeyCreation.md)
  - [ApiKeyFull](docs/ApiKeyFull.md)
  - [ApiKeyFullWithToken](docs/ApiKeyFullWithToken.md)
  - [ApiKeyItem](docs/ApiKeyItem.md)
  - [ApiKeyLinks](docs/ApiKeyLinks.md)
  - [ApiKeyMutation](docs/ApiKeyMutation.md)
+ - [ApiKeyStatus](docs/ApiKeyStatus.md)
  - [ApiKeyToken](docs/ApiKeyToken.md)
  - [Audience](docs/Audience.md)
  - [AudienceCategoryStats](docs/AudienceCategoryStats.md)
@@ -192,6 +261,7 @@ Class | Method | HTTP request | Description
  - [CampaignFrequencyStats](docs/CampaignFrequencyStats.md)
  - [CampaignFull](docs/CampaignFull.md)
  - [CampaignIngestionStatus](docs/CampaignIngestionStatus.md)
+ - [CampaignIntegrationPlatform](docs/CampaignIntegrationPlatform.md)
  - [CampaignItem](docs/CampaignItem.md)
  - [CampaignLifecycleStage](docs/CampaignLifecycleStage.md)
  - [CampaignLinks](docs/CampaignLinks.md)
@@ -203,6 +273,7 @@ Class | Method | HTTP request | Description
  - [CountryStats](docs/CountryStats.md)
  - [CreateApiKey201Response](docs/CreateApiKey201Response.md)
  - [CreateCampaign201Response](docs/CreateCampaign201Response.md)
+ - [CreateMeasurementClient201Response](docs/CreateMeasurementClient201Response.md)
  - [CreateUserInAccount201Response](docs/CreateUserInAccount201Response.md)
  - [DayOfMonthStats](docs/DayOfMonthStats.md)
  - [DayOfWeekStats](docs/DayOfWeekStats.md)
@@ -214,17 +285,25 @@ Class | Method | HTTP request | Description
  - [HourOfDayStats](docs/HourOfDayStats.md)
  - [IdentifyableObject](docs/IdentifyableObject.md)
  - [IdentifyableObject1](docs/IdentifyableObject1.md)
- - [ListApiKeysByUserId200Response](docs/ListApiKeysByUserId200Response.md)
+ - [ListApiKeysByAccountId200Response](docs/ListApiKeysByAccountId200Response.md)
  - [ListCampaigns200Response](docs/ListCampaigns200Response.md)
+ - [ListMeasurementClients200Response](docs/ListMeasurementClients200Response.md)
+ - [ListMeasurementLabels200Response](docs/ListMeasurementLabels200Response.md)
  - [ListPaginationLinks](docs/ListPaginationLinks.md)
  - [ListPaginationMeta](docs/ListPaginationMeta.md)
  - [ListPaginationMetaPage](docs/ListPaginationMetaPage.md)
  - [ListPopuplations200Response](docs/ListPopuplations200Response.md)
  - [ListUsersByAccountId200Response](docs/ListUsersByAccountId200Response.md)
  - [Measurement](docs/Measurement.md)
+ - [MeasurementClientBase](docs/MeasurementClientBase.md)
+ - [MeasurementClientFull](docs/MeasurementClientFull.md)
+ - [MeasurementClientItem](docs/MeasurementClientItem.md)
+ - [MeasurementClientMutation](docs/MeasurementClientMutation.md)
  - [MeasurementsContainer](docs/MeasurementsContainer.md)
  - [PasswordlessAuthRequest](docs/PasswordlessAuthRequest.md)
  - [PermissionScopes](docs/PermissionScopes.md)
+ - [PopulationAudienceCategorySetBusinessSection](docs/PopulationAudienceCategorySetBusinessSection.md)
+ - [PopulationAudienceCategorySetPrivateSection](docs/PopulationAudienceCategorySetPrivateSection.md)
  - [PopulationAudienceCategorySetSection](docs/PopulationAudienceCategorySetSection.md)
  - [PopulationFull](docs/PopulationFull.md)
  - [PopulationItem](docs/PopulationItem.md)
@@ -264,6 +343,7 @@ Class | Method | HTTP request | Description
  - [ResolveAudiencesOfMultipleResponseItem](docs/ResolveAudiencesOfMultipleResponseItem.md)
  - [TimestampedObject](docs/TimestampedObject.md)
  - [TimestampedObject1](docs/TimestampedObject1.md)
+ - [UserAccountMembership](docs/UserAccountMembership.md)
  - [UserAccountRole](docs/UserAccountRole.md)
  - [UserAux](docs/UserAux.md)
  - [UserBase](docs/UserBase.md)

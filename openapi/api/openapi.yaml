@@ -33,8 +33,59 @@ info:
 
     ## Audience taxonomy
 
-    For a catalog of Digisegs audiences, refer to the
-    [Audience list](https://digiseg.io/audiences-list).
+    Digiseg audiences are grouped into private and business audiences. In each group
+    there are categories that then contain the audiences. The API endpoints that
+    communicate audiences and household characteristics, audience codes are being used.
+
+    The following table can be used as a reference for audience codes. Note that Digiseg
+    will at times update names of audiences for purposes of internationalization, clarity
+    or other such purposes - but the codes will remain as-is and should be considered a
+    stable point of reference for the audience.
+
+    | Group | Category | Audience Code | Audience Name |
+    |-------|----------|---------------|---------------|
+    | private | home_type | a1 | Apartment |
+    |  |  | a2 | House |
+    |  | savings | b1 | No Savings |
+    |  |  | b2 | Smaller Savings |
+    |  |  | b3 | Larger Savings |
+    |  | lifecycle | c1 | Young singles and couples |
+    |  |  | c2 | Young couples with children |
+    |  |  | c3 | Families with school children |
+    |  |  | c4 | Older families |
+    |  |  | c5 | Pensioners |
+    |  | cars | d1 | No cars |
+    |  |  | d2 | 1 car |
+    |  |  | d3 | 2 or more cars |
+    |  | children | e1 | No children |
+    |  |  | e2 | 1 child |
+    |  |  | e3 | 2 or more children |
+    |  | education | f1 | Basic |
+    |  |  | f2 | Medium |
+    |  |  | f3 | Higher |
+    |  | neighbourhood_type | g1 | Countryside |
+    |  |  | g2 | Village |
+    |  |  | g3 | Suburban |
+    |  |  | g4 | City |
+    |  | income | h1 | Lowest 20% |
+    |  |  | h2 | Lowest 20-40% |
+    |  |  | h3 | Middle 40-60% |
+    |  |  | h4 | Highest 60-80% |
+    |  |  | h5 | Top 20% |
+    |  | home_ownership | j1 | Rent |
+    |  |  | j2 | Own |
+    |  | building_age | k1 | Pre 1945 |
+    |  |  | k2 | 1945-1989 |
+    |  |  | k3 | 1990 until today |
+    |  | living_space | l1 | Up to 80 m² |
+    |  |  | l2 | 80-119 m² |
+    |  |  | l3 | Above 120 m² |
+    |  | tech_level | n1 | Basic |
+    |  |  | n2 | Medium |
+    |  |  | n3 | High |
+    | business | size | ba1 | Small Business |
+    |  |  | ba2 | Medium Business |
+    |  |  | ba3 | Larger Business |
 
     There is also an interactive
     [Audience builder](https://digiseg.io/cookieless-audience-builder/)
@@ -93,6 +144,21 @@ tags:
     statistics about the impressions, clicks and other events of the campaign.
   name: campaigns
   x-displayName: Campaigns
+- description: |
+    Measurement labels can be used for categorization and filtering across all
+    measurement activities. At the core, the labels are simple text strings that
+    can be tagged upon e.g. a campaign. By labeling measurement activities, it
+    grants accounts the ability to compare activities with other activities that
+    are categorized in similar ways.
+  name: measurement_labels
+  x-displayName: Labels
+- description: |
+    In your Digiseg account you can register measurement clients.
+    A measurement clients could be a customer, a brand or any other type
+    of client. This is typically useful when running measurement campaigns or
+    other measurement activity in service of someone else.
+  name: measurement_clients
+  x-displayName: Clients / customers
 - description: |
     Populations represent benchmark numbers that can be used to compare your
     audience profile with. Digiseg produces a large set of populations called the
@@ -249,6 +315,41 @@ paths:
       tags:
       - accounts
       - users
+  /accounts/{account_id}/apikeys:
+    get:
+      operationId: listApiKeysByAccountId
+      parameters:
+      - explode: false
+        in: path
+        name: account_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listApiKeysByAccountId_200_response'
+          description: OK
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: List API keys for account
+      tags:
+      - accounts
+      - auth
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X GET \
+          https://api.digiseg.net/accounts/$ACCOUNT_ID/apikeys
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/accounts/\"+account_id+\"/apikeys\"\
+          , {\n  \"method\": \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer\
+          \ \" + token},\n}).then(response => {\n  console.log(response);\n})"
   /users/{user_id}/apikeys:
     get:
       operationId: listApiKeysByUserId
@@ -265,7 +366,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listApiKeysByUserId_200_response'
+                $ref: '#/components/schemas/listApiKeysByAccountId_200_response'
           description: OK
         "403":
           description: Forbidden
@@ -397,6 +498,40 @@ paths:
         source: "fetch(\"https://api.digiseg.net/users/\"+user_id+\"/apikeys/\"+key_id,\
           \ {\n  \"method\": \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer\
           \ \" + token},\n}).then(response => {\n  console.log(response);\n})"
+    put:
+      operationId: updateApiKeyById
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: key_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/ApiKeyUpdateRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApiKeyById_200_response'
+          description: OK
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: Update API key
+      tags:
+      - users
+      - auth
   /user:
     get:
       description: Get information about the currently authenticated user
@@ -540,6 +675,24 @@ paths:
     get:
       operationId: resolveAudiencesOfClient
       parameters:
+      - description: |
+          Optional parameter used to specify which audience information to be returned.
+          The value is comprised of comma-separated values, each indicating a set of
+          audiences:
+
+            * `core` represents the core audiences that are directly linked to household characteristics
+            * `composite` represents the composite audiences, used to model likely behaviours or buying
+              needs associated with the household characteristics.
+            * `name` and `category` refer to the fields of the same names in the returned Audience
+              objects. There is a slight performance gain in leaving these out when they are not needed.
+        explode: true
+        in: query
+        name: include
+        required: false
+        schema:
+          default: "core,name,category"
+          type: string
+        style: form
       - description: Optional parameter to set to `jsonp` if a JSONP response format
           is needed.
         explode: true
@@ -584,6 +737,25 @@ paths:
           \  console.log(response);\n})"
     post:
       operationId: resolveAudiencesOfMultiple
+      parameters:
+      - description: |
+          Optional parameter used to specify which audience information to be returned.
+          The value is comprised of comma-separated values, each indicating a set of
+          audiences:
+
+            * `core` represents the core audiences that are directly linked to household characteristics
+            * `composite` represents the composite audiences, used to model likely behaviours or buying
+              needs associated with the household characteristics.
+            * `name` and `category` refer to the fields of the same names in the returned Audience
+              objects. There is a slight performance gain in leaving these out when they are not needed.
+        explode: true
+        in: query
+        name: include
+        required: false
+        schema:
+          default: "core,name,category"
+          type: string
+        style: form
       requestBody:
         $ref: '#/components/requestBodies/ResolveAudiencesOfMultipleRequest'
       responses:
@@ -612,6 +784,24 @@ paths:
     get:
       operationId: resolveAudiencesOfSingle
       parameters:
+      - description: |
+          Optional parameter used to specify which audience information to be returned.
+          The value is comprised of comma-separated values, each indicating a set of
+          audiences:
+
+            * `core` represents the core audiences that are directly linked to household characteristics
+            * `composite` represents the composite audiences, used to model likely behaviours or buying
+              needs associated with the household characteristics.
+            * `name` and `category` refer to the fields of the same names in the returned Audience
+              objects. There is a slight performance gain in leaving these out when they are not needed.
+        explode: true
+        in: query
+        name: include
+        required: false
+        schema:
+          default: "core,name,category"
+          type: string
+        style: form
       - description: The IP address to look up.
         example: 1.1.1.1
         explode: false
@@ -771,6 +961,302 @@ paths:
       summary: Create campaign
       tags:
       - campaigns
+  /measurement/labels:
+    get:
+      description: |
+        List measurement labels that the user has access to
+      operationId: listMeasurementLabels
+      parameters:
+      - description: |
+          Optional parameter used to query measurement labels by specific account IDs
+          (only available to super admins).
+          The value `*` is synonymous for "all accounts".
+        examples:
+          single:
+            description: A specific account ID
+            value: 4k3jKJ9D12kj0S4c
+          all:
+            description: All accounts
+            value: '*'
+        explode: true
+        in: query
+        name: "filter[account_id]"
+        required: false
+        schema:
+          default: The user's account ID
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listMeasurementLabels_200_response'
+          description: OK
+      summary: List measurement labels
+      tags:
+      - measurement_labels
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/measurement/labels
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/measurement/labels\", {\n  \"method\"\
+          : \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response =>\
+          \ {\n  console.log(response);\n})"
+  /measurement/clients:
+    get:
+      description: |
+        List measurement clients that the user has access to
+      operationId: listMeasurementClients
+      parameters:
+      - description: |
+          Optional parameter used to query measurement clients by specific account IDs
+          (only available to super admins).
+          The value `*` is synonymous for "all accounts".
+        examples:
+          single:
+            description: A specific account ID
+            value: 4k3jKJ9D12kj0S4c
+          all:
+            description: All accounts
+            value: '*'
+        explode: true
+        in: query
+        name: "filter[account_id]"
+        required: false
+        schema:
+          default: The user's account ID
+          type: string
+        style: form
+      - description: Optional parameter used to search for clients where the name
+          contains a substring (case insensitive)
+        example: acme
+        explode: true
+        in: query
+        name: "filter[name][contains]"
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The desired page size
+        explode: true
+        in: query
+        name: "page[size]"
+        required: false
+        schema:
+          default: 100
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: |
+          Optional pagination parameter, indicating the previous cursor value to paginate beyond.
+          The value to provide here is opaque, but can be found in previous requests in the `meta.page.last_cursor` field.
+        explode: true
+        in: query
+        name: "page[after]"
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listMeasurementClients_200_response'
+          description: OK
+      summary: List measurement clients
+      tags:
+      - measurement_clients
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/measurement/clients
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/measurement/clients\", {\n  \"method\"\
+          : \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response =>\
+          \ {\n  console.log(response);\n})"
+    post:
+      description: |
+        Create a measurement client in the account of the user
+      operationId: createMeasurementClient
+      requestBody:
+        $ref: '#/components/requestBodies/MeasurementClientCreationRequest'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createMeasurementClient_201_response'
+          description: OK
+      summary: Create measurement client
+      tags:
+      - measurement_clients
+  /measurement/clients/{client_id}:
+    delete:
+      description: |
+        Deletes a measurement client
+      operationId: deleteMeasurementClientById
+      parameters:
+      - explode: false
+        in: path
+        name: client_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Object deleted
+      summary: Delete measurement client
+      tags:
+      - measurement_clients
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X DELETE \
+          https://api.digiseg.net/measurement/clients/$CLIENT_ID
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/measurement/clients/\"+client_id,\
+          \ {\n  \"method\": \"DELETE\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
+          }).then(response => {\n  console.log(response);\n})"
+    get:
+      description: |
+        Get information for a specific measurement client
+      operationId: getMeasurementClientById
+      parameters:
+      - explode: false
+        in: path
+        name: client_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createMeasurementClient_201_response'
+          description: OK
+      summary: Get measurement client
+      tags:
+      - measurement_clients
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/measurement/clients/$CLIENT_ID
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/measurement/clients/\"+client_id,\
+          \ {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
+          }).then(response => {\n  console.log(response);\n})"
+    put:
+      description: |
+        Updates properties of a measurement client
+      operationId: updateMeasurementClientById
+      parameters:
+      - explode: false
+        in: path
+        name: client_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/MeasurementClientUpdateRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createMeasurementClient_201_response'
+          description: OK
+      summary: Update measurement client
+      tags:
+      - measurement_clients
+  /measurement/clients/{client_id}/assets/logo:
+    delete:
+      description: |
+        Deletes the logo for a client
+      operationId: deleteClientLogo
+      parameters:
+      - explode: false
+        in: path
+        name: client_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Object deleted
+      summary: Delete measurement client logo
+      tags:
+      - measurement_clients
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X DELETE \
+          https://api.digiseg.net/measurement/clients/$CLIENT_ID/assets/logo
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/measurement/clients/\"+client_id+\"\
+          /assets/logo\", {\n  \"method\": \"DELETE\", \n  \"headers\": {\"X-API-KEY\"\
+          : apikey},\n}).then(response => {\n  console.log(response);\n})"
+    get:
+      description: |
+        Gets the client logo, if the image is hosted on the Digiseg platform.
+        Refer to the clients's `logo_url` to get a non-authenticated and shareable URL for the logo.
+      operationId: getClientLogo
+      parameters:
+      - explode: false
+        in: path
+        name: client_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not found
+      summary: Get measurement client logo
+      tags:
+      - measurement_clients
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/measurement/clients/$CLIENT_ID/assets/logo
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/measurement/clients/\"+client_id+\"\
+          /assets/logo\", {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\"\
+          : apikey},\n}).then(response => {\n  console.log(response);\n})"
+    put:
+      description: |
+        Upload a logo for a client
+      operationId: uploadClientLogo
+      parameters:
+      - explode: false
+        in: path
+        name: client_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/ImageUploadRequest'
+      responses:
+        "204":
+          description: OK
+      summary: Upload measurement client logo
+      tags:
+      - measurement_clients
   /campaigns/{campaign_id}:
     delete:
       description: |
@@ -852,6 +1338,84 @@ paths:
                 $ref: '#/components/schemas/createCampaign_201_response'
           description: OK
       summary: Update campaign
+      tags:
+      - campaigns
+  /campaigns/{campaign_id}/assets/banner_image:
+    delete:
+      description: |
+        Deletes the banner image for a campaign
+      operationId: deleteCampaignBannerImage
+      parameters:
+      - explode: false
+        in: path
+        name: campaign_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Object deleted
+      summary: Delete campaign banner image logo
+      tags:
+      - campaigns
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X DELETE \
+          https://api.digiseg.net/campaigns/$CAMPAIGN_ID/assets/banner_image
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/assets/banner_image\"\
+          , {\n  \"method\": \"DELETE\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
+          }).then(response => {\n  console.log(response);\n})"
+    get:
+      description: |
+        Gets the campaign banner image, if the image is hosted on the Digiseg platform.
+        Refer to the campaign's `banner_image_url` to get a non-authenticated and shareable URL for the logo.
+      operationId: getCampaignBannerImage
+      parameters:
+      - explode: false
+        in: path
+        name: campaign_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not found
+      summary: Get campaign banner image
+      tags:
+      - campaigns
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/campaigns/$CAMPAIGN_ID/assets/banner_image
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/assets/banner_image\"\
+          , {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
+          }).then(response => {\n  console.log(response);\n})"
+    put:
+      description: |
+        Upload a banner image for a campaign
+      operationId: uploadCampaignBannerImage
+      parameters:
+      - explode: false
+        in: path
+        name: campaign_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/ImageUploadRequest'
+      responses:
+        "204":
+          description: OK
+      summary: Upload campaign banner image
       tags:
       - campaigns
   /campaigns/{campaign_id}/stats/audiences:
@@ -1086,7 +1650,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ApiKeyMutation'
+            $ref: '#/components/schemas/ApiKeyCreation'
       required: true
     UserCreationRequest:
       content:
@@ -1099,6 +1663,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserMutation'
+      required: true
+    ApiKeyUpdateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiKeyMutation'
       required: true
     ResolveAudiencesOfMultipleRequest:
       content:
@@ -1117,6 +1687,36 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/CampaignMutation'
+      required: true
+    MeasurementClientCreationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MeasurementClientMutation'
+      required: true
+    MeasurementClientUpdateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MeasurementClientMutation'
+      required: true
+    ImageUploadRequest:
+      content:
+        image/gif:
+          schema:
+            format: binary
+            type: string
+        image/png:
+          schema:
+            format: binary
+            type: string
+        image/jpeg:
+          schema:
+            format: binary
+            type: string
+        multipart/form-data:
+          schema:
+            $ref: '#/components/schemas/uploadClientLogo_request'
       required: true
   responses:
     RegistrationCreationResponse:
@@ -1185,7 +1785,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/listApiKeysByUserId_200_response'
+            $ref: '#/components/schemas/listApiKeysByAccountId_200_response'
       description: OK
     UserByIdResponse:
       content:
@@ -1220,6 +1820,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/createCampaign_201_response'
+      description: OK
+    MeasurementLabelsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/listMeasurementLabels_200_response'
+      description: OK
+    MeasurementClientsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/listMeasurementClients_200_response'
+      description: OK
+    MeasurementClientByIdResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createMeasurementClient_201_response'
       description: OK
     CampaignAudienceStatsResponse:
       content:
@@ -1534,6 +2152,16 @@ components:
           example: 3j51ds3kn4234m23l24km23
           type: string
       type: object
+    ApiKeyStatus:
+      description: |
+        Describes the status of the API key.
+        The status can be set to active or disabled manually.
+        It will become expired automatically, if the expiry date has been surpassed.
+      enum:
+      - enabled
+      - disabled
+      - expired
+      type: string
     ApiKeyBase:
       properties:
         name:
@@ -1541,17 +2169,29 @@ components:
           example: CRM integration key
           type: string
         status:
-          enum:
-          - enabled
-          - disabled
-          - expired
-          type: string
+          $ref: '#/components/schemas/ApiKeyStatus'
         expires_at:
           description: Optional date/time that the key will expire
           format: date-time
           type: string
         user_id:
-          description: The ID of the API key's user
+          description: |
+            The ID of the API key's user.
+          readOnly: true
+          type: string
+        account_id:
+          description: |
+            The ID of account that the API key is associated with.
+          type: string
+        last_used_at:
+          description: The approximate last time that the API key was used to authenticate
+            API requests
+          format: date-time
+          readOnly: true
+          type: string
+        token_prefix:
+          description: A prefix of the API key
+          readOnly: true
           type: string
       type: object
     ApiKeyAux:
@@ -1559,6 +2199,10 @@ components:
         scopes:
           $ref: '#/components/schemas/PermissionScopes'
       type: object
+    ApiKeyCreation:
+      allOf:
+      - $ref: '#/components/schemas/ApiKeyBase'
+      - $ref: '#/components/schemas/ApiKeyAux'
     ApiKeyItem:
       allOf:
       - $ref: '#/components/schemas/IdentifyableObject'
@@ -1586,6 +2230,24 @@ components:
           format: uri
           type: string
       type: object
+    UserAccountMembership:
+      description: Describes a user's membership of an account
+      properties:
+        account_id:
+          description: The ID of the account
+          type: string
+        account_name:
+          description: The name of the account
+          type: string
+        roles:
+          description: The roles that the user has within the account
+          items:
+            $ref: '#/components/schemas/UserAccountRole'
+          type: array
+      required:
+      - account_id
+      - roles
+      type: object
     UserAccountRole:
       description: Determines the role of a user within an account
       enum:
@@ -1605,6 +2267,12 @@ components:
           description: Human readable name of the user
           example: Casey Doe
           type: string
+        account_id:
+          description: |
+            ID of the account that this user pertains to. If the user has
+            multiple account memberships, this account ID will represent
+            the primary account of the user.
+          type: string
         roles:
           description: The roles that the user has within the account
           items:
@@ -1623,9 +2291,11 @@ components:
       type: object
     UserAux:
       properties:
-        account_id:
-          description: ID of the account that this user pertains to
-          type: string
+        account_memberships:
+          items:
+            $ref: '#/components/schemas/UserAccountMembership'
+          readOnly: true
+          type: array
         is_super_admin:
           description: Determines if the user is a super admin of Digiseg API services
           type: boolean
@@ -1791,7 +2461,7 @@ components:
           - category: home_type
             code: a2
             name: Home Type > House
-          - category: household_children
+          - category: children
             code: e1
             name: Children in the Household > No children
           - category: education
@@ -1800,13 +2470,13 @@ components:
           - category: neighbourhood_type
             code: g1
             name: Neighbourhood Type > Countryside
-          - category: household_income
+          - category: income
             code: h1
             name: Household Income > Lowest 20%
           - category: building_age
             code: k1
             name: Building Age > Pre 1945
-          - category: household_techlevel
+          - category: tech_level
             code: n1
             name: Tech-Level in Household > Basic
           id: kbj423lt439hcdsijh432i
@@ -1815,7 +2485,7 @@ components:
           - category: home_type
             code: a2
             name: Home Type > House
-          - category: household_children
+          - category: children
             code: e1
             name: Children in the Household > No children
           - category: education
@@ -1824,13 +2494,13 @@ components:
           - category: neighbourhood_type
             code: g1
             name: Neighbourhood Type > Countryside
-          - category: household_income
+          - category: income
             code: h1
             name: Household Income > Lowest 20%
           - category: building_age
             code: k1
             name: Building Age > Pre 1945
-          - category: household_techlevel
+          - category: tech_level
             code: n1
             name: Tech-Level in Household > Basic
           id: kbj423lt439hcdsijh432i
@@ -1847,7 +2517,7 @@ components:
         - category: home_type
           code: a2
           name: Home Type > House
-        - category: household_children
+        - category: children
           code: e1
           name: Children in the Household > No children
         - category: education
@@ -1856,13 +2526,13 @@ components:
         - category: neighbourhood_type
           code: g1
           name: Neighbourhood Type > Countryside
-        - category: household_income
+        - category: income
           code: h1
           name: Household Income > Lowest 20%
         - category: building_age
           code: k1
           name: Building Age > Pre 1945
-        - category: household_techlevel
+        - category: tech_level
           code: n1
           name: Tech-Level in Household > Basic
         id: kbj423lt439hcdsijh432i
@@ -1878,7 +2548,7 @@ components:
           - category: home_type
             code: a2
             name: Home Type > House
-          - category: household_children
+          - category: children
             code: e1
             name: Children in the Household > No children
           - category: education
@@ -1887,13 +2557,13 @@ components:
           - category: neighbourhood_type
             code: g1
             name: Neighbourhood Type > Countryside
-          - category: household_income
+          - category: income
             code: h1
             name: Household Income > Lowest 20%
           - category: building_age
             code: k1
             name: Building Age > Pre 1945
-          - category: household_techlevel
+          - category: tech_level
             code: n1
             name: Tech-Level in Household > Basic
           items:
@@ -1910,7 +2580,7 @@ components:
         - category: home_type
           code: a2
           name: Home Type > House
-        - category: household_children
+        - category: children
           code: e1
           name: Children in the Household > No children
         - category: education
@@ -1919,13 +2589,13 @@ components:
         - category: neighbourhood_type
           code: g1
           name: Neighbourhood Type > Countryside
-        - category: household_income
+        - category: income
           code: h1
           name: Household Income > Lowest 20%
         - category: building_age
           code: k1
           name: Building Age > Pre 1945
-        - category: household_techlevel
+        - category: tech_level
           code: n1
           name: Tech-Level in Household > Basic
         status: null
@@ -1935,7 +2605,7 @@ components:
           - category: home_type
             code: a2
             name: Home Type > House
-          - category: household_children
+          - category: children
             code: e1
             name: Children in the Household > No children
           - category: education
@@ -1944,13 +2614,13 @@ components:
           - category: neighbourhood_type
             code: g1
             name: Neighbourhood Type > Countryside
-          - category: household_income
+          - category: income
             code: h1
             name: Household Income > Lowest 20%
           - category: building_age
             code: k1
             name: Building Age > Pre 1945
-          - category: household_techlevel
+          - category: tech_level
             code: n1
             name: Tech-Level in Household > Basic
           items:
@@ -1988,7 +2658,7 @@ components:
       - category: home_type
         code: a2
         name: Home Type > House
-      - category: household_children
+      - category: children
         code: e1
         name: Children in the Household > No children
       - category: education
@@ -1997,13 +2667,13 @@ components:
       - category: neighbourhood_type
         code: g1
         name: Neighbourhood Type > Countryside
-      - category: household_income
+      - category: income
         code: h1
         name: Household Income > Lowest 20%
       - category: building_age
         code: k1
         name: Building Age > Pre 1945
-      - category: household_techlevel
+      - category: tech_level
         code: n1
         name: Tech-Level in Household > Basic
       items:
@@ -2124,6 +2794,53 @@ components:
           description: A description of what the parameter is used for
           type: string
       type: object
+    MeasurementClientBase:
+      properties:
+        name:
+          description: The name of the measurement client
+          example: Acme Ltd
+          type: string
+        account_id:
+          description: The ID of the account that owns this client
+          example: 4k3jKJ9D12kj0S4c
+          readOnly: true
+          type: string
+        logo_url:
+          description: The URL of an image representing the measurement client
+          example: https://api.digiseg.net/assets/measurement/clients/t4387kdfjn2r3lk/logo?vrft=dsk4j23k4osdk243
+          format: uri
+          readOnly: true
+          type: string
+      type: object
+    MeasurementClientMutation:
+      allOf:
+      - $ref: '#/components/schemas/MeasurementClientBase'
+    MeasurementClientFull:
+      allOf:
+      - $ref: '#/components/schemas/IdentifyableObject1'
+      - $ref: '#/components/schemas/MeasurementClientBase'
+      - $ref: '#/components/schemas/TimestampedObject1'
+    MeasurementClientItem:
+      allOf:
+      - $ref: '#/components/schemas/IdentifyableObject1'
+      - $ref: '#/components/schemas/MeasurementClientBase'
+      example:
+        id: 7c9jKJ9D12kj0S4d
+        name: Acme Ltd
+        logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
+      readOnly: true
+    MeasurementLabels:
+      description: |
+        A set of labels that users can use to categorize their measurements.
+        Can be used to indicate type of campaign, customer names or other
+        traits.
+      example:
+      - Acme
+      - CTV
+      - Seasonal
+      items:
+        type: string
+      type: array
     CampaignBase:
       properties:
         name:
@@ -2131,7 +2848,7 @@ components:
           type: string
         labels:
           description: |
-            A set of labels that users can use to categorize their campaigns.
+            A set of labels that users can use to categorize their measurements.
             Can be used to indicate type of campaign, customer names or other
             traits.
           example:
@@ -2140,7 +2857,6 @@ components:
           - Seasonal
           items:
             type: string
-          maxItems: 5
           type: array
         account_id:
           description: The ID of the account that owns this campaign
@@ -2189,11 +2905,47 @@ components:
       properties:
         event_links:
           $ref: '#/components/schemas/CampaignEventLinks'
+        integration_platform:
+          $ref: '#/components/schemas/CampaignIntegrationPlatform'
+        banner_image_url:
+          description: |
+            The URL to a banner image for the campaign.
+            Note that the banner image is used only for Digiseg campaign reporting and presentation,
+            it does NOT represent any delivered banner ad creatives or similar.
+          example: https://api.digiseg.net/assets/campaigns/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
+          format: uri
+          readOnly: true
+          type: string
+        client:
+          $ref: '#/components/schemas/MeasurementClientItem'
+      type: object
+    CampaignIntegrationPlatform:
+      description: |
+        The integration/platform with which a campaign is being delivered
+      example:
+        id: 0
+        name: Adform
+      properties:
+        id:
+          description: |
+            An ID for the integration platform, if the integration platform is a known platform to Digiseg.
+            Will be null/omitted if the platform name was entered manually as a string.
+          type: string
+        name:
+          description: The name of the integration platform.
+          type: string
+      readOnly: true
       type: object
     CampaignCreationData:
       properties:
         event_set:
           $ref: '#/components/schemas/CampaignEventSet'
+        client_id:
+          description: The ID of the measurement client that this campaign is for
+          example: kfsdj423jkn243lml423
+          type: string
+      required:
+      - event_set
       type: object
     CampaignEventSet:
       description: |
@@ -2214,12 +2966,14 @@ components:
     CampaignCreation:
       allOf:
       - $ref: '#/components/schemas/CampaignBase'
+      - $ref: '#/components/schemas/CampaignAux'
       - $ref: '#/components/schemas/CampaignCreationData'
       required:
       - name
     CampaignMutation:
       allOf:
       - $ref: '#/components/schemas/CampaignBase'
+      - $ref: '#/components/schemas/CampaignAux'
     FractionOfTotal:
       description: |
         The fraction of events that fall within this object compared to the total of the
@@ -2294,6 +3048,8 @@ components:
           items:
             $ref: '#/components/schemas/Measurement'
           type: array
+      required:
+      - measurements
       type: object
     Comparison:
       description: Represents a comparison of measurements with another source
@@ -2339,12 +3095,16 @@ components:
       type: object
     AudienceCategoryStats:
       properties:
+        name:
+          description: The name of the audience category
+          type: string
         audiences:
           items:
             $ref: '#/components/schemas/AudienceStats'
           type: array
       required:
       - audiences
+      - name
       type: object
     AudienceStats:
       allOf:
@@ -2353,6 +3113,13 @@ components:
             description: The code of the audience
             example: a1
             type: string
+          name:
+            description: The name of the audience
+            example: Apartment
+            type: string
+        required:
+        - code
+        - name
         type: object
       - $ref: '#/components/schemas/MeasurementsContainer'
       - $ref: '#/components/schemas/ComparisonsContainer'
@@ -2698,6 +3465,8 @@ components:
             description: Country code of the country
             example: DK
             type: string
+        required:
+        - code
         type: object
       - $ref: '#/components/schemas/MeasurementsContainer'
     CampaignTimingStats:
@@ -3100,29 +3869,145 @@ components:
         comparison or adjustment of populations.
       example:
         private:
+          fraction_of_total: 0.60000191669972
           audience_categories:
-            key: null
-          fraction_of_total: 0.17
+            building_age:
+              k1: 0.15748203304926722
+              k2: 0.3928982945631324
+              k3: 0.44961967238760037
+            cars:
+              d1: 0.3629170872011518
+              d2: 0.3290712776032319
+              d3: 0.30801163519561625
+            children:
+              e1: 0.5810362918794315
+              e2: 0.2150702462122784
+              e3: 0.20389346190829008
+            education:
+              f1: 0.2845780304450923
+              f2: 0.42785638121555847
+              f3: 0.28756558833934925
+            home_ownership:
+              j1: 0.3669767000211004
+              j2: 0.6330232999788996
+            home_type:
+              a1: 0.35777372708205
+              a2: 0.64222627291795
+            income:
+              h1: 0.157881291966047
+              h2: 0.20531067296776892
+              h3: 0.20880081631623842
+              h4: 0.22446332831422933
+              h5: 0.20354389043571633
+            lifecycle:
+              c1: 0.1637364508298437
+              c2: 0.2204226903640166
+              c3: 0.2202620814826336
+              c4: 0.21366189423068807
+              c5: 0.18191688309281803
+            living_space:
+              l1: 0.26044913754608373
+              l2: 0.4447836943442527
+              l3: 0.2947671681096636
+            neighbourhood_type:
+              g1: 0.17472834616737581
+              g2: 0.35623403820575084
+              g3: 0.30825608526723125
+              g4: 0.1607815303596421
+            savings:
+              b1: 0.48156860343408014
+              b2: 0.32373097312992377
+              b3: 0.19470042343599608
+            tech_level:
+              n1: 0.6029877995882236
+              n2: 0.20917762259901243
+              n3: 0.18783457781276397
         business:
+          fraction_of_total: 0.39999808330027997
           audience_categories:
-            key: null
-          fraction_of_total: 0.17
+            size:
+              ba1: 0.500006099426075
+              ba2: 0.30009526544087706
+              ba3: 0.19989863513304795
         name: name
       properties:
         name:
           description: A humanly readable name of the population
           type: string
         private:
-          $ref: '#/components/schemas/PopulationAudienceCategorySetSection'
+          $ref: '#/components/schemas/PopulationAudienceCategorySetPrivateSection'
         business:
-          $ref: '#/components/schemas/PopulationAudienceCategorySetSection'
+          $ref: '#/components/schemas/PopulationAudienceCategorySetBusinessSection'
       readOnly: true
       type: object
-    PopulationAudienceCategorySetSection:
+    PopulationAudienceCategorySetPrivateSection:
+      allOf:
+      - $ref: '#/components/schemas/PopulationAudienceCategorySetSection'
       example:
+        fraction_of_total: 0.60000191669972
         audience_categories:
-          key: null
-        fraction_of_total: 0.17
+          building_age:
+            k1: 0.15748203304926722
+            k2: 0.3928982945631324
+            k3: 0.44961967238760037
+          cars:
+            d1: 0.3629170872011518
+            d2: 0.3290712776032319
+            d3: 0.30801163519561625
+          children:
+            e1: 0.5810362918794315
+            e2: 0.2150702462122784
+            e3: 0.20389346190829008
+          education:
+            f1: 0.2845780304450923
+            f2: 0.42785638121555847
+            f3: 0.28756558833934925
+          home_ownership:
+            j1: 0.3669767000211004
+            j2: 0.6330232999788996
+          home_type:
+            a1: 0.35777372708205
+            a2: 0.64222627291795
+          income:
+            h1: 0.157881291966047
+            h2: 0.20531067296776892
+            h3: 0.20880081631623842
+            h4: 0.22446332831422933
+            h5: 0.20354389043571633
+          lifecycle:
+            c1: 0.1637364508298437
+            c2: 0.2204226903640166
+            c3: 0.2202620814826336
+            c4: 0.21366189423068807
+            c5: 0.18191688309281803
+          living_space:
+            l1: 0.26044913754608373
+            l2: 0.4447836943442527
+            l3: 0.2947671681096636
+          neighbourhood_type:
+            g1: 0.17472834616737581
+            g2: 0.35623403820575084
+            g3: 0.30825608526723125
+            g4: 0.1607815303596421
+          savings:
+            b1: 0.48156860343408014
+            b2: 0.32373097312992377
+            b3: 0.19470042343599608
+          tech_level:
+            n1: 0.6029877995882236
+            n2: 0.20917762259901243
+            n3: 0.18783457781276397
+    PopulationAudienceCategorySetBusinessSection:
+      allOf:
+      - $ref: '#/components/schemas/PopulationAudienceCategorySetSection'
+      example:
+        fraction_of_total: 0.39999808330027997
+        audience_categories:
+          size:
+            ba1: 0.500006099426075
+            ba2: 0.30009526544087706
+            ba3: 0.19989863513304795
+    PopulationAudienceCategorySetSection:
       properties:
         fraction_of_total:
           description: |
@@ -3286,7 +4171,7 @@ components:
         links:
           $ref: '#/components/schemas/UserLinks'
       type: object
-    listApiKeysByUserId_200_response:
+    listApiKeysByAccountId_200_response:
       example:
         data:
         - null
@@ -3365,6 +4250,67 @@ components:
           $ref: '#/components/schemas/CampaignFull'
         links:
           $ref: '#/components/schemas/CampaignLinks'
+      type: object
+    listMeasurementLabels_200_response:
+      example:
+        data:
+        - Acme
+        - CTV
+        - Seasonal
+      properties:
+        data:
+          description: |
+            A set of labels that users can use to categorize their measurements.
+            Can be used to indicate type of campaign, customer names or other
+            traits.
+          example:
+          - Acme
+          - CTV
+          - Seasonal
+          items:
+            type: string
+          type: array
+      type: object
+    listMeasurementClients_200_response:
+      example:
+        data:
+        - id: 7c9jKJ9D12kj0S4d
+          name: Acme Ltd
+          logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
+        - id: 7c9jKJ9D12kj0S4d
+          name: Acme Ltd
+          logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
+        meta:
+          page:
+            first_cursor: first_cursor
+            total: 238
+            last_cursor: last_cursor
+            rangeTruncated: true
+        links:
+          next: /path/to/next_page
+          first: /path/to/first_page
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/MeasurementClientItem'
+          type: array
+        meta:
+          $ref: '#/components/schemas/ListPaginationMeta'
+        links:
+          $ref: '#/components/schemas/ListPaginationLinks'
+      type: object
+    createMeasurementClient_201_response:
+      example:
+        data: null
+      properties:
+        data:
+          $ref: '#/components/schemas/MeasurementClientFull'
+      type: object
+    uploadClientLogo_request:
+      properties:
+        file:
+          format: binary
+          type: string
       type: object
     queryCampaignAudienceStats_200_response:
       example:
@@ -3653,13 +4599,66 @@ components:
       example:
         data:
           private:
+            fraction_of_total: 0.60000191669972
             audience_categories:
-              key: null
-            fraction_of_total: 0.17
+              building_age:
+                k1: 0.15748203304926722
+                k2: 0.3928982945631324
+                k3: 0.44961967238760037
+              cars:
+                d1: 0.3629170872011518
+                d2: 0.3290712776032319
+                d3: 0.30801163519561625
+              children:
+                e1: 0.5810362918794315
+                e2: 0.2150702462122784
+                e3: 0.20389346190829008
+              education:
+                f1: 0.2845780304450923
+                f2: 0.42785638121555847
+                f3: 0.28756558833934925
+              home_ownership:
+                j1: 0.3669767000211004
+                j2: 0.6330232999788996
+              home_type:
+                a1: 0.35777372708205
+                a2: 0.64222627291795
+              income:
+                h1: 0.157881291966047
+                h2: 0.20531067296776892
+                h3: 0.20880081631623842
+                h4: 0.22446332831422933
+                h5: 0.20354389043571633
+              lifecycle:
+                c1: 0.1637364508298437
+                c2: 0.2204226903640166
+                c3: 0.2202620814826336
+                c4: 0.21366189423068807
+                c5: 0.18191688309281803
+              living_space:
+                l1: 0.26044913754608373
+                l2: 0.4447836943442527
+                l3: 0.2947671681096636
+              neighbourhood_type:
+                g1: 0.17472834616737581
+                g2: 0.35623403820575084
+                g3: 0.30825608526723125
+                g4: 0.1607815303596421
+              savings:
+                b1: 0.48156860343408014
+                b2: 0.32373097312992377
+                b3: 0.19470042343599608
+              tech_level:
+                n1: 0.6029877995882236
+                n2: 0.20917762259901243
+                n3: 0.18783457781276397
           business:
+            fraction_of_total: 0.39999808330027997
             audience_categories:
-              key: null
-            fraction_of_total: 0.17
+              size:
+                ba1: 0.500006099426075
+                ba2: 0.30009526544087706
+                ba3: 0.19989863513304795
           name: name
       properties:
         data:
@@ -3870,6 +4869,8 @@ x-tagGroups:
 - name: Measurement
   tags:
   - campaigns
+  - measurement_labels
+  - measurement_clients
   - populations
 - name: Administration
   tags:

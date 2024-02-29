@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Measurements** | Pointer to [**[]Measurement**](Measurement.md) | Measurements related to this object | [optional] 
+**Measurements** | [**[]Measurement**](Measurement.md) | Measurements related to this object | 
 
 ## Methods
 
 ### NewMeasurementsContainer
 
-`func NewMeasurementsContainer() *MeasurementsContainer`
+`func NewMeasurementsContainer(measurements []Measurement, ) *MeasurementsContainer`
 
 NewMeasurementsContainer instantiates a new MeasurementsContainer object
 This constructor will assign default values to properties that have it defined,
@@ -44,11 +44,6 @@ and a boolean to check if the value has been set.
 
 SetMeasurements sets Measurements field to given value.
 
-### HasMeasurements
-
-`func (o *MeasurementsContainer) HasMeasurements() bool`
-
-HasMeasurements returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

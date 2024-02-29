@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Id** | Pointer to **string** | Unique ID for the object | [optional] 
 **Email** | Pointer to **string** | The email of the user (used as username when authenticating with password) | [optional] 
 **Name** | Pointer to **string** | Human readable name of the user | [optional] 
+**AccountId** | Pointer to **string** | ID of the account that this user pertains to. If the user has multiple account memberships, this account ID will represent the primary account of the user.  | [optional] 
 **Roles** | Pointer to [**[]UserAccountRole**](UserAccountRole.md) | The roles that the user has within the account | [optional] 
 **AvatarUrl** | Pointer to **string** | The URL to an avatar of the user | [optional] 
 
@@ -103,6 +104,31 @@ SetName sets Name field to given value.
 `func (o *UserItem) HasName() bool`
 
 HasName returns a boolean if a field has been set.
+
+### GetAccountId
+
+`func (o *UserItem) GetAccountId() string`
+
+GetAccountId returns the AccountId field if non-nil, zero value otherwise.
+
+### GetAccountIdOk
+
+`func (o *UserItem) GetAccountIdOk() (*string, bool)`
+
+GetAccountIdOk returns a tuple with the AccountId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccountId
+
+`func (o *UserItem) SetAccountId(v string)`
+
+SetAccountId sets AccountId field to given value.
+
+### HasAccountId
+
+`func (o *UserItem) HasAccountId() bool`
+
+HasAccountId returns a boolean if a field has been set.
 
 ### GetRoles
 

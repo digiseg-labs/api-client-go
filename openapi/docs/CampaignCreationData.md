@@ -4,13 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**EventSet** | Pointer to [**CampaignEventSet**](CampaignEventSet.md) |  | [optional] 
+**EventSet** | [**CampaignEventSet**](CampaignEventSet.md) |  | 
+**ClientId** | Pointer to **string** | The ID of the measurement client that this campaign is for | [optional] 
 
 ## Methods
 
 ### NewCampaignCreationData
 
-`func NewCampaignCreationData() *CampaignCreationData`
+`func NewCampaignCreationData(eventSet CampaignEventSet, ) *CampaignCreationData`
 
 NewCampaignCreationData instantiates a new CampaignCreationData object
 This constructor will assign default values to properties that have it defined,
@@ -44,11 +45,31 @@ and a boolean to check if the value has been set.
 
 SetEventSet sets EventSet field to given value.
 
-### HasEventSet
 
-`func (o *CampaignCreationData) HasEventSet() bool`
+### GetClientId
 
-HasEventSet returns a boolean if a field has been set.
+`func (o *CampaignCreationData) GetClientId() string`
+
+GetClientId returns the ClientId field if non-nil, zero value otherwise.
+
+### GetClientIdOk
+
+`func (o *CampaignCreationData) GetClientIdOk() (*string, bool)`
+
+GetClientIdOk returns a tuple with the ClientId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetClientId
+
+`func (o *CampaignCreationData) SetClientId(v string)`
+
+SetClientId sets ClientId field to given value.
+
+### HasClientId
+
+`func (o *CampaignCreationData) HasClientId() bool`
+
+HasClientId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

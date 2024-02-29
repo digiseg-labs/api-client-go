@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  For a catalog of Digisegs audiences, refer to the [Audience list](https://digiseg.io/audiences-list).  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young singles and couples | |  |  | c2 | Young couples with children | |  |  | c3 | Families with school children | |  |  | c4 | Older families | |  |  | c5 | Pensioners | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Up to 80 m² | |  |  | l2 | 80-119 m² | |  |  | l3 | Above 120 m² | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -23,11 +23,17 @@ var _ MappedNullable = &ApiKeyMutation{}
 type ApiKeyMutation struct {
 	// Human readable name of the API key
 	Name *string `json:"name,omitempty"`
-	Status *string `json:"status,omitempty"`
+	Status *ApiKeyStatus `json:"status,omitempty"`
 	// Optional date/time that the key will expire
 	ExpiresAt *time.Time `json:"expires_at,omitempty"`
-	// The ID of the API key's user
+	// The ID of the API key's user. 
 	UserId *string `json:"user_id,omitempty"`
+	// The ID of account that the API key is associated with. 
+	AccountId *string `json:"account_id,omitempty"`
+	// The approximate last time that the API key was used to authenticate API requests
+	LastUsedAt *time.Time `json:"last_used_at,omitempty"`
+	// A prefix of the API key
+	TokenPrefix *string `json:"token_prefix,omitempty"`
 	Scopes *PermissionScopes `json:"scopes,omitempty"`
 }
 
@@ -81,9 +87,9 @@ func (o *ApiKeyMutation) SetName(v string) {
 }
 
 // GetStatus returns the Status field value if set, zero value otherwise.
-func (o *ApiKeyMutation) GetStatus() string {
+func (o *ApiKeyMutation) GetStatus() ApiKeyStatus {
 	if o == nil || IsNil(o.Status) {
-		var ret string
+		var ret ApiKeyStatus
 		return ret
 	}
 	return *o.Status
@@ -91,7 +97,7 @@ func (o *ApiKeyMutation) GetStatus() string {
 
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApiKeyMutation) GetStatusOk() (*string, bool) {
+func (o *ApiKeyMutation) GetStatusOk() (*ApiKeyStatus, bool) {
 	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
@@ -107,8 +113,8 @@ func (o *ApiKeyMutation) HasStatus() bool {
 	return false
 }
 
-// SetStatus gets a reference to the given string and assigns it to the Status field.
-func (o *ApiKeyMutation) SetStatus(v string) {
+// SetStatus gets a reference to the given ApiKeyStatus and assigns it to the Status field.
+func (o *ApiKeyMutation) SetStatus(v ApiKeyStatus) {
 	o.Status = &v
 }
 
@@ -176,6 +182,102 @@ func (o *ApiKeyMutation) SetUserId(v string) {
 	o.UserId = &v
 }
 
+// GetAccountId returns the AccountId field value if set, zero value otherwise.
+func (o *ApiKeyMutation) GetAccountId() string {
+	if o == nil || IsNil(o.AccountId) {
+		var ret string
+		return ret
+	}
+	return *o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiKeyMutation) GetAccountIdOk() (*string, bool) {
+	if o == nil || IsNil(o.AccountId) {
+		return nil, false
+	}
+	return o.AccountId, true
+}
+
+// HasAccountId returns a boolean if a field has been set.
+func (o *ApiKeyMutation) HasAccountId() bool {
+	if o != nil && !IsNil(o.AccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountId gets a reference to the given string and assigns it to the AccountId field.
+func (o *ApiKeyMutation) SetAccountId(v string) {
+	o.AccountId = &v
+}
+
+// GetLastUsedAt returns the LastUsedAt field value if set, zero value otherwise.
+func (o *ApiKeyMutation) GetLastUsedAt() time.Time {
+	if o == nil || IsNil(o.LastUsedAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LastUsedAt
+}
+
+// GetLastUsedAtOk returns a tuple with the LastUsedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiKeyMutation) GetLastUsedAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.LastUsedAt) {
+		return nil, false
+	}
+	return o.LastUsedAt, true
+}
+
+// HasLastUsedAt returns a boolean if a field has been set.
+func (o *ApiKeyMutation) HasLastUsedAt() bool {
+	if o != nil && !IsNil(o.LastUsedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastUsedAt gets a reference to the given time.Time and assigns it to the LastUsedAt field.
+func (o *ApiKeyMutation) SetLastUsedAt(v time.Time) {
+	o.LastUsedAt = &v
+}
+
+// GetTokenPrefix returns the TokenPrefix field value if set, zero value otherwise.
+func (o *ApiKeyMutation) GetTokenPrefix() string {
+	if o == nil || IsNil(o.TokenPrefix) {
+		var ret string
+		return ret
+	}
+	return *o.TokenPrefix
+}
+
+// GetTokenPrefixOk returns a tuple with the TokenPrefix field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiKeyMutation) GetTokenPrefixOk() (*string, bool) {
+	if o == nil || IsNil(o.TokenPrefix) {
+		return nil, false
+	}
+	return o.TokenPrefix, true
+}
+
+// HasTokenPrefix returns a boolean if a field has been set.
+func (o *ApiKeyMutation) HasTokenPrefix() bool {
+	if o != nil && !IsNil(o.TokenPrefix) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenPrefix gets a reference to the given string and assigns it to the TokenPrefix field.
+func (o *ApiKeyMutation) SetTokenPrefix(v string) {
+	o.TokenPrefix = &v
+}
+
 // GetScopes returns the Scopes field value if set, zero value otherwise.
 func (o *ApiKeyMutation) GetScopes() PermissionScopes {
 	if o == nil || IsNil(o.Scopes) {
@@ -229,6 +331,15 @@ func (o ApiKeyMutation) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UserId) {
 		toSerialize["user_id"] = o.UserId
+	}
+	if !IsNil(o.AccountId) {
+		toSerialize["account_id"] = o.AccountId
+	}
+	if !IsNil(o.LastUsedAt) {
+		toSerialize["last_used_at"] = o.LastUsedAt
+	}
+	if !IsNil(o.TokenPrefix) {
+		toSerialize["token_prefix"] = o.TokenPrefix
 	}
 	if !IsNil(o.Scopes) {
 		toSerialize["scopes"] = o.Scopes

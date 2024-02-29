@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Measurements** | Pointer to [**[]Measurement**](Measurement.md) | Measurements related to this object | [optional] 
+**Measurements** | [**[]Measurement**](Measurement.md) | Measurements related to this object | 
 **AudienceCategories** | [**PrivateAudienceStatsAudienceCategories**](PrivateAudienceStatsAudienceCategories.md) |  | 
 
 ## Methods
 
 ### NewPrivateAudienceStats
 
-`func NewPrivateAudienceStats(audienceCategories PrivateAudienceStatsAudienceCategories, ) *PrivateAudienceStats`
+`func NewPrivateAudienceStats(measurements []Measurement, audienceCategories PrivateAudienceStatsAudienceCategories, ) *PrivateAudienceStats`
 
 NewPrivateAudienceStats instantiates a new PrivateAudienceStats object
 This constructor will assign default values to properties that have it defined,
@@ -45,11 +45,6 @@ and a boolean to check if the value has been set.
 
 SetMeasurements sets Measurements field to given value.
 
-### HasMeasurements
-
-`func (o *PrivateAudienceStats) HasMeasurements() bool`
-
-HasMeasurements returns a boolean if a field has been set.
 
 ### GetAudienceCategories
 

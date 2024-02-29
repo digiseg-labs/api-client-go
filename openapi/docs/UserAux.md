@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AccountId** | Pointer to **string** | ID of the account that this user pertains to | [optional] 
+**AccountMemberships** | Pointer to [**[]UserAccountMembership**](UserAccountMembership.md) |  | [optional] [readonly] 
 **IsSuperAdmin** | Pointer to **bool** | Determines if the user is a super admin of Digiseg API services | [optional] 
 
 ## Methods
@@ -26,30 +26,30 @@ NewUserAuxWithDefaults instantiates a new UserAux object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetAccountId
+### GetAccountMemberships
 
-`func (o *UserAux) GetAccountId() string`
+`func (o *UserAux) GetAccountMemberships() []UserAccountMembership`
 
-GetAccountId returns the AccountId field if non-nil, zero value otherwise.
+GetAccountMemberships returns the AccountMemberships field if non-nil, zero value otherwise.
 
-### GetAccountIdOk
+### GetAccountMembershipsOk
 
-`func (o *UserAux) GetAccountIdOk() (*string, bool)`
+`func (o *UserAux) GetAccountMembershipsOk() (*[]UserAccountMembership, bool)`
 
-GetAccountIdOk returns a tuple with the AccountId field if it's non-nil, zero value otherwise
+GetAccountMembershipsOk returns a tuple with the AccountMemberships field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAccountId
+### SetAccountMemberships
 
-`func (o *UserAux) SetAccountId(v string)`
+`func (o *UserAux) SetAccountMemberships(v []UserAccountMembership)`
 
-SetAccountId sets AccountId field to given value.
+SetAccountMemberships sets AccountMemberships field to given value.
 
-### HasAccountId
+### HasAccountMemberships
 
-`func (o *UserAux) HasAccountId() bool`
+`func (o *UserAux) HasAccountMemberships() bool`
 
-HasAccountId returns a boolean if a field has been set.
+HasAccountMemberships returns a boolean if a field has been set.
 
 ### GetIsSuperAdmin
 

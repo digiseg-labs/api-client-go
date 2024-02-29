@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  For a catalog of Digisegs audiences, refer to the [Audience list](https://digiseg.io/audiences-list).  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young singles and couples | |  |  | c2 | Young couples with children | |  |  | c3 | Families with school children | |  |  | c4 | Older families | |  |  | c5 | Pensioners | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Up to 80 m² | |  |  | l2 | 80-119 m² | |  |  | l3 | Above 120 m² | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -22,8 +22,8 @@ var _ MappedNullable = &PopulationFull{}
 type PopulationFull struct {
 	// A humanly readable name of the population
 	Name *string `json:"name,omitempty"`
-	Private *PopulationAudienceCategorySetSection `json:"private,omitempty"`
-	Business *PopulationAudienceCategorySetSection `json:"business,omitempty"`
+	Private *PopulationAudienceCategorySetPrivateSection `json:"private,omitempty"`
+	Business *PopulationAudienceCategorySetBusinessSection `json:"business,omitempty"`
 }
 
 // NewPopulationFull instantiates a new PopulationFull object
@@ -76,9 +76,9 @@ func (o *PopulationFull) SetName(v string) {
 }
 
 // GetPrivate returns the Private field value if set, zero value otherwise.
-func (o *PopulationFull) GetPrivate() PopulationAudienceCategorySetSection {
+func (o *PopulationFull) GetPrivate() PopulationAudienceCategorySetPrivateSection {
 	if o == nil || IsNil(o.Private) {
-		var ret PopulationAudienceCategorySetSection
+		var ret PopulationAudienceCategorySetPrivateSection
 		return ret
 	}
 	return *o.Private
@@ -86,7 +86,7 @@ func (o *PopulationFull) GetPrivate() PopulationAudienceCategorySetSection {
 
 // GetPrivateOk returns a tuple with the Private field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PopulationFull) GetPrivateOk() (*PopulationAudienceCategorySetSection, bool) {
+func (o *PopulationFull) GetPrivateOk() (*PopulationAudienceCategorySetPrivateSection, bool) {
 	if o == nil || IsNil(o.Private) {
 		return nil, false
 	}
@@ -102,15 +102,15 @@ func (o *PopulationFull) HasPrivate() bool {
 	return false
 }
 
-// SetPrivate gets a reference to the given PopulationAudienceCategorySetSection and assigns it to the Private field.
-func (o *PopulationFull) SetPrivate(v PopulationAudienceCategorySetSection) {
+// SetPrivate gets a reference to the given PopulationAudienceCategorySetPrivateSection and assigns it to the Private field.
+func (o *PopulationFull) SetPrivate(v PopulationAudienceCategorySetPrivateSection) {
 	o.Private = &v
 }
 
 // GetBusiness returns the Business field value if set, zero value otherwise.
-func (o *PopulationFull) GetBusiness() PopulationAudienceCategorySetSection {
+func (o *PopulationFull) GetBusiness() PopulationAudienceCategorySetBusinessSection {
 	if o == nil || IsNil(o.Business) {
-		var ret PopulationAudienceCategorySetSection
+		var ret PopulationAudienceCategorySetBusinessSection
 		return ret
 	}
 	return *o.Business
@@ -118,7 +118,7 @@ func (o *PopulationFull) GetBusiness() PopulationAudienceCategorySetSection {
 
 // GetBusinessOk returns a tuple with the Business field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PopulationFull) GetBusinessOk() (*PopulationAudienceCategorySetSection, bool) {
+func (o *PopulationFull) GetBusinessOk() (*PopulationAudienceCategorySetBusinessSection, bool) {
 	if o == nil || IsNil(o.Business) {
 		return nil, false
 	}
@@ -134,8 +134,8 @@ func (o *PopulationFull) HasBusiness() bool {
 	return false
 }
 
-// SetBusiness gets a reference to the given PopulationAudienceCategorySetSection and assigns it to the Business field.
-func (o *PopulationFull) SetBusiness(v PopulationAudienceCategorySetSection) {
+// SetBusiness gets a reference to the given PopulationAudienceCategorySetBusinessSection and assigns it to the Business field.
+func (o *PopulationFull) SetBusiness(v PopulationAudienceCategorySetBusinessSection) {
 	o.Business = &v
 }
 

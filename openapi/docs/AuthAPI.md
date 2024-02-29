@@ -8,7 +8,9 @@ Method | HTTP request | Description
 [**CreateApiKey**](AuthAPI.md#CreateApiKey) | **Post** /users/{user_id}/apikeys | Create API key
 [**DeleteApiKeyById**](AuthAPI.md#DeleteApiKeyById) | **Delete** /users/{user_id}/apikeys/{key_id} | Delete API key
 [**GetApiKeyById**](AuthAPI.md#GetApiKeyById) | **Get** /users/{user_id}/apikeys/{key_id} | Get API key
+[**ListApiKeysByAccountId**](AuthAPI.md#ListApiKeysByAccountId) | **Get** /accounts/{account_id}/apikeys | List API keys for account
 [**ListApiKeysByUserId**](AuthAPI.md#ListApiKeysByUserId) | **Get** /users/{user_id}/apikeys | List API keys for user
+[**UpdateApiKeyById**](AuthAPI.md#UpdateApiKeyById) | **Put** /users/{user_id}/apikeys/{key_id} | Update API key
 
 
 
@@ -78,7 +80,7 @@ No authorization required
 
 ## CreateApiKey
 
-> CreateApiKey201Response CreateApiKey(ctx, userId).ApiKeyMutation(apiKeyMutation).Execute()
+> CreateApiKey201Response CreateApiKey(ctx, userId).ApiKeyCreation(apiKeyCreation).Execute()
 
 Create API key
 
@@ -98,11 +100,11 @@ import (
 
 func main() {
 	userId := "userId_example" // string | 
-	apiKeyMutation := *openapiclient.NewApiKeyMutation() // ApiKeyMutation | 
+	apiKeyCreation := *openapiclient.NewApiKeyCreation() // ApiKeyCreation | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthAPI.CreateApiKey(context.Background(), userId).ApiKeyMutation(apiKeyMutation).Execute()
+	resp, r, err := apiClient.AuthAPI.CreateApiKey(context.Background(), userId).ApiKeyCreation(apiKeyCreation).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.CreateApiKey``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -128,7 +130,7 @@ Other parameters are passed through a pointer to a apiCreateApiKeyRequest struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **apiKeyMutation** | [**ApiKeyMutation**](ApiKeyMutation.md) |  | 
+ **apiKeyCreation** | [**ApiKeyCreation**](ApiKeyCreation.md) |  | 
 
 ### Return type
 
@@ -288,9 +290,77 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListApiKeysByAccountId
+
+> ListApiKeysByAccountId200Response ListApiKeysByAccountId(ctx, accountId).Execute()
+
+List API keys for account
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	accountId := "accountId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AuthAPI.ListApiKeysByAccountId(context.Background(), accountId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.ListApiKeysByAccountId``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListApiKeysByAccountId`: ListApiKeysByAccountId200Response
+	fmt.Fprintf(os.Stdout, "Response from `AuthAPI.ListApiKeysByAccountId`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**accountId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListApiKeysByAccountIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ListApiKeysByAccountId200Response**](ListApiKeysByAccountId200Response.md)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListApiKeysByUserId
 
-> ListApiKeysByUserId200Response ListApiKeysByUserId(ctx, userId).Execute()
+> ListApiKeysByAccountId200Response ListApiKeysByUserId(ctx, userId).Execute()
 
 List API keys for user
 
@@ -316,7 +386,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.ListApiKeysByUserId``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ListApiKeysByUserId`: ListApiKeysByUserId200Response
+	// response from `ListApiKeysByUserId`: ListApiKeysByAccountId200Response
 	fmt.Fprintf(os.Stdout, "Response from `AuthAPI.ListApiKeysByUserId`: %v\n", resp)
 }
 ```
@@ -340,7 +410,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListApiKeysByUserId200Response**](ListApiKeysByUserId200Response.md)
+[**ListApiKeysByAccountId200Response**](ListApiKeysByAccountId200Response.md)
 
 ### Authorization
 
@@ -349,6 +419,79 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateApiKeyById
+
+> GetApiKeyById200Response UpdateApiKeyById(ctx, userId, keyId).ApiKeyMutation(apiKeyMutation).Execute()
+
+Update API key
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	userId := "userId_example" // string | 
+	keyId := "keyId_example" // string | 
+	apiKeyMutation := *openapiclient.NewApiKeyMutation() // ApiKeyMutation | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AuthAPI.UpdateApiKeyById(context.Background(), userId, keyId).ApiKeyMutation(apiKeyMutation).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.UpdateApiKeyById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateApiKeyById`: GetApiKeyById200Response
+	fmt.Fprintf(os.Stdout, "Response from `AuthAPI.UpdateApiKeyById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**userId** | **string** |  | 
+**keyId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateApiKeyByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **apiKeyMutation** | [**ApiKeyMutation**](ApiKeyMutation.md) |  | 
+
+### Return type
+
+[**GetApiKeyById200Response**](GetApiKeyById200Response.md)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

@@ -5,7 +5,9 @@ All URIs are relative to *https://api.digiseg.net*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateCampaign**](CampaignsAPI.md#CreateCampaign) | **Post** /campaigns | Create campaign
+[**DeleteCampaignBannerImage**](CampaignsAPI.md#DeleteCampaignBannerImage) | **Delete** /campaigns/{campaign_id}/assets/banner_image | Delete campaign banner image logo
 [**DeleteCampaignById**](CampaignsAPI.md#DeleteCampaignById) | **Delete** /campaigns/{campaign_id} | Delete campaign
+[**GetCampaignBannerImage**](CampaignsAPI.md#GetCampaignBannerImage) | **Get** /campaigns/{campaign_id}/assets/banner_image | Get campaign banner image
 [**GetCampaignById**](CampaignsAPI.md#GetCampaignById) | **Get** /campaigns/{campaign_id} | Get campaign
 [**ListCampaigns**](CampaignsAPI.md#ListCampaigns) | **Get** /campaigns | List campaigns
 [**QueryCampaignAudienceStats**](CampaignsAPI.md#QueryCampaignAudienceStats) | **Get** /campaigns/{campaign_id}/stats/audiences | Audience statistics for campaign
@@ -13,6 +15,7 @@ Method | HTTP request | Description
 [**QueryCampaignFrequencyStats**](CampaignsAPI.md#QueryCampaignFrequencyStats) | **Get** /campaigns/{campaign_id}/stats/frequencies | Frequency statistics for campaign
 [**QueryCampaignTimingStats**](CampaignsAPI.md#QueryCampaignTimingStats) | **Get** /campaigns/{campaign_id}/stats/timing | Timing statistics for campaign
 [**UpdateCampaignById**](CampaignsAPI.md#UpdateCampaignById) | **Put** /campaigns/{campaign_id} | Update campaign
+[**UploadCampaignBannerImage**](CampaignsAPI.md#UploadCampaignBannerImage) | **Put** /campaigns/{campaign_id}/assets/banner_image | Upload campaign banner image
 
 
 
@@ -37,7 +40,7 @@ import (
 )
 
 func main() {
-	campaignCreation := *openapiclient.NewCampaignCreation("Acme Summer 2024 brand awareness") // CampaignCreation | 
+	campaignCreation := *openapiclient.NewCampaignCreation("Acme Summer 2024 brand awareness", openapiclient.CampaignEventSet("impressions_only")) // CampaignCreation | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -76,6 +79,74 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteCampaignBannerImage
+
+> DeleteCampaignBannerImage(ctx, campaignId).Execute()
+
+Delete campaign banner image logo
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	campaignId := "campaignId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.CampaignsAPI.DeleteCampaignBannerImage(context.Background(), campaignId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CampaignsAPI.DeleteCampaignBannerImage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**campaignId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteCampaignBannerImageRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -126,6 +197,74 @@ Name | Type | Description  | Notes
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteCampaignByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetCampaignBannerImage
+
+> GetCampaignBannerImage(ctx, campaignId).Execute()
+
+Get campaign banner image
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	campaignId := "campaignId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.CampaignsAPI.GetCampaignBannerImage(context.Background(), campaignId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CampaignsAPI.GetCampaignBannerImage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**campaignId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetCampaignBannerImageRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -642,6 +781,76 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UploadCampaignBannerImage
+
+> UploadCampaignBannerImage(ctx, campaignId).Body(body).Execute()
+
+Upload campaign banner image
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	campaignId := "campaignId_example" // string | 
+	body := os.NewFile(1234, "some_file") // *os.File | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.CampaignsAPI.UploadCampaignBannerImage(context.Background(), campaignId).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CampaignsAPI.UploadCampaignBannerImage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**campaignId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUploadCampaignBannerImageRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **body** | ***os.File** |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: image/gif, image/png, image/jpeg, multipart/form-data
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  For a catalog of Digisegs audiences, refer to the [Audience list](https://digiseg.io/audiences-list).  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young singles and couples | |  |  | c2 | Young couples with children | |  |  | c3 | Families with school children | |  |  | c4 | Older families | |  |  | c5 | Pensioners | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Up to 80 m² | |  |  | l2 | 80-119 m² | |  |  | l3 | Above 120 m² | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -27,12 +27,13 @@ type UserFull struct {
 	Email *string `json:"email,omitempty"`
 	// Human readable name of the user
 	Name *string `json:"name,omitempty"`
+	// ID of the account that this user pertains to. If the user has multiple account memberships, this account ID will represent the primary account of the user. 
+	AccountId *string `json:"account_id,omitempty"`
 	// The roles that the user has within the account
 	Roles []UserAccountRole `json:"roles,omitempty"`
 	// The URL to an avatar of the user
 	AvatarUrl *string `json:"avatar_url,omitempty"`
-	// ID of the account that this user pertains to
-	AccountId *string `json:"account_id,omitempty"`
+	AccountMemberships []UserAccountMembership `json:"account_memberships,omitempty"`
 	// Determines if the user is a super admin of Digiseg API services
 	IsSuperAdmin *bool `json:"is_super_admin,omitempty"`
 	// Date and time of the object creation
@@ -158,6 +159,38 @@ func (o *UserFull) SetName(v string) {
 	o.Name = &v
 }
 
+// GetAccountId returns the AccountId field value if set, zero value otherwise.
+func (o *UserFull) GetAccountId() string {
+	if o == nil || IsNil(o.AccountId) {
+		var ret string
+		return ret
+	}
+	return *o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UserFull) GetAccountIdOk() (*string, bool) {
+	if o == nil || IsNil(o.AccountId) {
+		return nil, false
+	}
+	return o.AccountId, true
+}
+
+// HasAccountId returns a boolean if a field has been set.
+func (o *UserFull) HasAccountId() bool {
+	if o != nil && !IsNil(o.AccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountId gets a reference to the given string and assigns it to the AccountId field.
+func (o *UserFull) SetAccountId(v string) {
+	o.AccountId = &v
+}
+
 // GetRoles returns the Roles field value if set, zero value otherwise.
 func (o *UserFull) GetRoles() []UserAccountRole {
 	if o == nil || IsNil(o.Roles) {
@@ -222,36 +255,36 @@ func (o *UserFull) SetAvatarUrl(v string) {
 	o.AvatarUrl = &v
 }
 
-// GetAccountId returns the AccountId field value if set, zero value otherwise.
-func (o *UserFull) GetAccountId() string {
-	if o == nil || IsNil(o.AccountId) {
-		var ret string
+// GetAccountMemberships returns the AccountMemberships field value if set, zero value otherwise.
+func (o *UserFull) GetAccountMemberships() []UserAccountMembership {
+	if o == nil || IsNil(o.AccountMemberships) {
+		var ret []UserAccountMembership
 		return ret
 	}
-	return *o.AccountId
+	return o.AccountMemberships
 }
 
-// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// GetAccountMembershipsOk returns a tuple with the AccountMemberships field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UserFull) GetAccountIdOk() (*string, bool) {
-	if o == nil || IsNil(o.AccountId) {
+func (o *UserFull) GetAccountMembershipsOk() ([]UserAccountMembership, bool) {
+	if o == nil || IsNil(o.AccountMemberships) {
 		return nil, false
 	}
-	return o.AccountId, true
+	return o.AccountMemberships, true
 }
 
-// HasAccountId returns a boolean if a field has been set.
-func (o *UserFull) HasAccountId() bool {
-	if o != nil && !IsNil(o.AccountId) {
+// HasAccountMemberships returns a boolean if a field has been set.
+func (o *UserFull) HasAccountMemberships() bool {
+	if o != nil && !IsNil(o.AccountMemberships) {
 		return true
 	}
 
 	return false
 }
 
-// SetAccountId gets a reference to the given string and assigns it to the AccountId field.
-func (o *UserFull) SetAccountId(v string) {
-	o.AccountId = &v
+// SetAccountMemberships gets a reference to the given []UserAccountMembership and assigns it to the AccountMemberships field.
+func (o *UserFull) SetAccountMemberships(v []UserAccountMembership) {
+	o.AccountMemberships = v
 }
 
 // GetIsSuperAdmin returns the IsSuperAdmin field value if set, zero value otherwise.
@@ -433,14 +466,17 @@ func (o UserFull) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
+	if !IsNil(o.AccountId) {
+		toSerialize["account_id"] = o.AccountId
+	}
 	if !IsNil(o.Roles) {
 		toSerialize["roles"] = o.Roles
 	}
 	if !IsNil(o.AvatarUrl) {
 		toSerialize["avatar_url"] = o.AvatarUrl
 	}
-	if !IsNil(o.AccountId) {
-		toSerialize["account_id"] = o.AccountId
+	if !IsNil(o.AccountMemberships) {
+		toSerialize["account_memberships"] = o.AccountMemberships
 	}
 	if !IsNil(o.IsSuperAdmin) {
 		toSerialize["is_super_admin"] = o.IsSuperAdmin

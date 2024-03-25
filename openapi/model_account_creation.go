@@ -22,7 +22,10 @@ var _ MappedNullable = &AccountCreation{}
 type AccountCreation struct {
 	// Human readable name of the account
 	Name *string `json:"name,omitempty"`
+	// The URL to the logo of the account
+	LogoUrl *string `json:"logo_url,omitempty"`
 	// A short human-readable name to identify the account. Must be lower-case and between 4 and 16 characters.
+	// Deprecated
 	Slug *string `json:"slug,omitempty"`
 	// ID of the user who is the ultimate owner of the account
 	OwnerId *string `json:"owner_id,omitempty"`
@@ -78,7 +81,40 @@ func (o *AccountCreation) SetName(v string) {
 	o.Name = &v
 }
 
+// GetLogoUrl returns the LogoUrl field value if set, zero value otherwise.
+func (o *AccountCreation) GetLogoUrl() string {
+	if o == nil || IsNil(o.LogoUrl) {
+		var ret string
+		return ret
+	}
+	return *o.LogoUrl
+}
+
+// GetLogoUrlOk returns a tuple with the LogoUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountCreation) GetLogoUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.LogoUrl) {
+		return nil, false
+	}
+	return o.LogoUrl, true
+}
+
+// HasLogoUrl returns a boolean if a field has been set.
+func (o *AccountCreation) HasLogoUrl() bool {
+	if o != nil && !IsNil(o.LogoUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogoUrl gets a reference to the given string and assigns it to the LogoUrl field.
+func (o *AccountCreation) SetLogoUrl(v string) {
+	o.LogoUrl = &v
+}
+
 // GetSlug returns the Slug field value if set, zero value otherwise.
+// Deprecated
 func (o *AccountCreation) GetSlug() string {
 	if o == nil || IsNil(o.Slug) {
 		var ret string
@@ -89,6 +125,7 @@ func (o *AccountCreation) GetSlug() string {
 
 // GetSlugOk returns a tuple with the Slug field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *AccountCreation) GetSlugOk() (*string, bool) {
 	if o == nil || IsNil(o.Slug) {
 		return nil, false
@@ -106,6 +143,7 @@ func (o *AccountCreation) HasSlug() bool {
 }
 
 // SetSlug gets a reference to the given string and assigns it to the Slug field.
+// Deprecated
 func (o *AccountCreation) SetSlug(v string) {
 	o.Slug = &v
 }
@@ -186,6 +224,9 @@ func (o AccountCreation) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.LogoUrl) {
+		toSerialize["logo_url"] = o.LogoUrl
 	}
 	if !IsNil(o.Slug) {
 		toSerialize["slug"] = o.Slug

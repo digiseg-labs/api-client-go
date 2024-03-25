@@ -228,6 +228,84 @@ paths:
       summary: Update account
       tags:
       - accounts
+  /accounts/{account_id}/assets/logo:
+    delete:
+      description: |
+        Deletes the logo for an account
+      operationId: deleteAccountLogo
+      parameters:
+      - explode: false
+        in: path
+        name: account_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Object deleted
+      summary: Delete account logo
+      tags:
+      - accounts
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X DELETE \
+          https://api.digiseg.net/accounts/$ACCOUNT_ID/assets/logo
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/accounts/\"+account_id+\"/assets/logo\"\
+          , {\n  \"method\": \"DELETE\", \n  \"headers\": {\"Authorization\": \"Bearer\
+          \ \" + token},\n}).then(response => {\n  console.log(response);\n})"
+    get:
+      description: |
+        Gets the account logo, if the image is hosted on the Digiseg platform.
+        Refer to the account's `logo_url` to get a non-authenticated and shareable URL for the logo.
+      operationId: getAccountLogo
+      parameters:
+      - explode: false
+        in: path
+        name: account_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not found
+      summary: Get account logo
+      tags:
+      - accounts
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X GET \
+          https://api.digiseg.net/accounts/$ACCOUNT_ID/assets/logo
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/accounts/\"+account_id+\"/assets/logo\"\
+          , {\n  \"method\": \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer\
+          \ \" + token},\n}).then(response => {\n  console.log(response);\n})"
+    put:
+      description: |
+        Upload a logo for an account
+      operationId: uploadAccountLogo
+      parameters:
+      - explode: false
+        in: path
+        name: account_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/ImageUploadRequest'
+      responses:
+        "204":
+          description: OK
+      summary: Upload account logo
+      tags:
+      - accounts
   /accounts/{account_id}/users:
     get:
       operationId: listUsersByAccountId
@@ -239,6 +317,24 @@ paths:
         schema:
           type: string
         style: simple
+      - description: "Filter based on platform roles, e.g. super_admin"
+        explode: true
+        in: query
+        name: "filter[platform_roles]"
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Optional parameter used to search for users where the name contains
+          a substring (case insensitive)
+        example: Doe
+        explode: true
+        in: query
+        name: "filter[name][contains]"
+        required: false
+        schema:
+          type: string
+        style: form
       - description: The desired page size
         explode: true
         in: query
@@ -646,6 +742,84 @@ paths:
         "404":
           description: Not found
       summary: Update user
+      tags:
+      - users
+  /users/{user_id}/assets/avatar:
+    delete:
+      description: |
+        Deletes the avatar for a user
+      operationId: deleteUserAvatar
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Object deleted
+      summary: Delete user avatar
+      tags:
+      - users
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X DELETE \
+          https://api.digiseg.net/users/$USER_ID/assets/avatar
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/users/\"+user_id+\"/assets/avatar\"\
+          , {\n  \"method\": \"DELETE\", \n  \"headers\": {\"Authorization\": \"Bearer\
+          \ \" + token},\n}).then(response => {\n  console.log(response);\n})"
+    get:
+      description: |
+        Gets the user avatar, if the image is hosted on the Digiseg platform.
+        Refer to the user's `avatar_url` to get a non-authenticated and shareable URL for the avatar.
+      operationId: getUserAvatar
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not found
+      summary: Get user avatar
+      tags:
+      - users
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X GET \
+          https://api.digiseg.net/users/$USER_ID/assets/avatar
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/users/\"+user_id+\"/assets/avatar\"\
+          , {\n  \"method\": \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer\
+          \ \" + token},\n}).then(response => {\n  console.log(response);\n})"
+    put:
+      description: |
+        Upload a avatar for a user
+      operationId: uploadUserAvatar
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/ImageUploadRequest'
+      responses:
+        "204":
+          description: OK
+      summary: Upload user avatar
       tags:
       - users
   /auth/token:
@@ -1670,6 +1844,24 @@ components:
           schema:
             $ref: '#/components/schemas/ApiKeyMutation'
       required: true
+    ImageUploadRequest:
+      content:
+        image/gif:
+          schema:
+            format: binary
+            type: string
+        image/png:
+          schema:
+            format: binary
+            type: string
+        image/jpeg:
+          schema:
+            format: binary
+            type: string
+        multipart/form-data:
+          schema:
+            $ref: '#/components/schemas/uploadAccountLogo_request'
+      required: true
     ResolveAudiencesOfMultipleRequest:
       content:
         application/json:
@@ -1699,24 +1891,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MeasurementClientMutation'
-      required: true
-    ImageUploadRequest:
-      content:
-        image/gif:
-          schema:
-            format: binary
-            type: string
-        image/png:
-          schema:
-            format: binary
-            type: string
-        image/jpeg:
-          schema:
-            format: binary
-            type: string
-        multipart/form-data:
-          schema:
-            $ref: '#/components/schemas/uploadClientLogo_request'
       required: true
   responses:
     RegistrationCreationResponse:
@@ -2019,7 +2193,13 @@ components:
           description: Human readable name of the account
           example: Example Co.
           type: string
+        logo_url:
+          description: The URL to the logo of the account
+          example: https://api.digiseg.net/assets/account/ioi4324i2309das/logo?vrft=csdkl232l4pod4
+          format: uri
+          type: string
         slug:
+          deprecated: true
           description: A short human-readable name to identify the account. Must be
             lower-case and between 4 and 16 characters.
           maxLength: 12
@@ -2068,11 +2248,22 @@ components:
       allOf:
       - $ref: '#/components/schemas/AccountBase'
       - $ref: '#/components/schemas/AccountAux'
+      example:
+        logo_url: https://api.digiseg.net/assets/account/ioi4324i2309das/logo?vrft=csdkl232l4pod4
+        owner_id: owner_id
+        name: Example Co.
+        slug: slug
     AccountFull:
       allOf:
       - $ref: '#/components/schemas/AccountItem'
       - $ref: '#/components/schemas/AccountAux'
       - $ref: '#/components/schemas/TimestampedObject'
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        owner_id: owner_id
+        updated_by: updated_by
+        created_at: 2000-01-23T04:56:07.000+00:00
+        created_by: created_by
     AccountLinks:
       example:
         users: /accounts/4k3jKJ9D12kj0S4c/users
@@ -2203,23 +2394,100 @@ components:
       allOf:
       - $ref: '#/components/schemas/ApiKeyBase'
       - $ref: '#/components/schemas/ApiKeyAux'
+      example:
+        last_used_at: 2000-01-23T04:56:07.000+00:00
+        expires_at: 2000-01-23T04:56:07.000+00:00
+        account_id: account_id
+        user_id: user_id
+        name: CRM integration key
+        token_prefix: token_prefix
+        scopes:
+          country_data:
+          - '*'
+          - DE
+          - DK
+          - GB
+          - SE
+          origin_domains:
+          - '*'
+          - https://example.com
+          service_grants:
+          - audience-lookup
+          - analytics-impression
+          - analytics-click
+          - '*'
+        status: null
     ApiKeyItem:
       allOf:
       - $ref: '#/components/schemas/IdentifyableObject'
       - $ref: '#/components/schemas/ApiKeyBase'
+      example:
+        last_used_at: 2000-01-23T04:56:07.000+00:00
+        expires_at: 2000-01-23T04:56:07.000+00:00
+        account_id: account_id
+        user_id: user_id
+        name: CRM integration key
+        token_prefix: token_prefix
+        id: 4k3jKJ9D12kj0S4c
+        status: null
     ApiKeyMutation:
       allOf:
       - $ref: '#/components/schemas/ApiKeyBase'
       - $ref: '#/components/schemas/ApiKeyAux'
+      example:
+        last_used_at: 2000-01-23T04:56:07.000+00:00
+        expires_at: 2000-01-23T04:56:07.000+00:00
+        account_id: account_id
+        user_id: user_id
+        name: CRM integration key
+        token_prefix: token_prefix
+        scopes:
+          country_data:
+          - '*'
+          - DE
+          - DK
+          - GB
+          - SE
+          origin_domains:
+          - '*'
+          - https://example.com
+          service_grants:
+          - audience-lookup
+          - analytics-impression
+          - analytics-click
+          - '*'
+        status: null
     ApiKeyFull:
       allOf:
       - $ref: '#/components/schemas/ApiKeyItem'
       - $ref: '#/components/schemas/ApiKeyAux'
       - $ref: '#/components/schemas/TimestampedObject'
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        updated_by: updated_by
+        created_at: 2000-01-23T04:56:07.000+00:00
+        scopes:
+          country_data:
+          - '*'
+          - DE
+          - DK
+          - GB
+          - SE
+          origin_domains:
+          - '*'
+          - https://example.com
+          service_grants:
+          - audience-lookup
+          - analytics-impression
+          - analytics-click
+          - '*'
+        created_by: created_by
     ApiKeyFullWithToken:
       allOf:
       - $ref: '#/components/schemas/ApiKeyToken'
       - $ref: '#/components/schemas/ApiKeyFull'
+      example:
+        token: 3j51ds3kn4234m23l24km23
     ApiKeyLinks:
       example:
         user: /user/4k3jKJ9D12kj0S4c
@@ -2232,6 +2500,12 @@ components:
       type: object
     UserAccountMembership:
       description: Describes a user's membership of an account
+      example:
+        account_id: account_id
+        account_name: account_name
+        roles:
+        - null
+        - null
       properties:
         account_id:
           description: The ID of the account
@@ -2280,6 +2554,7 @@ components:
           type: array
         avatar_url:
           description: The URL to an avatar of the user
+          example: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
           format: uri
           type: string
       type: object
@@ -2305,15 +2580,62 @@ components:
       - $ref: '#/components/schemas/UserBase'
       - $ref: '#/components/schemas/UserAux'
       - $ref: '#/components/schemas/UserCredentials'
+      example:
+        password: password
+        account_id: account_id
+        avatar_url: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
+        roles:
+        - null
+        - null
+        account_memberships:
+        - account_id: account_id
+          account_name: account_name
+          roles:
+          - null
+          - null
+        - account_id: account_id
+          account_name: account_name
+          roles:
+          - null
+          - null
+        name: Casey Doe
+        is_super_admin: true
+        email: casey.doe@example.com
     UserItem:
       allOf:
       - $ref: '#/components/schemas/IdentifyableObject'
       - $ref: '#/components/schemas/UserBase'
+      example:
+        account_id: account_id
+        avatar_url: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
+        roles:
+        - null
+        - null
+        name: Casey Doe
+        id: 4k3jKJ9D12kj0S4c
+        email: casey.doe@example.com
     UserFull:
       allOf:
       - $ref: '#/components/schemas/UserItem'
       - $ref: '#/components/schemas/UserAux'
       - $ref: '#/components/schemas/TimestampedObject'
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        account_memberships:
+        - account_id: account_id
+          account_name: account_name
+          roles:
+          - null
+          - null
+        - account_id: account_id
+          account_name: account_name
+          roles:
+          - null
+          - null
+        updated_by: updated_by
+        created_at: 2000-01-23T04:56:07.000+00:00
+        is_super_admin: true
+        created_by: created_by
     UserLinks:
       example:
         apikeys: /users/4k3jKJ9D12kj0S4c/apikeys
@@ -2398,6 +2720,11 @@ components:
     AuthTokenResponse:
       allOf:
       - $ref: '#/components/schemas/AccessTokenData'
+      example:
+        access_token: 5k32n423kn4234m23l24km23
+        refresh_token: IwOGYzYTlmM2YxOTQ5MGE3YmNmMDFkNTVk
+        token_type: Bearer
+        expires_in: 3600
     RegistrationVerificationResponseData:
       allOf:
       - $ref: '#/components/schemas/AccessTokenData'
@@ -2643,6 +2970,9 @@ components:
       - forbidden
       type: string
     ErrorResponse:
+      example:
+        code: 0
+        message: message
       properties:
         code:
           type: integer
@@ -2815,11 +3145,24 @@ components:
     MeasurementClientMutation:
       allOf:
       - $ref: '#/components/schemas/MeasurementClientBase'
+      example:
+        account_id: 4k3jKJ9D12kj0S4c
+        logo_url: https://api.digiseg.net/assets/measurement/clients/t4387kdfjn2r3lk/logo?vrft=dsk4j23k4osdk243
+        name: Acme Ltd
     MeasurementClientFull:
       allOf:
       - $ref: '#/components/schemas/IdentifyableObject1'
       - $ref: '#/components/schemas/MeasurementClientBase'
       - $ref: '#/components/schemas/TimestampedObject1'
+      example:
+        account_id: 4k3jKJ9D12kj0S4c
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        logo_url: https://api.digiseg.net/assets/measurement/clients/t4387kdfjn2r3lk/logo?vrft=dsk4j23k4osdk243
+        name: Acme Ltd
+        updated_by: 3u1jKJ9D12kj0S4c
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: 2c9jKJ9D12kj0S4c
+        created_by: 3u1jKJ9D12kj0S4c
     MeasurementClientItem:
       allOf:
       - $ref: '#/components/schemas/IdentifyableObject1'
@@ -2873,6 +3216,10 @@ components:
           $ref: '#/components/schemas/CampaignLifecycleStage'
         ingestion_status:
           $ref: '#/components/schemas/CampaignIngestionStatus'
+        summary_stats:
+          $ref: '#/components/schemas/CampaignSummaryStats'
+        client:
+          $ref: '#/components/schemas/MeasurementClientItem'
       type: object
     CampaignIngestionStatus:
       description: |
@@ -2901,12 +3248,52 @@ components:
       - finished
       readOnly: true
       type: string
+    CampaignSummaryStats:
+      example:
+        private:
+          measurements:
+          - event: impression
+            count: 7280791
+            fraction_of_total: 0.54
+          - event: click
+            count: 23522
+            fraction_of_total: 0.5
+            conversion_rate: 0.00323
+        business:
+          measurements:
+          - event: impression
+            count: 7280791
+            fraction_of_total: 0.54
+          - event: click
+            count: 23522
+            fraction_of_total: 0.5
+            conversion_rate: 0.00323
+        not_resolved:
+          measurements:
+          - event: impression
+            count: 7280791
+            fraction_of_total: 0.54
+          - event: click
+            count: 23522
+            fraction_of_total: 0.5
+            conversion_rate: 0.00323
+      properties:
+        private:
+          $ref: '#/components/schemas/MeasurementsContainer'
+        business:
+          $ref: '#/components/schemas/MeasurementsContainer'
+        not_resolved:
+          $ref: '#/components/schemas/MeasurementsContainer'
+      readOnly: true
+      required:
+      - business
+      - not_resolved
+      - private
+      type: object
     CampaignAux:
       properties:
         event_links:
           $ref: '#/components/schemas/CampaignEventLinks'
-        integration_platform:
-          $ref: '#/components/schemas/CampaignIntegrationPlatform'
         banner_image_url:
           description: |
             The URL to a banner image for the campaign.
@@ -2916,25 +3303,27 @@ components:
           format: uri
           readOnly: true
           type: string
-        client:
-          $ref: '#/components/schemas/MeasurementClientItem'
+        integration_platform:
+          $ref: '#/components/schemas/CampaignIntegrationPlatform'
       type: object
     CampaignIntegrationPlatform:
       description: |
         The integration/platform with which a campaign is being delivered
       example:
-        id: 0
+        id: adf
         name: Adform
       properties:
         id:
           description: |
-            An ID for the integration platform, if the integration platform is a known platform to Digiseg.
-            Will be null/omitted if the platform name was entered manually as a string.
+            An ID for the integration platform, if the integration platform is a known platform.
+            Note that integration platform ID uniqueness is a responsibility of the client since this is simply an optional reference point to keep.
+            Can be null/omitted if the platform name is a one-off value with just a string.
+          maxLength: 26
           type: string
         name:
           description: The name of the integration platform.
+          maxLength: 200
           type: string
-      readOnly: true
       type: object
     CampaignCreationData:
       properties:
@@ -2958,22 +3347,192 @@ components:
       allOf:
       - $ref: '#/components/schemas/IdentifyableObject1'
       - $ref: '#/components/schemas/CampaignBase'
+      example:
+        account_id: 4k3jKJ9D12kj0S4c
+        name: Acme Summer 2024 brand awareness
+        summary_stats:
+          private:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323
+          business:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323
+          not_resolved:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323
+        client:
+          id: 7c9jKJ9D12kj0S4d
+          name: Acme Ltd
+          logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
+        id: 2c9jKJ9D12kj0S4c
+        life_cycle_stage: null
+        labels:
+        - Acme
+        - CTV
+        - Seasonal
+        start_date: 2000-01-23T04:56:07.000+00:00
+        ingestion_status: null
     CampaignFull:
       allOf:
       - $ref: '#/components/schemas/CampaignItem'
       - $ref: '#/components/schemas/CampaignAux'
       - $ref: '#/components/schemas/TimestampedObject1'
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        integration_platform:
+          id: adf
+          name: Adform
+        banner_image_url: https://api.digiseg.net/assets/campaigns/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
+        updated_by: 3u1jKJ9D12kj0S4c
+        created_at: 2000-01-23T04:56:07.000+00:00
+        event_links:
+          impression:
+            link: //subdomain.digiseg.net/path/to/pix.gif
+          click:
+            link: //subdomain.digiseg.net/path/to/click
+            parameters:
+              destination:
+                description: URL to redirect to
+        created_by: 3u1jKJ9D12kj0S4c
     CampaignCreation:
       allOf:
       - $ref: '#/components/schemas/CampaignBase'
       - $ref: '#/components/schemas/CampaignAux'
       - $ref: '#/components/schemas/CampaignCreationData'
+      example:
+        integration_platform:
+          id: adf
+          name: Adform
+        client_id: kfsdj423jkn243lml423
+        labels:
+        - Acme
+        - CTV
+        - Seasonal
+        ingestion_status: null
+        account_id: 4k3jKJ9D12kj0S4c
+        banner_image_url: https://api.digiseg.net/assets/campaigns/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
+        name: Acme Summer 2024 brand awareness
+        summary_stats:
+          private:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323
+          business:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323
+          not_resolved:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323
+        client:
+          id: 7c9jKJ9D12kj0S4d
+          name: Acme Ltd
+          logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
+        event_set: null
+        life_cycle_stage: null
+        event_links:
+          impression:
+            link: //subdomain.digiseg.net/path/to/pix.gif
+          click:
+            link: //subdomain.digiseg.net/path/to/click
+            parameters:
+              destination:
+                description: URL to redirect to
+        start_date: 2000-01-23T04:56:07.000+00:00
       required:
       - name
     CampaignMutation:
       allOf:
       - $ref: '#/components/schemas/CampaignBase'
       - $ref: '#/components/schemas/CampaignAux'
+      example:
+        account_id: 4k3jKJ9D12kj0S4c
+        integration_platform:
+          id: adf
+          name: Adform
+        banner_image_url: https://api.digiseg.net/assets/campaigns/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
+        name: Acme Summer 2024 brand awareness
+        summary_stats:
+          private:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323
+          business:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323
+          not_resolved:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323
+        client:
+          id: 7c9jKJ9D12kj0S4d
+          name: Acme Ltd
+          logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
+        life_cycle_stage: null
+        event_links:
+          impression:
+            link: //subdomain.digiseg.net/path/to/pix.gif
+          click:
+            link: //subdomain.digiseg.net/path/to/click
+            parameters:
+              destination:
+                description: URL to redirect to
+        labels:
+        - Acme
+        - CTV
+        - Seasonal
+        start_date: 2000-01-23T04:56:07.000+00:00
+        ingestion_status: null
     FractionOfTotal:
       description: |
         The fraction of events that fall within this object compared to the total of the
@@ -4126,7 +4685,12 @@ components:
       type: object
     getAccountById_200_response:
       example:
-        data: null
+        data:
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          owner_id: owner_id
+          updated_by: updated_by
+          created_at: 2000-01-23T04:56:07.000+00:00
+          created_by: created_by
         links:
           users: /accounts/4k3jKJ9D12kj0S4c/users
       properties:
@@ -4135,11 +4699,31 @@ components:
         links:
           $ref: '#/components/schemas/AccountLinks'
       type: object
+    uploadAccountLogo_request:
+      properties:
+        file:
+          format: binary
+          type: string
+      type: object
     listUsersByAccountId_200_response:
       example:
         data:
-        - null
-        - null
+        - account_id: account_id
+          avatar_url: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
+          roles:
+          - null
+          - null
+          name: Casey Doe
+          id: 4k3jKJ9D12kj0S4c
+          email: casey.doe@example.com
+        - account_id: account_id
+          avatar_url: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
+          roles:
+          - null
+          - null
+          name: Casey Doe
+          id: 4k3jKJ9D12kj0S4c
+          email: casey.doe@example.com
         meta:
           page:
             first_cursor: first_cursor
@@ -4161,7 +4745,23 @@ components:
       type: object
     createUserInAccount_201_response:
       example:
-        data: null
+        data:
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          account_memberships:
+          - account_id: account_id
+            account_name: account_name
+            roles:
+            - null
+            - null
+          - account_id: account_id
+            account_name: account_name
+            roles:
+            - null
+            - null
+          updated_by: updated_by
+          created_at: 2000-01-23T04:56:07.000+00:00
+          is_super_admin: true
+          created_by: created_by
         links:
           apikeys: /users/4k3jKJ9D12kj0S4c/apikeys
           account: /accounts/4k3jKJ9D12kj0S4c
@@ -4174,8 +4774,22 @@ components:
     listApiKeysByAccountId_200_response:
       example:
         data:
-        - null
-        - null
+        - last_used_at: 2000-01-23T04:56:07.000+00:00
+          expires_at: 2000-01-23T04:56:07.000+00:00
+          account_id: account_id
+          user_id: user_id
+          name: CRM integration key
+          token_prefix: token_prefix
+          id: 4k3jKJ9D12kj0S4c
+          status: null
+        - last_used_at: 2000-01-23T04:56:07.000+00:00
+          expires_at: 2000-01-23T04:56:07.000+00:00
+          account_id: account_id
+          user_id: user_id
+          name: CRM integration key
+          token_prefix: token_prefix
+          id: 4k3jKJ9D12kj0S4c
+          status: null
         meta:
           page:
             first_cursor: first_cursor
@@ -4197,14 +4811,34 @@ components:
       type: object
     createApiKey_201_response:
       example:
-        data: null
+        data:
+          token: 3j51ds3kn4234m23l24km23
       properties:
         data:
           $ref: '#/components/schemas/ApiKeyFullWithToken'
       type: object
     getApiKeyById_200_response:
       example:
-        data: null
+        data:
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          updated_by: updated_by
+          created_at: 2000-01-23T04:56:07.000+00:00
+          scopes:
+            country_data:
+            - '*'
+            - DE
+            - DK
+            - GB
+            - SE
+            origin_domains:
+            - '*'
+            - https://example.com
+            service_grants:
+            - audience-lookup
+            - analytics-impression
+            - analytics-click
+            - '*'
+          created_by: created_by
         links:
           user: /user/4k3jKJ9D12kj0S4c
       properties:
@@ -4216,8 +4850,90 @@ components:
     listCampaigns_200_response:
       example:
         data:
-        - null
-        - null
+        - account_id: 4k3jKJ9D12kj0S4c
+          name: Acme Summer 2024 brand awareness
+          summary_stats:
+            private:
+              measurements:
+              - event: impression
+                count: 7280791
+                fraction_of_total: 0.54
+              - event: click
+                count: 23522
+                fraction_of_total: 0.5
+                conversion_rate: 0.00323
+            business:
+              measurements:
+              - event: impression
+                count: 7280791
+                fraction_of_total: 0.54
+              - event: click
+                count: 23522
+                fraction_of_total: 0.5
+                conversion_rate: 0.00323
+            not_resolved:
+              measurements:
+              - event: impression
+                count: 7280791
+                fraction_of_total: 0.54
+              - event: click
+                count: 23522
+                fraction_of_total: 0.5
+                conversion_rate: 0.00323
+          client:
+            id: 7c9jKJ9D12kj0S4d
+            name: Acme Ltd
+            logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
+          id: 2c9jKJ9D12kj0S4c
+          life_cycle_stage: null
+          labels:
+          - Acme
+          - CTV
+          - Seasonal
+          start_date: 2000-01-23T04:56:07.000+00:00
+          ingestion_status: null
+        - account_id: 4k3jKJ9D12kj0S4c
+          name: Acme Summer 2024 brand awareness
+          summary_stats:
+            private:
+              measurements:
+              - event: impression
+                count: 7280791
+                fraction_of_total: 0.54
+              - event: click
+                count: 23522
+                fraction_of_total: 0.5
+                conversion_rate: 0.00323
+            business:
+              measurements:
+              - event: impression
+                count: 7280791
+                fraction_of_total: 0.54
+              - event: click
+                count: 23522
+                fraction_of_total: 0.5
+                conversion_rate: 0.00323
+            not_resolved:
+              measurements:
+              - event: impression
+                count: 7280791
+                fraction_of_total: 0.54
+              - event: click
+                count: 23522
+                fraction_of_total: 0.5
+                conversion_rate: 0.00323
+          client:
+            id: 7c9jKJ9D12kj0S4d
+            name: Acme Ltd
+            logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
+          id: 2c9jKJ9D12kj0S4c
+          life_cycle_stage: null
+          labels:
+          - Acme
+          - CTV
+          - Seasonal
+          start_date: 2000-01-23T04:56:07.000+00:00
+          ingestion_status: null
         meta:
           page:
             first_cursor: first_cursor
@@ -4239,7 +4955,23 @@ components:
       type: object
     createCampaign_201_response:
       example:
-        data: null
+        data:
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          integration_platform:
+            id: adf
+            name: Adform
+          banner_image_url: https://api.digiseg.net/assets/campaigns/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
+          updated_by: 3u1jKJ9D12kj0S4c
+          created_at: 2000-01-23T04:56:07.000+00:00
+          event_links:
+            impression:
+              link: //subdomain.digiseg.net/path/to/pix.gif
+            click:
+              link: //subdomain.digiseg.net/path/to/click
+              parameters:
+                destination:
+                  description: URL to redirect to
+          created_by: 3u1jKJ9D12kj0S4c
         links:
           stats_timing: /campaigns/2c9jKJ9D12kj0S4c/stats/timing
           stats_frequencies: /campaigns/2c9jKJ9D12kj0S4c/stats/frequencies
@@ -4301,16 +5033,18 @@ components:
       type: object
     createMeasurementClient_201_response:
       example:
-        data: null
+        data:
+          account_id: 4k3jKJ9D12kj0S4c
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          logo_url: https://api.digiseg.net/assets/measurement/clients/t4387kdfjn2r3lk/logo?vrft=dsk4j23k4osdk243
+          name: Acme Ltd
+          updated_by: 3u1jKJ9D12kj0S4c
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: 2c9jKJ9D12kj0S4c
+          created_by: 3u1jKJ9D12kj0S4c
       properties:
         data:
           $ref: '#/components/schemas/MeasurementClientFull'
-      type: object
-    uploadClientLogo_request:
-      properties:
-        file:
-          format: binary
-          type: string
       type: object
     queryCampaignAudienceStats_200_response:
       example:

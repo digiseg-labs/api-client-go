@@ -20,7 +20,7 @@ var _ MappedNullable = &CampaignIntegrationPlatform{}
 
 // CampaignIntegrationPlatform The integration/platform with which a campaign is being delivered 
 type CampaignIntegrationPlatform struct {
-	// An ID for the integration platform, if the integration platform is a known platform to Digiseg. Will be null/omitted if the platform name was entered manually as a string. 
+	// An ID for the integration platform, if the integration platform is a known platform. Note that integration platform ID uniqueness is a responsibility of the client since this is simply an optional reference point to keep. Can be null/omitted if the platform name is a one-off value with just a string. 
 	Id *string `json:"id,omitempty"`
 	// The name of the integration platform.
 	Name *string `json:"name,omitempty"`

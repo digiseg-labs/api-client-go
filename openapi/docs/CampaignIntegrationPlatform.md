@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | An ID for the integration platform, if the integration platform is a known platform to Digiseg. Will be null/omitted if the platform name was entered manually as a string.  | [optional] 
+**Id** | Pointer to **string** | An ID for the integration platform, if the integration platform is a known platform. Note that integration platform ID uniqueness is a responsibility of the client since this is simply an optional reference point to keep. Can be null/omitted if the platform name is a one-off value with just a string.  | [optional] 
 **Name** | Pointer to **string** | The name of the integration platform. | [optional] 
 
 ## Methods

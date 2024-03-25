@@ -5,9 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **EventLinks** | Pointer to [**CampaignEventLinks**](CampaignEventLinks.md) |  | [optional] 
-**IntegrationPlatform** | Pointer to [**CampaignIntegrationPlatform**](CampaignIntegrationPlatform.md) |  | [optional] 
 **BannerImageUrl** | Pointer to **string** | The URL to a banner image for the campaign. Note that the banner image is used only for Digiseg campaign reporting and presentation, it does NOT represent any delivered banner ad creatives or similar.  | [optional] [readonly] 
-**Client** | Pointer to [**MeasurementClientItem**](MeasurementClientItem.md) |  | [optional] 
+**IntegrationPlatform** | Pointer to [**CampaignIntegrationPlatform**](CampaignIntegrationPlatform.md) |  | [optional] 
 
 ## Methods
 
@@ -53,31 +52,6 @@ SetEventLinks sets EventLinks field to given value.
 
 HasEventLinks returns a boolean if a field has been set.
 
-### GetIntegrationPlatform
-
-`func (o *CampaignAux) GetIntegrationPlatform() CampaignIntegrationPlatform`
-
-GetIntegrationPlatform returns the IntegrationPlatform field if non-nil, zero value otherwise.
-
-### GetIntegrationPlatformOk
-
-`func (o *CampaignAux) GetIntegrationPlatformOk() (*CampaignIntegrationPlatform, bool)`
-
-GetIntegrationPlatformOk returns a tuple with the IntegrationPlatform field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIntegrationPlatform
-
-`func (o *CampaignAux) SetIntegrationPlatform(v CampaignIntegrationPlatform)`
-
-SetIntegrationPlatform sets IntegrationPlatform field to given value.
-
-### HasIntegrationPlatform
-
-`func (o *CampaignAux) HasIntegrationPlatform() bool`
-
-HasIntegrationPlatform returns a boolean if a field has been set.
-
 ### GetBannerImageUrl
 
 `func (o *CampaignAux) GetBannerImageUrl() string`
@@ -103,30 +77,30 @@ SetBannerImageUrl sets BannerImageUrl field to given value.
 
 HasBannerImageUrl returns a boolean if a field has been set.
 
-### GetClient
+### GetIntegrationPlatform
 
-`func (o *CampaignAux) GetClient() MeasurementClientItem`
+`func (o *CampaignAux) GetIntegrationPlatform() CampaignIntegrationPlatform`
 
-GetClient returns the Client field if non-nil, zero value otherwise.
+GetIntegrationPlatform returns the IntegrationPlatform field if non-nil, zero value otherwise.
 
-### GetClientOk
+### GetIntegrationPlatformOk
 
-`func (o *CampaignAux) GetClientOk() (*MeasurementClientItem, bool)`
+`func (o *CampaignAux) GetIntegrationPlatformOk() (*CampaignIntegrationPlatform, bool)`
 
-GetClientOk returns a tuple with the Client field if it's non-nil, zero value otherwise
+GetIntegrationPlatformOk returns a tuple with the IntegrationPlatform field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetClient
+### SetIntegrationPlatform
 
-`func (o *CampaignAux) SetClient(v MeasurementClientItem)`
+`func (o *CampaignAux) SetIntegrationPlatform(v CampaignIntegrationPlatform)`
 
-SetClient sets Client field to given value.
+SetIntegrationPlatform sets IntegrationPlatform field to given value.
 
-### HasClient
+### HasIntegrationPlatform
 
-`func (o *CampaignAux) HasClient() bool`
+`func (o *CampaignAux) HasIntegrationPlatform() bool`
 
-HasClient returns a boolean if a field has been set.
+HasIntegrationPlatform returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

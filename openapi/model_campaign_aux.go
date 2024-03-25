@@ -21,10 +21,9 @@ var _ MappedNullable = &CampaignAux{}
 // CampaignAux struct for CampaignAux
 type CampaignAux struct {
 	EventLinks *CampaignEventLinks `json:"event_links,omitempty"`
-	IntegrationPlatform *CampaignIntegrationPlatform `json:"integration_platform,omitempty"`
 	// The URL to a banner image for the campaign. Note that the banner image is used only for Digiseg campaign reporting and presentation, it does NOT represent any delivered banner ad creatives or similar. 
 	BannerImageUrl *string `json:"banner_image_url,omitempty"`
-	Client *MeasurementClientItem `json:"client,omitempty"`
+	IntegrationPlatform *CampaignIntegrationPlatform `json:"integration_platform,omitempty"`
 }
 
 // NewCampaignAux instantiates a new CampaignAux object
@@ -76,38 +75,6 @@ func (o *CampaignAux) SetEventLinks(v CampaignEventLinks) {
 	o.EventLinks = &v
 }
 
-// GetIntegrationPlatform returns the IntegrationPlatform field value if set, zero value otherwise.
-func (o *CampaignAux) GetIntegrationPlatform() CampaignIntegrationPlatform {
-	if o == nil || IsNil(o.IntegrationPlatform) {
-		var ret CampaignIntegrationPlatform
-		return ret
-	}
-	return *o.IntegrationPlatform
-}
-
-// GetIntegrationPlatformOk returns a tuple with the IntegrationPlatform field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CampaignAux) GetIntegrationPlatformOk() (*CampaignIntegrationPlatform, bool) {
-	if o == nil || IsNil(o.IntegrationPlatform) {
-		return nil, false
-	}
-	return o.IntegrationPlatform, true
-}
-
-// HasIntegrationPlatform returns a boolean if a field has been set.
-func (o *CampaignAux) HasIntegrationPlatform() bool {
-	if o != nil && !IsNil(o.IntegrationPlatform) {
-		return true
-	}
-
-	return false
-}
-
-// SetIntegrationPlatform gets a reference to the given CampaignIntegrationPlatform and assigns it to the IntegrationPlatform field.
-func (o *CampaignAux) SetIntegrationPlatform(v CampaignIntegrationPlatform) {
-	o.IntegrationPlatform = &v
-}
-
 // GetBannerImageUrl returns the BannerImageUrl field value if set, zero value otherwise.
 func (o *CampaignAux) GetBannerImageUrl() string {
 	if o == nil || IsNil(o.BannerImageUrl) {
@@ -140,36 +107,36 @@ func (o *CampaignAux) SetBannerImageUrl(v string) {
 	o.BannerImageUrl = &v
 }
 
-// GetClient returns the Client field value if set, zero value otherwise.
-func (o *CampaignAux) GetClient() MeasurementClientItem {
-	if o == nil || IsNil(o.Client) {
-		var ret MeasurementClientItem
+// GetIntegrationPlatform returns the IntegrationPlatform field value if set, zero value otherwise.
+func (o *CampaignAux) GetIntegrationPlatform() CampaignIntegrationPlatform {
+	if o == nil || IsNil(o.IntegrationPlatform) {
+		var ret CampaignIntegrationPlatform
 		return ret
 	}
-	return *o.Client
+	return *o.IntegrationPlatform
 }
 
-// GetClientOk returns a tuple with the Client field value if set, nil otherwise
+// GetIntegrationPlatformOk returns a tuple with the IntegrationPlatform field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CampaignAux) GetClientOk() (*MeasurementClientItem, bool) {
-	if o == nil || IsNil(o.Client) {
+func (o *CampaignAux) GetIntegrationPlatformOk() (*CampaignIntegrationPlatform, bool) {
+	if o == nil || IsNil(o.IntegrationPlatform) {
 		return nil, false
 	}
-	return o.Client, true
+	return o.IntegrationPlatform, true
 }
 
-// HasClient returns a boolean if a field has been set.
-func (o *CampaignAux) HasClient() bool {
-	if o != nil && !IsNil(o.Client) {
+// HasIntegrationPlatform returns a boolean if a field has been set.
+func (o *CampaignAux) HasIntegrationPlatform() bool {
+	if o != nil && !IsNil(o.IntegrationPlatform) {
 		return true
 	}
 
 	return false
 }
 
-// SetClient gets a reference to the given MeasurementClientItem and assigns it to the Client field.
-func (o *CampaignAux) SetClient(v MeasurementClientItem) {
-	o.Client = &v
+// SetIntegrationPlatform gets a reference to the given CampaignIntegrationPlatform and assigns it to the IntegrationPlatform field.
+func (o *CampaignAux) SetIntegrationPlatform(v CampaignIntegrationPlatform) {
+	o.IntegrationPlatform = &v
 }
 
 func (o CampaignAux) MarshalJSON() ([]byte, error) {
@@ -185,14 +152,11 @@ func (o CampaignAux) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EventLinks) {
 		toSerialize["event_links"] = o.EventLinks
 	}
-	if !IsNil(o.IntegrationPlatform) {
-		toSerialize["integration_platform"] = o.IntegrationPlatform
-	}
 	if !IsNil(o.BannerImageUrl) {
 		toSerialize["banner_image_url"] = o.BannerImageUrl
 	}
-	if !IsNil(o.Client) {
-		toSerialize["client"] = o.Client
+	if !IsNil(o.IntegrationPlatform) {
+		toSerialize["integration_platform"] = o.IntegrationPlatform
 	}
 	return toSerialize, nil
 }

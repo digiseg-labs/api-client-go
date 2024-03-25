@@ -13,139 +13,115 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
-// checks if the AccountBase type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &AccountBase{}
+// checks if the CampaignSummaryStats type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CampaignSummaryStats{}
 
-// AccountBase struct for AccountBase
-type AccountBase struct {
-	// Human readable name of the account
-	Name *string `json:"name,omitempty"`
-	// The URL to the logo of the account
-	LogoUrl *string `json:"logo_url,omitempty"`
-	// A short human-readable name to identify the account. Must be lower-case and between 4 and 16 characters.
-	// Deprecated
-	Slug *string `json:"slug,omitempty"`
+// CampaignSummaryStats struct for CampaignSummaryStats
+type CampaignSummaryStats struct {
+	Private MeasurementsContainer `json:"private"`
+	Business MeasurementsContainer `json:"business"`
+	NotResolved MeasurementsContainer `json:"not_resolved"`
 }
 
-// NewAccountBase instantiates a new AccountBase object
+type _CampaignSummaryStats CampaignSummaryStats
+
+// NewCampaignSummaryStats instantiates a new CampaignSummaryStats object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAccountBase() *AccountBase {
-	this := AccountBase{}
+func NewCampaignSummaryStats(private MeasurementsContainer, business MeasurementsContainer, notResolved MeasurementsContainer) *CampaignSummaryStats {
+	this := CampaignSummaryStats{}
+	this.Private = private
+	this.Business = business
+	this.NotResolved = notResolved
 	return &this
 }
 
-// NewAccountBaseWithDefaults instantiates a new AccountBase object
+// NewCampaignSummaryStatsWithDefaults instantiates a new CampaignSummaryStats object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewAccountBaseWithDefaults() *AccountBase {
-	this := AccountBase{}
+func NewCampaignSummaryStatsWithDefaults() *CampaignSummaryStats {
+	this := CampaignSummaryStats{}
 	return &this
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
-func (o *AccountBase) GetName() string {
-	if o == nil || IsNil(o.Name) {
-		var ret string
+// GetPrivate returns the Private field value
+func (o *CampaignSummaryStats) GetPrivate() MeasurementsContainer {
+	if o == nil {
+		var ret MeasurementsContainer
 		return ret
 	}
-	return *o.Name
+
+	return o.Private
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetPrivateOk returns a tuple with the Private field value
 // and a boolean to check if the value has been set.
-func (o *AccountBase) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+func (o *CampaignSummaryStats) GetPrivateOk() (*MeasurementsContainer, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Private, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *AccountBase) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
+// SetPrivate sets field value
+func (o *CampaignSummaryStats) SetPrivate(v MeasurementsContainer) {
+	o.Private = v
 }
 
-// SetName gets a reference to the given string and assigns it to the Name field.
-func (o *AccountBase) SetName(v string) {
-	o.Name = &v
-}
-
-// GetLogoUrl returns the LogoUrl field value if set, zero value otherwise.
-func (o *AccountBase) GetLogoUrl() string {
-	if o == nil || IsNil(o.LogoUrl) {
-		var ret string
+// GetBusiness returns the Business field value
+func (o *CampaignSummaryStats) GetBusiness() MeasurementsContainer {
+	if o == nil {
+		var ret MeasurementsContainer
 		return ret
 	}
-	return *o.LogoUrl
+
+	return o.Business
 }
 
-// GetLogoUrlOk returns a tuple with the LogoUrl field value if set, nil otherwise
+// GetBusinessOk returns a tuple with the Business field value
 // and a boolean to check if the value has been set.
-func (o *AccountBase) GetLogoUrlOk() (*string, bool) {
-	if o == nil || IsNil(o.LogoUrl) {
+func (o *CampaignSummaryStats) GetBusinessOk() (*MeasurementsContainer, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.LogoUrl, true
+	return &o.Business, true
 }
 
-// HasLogoUrl returns a boolean if a field has been set.
-func (o *AccountBase) HasLogoUrl() bool {
-	if o != nil && !IsNil(o.LogoUrl) {
-		return true
-	}
-
-	return false
+// SetBusiness sets field value
+func (o *CampaignSummaryStats) SetBusiness(v MeasurementsContainer) {
+	o.Business = v
 }
 
-// SetLogoUrl gets a reference to the given string and assigns it to the LogoUrl field.
-func (o *AccountBase) SetLogoUrl(v string) {
-	o.LogoUrl = &v
-}
-
-// GetSlug returns the Slug field value if set, zero value otherwise.
-// Deprecated
-func (o *AccountBase) GetSlug() string {
-	if o == nil || IsNil(o.Slug) {
-		var ret string
+// GetNotResolved returns the NotResolved field value
+func (o *CampaignSummaryStats) GetNotResolved() MeasurementsContainer {
+	if o == nil {
+		var ret MeasurementsContainer
 		return ret
 	}
-	return *o.Slug
+
+	return o.NotResolved
 }
 
-// GetSlugOk returns a tuple with the Slug field value if set, nil otherwise
+// GetNotResolvedOk returns a tuple with the NotResolved field value
 // and a boolean to check if the value has been set.
-// Deprecated
-func (o *AccountBase) GetSlugOk() (*string, bool) {
-	if o == nil || IsNil(o.Slug) {
+func (o *CampaignSummaryStats) GetNotResolvedOk() (*MeasurementsContainer, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Slug, true
+	return &o.NotResolved, true
 }
 
-// HasSlug returns a boolean if a field has been set.
-func (o *AccountBase) HasSlug() bool {
-	if o != nil && !IsNil(o.Slug) {
-		return true
-	}
-
-	return false
+// SetNotResolved sets field value
+func (o *CampaignSummaryStats) SetNotResolved(v MeasurementsContainer) {
+	o.NotResolved = v
 }
 
-// SetSlug gets a reference to the given string and assigns it to the Slug field.
-// Deprecated
-func (o *AccountBase) SetSlug(v string) {
-	o.Slug = &v
-}
-
-func (o AccountBase) MarshalJSON() ([]byte, error) {
+func (o CampaignSummaryStats) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -153,52 +129,85 @@ func (o AccountBase) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o AccountBase) ToMap() (map[string]interface{}, error) {
+func (o CampaignSummaryStats) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
-	if !IsNil(o.LogoUrl) {
-		toSerialize["logo_url"] = o.LogoUrl
-	}
-	if !IsNil(o.Slug) {
-		toSerialize["slug"] = o.Slug
-	}
+	toSerialize["private"] = o.Private
+	toSerialize["business"] = o.Business
+	toSerialize["not_resolved"] = o.NotResolved
 	return toSerialize, nil
 }
 
-type NullableAccountBase struct {
-	value *AccountBase
+func (o *CampaignSummaryStats) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"private",
+		"business",
+		"not_resolved",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCampaignSummaryStats := _CampaignSummaryStats{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCampaignSummaryStats)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CampaignSummaryStats(varCampaignSummaryStats)
+
+	return err
+}
+
+type NullableCampaignSummaryStats struct {
+	value *CampaignSummaryStats
 	isSet bool
 }
 
-func (v NullableAccountBase) Get() *AccountBase {
+func (v NullableCampaignSummaryStats) Get() *CampaignSummaryStats {
 	return v.value
 }
 
-func (v *NullableAccountBase) Set(val *AccountBase) {
+func (v *NullableCampaignSummaryStats) Set(val *CampaignSummaryStats) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableAccountBase) IsSet() bool {
+func (v NullableCampaignSummaryStats) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableAccountBase) Unset() {
+func (v *NullableCampaignSummaryStats) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableAccountBase(val *AccountBase) *NullableAccountBase {
-	return &NullableAccountBase{value: val, isSet: true}
+func NewNullableCampaignSummaryStats(val *CampaignSummaryStats) *NullableCampaignSummaryStats {
+	return &NullableCampaignSummaryStats{value: val, isSet: true}
 }
 
-func (v NullableAccountBase) MarshalJSON() ([]byte, error) {
+func (v NullableCampaignSummaryStats) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableAccountBase) UnmarshalJSON(src []byte) error {
+func (v *NullableCampaignSummaryStats) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

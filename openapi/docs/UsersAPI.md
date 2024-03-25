@@ -7,14 +7,17 @@ Method | HTTP request | Description
 [**CreateApiKey**](UsersAPI.md#CreateApiKey) | **Post** /users/{user_id}/apikeys | Create API key
 [**CreateUserInAccount**](UsersAPI.md#CreateUserInAccount) | **Post** /accounts/{account_id}/users | Create user
 [**DeleteApiKeyById**](UsersAPI.md#DeleteApiKeyById) | **Delete** /users/{user_id}/apikeys/{key_id} | Delete API key
+[**DeleteUserAvatar**](UsersAPI.md#DeleteUserAvatar) | **Delete** /users/{user_id}/assets/avatar | Delete user avatar
 [**DeleteUserById**](UsersAPI.md#DeleteUserById) | **Delete** /users/{user_id} | Delete user
 [**GetApiKeyById**](UsersAPI.md#GetApiKeyById) | **Get** /users/{user_id}/apikeys/{key_id} | Get API key
 [**GetCurrentUser**](UsersAPI.md#GetCurrentUser) | **Get** /user | Get current user
+[**GetUserAvatar**](UsersAPI.md#GetUserAvatar) | **Get** /users/{user_id}/assets/avatar | Get user avatar
 [**GetUserById**](UsersAPI.md#GetUserById) | **Get** /users/{user_id} | Get user
 [**ListApiKeysByUserId**](UsersAPI.md#ListApiKeysByUserId) | **Get** /users/{user_id}/apikeys | List API keys for user
 [**ListUsersByAccountId**](UsersAPI.md#ListUsersByAccountId) | **Get** /accounts/{account_id}/users | List users for account
 [**UpdateApiKeyById**](UsersAPI.md#UpdateApiKeyById) | **Put** /users/{user_id}/apikeys/{key_id} | Update API key
 [**UpdateUserById**](UsersAPI.md#UpdateUserById) | **Put** /users/{user_id} | Update user
+[**UploadUserAvatar**](UsersAPI.md#UploadUserAvatar) | **Put** /users/{user_id}/assets/avatar | Upload user avatar
 
 
 
@@ -211,6 +214,74 @@ Other parameters are passed through a pointer to a apiDeleteApiKeyByIdRequest st
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteUserAvatar
+
+> DeleteUserAvatar(ctx, userId).Execute()
+
+Delete user avatar
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	userId := "userId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.UsersAPI.DeleteUserAvatar(context.Background(), userId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.DeleteUserAvatar``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**userId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteUserAvatarRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
 
 
 ### Return type
@@ -429,6 +500,74 @@ Other parameters are passed through a pointer to a apiGetCurrentUserRequest stru
 [[Back to README]](../README.md)
 
 
+## GetUserAvatar
+
+> GetUserAvatar(ctx, userId).Execute()
+
+Get user avatar
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	userId := "userId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.UsersAPI.GetUserAvatar(context.Background(), userId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetUserAvatar``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**userId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetUserAvatarRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetUserById
 
 > CreateUserInAccount201Response GetUserById(ctx, userId).Execute()
@@ -567,7 +706,7 @@ Name | Type | Description  | Notes
 
 ## ListUsersByAccountId
 
-> ListUsersByAccountId200Response ListUsersByAccountId(ctx, accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
+> ListUsersByAccountId200Response ListUsersByAccountId(ctx, accountId).FilterPlatformRoles(filterPlatformRoles).FilterNameContains(filterNameContains).PageSize(pageSize).PageAfter(pageAfter).Execute()
 
 List users for account
 
@@ -585,12 +724,14 @@ import (
 
 func main() {
 	accountId := "accountId_example" // string | 
+	filterPlatformRoles := "filterPlatformRoles_example" // string | Filter based on platform roles, e.g. super_admin (optional)
+	filterNameContains := "Doe" // string | Optional parameter used to search for users where the name contains a substring (case insensitive) (optional)
 	pageSize := int32(56) // int32 | The desired page size (optional) (default to 100)
 	pageAfter := "pageAfter_example" // string | Optional pagination parameter, indicating the previous cursor value to paginate beyond. The value to provide here is opaque, but can be found in previous requests in the `meta.page.last_cursor` field.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UsersAPI.ListUsersByAccountId(context.Background(), accountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
+	resp, r, err := apiClient.UsersAPI.ListUsersByAccountId(context.Background(), accountId).FilterPlatformRoles(filterPlatformRoles).FilterNameContains(filterNameContains).PageSize(pageSize).PageAfter(pageAfter).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.ListUsersByAccountId``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -616,6 +757,8 @@ Other parameters are passed through a pointer to a apiListUsersByAccountIdReques
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **filterPlatformRoles** | **string** | Filter based on platform roles, e.g. super_admin | 
+ **filterNameContains** | **string** | Optional parameter used to search for users where the name contains a substring (case insensitive) | 
  **pageSize** | **int32** | The desired page size | [default to 100]
  **pageAfter** | **string** | Optional pagination parameter, indicating the previous cursor value to paginate beyond. The value to provide here is opaque, but can be found in previous requests in the &#x60;meta.page.last_cursor&#x60; field.  | 
 
@@ -774,6 +917,76 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UploadUserAvatar
+
+> UploadUserAvatar(ctx, userId).Body(body).Execute()
+
+Upload user avatar
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	userId := "userId_example" // string | 
+	body := os.NewFile(1234, "some_file") // *os.File | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.UsersAPI.UploadUserAvatar(context.Background(), userId).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.UploadUserAvatar``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**userId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUploadUserAvatarRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **body** | ***os.File** |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: image/gif, image/png, image/jpeg, multipart/form-data
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

@@ -10,10 +10,11 @@ Name | Type | Description | Notes
 **StartDate** | Pointer to **time.Time** | The date for which the campaign and its data ingestion will start. | [optional] [readonly] 
 **LifeCycleStage** | Pointer to [**CampaignLifecycleStage**](CampaignLifecycleStage.md) |  | [optional] 
 **IngestionStatus** | Pointer to [**CampaignIngestionStatus**](CampaignIngestionStatus.md) |  | [optional] 
-**EventLinks** | Pointer to [**CampaignEventLinks**](CampaignEventLinks.md) |  | [optional] 
-**IntegrationPlatform** | Pointer to [**CampaignIntegrationPlatform**](CampaignIntegrationPlatform.md) |  | [optional] 
-**BannerImageUrl** | Pointer to **string** | The URL to a banner image for the campaign. Note that the banner image is used only for Digiseg campaign reporting and presentation, it does NOT represent any delivered banner ad creatives or similar.  | [optional] [readonly] 
+**SummaryStats** | Pointer to [**CampaignSummaryStats**](CampaignSummaryStats.md) |  | [optional] 
 **Client** | Pointer to [**MeasurementClientItem**](MeasurementClientItem.md) |  | [optional] 
+**EventLinks** | Pointer to [**CampaignEventLinks**](CampaignEventLinks.md) |  | [optional] 
+**BannerImageUrl** | Pointer to **string** | The URL to a banner image for the campaign. Note that the banner image is used only for Digiseg campaign reporting and presentation, it does NOT represent any delivered banner ad creatives or similar.  | [optional] [readonly] 
+**IntegrationPlatform** | Pointer to [**CampaignIntegrationPlatform**](CampaignIntegrationPlatform.md) |  | [optional] 
 
 ## Methods
 
@@ -184,6 +185,56 @@ SetIngestionStatus sets IngestionStatus field to given value.
 
 HasIngestionStatus returns a boolean if a field has been set.
 
+### GetSummaryStats
+
+`func (o *CampaignMutation) GetSummaryStats() CampaignSummaryStats`
+
+GetSummaryStats returns the SummaryStats field if non-nil, zero value otherwise.
+
+### GetSummaryStatsOk
+
+`func (o *CampaignMutation) GetSummaryStatsOk() (*CampaignSummaryStats, bool)`
+
+GetSummaryStatsOk returns a tuple with the SummaryStats field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSummaryStats
+
+`func (o *CampaignMutation) SetSummaryStats(v CampaignSummaryStats)`
+
+SetSummaryStats sets SummaryStats field to given value.
+
+### HasSummaryStats
+
+`func (o *CampaignMutation) HasSummaryStats() bool`
+
+HasSummaryStats returns a boolean if a field has been set.
+
+### GetClient
+
+`func (o *CampaignMutation) GetClient() MeasurementClientItem`
+
+GetClient returns the Client field if non-nil, zero value otherwise.
+
+### GetClientOk
+
+`func (o *CampaignMutation) GetClientOk() (*MeasurementClientItem, bool)`
+
+GetClientOk returns a tuple with the Client field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetClient
+
+`func (o *CampaignMutation) SetClient(v MeasurementClientItem)`
+
+SetClient sets Client field to given value.
+
+### HasClient
+
+`func (o *CampaignMutation) HasClient() bool`
+
+HasClient returns a boolean if a field has been set.
+
 ### GetEventLinks
 
 `func (o *CampaignMutation) GetEventLinks() CampaignEventLinks`
@@ -208,31 +259,6 @@ SetEventLinks sets EventLinks field to given value.
 `func (o *CampaignMutation) HasEventLinks() bool`
 
 HasEventLinks returns a boolean if a field has been set.
-
-### GetIntegrationPlatform
-
-`func (o *CampaignMutation) GetIntegrationPlatform() CampaignIntegrationPlatform`
-
-GetIntegrationPlatform returns the IntegrationPlatform field if non-nil, zero value otherwise.
-
-### GetIntegrationPlatformOk
-
-`func (o *CampaignMutation) GetIntegrationPlatformOk() (*CampaignIntegrationPlatform, bool)`
-
-GetIntegrationPlatformOk returns a tuple with the IntegrationPlatform field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIntegrationPlatform
-
-`func (o *CampaignMutation) SetIntegrationPlatform(v CampaignIntegrationPlatform)`
-
-SetIntegrationPlatform sets IntegrationPlatform field to given value.
-
-### HasIntegrationPlatform
-
-`func (o *CampaignMutation) HasIntegrationPlatform() bool`
-
-HasIntegrationPlatform returns a boolean if a field has been set.
 
 ### GetBannerImageUrl
 
@@ -259,30 +285,30 @@ SetBannerImageUrl sets BannerImageUrl field to given value.
 
 HasBannerImageUrl returns a boolean if a field has been set.
 
-### GetClient
+### GetIntegrationPlatform
 
-`func (o *CampaignMutation) GetClient() MeasurementClientItem`
+`func (o *CampaignMutation) GetIntegrationPlatform() CampaignIntegrationPlatform`
 
-GetClient returns the Client field if non-nil, zero value otherwise.
+GetIntegrationPlatform returns the IntegrationPlatform field if non-nil, zero value otherwise.
 
-### GetClientOk
+### GetIntegrationPlatformOk
 
-`func (o *CampaignMutation) GetClientOk() (*MeasurementClientItem, bool)`
+`func (o *CampaignMutation) GetIntegrationPlatformOk() (*CampaignIntegrationPlatform, bool)`
 
-GetClientOk returns a tuple with the Client field if it's non-nil, zero value otherwise
+GetIntegrationPlatformOk returns a tuple with the IntegrationPlatform field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetClient
+### SetIntegrationPlatform
 
-`func (o *CampaignMutation) SetClient(v MeasurementClientItem)`
+`func (o *CampaignMutation) SetIntegrationPlatform(v CampaignIntegrationPlatform)`
 
-SetClient sets Client field to given value.
+SetIntegrationPlatform sets IntegrationPlatform field to given value.
 
-### HasClient
+### HasIntegrationPlatform
 
-`func (o *CampaignMutation) HasClient() bool`
+`func (o *CampaignMutation) HasIntegrationPlatform() bool`
 
-HasClient returns a boolean if a field has been set.
+HasIntegrationPlatform returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -34,6 +34,8 @@ type CampaignItem struct {
 	StartDate *time.Time `json:"start_date,omitempty"`
 	LifeCycleStage *CampaignLifecycleStage `json:"life_cycle_stage,omitempty"`
 	IngestionStatus *CampaignIngestionStatus `json:"ingestion_status,omitempty"`
+	SummaryStats *CampaignSummaryStats `json:"summary_stats,omitempty"`
+	Client *MeasurementClientItem `json:"client,omitempty"`
 }
 
 type _CampaignItem CampaignItem
@@ -272,6 +274,70 @@ func (o *CampaignItem) SetIngestionStatus(v CampaignIngestionStatus) {
 	o.IngestionStatus = &v
 }
 
+// GetSummaryStats returns the SummaryStats field value if set, zero value otherwise.
+func (o *CampaignItem) GetSummaryStats() CampaignSummaryStats {
+	if o == nil || IsNil(o.SummaryStats) {
+		var ret CampaignSummaryStats
+		return ret
+	}
+	return *o.SummaryStats
+}
+
+// GetSummaryStatsOk returns a tuple with the SummaryStats field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CampaignItem) GetSummaryStatsOk() (*CampaignSummaryStats, bool) {
+	if o == nil || IsNil(o.SummaryStats) {
+		return nil, false
+	}
+	return o.SummaryStats, true
+}
+
+// HasSummaryStats returns a boolean if a field has been set.
+func (o *CampaignItem) HasSummaryStats() bool {
+	if o != nil && !IsNil(o.SummaryStats) {
+		return true
+	}
+
+	return false
+}
+
+// SetSummaryStats gets a reference to the given CampaignSummaryStats and assigns it to the SummaryStats field.
+func (o *CampaignItem) SetSummaryStats(v CampaignSummaryStats) {
+	o.SummaryStats = &v
+}
+
+// GetClient returns the Client field value if set, zero value otherwise.
+func (o *CampaignItem) GetClient() MeasurementClientItem {
+	if o == nil || IsNil(o.Client) {
+		var ret MeasurementClientItem
+		return ret
+	}
+	return *o.Client
+}
+
+// GetClientOk returns a tuple with the Client field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CampaignItem) GetClientOk() (*MeasurementClientItem, bool) {
+	if o == nil || IsNil(o.Client) {
+		return nil, false
+	}
+	return o.Client, true
+}
+
+// HasClient returns a boolean if a field has been set.
+func (o *CampaignItem) HasClient() bool {
+	if o != nil && !IsNil(o.Client) {
+		return true
+	}
+
+	return false
+}
+
+// SetClient gets a reference to the given MeasurementClientItem and assigns it to the Client field.
+func (o *CampaignItem) SetClient(v MeasurementClientItem) {
+	o.Client = &v
+}
+
 func (o CampaignItem) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -300,6 +366,12 @@ func (o CampaignItem) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IngestionStatus) {
 		toSerialize["ingestion_status"] = o.IngestionStatus
+	}
+	if !IsNil(o.SummaryStats) {
+		toSerialize["summary_stats"] = o.SummaryStats
+	}
+	if !IsNil(o.Client) {
+		toSerialize["client"] = o.Client
 	}
 	return toSerialize, nil
 }

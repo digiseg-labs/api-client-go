@@ -30,11 +30,12 @@ type CampaignMutation struct {
 	StartDate *time.Time `json:"start_date,omitempty"`
 	LifeCycleStage *CampaignLifecycleStage `json:"life_cycle_stage,omitempty"`
 	IngestionStatus *CampaignIngestionStatus `json:"ingestion_status,omitempty"`
+	SummaryStats *CampaignSummaryStats `json:"summary_stats,omitempty"`
+	Client *MeasurementClientItem `json:"client,omitempty"`
 	EventLinks *CampaignEventLinks `json:"event_links,omitempty"`
-	IntegrationPlatform *CampaignIntegrationPlatform `json:"integration_platform,omitempty"`
 	// The URL to a banner image for the campaign. Note that the banner image is used only for Digiseg campaign reporting and presentation, it does NOT represent any delivered banner ad creatives or similar. 
 	BannerImageUrl *string `json:"banner_image_url,omitempty"`
-	Client *MeasurementClientItem `json:"client,omitempty"`
+	IntegrationPlatform *CampaignIntegrationPlatform `json:"integration_platform,omitempty"`
 }
 
 // NewCampaignMutation instantiates a new CampaignMutation object
@@ -246,100 +247,36 @@ func (o *CampaignMutation) SetIngestionStatus(v CampaignIngestionStatus) {
 	o.IngestionStatus = &v
 }
 
-// GetEventLinks returns the EventLinks field value if set, zero value otherwise.
-func (o *CampaignMutation) GetEventLinks() CampaignEventLinks {
-	if o == nil || IsNil(o.EventLinks) {
-		var ret CampaignEventLinks
+// GetSummaryStats returns the SummaryStats field value if set, zero value otherwise.
+func (o *CampaignMutation) GetSummaryStats() CampaignSummaryStats {
+	if o == nil || IsNil(o.SummaryStats) {
+		var ret CampaignSummaryStats
 		return ret
 	}
-	return *o.EventLinks
+	return *o.SummaryStats
 }
 
-// GetEventLinksOk returns a tuple with the EventLinks field value if set, nil otherwise
+// GetSummaryStatsOk returns a tuple with the SummaryStats field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CampaignMutation) GetEventLinksOk() (*CampaignEventLinks, bool) {
-	if o == nil || IsNil(o.EventLinks) {
+func (o *CampaignMutation) GetSummaryStatsOk() (*CampaignSummaryStats, bool) {
+	if o == nil || IsNil(o.SummaryStats) {
 		return nil, false
 	}
-	return o.EventLinks, true
+	return o.SummaryStats, true
 }
 
-// HasEventLinks returns a boolean if a field has been set.
-func (o *CampaignMutation) HasEventLinks() bool {
-	if o != nil && !IsNil(o.EventLinks) {
+// HasSummaryStats returns a boolean if a field has been set.
+func (o *CampaignMutation) HasSummaryStats() bool {
+	if o != nil && !IsNil(o.SummaryStats) {
 		return true
 	}
 
 	return false
 }
 
-// SetEventLinks gets a reference to the given CampaignEventLinks and assigns it to the EventLinks field.
-func (o *CampaignMutation) SetEventLinks(v CampaignEventLinks) {
-	o.EventLinks = &v
-}
-
-// GetIntegrationPlatform returns the IntegrationPlatform field value if set, zero value otherwise.
-func (o *CampaignMutation) GetIntegrationPlatform() CampaignIntegrationPlatform {
-	if o == nil || IsNil(o.IntegrationPlatform) {
-		var ret CampaignIntegrationPlatform
-		return ret
-	}
-	return *o.IntegrationPlatform
-}
-
-// GetIntegrationPlatformOk returns a tuple with the IntegrationPlatform field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CampaignMutation) GetIntegrationPlatformOk() (*CampaignIntegrationPlatform, bool) {
-	if o == nil || IsNil(o.IntegrationPlatform) {
-		return nil, false
-	}
-	return o.IntegrationPlatform, true
-}
-
-// HasIntegrationPlatform returns a boolean if a field has been set.
-func (o *CampaignMutation) HasIntegrationPlatform() bool {
-	if o != nil && !IsNil(o.IntegrationPlatform) {
-		return true
-	}
-
-	return false
-}
-
-// SetIntegrationPlatform gets a reference to the given CampaignIntegrationPlatform and assigns it to the IntegrationPlatform field.
-func (o *CampaignMutation) SetIntegrationPlatform(v CampaignIntegrationPlatform) {
-	o.IntegrationPlatform = &v
-}
-
-// GetBannerImageUrl returns the BannerImageUrl field value if set, zero value otherwise.
-func (o *CampaignMutation) GetBannerImageUrl() string {
-	if o == nil || IsNil(o.BannerImageUrl) {
-		var ret string
-		return ret
-	}
-	return *o.BannerImageUrl
-}
-
-// GetBannerImageUrlOk returns a tuple with the BannerImageUrl field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CampaignMutation) GetBannerImageUrlOk() (*string, bool) {
-	if o == nil || IsNil(o.BannerImageUrl) {
-		return nil, false
-	}
-	return o.BannerImageUrl, true
-}
-
-// HasBannerImageUrl returns a boolean if a field has been set.
-func (o *CampaignMutation) HasBannerImageUrl() bool {
-	if o != nil && !IsNil(o.BannerImageUrl) {
-		return true
-	}
-
-	return false
-}
-
-// SetBannerImageUrl gets a reference to the given string and assigns it to the BannerImageUrl field.
-func (o *CampaignMutation) SetBannerImageUrl(v string) {
-	o.BannerImageUrl = &v
+// SetSummaryStats gets a reference to the given CampaignSummaryStats and assigns it to the SummaryStats field.
+func (o *CampaignMutation) SetSummaryStats(v CampaignSummaryStats) {
+	o.SummaryStats = &v
 }
 
 // GetClient returns the Client field value if set, zero value otherwise.
@@ -374,6 +311,102 @@ func (o *CampaignMutation) SetClient(v MeasurementClientItem) {
 	o.Client = &v
 }
 
+// GetEventLinks returns the EventLinks field value if set, zero value otherwise.
+func (o *CampaignMutation) GetEventLinks() CampaignEventLinks {
+	if o == nil || IsNil(o.EventLinks) {
+		var ret CampaignEventLinks
+		return ret
+	}
+	return *o.EventLinks
+}
+
+// GetEventLinksOk returns a tuple with the EventLinks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CampaignMutation) GetEventLinksOk() (*CampaignEventLinks, bool) {
+	if o == nil || IsNil(o.EventLinks) {
+		return nil, false
+	}
+	return o.EventLinks, true
+}
+
+// HasEventLinks returns a boolean if a field has been set.
+func (o *CampaignMutation) HasEventLinks() bool {
+	if o != nil && !IsNil(o.EventLinks) {
+		return true
+	}
+
+	return false
+}
+
+// SetEventLinks gets a reference to the given CampaignEventLinks and assigns it to the EventLinks field.
+func (o *CampaignMutation) SetEventLinks(v CampaignEventLinks) {
+	o.EventLinks = &v
+}
+
+// GetBannerImageUrl returns the BannerImageUrl field value if set, zero value otherwise.
+func (o *CampaignMutation) GetBannerImageUrl() string {
+	if o == nil || IsNil(o.BannerImageUrl) {
+		var ret string
+		return ret
+	}
+	return *o.BannerImageUrl
+}
+
+// GetBannerImageUrlOk returns a tuple with the BannerImageUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CampaignMutation) GetBannerImageUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.BannerImageUrl) {
+		return nil, false
+	}
+	return o.BannerImageUrl, true
+}
+
+// HasBannerImageUrl returns a boolean if a field has been set.
+func (o *CampaignMutation) HasBannerImageUrl() bool {
+	if o != nil && !IsNil(o.BannerImageUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetBannerImageUrl gets a reference to the given string and assigns it to the BannerImageUrl field.
+func (o *CampaignMutation) SetBannerImageUrl(v string) {
+	o.BannerImageUrl = &v
+}
+
+// GetIntegrationPlatform returns the IntegrationPlatform field value if set, zero value otherwise.
+func (o *CampaignMutation) GetIntegrationPlatform() CampaignIntegrationPlatform {
+	if o == nil || IsNil(o.IntegrationPlatform) {
+		var ret CampaignIntegrationPlatform
+		return ret
+	}
+	return *o.IntegrationPlatform
+}
+
+// GetIntegrationPlatformOk returns a tuple with the IntegrationPlatform field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CampaignMutation) GetIntegrationPlatformOk() (*CampaignIntegrationPlatform, bool) {
+	if o == nil || IsNil(o.IntegrationPlatform) {
+		return nil, false
+	}
+	return o.IntegrationPlatform, true
+}
+
+// HasIntegrationPlatform returns a boolean if a field has been set.
+func (o *CampaignMutation) HasIntegrationPlatform() bool {
+	if o != nil && !IsNil(o.IntegrationPlatform) {
+		return true
+	}
+
+	return false
+}
+
+// SetIntegrationPlatform gets a reference to the given CampaignIntegrationPlatform and assigns it to the IntegrationPlatform field.
+func (o *CampaignMutation) SetIntegrationPlatform(v CampaignIntegrationPlatform) {
+	o.IntegrationPlatform = &v
+}
+
 func (o CampaignMutation) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -402,17 +435,20 @@ func (o CampaignMutation) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.IngestionStatus) {
 		toSerialize["ingestion_status"] = o.IngestionStatus
 	}
+	if !IsNil(o.SummaryStats) {
+		toSerialize["summary_stats"] = o.SummaryStats
+	}
+	if !IsNil(o.Client) {
+		toSerialize["client"] = o.Client
+	}
 	if !IsNil(o.EventLinks) {
 		toSerialize["event_links"] = o.EventLinks
-	}
-	if !IsNil(o.IntegrationPlatform) {
-		toSerialize["integration_platform"] = o.IntegrationPlatform
 	}
 	if !IsNil(o.BannerImageUrl) {
 		toSerialize["banner_image_url"] = o.BannerImageUrl
 	}
-	if !IsNil(o.Client) {
-		toSerialize["client"] = o.Client
+	if !IsNil(o.IntegrationPlatform) {
+		toSerialize["integration_platform"] = o.IntegrationPlatform
 	}
 	return toSerialize, nil
 }

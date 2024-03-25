@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** | Unique ID for the object | [optional] 
 **Name** | Pointer to **string** | Human readable name of the account | [optional] 
+**LogoUrl** | Pointer to **string** | The URL to the logo of the account | [optional] 
 **Slug** | Pointer to **string** | A short human-readable name to identify the account. Must be lower-case and between 4 and 16 characters. | [optional] 
 **OwnerId** | Pointer to **string** | ID of the user who is the ultimate owner of the account | [optional] 
 **CreatedAt** | Pointer to **time.Time** | Date and time of the object creation | [optional] 
@@ -81,6 +82,31 @@ SetName sets Name field to given value.
 `func (o *AccountFull) HasName() bool`
 
 HasName returns a boolean if a field has been set.
+
+### GetLogoUrl
+
+`func (o *AccountFull) GetLogoUrl() string`
+
+GetLogoUrl returns the LogoUrl field if non-nil, zero value otherwise.
+
+### GetLogoUrlOk
+
+`func (o *AccountFull) GetLogoUrlOk() (*string, bool)`
+
+GetLogoUrlOk returns a tuple with the LogoUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLogoUrl
+
+`func (o *AccountFull) SetLogoUrl(v string)`
+
+SetLogoUrl sets LogoUrl field to given value.
+
+### HasLogoUrl
+
+`func (o *AccountFull) HasLogoUrl() bool`
+
+HasLogoUrl returns a boolean if a field has been set.
 
 ### GetSlug
 

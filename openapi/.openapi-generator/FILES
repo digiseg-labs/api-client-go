@@ -63,6 +63,7 @@ docs/CampaignItem.md
 docs/CampaignLifecycleStage.md
 docs/CampaignLinks.md
 docs/CampaignMutation.md
+docs/CampaignSummaryStats.md
 docs/CampaignTimingStats.md
 docs/CampaignsAPI.md
 docs/CategoryPopulationsFull.md
@@ -204,6 +205,7 @@ model_campaign_item.go
 model_campaign_lifecycle_stage.go
 model_campaign_links.go
 model_campaign_mutation.go
+model_campaign_summary_stats.go
 model_campaign_timing_stats.go
 model_category_populations_full.go
 model_comparison.go

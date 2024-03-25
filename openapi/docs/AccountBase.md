@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | Pointer to **string** | Human readable name of the account | [optional] 
+**LogoUrl** | Pointer to **string** | The URL to the logo of the account | [optional] 
 **Slug** | Pointer to **string** | A short human-readable name to identify the account. Must be lower-case and between 4 and 16 characters. | [optional] 
 
 ## Methods
@@ -50,6 +51,31 @@ SetName sets Name field to given value.
 `func (o *AccountBase) HasName() bool`
 
 HasName returns a boolean if a field has been set.
+
+### GetLogoUrl
+
+`func (o *AccountBase) GetLogoUrl() string`
+
+GetLogoUrl returns the LogoUrl field if non-nil, zero value otherwise.
+
+### GetLogoUrlOk
+
+`func (o *AccountBase) GetLogoUrlOk() (*string, bool)`
+
+GetLogoUrlOk returns a tuple with the LogoUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLogoUrl
+
+`func (o *AccountBase) SetLogoUrl(v string)`
+
+SetLogoUrl sets LogoUrl field to given value.
+
+### HasLogoUrl
+
+`func (o *AccountBase) HasLogoUrl() bool`
+
+HasLogoUrl returns a boolean if a field has been set.
 
 ### GetSlug
 

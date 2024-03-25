@@ -32,11 +32,12 @@ type CampaignCreation struct {
 	StartDate *time.Time `json:"start_date,omitempty"`
 	LifeCycleStage *CampaignLifecycleStage `json:"life_cycle_stage,omitempty"`
 	IngestionStatus *CampaignIngestionStatus `json:"ingestion_status,omitempty"`
+	SummaryStats *CampaignSummaryStats `json:"summary_stats,omitempty"`
+	Client *MeasurementClientItem `json:"client,omitempty"`
 	EventLinks *CampaignEventLinks `json:"event_links,omitempty"`
-	IntegrationPlatform *CampaignIntegrationPlatform `json:"integration_platform,omitempty"`
 	// The URL to a banner image for the campaign. Note that the banner image is used only for Digiseg campaign reporting and presentation, it does NOT represent any delivered banner ad creatives or similar. 
 	BannerImageUrl *string `json:"banner_image_url,omitempty"`
-	Client *MeasurementClientItem `json:"client,omitempty"`
+	IntegrationPlatform *CampaignIntegrationPlatform `json:"integration_platform,omitempty"`
 	EventSet CampaignEventSet `json:"event_set"`
 	// The ID of the measurement client that this campaign is for
 	ClientId *string `json:"client_id,omitempty"`
@@ -247,6 +248,70 @@ func (o *CampaignCreation) SetIngestionStatus(v CampaignIngestionStatus) {
 	o.IngestionStatus = &v
 }
 
+// GetSummaryStats returns the SummaryStats field value if set, zero value otherwise.
+func (o *CampaignCreation) GetSummaryStats() CampaignSummaryStats {
+	if o == nil || IsNil(o.SummaryStats) {
+		var ret CampaignSummaryStats
+		return ret
+	}
+	return *o.SummaryStats
+}
+
+// GetSummaryStatsOk returns a tuple with the SummaryStats field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CampaignCreation) GetSummaryStatsOk() (*CampaignSummaryStats, bool) {
+	if o == nil || IsNil(o.SummaryStats) {
+		return nil, false
+	}
+	return o.SummaryStats, true
+}
+
+// HasSummaryStats returns a boolean if a field has been set.
+func (o *CampaignCreation) HasSummaryStats() bool {
+	if o != nil && !IsNil(o.SummaryStats) {
+		return true
+	}
+
+	return false
+}
+
+// SetSummaryStats gets a reference to the given CampaignSummaryStats and assigns it to the SummaryStats field.
+func (o *CampaignCreation) SetSummaryStats(v CampaignSummaryStats) {
+	o.SummaryStats = &v
+}
+
+// GetClient returns the Client field value if set, zero value otherwise.
+func (o *CampaignCreation) GetClient() MeasurementClientItem {
+	if o == nil || IsNil(o.Client) {
+		var ret MeasurementClientItem
+		return ret
+	}
+	return *o.Client
+}
+
+// GetClientOk returns a tuple with the Client field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CampaignCreation) GetClientOk() (*MeasurementClientItem, bool) {
+	if o == nil || IsNil(o.Client) {
+		return nil, false
+	}
+	return o.Client, true
+}
+
+// HasClient returns a boolean if a field has been set.
+func (o *CampaignCreation) HasClient() bool {
+	if o != nil && !IsNil(o.Client) {
+		return true
+	}
+
+	return false
+}
+
+// SetClient gets a reference to the given MeasurementClientItem and assigns it to the Client field.
+func (o *CampaignCreation) SetClient(v MeasurementClientItem) {
+	o.Client = &v
+}
+
 // GetEventLinks returns the EventLinks field value if set, zero value otherwise.
 func (o *CampaignCreation) GetEventLinks() CampaignEventLinks {
 	if o == nil || IsNil(o.EventLinks) {
@@ -277,38 +342,6 @@ func (o *CampaignCreation) HasEventLinks() bool {
 // SetEventLinks gets a reference to the given CampaignEventLinks and assigns it to the EventLinks field.
 func (o *CampaignCreation) SetEventLinks(v CampaignEventLinks) {
 	o.EventLinks = &v
-}
-
-// GetIntegrationPlatform returns the IntegrationPlatform field value if set, zero value otherwise.
-func (o *CampaignCreation) GetIntegrationPlatform() CampaignIntegrationPlatform {
-	if o == nil || IsNil(o.IntegrationPlatform) {
-		var ret CampaignIntegrationPlatform
-		return ret
-	}
-	return *o.IntegrationPlatform
-}
-
-// GetIntegrationPlatformOk returns a tuple with the IntegrationPlatform field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CampaignCreation) GetIntegrationPlatformOk() (*CampaignIntegrationPlatform, bool) {
-	if o == nil || IsNil(o.IntegrationPlatform) {
-		return nil, false
-	}
-	return o.IntegrationPlatform, true
-}
-
-// HasIntegrationPlatform returns a boolean if a field has been set.
-func (o *CampaignCreation) HasIntegrationPlatform() bool {
-	if o != nil && !IsNil(o.IntegrationPlatform) {
-		return true
-	}
-
-	return false
-}
-
-// SetIntegrationPlatform gets a reference to the given CampaignIntegrationPlatform and assigns it to the IntegrationPlatform field.
-func (o *CampaignCreation) SetIntegrationPlatform(v CampaignIntegrationPlatform) {
-	o.IntegrationPlatform = &v
 }
 
 // GetBannerImageUrl returns the BannerImageUrl field value if set, zero value otherwise.
@@ -343,36 +376,36 @@ func (o *CampaignCreation) SetBannerImageUrl(v string) {
 	o.BannerImageUrl = &v
 }
 
-// GetClient returns the Client field value if set, zero value otherwise.
-func (o *CampaignCreation) GetClient() MeasurementClientItem {
-	if o == nil || IsNil(o.Client) {
-		var ret MeasurementClientItem
+// GetIntegrationPlatform returns the IntegrationPlatform field value if set, zero value otherwise.
+func (o *CampaignCreation) GetIntegrationPlatform() CampaignIntegrationPlatform {
+	if o == nil || IsNil(o.IntegrationPlatform) {
+		var ret CampaignIntegrationPlatform
 		return ret
 	}
-	return *o.Client
+	return *o.IntegrationPlatform
 }
 
-// GetClientOk returns a tuple with the Client field value if set, nil otherwise
+// GetIntegrationPlatformOk returns a tuple with the IntegrationPlatform field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CampaignCreation) GetClientOk() (*MeasurementClientItem, bool) {
-	if o == nil || IsNil(o.Client) {
+func (o *CampaignCreation) GetIntegrationPlatformOk() (*CampaignIntegrationPlatform, bool) {
+	if o == nil || IsNil(o.IntegrationPlatform) {
 		return nil, false
 	}
-	return o.Client, true
+	return o.IntegrationPlatform, true
 }
 
-// HasClient returns a boolean if a field has been set.
-func (o *CampaignCreation) HasClient() bool {
-	if o != nil && !IsNil(o.Client) {
+// HasIntegrationPlatform returns a boolean if a field has been set.
+func (o *CampaignCreation) HasIntegrationPlatform() bool {
+	if o != nil && !IsNil(o.IntegrationPlatform) {
 		return true
 	}
 
 	return false
 }
 
-// SetClient gets a reference to the given MeasurementClientItem and assigns it to the Client field.
-func (o *CampaignCreation) SetClient(v MeasurementClientItem) {
-	o.Client = &v
+// SetIntegrationPlatform gets a reference to the given CampaignIntegrationPlatform and assigns it to the IntegrationPlatform field.
+func (o *CampaignCreation) SetIntegrationPlatform(v CampaignIntegrationPlatform) {
+	o.IntegrationPlatform = &v
 }
 
 // GetEventSet returns the EventSet field value
@@ -457,17 +490,20 @@ func (o CampaignCreation) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.IngestionStatus) {
 		toSerialize["ingestion_status"] = o.IngestionStatus
 	}
+	if !IsNil(o.SummaryStats) {
+		toSerialize["summary_stats"] = o.SummaryStats
+	}
+	if !IsNil(o.Client) {
+		toSerialize["client"] = o.Client
+	}
 	if !IsNil(o.EventLinks) {
 		toSerialize["event_links"] = o.EventLinks
-	}
-	if !IsNil(o.IntegrationPlatform) {
-		toSerialize["integration_platform"] = o.IntegrationPlatform
 	}
 	if !IsNil(o.BannerImageUrl) {
 		toSerialize["banner_image_url"] = o.BannerImageUrl
 	}
-	if !IsNil(o.Client) {
-		toSerialize["client"] = o.Client
+	if !IsNil(o.IntegrationPlatform) {
+		toSerialize["integration_platform"] = o.IntegrationPlatform
 	}
 	toSerialize["event_set"] = o.EventSet
 	if !IsNil(o.ClientId) {

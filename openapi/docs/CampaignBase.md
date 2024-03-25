@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **StartDate** | Pointer to **time.Time** | The date for which the campaign and its data ingestion will start. | [optional] [readonly] 
 **LifeCycleStage** | Pointer to [**CampaignLifecycleStage**](CampaignLifecycleStage.md) |  | [optional] 
 **IngestionStatus** | Pointer to [**CampaignIngestionStatus**](CampaignIngestionStatus.md) |  | [optional] 
+**SummaryStats** | Pointer to [**CampaignSummaryStats**](CampaignSummaryStats.md) |  | [optional] 
+**Client** | Pointer to [**MeasurementClientItem**](MeasurementClientItem.md) |  | [optional] 
 
 ## Methods
 
@@ -179,6 +181,56 @@ SetIngestionStatus sets IngestionStatus field to given value.
 `func (o *CampaignBase) HasIngestionStatus() bool`
 
 HasIngestionStatus returns a boolean if a field has been set.
+
+### GetSummaryStats
+
+`func (o *CampaignBase) GetSummaryStats() CampaignSummaryStats`
+
+GetSummaryStats returns the SummaryStats field if non-nil, zero value otherwise.
+
+### GetSummaryStatsOk
+
+`func (o *CampaignBase) GetSummaryStatsOk() (*CampaignSummaryStats, bool)`
+
+GetSummaryStatsOk returns a tuple with the SummaryStats field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSummaryStats
+
+`func (o *CampaignBase) SetSummaryStats(v CampaignSummaryStats)`
+
+SetSummaryStats sets SummaryStats field to given value.
+
+### HasSummaryStats
+
+`func (o *CampaignBase) HasSummaryStats() bool`
+
+HasSummaryStats returns a boolean if a field has been set.
+
+### GetClient
+
+`func (o *CampaignBase) GetClient() MeasurementClientItem`
+
+GetClient returns the Client field if non-nil, zero value otherwise.
+
+### GetClientOk
+
+`func (o *CampaignBase) GetClientOk() (*MeasurementClientItem, bool)`
+
+GetClientOk returns a tuple with the Client field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetClient
+
+`func (o *CampaignBase) SetClient(v MeasurementClientItem)`
+
+SetClient sets Client field to given value.
+
+### HasClient
+
+`func (o *CampaignBase) HasClient() bool`
+
+HasClient returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

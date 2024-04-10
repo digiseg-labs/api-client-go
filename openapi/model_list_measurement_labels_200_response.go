@@ -20,7 +20,7 @@ var _ MappedNullable = &ListMeasurementLabels200Response{}
 
 // ListMeasurementLabels200Response struct for ListMeasurementLabels200Response
 type ListMeasurementLabels200Response struct {
-	// A set of labels that users can use to categorize their measurements. Can be used to indicate type of campaign, customer names or other traits. 
+	// A set of labels that users can use to categorize their measurements. Can be used to indicate type of study, customer names or other traits. 
 	Data []string `json:"data,omitempty"`
 }
 

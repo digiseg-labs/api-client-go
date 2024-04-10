@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Frequency** | Pointer to **int32** | A frequency of campaign impressions to users. * The value 1 means that the campaign has been exposed just once. * The value 2 means that the campaign has been exposed twice. * And so on...  | [optional] 
+**Frequency** | Pointer to **int32** | A frequency of study impressions to users. * The value 1 means that the study has been exposed just once. * The value 2 means that the study has been exposed twice. * And so on...  | [optional] 
 **Count** | Pointer to **int32** | The number of users that have generated impressions at the corresponding frequency | [optional] 
 
 ## Methods

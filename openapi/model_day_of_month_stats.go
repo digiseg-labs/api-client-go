@@ -18,7 +18,7 @@ import (
 // checks if the DayOfMonthStats type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &DayOfMonthStats{}
 
-// DayOfMonthStats Contains statistics about the day of the month that campaign activity has been measured. The time zone used to record these measurements is the time zone of the measured user, or UTC if the user's location cannot be resolved. 
+// DayOfMonthStats Contains statistics about the day of the month that study activity has been measured. The time zone used to record these measurements is the time zone of the measured user, or UTC if the user's location cannot be resolved. 
 type DayOfMonthStats struct {
 	Var0 *MeasurementsContainer `json:"0,omitempty"`
 	Var1 *MeasurementsContainer `json:"1,omitempty"`

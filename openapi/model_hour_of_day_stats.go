@@ -18,7 +18,7 @@ import (
 // checks if the HourOfDayStats type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &HourOfDayStats{}
 
-// HourOfDayStats Contains statistics about the time of day that campaign activity has been measured. The 24 hour time format is used to represent measurements for each hour. The time zone used to record these measurements is the time zone of the measured user, or UTC if the user's location cannot be resolved. 
+// HourOfDayStats Contains statistics about the time of day that study activity has been measured. The 24 hour time format is used to represent measurements for each hour. The time zone used to record these measurements is the time zone of the measured user, or UTC if the user's location cannot be resolved. 
 type HourOfDayStats struct {
 	Var10 *MeasurementsContainer `json:"10,omitempty"`
 	Var11 *MeasurementsContainer `json:"11,omitempty"`

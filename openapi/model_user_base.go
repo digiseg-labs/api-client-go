@@ -13,6 +13,7 @@ package openapi
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the UserBase type satisfies the MappedNullable interface at compile time
@@ -30,6 +31,8 @@ type UserBase struct {
 	Roles []UserAccountRole `json:"roles,omitempty"`
 	// The URL to an avatar of the user
 	AvatarUrl *string `json:"avatar_url,omitempty"`
+	// The approximate last time that the user logged in
+	LoggedInAt *time.Time `json:"logged_in_at,omitempty"`
 }
 
 // NewUserBase instantiates a new UserBase object
@@ -209,6 +212,38 @@ func (o *UserBase) SetAvatarUrl(v string) {
 	o.AvatarUrl = &v
 }
 
+// GetLoggedInAt returns the LoggedInAt field value if set, zero value otherwise.
+func (o *UserBase) GetLoggedInAt() time.Time {
+	if o == nil || IsNil(o.LoggedInAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LoggedInAt
+}
+
+// GetLoggedInAtOk returns a tuple with the LoggedInAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UserBase) GetLoggedInAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.LoggedInAt) {
+		return nil, false
+	}
+	return o.LoggedInAt, true
+}
+
+// HasLoggedInAt returns a boolean if a field has been set.
+func (o *UserBase) HasLoggedInAt() bool {
+	if o != nil && !IsNil(o.LoggedInAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetLoggedInAt gets a reference to the given time.Time and assigns it to the LoggedInAt field.
+func (o *UserBase) SetLoggedInAt(v time.Time) {
+	o.LoggedInAt = &v
+}
+
 func (o UserBase) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -233,6 +268,9 @@ func (o UserBase) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AvatarUrl) {
 		toSerialize["avatar_url"] = o.AvatarUrl
+	}
+	if !IsNil(o.LoggedInAt) {
+		toSerialize["logged_in_at"] = o.LoggedInAt
 	}
 	return toSerialize, nil
 }

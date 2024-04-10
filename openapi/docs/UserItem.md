@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **AccountId** | Pointer to **string** | ID of the account that this user pertains to. If the user has multiple account memberships, this account ID will represent the primary account of the user.  | [optional] 
 **Roles** | Pointer to [**[]UserAccountRole**](UserAccountRole.md) | The roles that the user has within the account | [optional] 
 **AvatarUrl** | Pointer to **string** | The URL to an avatar of the user | [optional] 
+**LoggedInAt** | Pointer to **time.Time** | The approximate last time that the user logged in | [optional] [readonly] 
 
 ## Methods
 
@@ -179,6 +180,31 @@ SetAvatarUrl sets AvatarUrl field to given value.
 `func (o *UserItem) HasAvatarUrl() bool`
 
 HasAvatarUrl returns a boolean if a field has been set.
+
+### GetLoggedInAt
+
+`func (o *UserItem) GetLoggedInAt() time.Time`
+
+GetLoggedInAt returns the LoggedInAt field if non-nil, zero value otherwise.
+
+### GetLoggedInAtOk
+
+`func (o *UserItem) GetLoggedInAtOk() (*time.Time, bool)`
+
+GetLoggedInAtOk returns a tuple with the LoggedInAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLoggedInAt
+
+`func (o *UserItem) SetLoggedInAt(v time.Time)`
+
+SetLoggedInAt sets LoggedInAt field to given value.
+
+### HasLoggedInAt
+
+`func (o *UserItem) HasLoggedInAt() bool`
+
+HasLoggedInAt returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

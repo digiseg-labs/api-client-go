@@ -20,7 +20,7 @@ var _ MappedNullable = &FrequencyStats{}
 
 // FrequencyStats struct for FrequencyStats
 type FrequencyStats struct {
-	// A frequency of campaign impressions to users. * The value 1 means that the campaign has been exposed just once. * The value 2 means that the campaign has been exposed twice. * And so on... 
+	// A frequency of study impressions to users. * The value 1 means that the study has been exposed just once. * The value 2 means that the study has been exposed twice. * And so on... 
 	Frequency *int32 `json:"frequency,omitempty"`
 	// The number of users that have generated impressions at the corresponding frequency
 	Count *int32 `json:"count,omitempty"`

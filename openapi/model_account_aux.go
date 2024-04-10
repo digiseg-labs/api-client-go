@@ -20,8 +20,12 @@ var _ MappedNullable = &AccountAux{}
 
 // AccountAux struct for AccountAux
 type AccountAux struct {
-	// ID of the user who is the ultimate owner of the account
+	// ID of the user who is the ultimate owner of the account. Deprecated in favor of the `owner` role of the user's account membership.
+	// Deprecated
 	OwnerId *string `json:"owner_id,omitempty"`
+	// The email address to send billing information to. Requires `owner` role to change.
+	BillingEmail *string `json:"billing_email,omitempty"`
+	BillingAddress *PostalAddress `json:"billing_address,omitempty"`
 }
 
 // NewAccountAux instantiates a new AccountAux object
@@ -42,6 +46,7 @@ func NewAccountAuxWithDefaults() *AccountAux {
 }
 
 // GetOwnerId returns the OwnerId field value if set, zero value otherwise.
+// Deprecated
 func (o *AccountAux) GetOwnerId() string {
 	if o == nil || IsNil(o.OwnerId) {
 		var ret string
@@ -52,6 +57,7 @@ func (o *AccountAux) GetOwnerId() string {
 
 // GetOwnerIdOk returns a tuple with the OwnerId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *AccountAux) GetOwnerIdOk() (*string, bool) {
 	if o == nil || IsNil(o.OwnerId) {
 		return nil, false
@@ -69,8 +75,73 @@ func (o *AccountAux) HasOwnerId() bool {
 }
 
 // SetOwnerId gets a reference to the given string and assigns it to the OwnerId field.
+// Deprecated
 func (o *AccountAux) SetOwnerId(v string) {
 	o.OwnerId = &v
+}
+
+// GetBillingEmail returns the BillingEmail field value if set, zero value otherwise.
+func (o *AccountAux) GetBillingEmail() string {
+	if o == nil || IsNil(o.BillingEmail) {
+		var ret string
+		return ret
+	}
+	return *o.BillingEmail
+}
+
+// GetBillingEmailOk returns a tuple with the BillingEmail field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountAux) GetBillingEmailOk() (*string, bool) {
+	if o == nil || IsNil(o.BillingEmail) {
+		return nil, false
+	}
+	return o.BillingEmail, true
+}
+
+// HasBillingEmail returns a boolean if a field has been set.
+func (o *AccountAux) HasBillingEmail() bool {
+	if o != nil && !IsNil(o.BillingEmail) {
+		return true
+	}
+
+	return false
+}
+
+// SetBillingEmail gets a reference to the given string and assigns it to the BillingEmail field.
+func (o *AccountAux) SetBillingEmail(v string) {
+	o.BillingEmail = &v
+}
+
+// GetBillingAddress returns the BillingAddress field value if set, zero value otherwise.
+func (o *AccountAux) GetBillingAddress() PostalAddress {
+	if o == nil || IsNil(o.BillingAddress) {
+		var ret PostalAddress
+		return ret
+	}
+	return *o.BillingAddress
+}
+
+// GetBillingAddressOk returns a tuple with the BillingAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountAux) GetBillingAddressOk() (*PostalAddress, bool) {
+	if o == nil || IsNil(o.BillingAddress) {
+		return nil, false
+	}
+	return o.BillingAddress, true
+}
+
+// HasBillingAddress returns a boolean if a field has been set.
+func (o *AccountAux) HasBillingAddress() bool {
+	if o != nil && !IsNil(o.BillingAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetBillingAddress gets a reference to the given PostalAddress and assigns it to the BillingAddress field.
+func (o *AccountAux) SetBillingAddress(v PostalAddress) {
+	o.BillingAddress = &v
 }
 
 func (o AccountAux) MarshalJSON() ([]byte, error) {
@@ -85,6 +156,12 @@ func (o AccountAux) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.OwnerId) {
 		toSerialize["owner_id"] = o.OwnerId
+	}
+	if !IsNil(o.BillingEmail) {
+		toSerialize["billing_email"] = o.BillingEmail
+	}
+	if !IsNil(o.BillingAddress) {
+		toSerialize["billing_address"] = o.BillingAddress
 	}
 	return toSerialize, nil
 }

@@ -18,7 +18,7 @@ import (
 // checks if the DayOfWeekStats type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &DayOfWeekStats{}
 
-// DayOfWeekStats Contains statistics about the week days that campaign activity has been measured. The time zone used to record these measurements is the time zone of the measured user, or UTC if the user's location cannot be resolved. 
+// DayOfWeekStats Contains statistics about the week days that study activity has been measured. The time zone used to record these measurements is the time zone of the measured user, or UTC if the user's location cannot be resolved. 
 type DayOfWeekStats struct {
 	Monday *MeasurementsContainer `json:"Monday,omitempty"`
 	Tuesday *MeasurementsContainer `json:"Tuesday,omitempty"`

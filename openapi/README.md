@@ -185,18 +185,6 @@ Class | Method | HTTP request | Description
 *AuthAPI* | [**ListApiKeysByAccountId**](docs/AuthAPI.md#listapikeysbyaccountid) | **Get** /accounts/{account_id}/apikeys | List API keys for account
 *AuthAPI* | [**ListApiKeysByUserId**](docs/AuthAPI.md#listapikeysbyuserid) | **Get** /users/{user_id}/apikeys | List API keys for user
 *AuthAPI* | [**UpdateApiKeyById**](docs/AuthAPI.md#updateapikeybyid) | **Put** /users/{user_id}/apikeys/{key_id} | Update API key
-*CampaignsAPI* | [**CreateCampaign**](docs/CampaignsAPI.md#createcampaign) | **Post** /campaigns | Create campaign
-*CampaignsAPI* | [**DeleteCampaignBannerImage**](docs/CampaignsAPI.md#deletecampaignbannerimage) | **Delete** /campaigns/{campaign_id}/assets/banner_image | Delete campaign banner image logo
-*CampaignsAPI* | [**DeleteCampaignById**](docs/CampaignsAPI.md#deletecampaignbyid) | **Delete** /campaigns/{campaign_id} | Delete campaign
-*CampaignsAPI* | [**GetCampaignBannerImage**](docs/CampaignsAPI.md#getcampaignbannerimage) | **Get** /campaigns/{campaign_id}/assets/banner_image | Get campaign banner image
-*CampaignsAPI* | [**GetCampaignById**](docs/CampaignsAPI.md#getcampaignbyid) | **Get** /campaigns/{campaign_id} | Get campaign
-*CampaignsAPI* | [**ListCampaigns**](docs/CampaignsAPI.md#listcampaigns) | **Get** /campaigns | List campaigns
-*CampaignsAPI* | [**QueryCampaignAudienceStats**](docs/CampaignsAPI.md#querycampaignaudiencestats) | **Get** /campaigns/{campaign_id}/stats/audiences | Audience statistics for campaign
-*CampaignsAPI* | [**QueryCampaignCountryStats**](docs/CampaignsAPI.md#querycampaigncountrystats) | **Get** /campaigns/{campaign_id}/stats/countries | Country statistics for campaign
-*CampaignsAPI* | [**QueryCampaignFrequencyStats**](docs/CampaignsAPI.md#querycampaignfrequencystats) | **Get** /campaigns/{campaign_id}/stats/frequencies | Frequency statistics for campaign
-*CampaignsAPI* | [**QueryCampaignTimingStats**](docs/CampaignsAPI.md#querycampaigntimingstats) | **Get** /campaigns/{campaign_id}/stats/timing | Timing statistics for campaign
-*CampaignsAPI* | [**UpdateCampaignById**](docs/CampaignsAPI.md#updatecampaignbyid) | **Put** /campaigns/{campaign_id} | Update campaign
-*CampaignsAPI* | [**UploadCampaignBannerImage**](docs/CampaignsAPI.md#uploadcampaignbannerimage) | **Put** /campaigns/{campaign_id}/assets/banner_image | Upload campaign banner image
 *MeasurementClientsAPI* | [**CreateMeasurementClient**](docs/MeasurementClientsAPI.md#createmeasurementclient) | **Post** /measurement/clients | Create measurement client
 *MeasurementClientsAPI* | [**DeleteClientLogo**](docs/MeasurementClientsAPI.md#deleteclientlogo) | **Delete** /measurement/clients/{client_id}/assets/logo | Delete measurement client logo
 *MeasurementClientsAPI* | [**DeleteMeasurementClientById**](docs/MeasurementClientsAPI.md#deletemeasurementclientbyid) | **Delete** /measurement/clients/{client_id} | Delete measurement client
@@ -208,6 +196,21 @@ Class | Method | HTTP request | Description
 *MeasurementLabelsAPI* | [**ListMeasurementLabels**](docs/MeasurementLabelsAPI.md#listmeasurementlabels) | **Get** /measurement/labels | List measurement labels
 *PopulationsAPI* | [**GetPopuplationByKey**](docs/PopulationsAPI.md#getpopuplationbykey) | **Get** /populations/{category_key}/{population_key} | Get Population by key
 *PopulationsAPI* | [**ListPopuplations**](docs/PopulationsAPI.md#listpopuplations) | **Get** /populations/{category_key} | List populations of category
+*StudiesAPI* | [**CreateStudy**](docs/StudiesAPI.md#createstudy) | **Post** /studies | Create study
+*StudiesAPI* | [**DeleteStudyBannerImage**](docs/StudiesAPI.md#deletestudybannerimage) | **Delete** /studies/{study_id}/assets/banner_image | Delete study banner image logo
+*StudiesAPI* | [**DeleteStudyById**](docs/StudiesAPI.md#deletestudybyid) | **Delete** /studies/{study_id} | Delete study
+*StudiesAPI* | [**GetStudyBannerImage**](docs/StudiesAPI.md#getstudybannerimage) | **Get** /studies/{study_id}/assets/banner_image | Get study banner image
+*StudiesAPI* | [**GetStudyById**](docs/StudiesAPI.md#getstudybyid) | **Get** /studies/{study_id} | Get study
+*StudiesAPI* | [**ListStudies**](docs/StudiesAPI.md#liststudies) | **Get** /studies | List studies
+*StudiesAPI* | [**QueryStudyAudienceStats**](docs/StudiesAPI.md#querystudyaudiencestats) | **Get** /studies/{study_id}/stats/audiences | Audience statistics for study
+*StudiesAPI* | [**QueryStudyCountryStats**](docs/StudiesAPI.md#querystudycountrystats) | **Get** /studies/{study_id}/stats/countries | Country statistics for study
+*StudiesAPI* | [**QueryStudyFrequencyStats**](docs/StudiesAPI.md#querystudyfrequencystats) | **Get** /studies/{study_id}/stats/frequencies | Frequency statistics for study
+*StudiesAPI* | [**QueryStudyTimingStats**](docs/StudiesAPI.md#querystudytimingstats) | **Get** /studies/{study_id}/stats/timing | Timing statistics for study
+*StudiesAPI* | [**UpdateStudyById**](docs/StudiesAPI.md#updatestudybyid) | **Put** /studies/{study_id} | Update study
+*StudiesAPI* | [**UploadStudyBannerImage**](docs/StudiesAPI.md#uploadstudybannerimage) | **Put** /studies/{study_id}/assets/banner_image | Upload study banner image
+*UsageAPI* | [**ListAudienceDataDailyUsage**](docs/UsageAPI.md#listaudiencedatadailyusage) | **Get** /usage/audience_data/daily | List daily usage of Audience Data
+*UsageAPI* | [**ListAudienceDataMonthlyUsage**](docs/UsageAPI.md#listaudiencedatamonthlyusage) | **Get** /usage/audience_data/monthly | List monthly usage of Audience Data
+*UsageAPI* | [**ListAudienceDataRealtimeUsage**](docs/UsageAPI.md#listaudiencedatarealtimeusage) | **Get** /usage/audience_data/realtime | List realtime usage of Audience Data
 *UsersAPI* | [**CreateApiKey**](docs/UsersAPI.md#createapikey) | **Post** /users/{user_id}/apikeys | Create API key
 *UsersAPI* | [**CreateUserInAccount**](docs/UsersAPI.md#createuserinaccount) | **Post** /accounts/{account_id}/users | Create user
 *UsersAPI* | [**DeleteApiKeyById**](docs/UsersAPI.md#deleteapikeybyid) | **Delete** /users/{user_id}/apikeys/{key_id} | Delete API key
@@ -235,6 +238,7 @@ Class | Method | HTTP request | Description
  - [AccountItem](docs/AccountItem.md)
  - [AccountLinks](docs/AccountLinks.md)
  - [AccountMutation](docs/AccountMutation.md)
+ - [AccountMutationAux](docs/AccountMutationAux.md)
  - [AccountOwnerCreation](docs/AccountOwnerCreation.md)
  - [ApiKeyAux](docs/ApiKeyAux.md)
  - [ApiKeyBase](docs/ApiKeyBase.md)
@@ -248,6 +252,10 @@ Class | Method | HTTP request | Description
  - [ApiKeyToken](docs/ApiKeyToken.md)
  - [Audience](docs/Audience.md)
  - [AudienceCategoryStats](docs/AudienceCategoryStats.md)
+ - [AudienceDataDailyUsage](docs/AudienceDataDailyUsage.md)
+ - [AudienceDataMonthlyUsage](docs/AudienceDataMonthlyUsage.md)
+ - [AudienceDataRealtimeUsage](docs/AudienceDataRealtimeUsage.md)
+ - [AudienceDataUsage](docs/AudienceDataUsage.md)
  - [AudienceResponse](docs/AudienceResponse.md)
  - [AudienceResponseStatus](docs/AudienceResponseStatus.md)
  - [AudienceStats](docs/AudienceStats.md)
@@ -255,33 +263,15 @@ Class | Method | HTTP request | Description
  - [AuthTokenResponse](docs/AuthTokenResponse.md)
  - [BusinessAudienceStats](docs/BusinessAudienceStats.md)
  - [BusinessAudienceStatsAudienceCategories](docs/BusinessAudienceStatsAudienceCategories.md)
- - [CampaignAudienceStats](docs/CampaignAudienceStats.md)
- - [CampaignAux](docs/CampaignAux.md)
- - [CampaignBase](docs/CampaignBase.md)
- - [CampaignCountryStats](docs/CampaignCountryStats.md)
- - [CampaignCreation](docs/CampaignCreation.md)
- - [CampaignCreationData](docs/CampaignCreationData.md)
- - [CampaignEventLink](docs/CampaignEventLink.md)
- - [CampaignEventLinkParameterInfo](docs/CampaignEventLinkParameterInfo.md)
- - [CampaignEventLinks](docs/CampaignEventLinks.md)
- - [CampaignEventSet](docs/CampaignEventSet.md)
- - [CampaignFrequencyStats](docs/CampaignFrequencyStats.md)
- - [CampaignFull](docs/CampaignFull.md)
- - [CampaignIngestionStatus](docs/CampaignIngestionStatus.md)
- - [CampaignIntegrationPlatform](docs/CampaignIntegrationPlatform.md)
- - [CampaignItem](docs/CampaignItem.md)
- - [CampaignLifecycleStage](docs/CampaignLifecycleStage.md)
- - [CampaignLinks](docs/CampaignLinks.md)
- - [CampaignMutation](docs/CampaignMutation.md)
- - [CampaignSummaryStats](docs/CampaignSummaryStats.md)
- - [CampaignTimingStats](docs/CampaignTimingStats.md)
  - [CategoryPopulationsFull](docs/CategoryPopulationsFull.md)
+ - [CompanySize](docs/CompanySize.md)
+ - [CompanyType](docs/CompanyType.md)
  - [Comparison](docs/Comparison.md)
  - [ComparisonsContainer](docs/ComparisonsContainer.md)
  - [CountryStats](docs/CountryStats.md)
  - [CreateApiKey201Response](docs/CreateApiKey201Response.md)
- - [CreateCampaign201Response](docs/CreateCampaign201Response.md)
  - [CreateMeasurementClient201Response](docs/CreateMeasurementClient201Response.md)
+ - [CreateStudy201Response](docs/CreateStudy201Response.md)
  - [CreateUserInAccount201Response](docs/CreateUserInAccount201Response.md)
  - [DayOfMonthStats](docs/DayOfMonthStats.md)
  - [DayOfWeekStats](docs/DayOfWeekStats.md)
@@ -294,19 +284,27 @@ Class | Method | HTTP request | Description
  - [IdentifyableObject](docs/IdentifyableObject.md)
  - [IdentifyableObject1](docs/IdentifyableObject1.md)
  - [ListApiKeysByAccountId200Response](docs/ListApiKeysByAccountId200Response.md)
- - [ListCampaigns200Response](docs/ListCampaigns200Response.md)
+ - [ListAudienceDataDailyUsage200Response](docs/ListAudienceDataDailyUsage200Response.md)
+ - [ListAudienceDataMonthlyUsage200Response](docs/ListAudienceDataMonthlyUsage200Response.md)
+ - [ListAudienceDataRealtimeUsage200Response](docs/ListAudienceDataRealtimeUsage200Response.md)
  - [ListMeasurementClients200Response](docs/ListMeasurementClients200Response.md)
  - [ListMeasurementLabels200Response](docs/ListMeasurementLabels200Response.md)
  - [ListPaginationLinks](docs/ListPaginationLinks.md)
  - [ListPaginationMeta](docs/ListPaginationMeta.md)
  - [ListPaginationMetaPage](docs/ListPaginationMetaPage.md)
  - [ListPopuplations200Response](docs/ListPopuplations200Response.md)
+ - [ListStudies200Response](docs/ListStudies200Response.md)
  - [ListUsersByAccountId200Response](docs/ListUsersByAccountId200Response.md)
  - [Measurement](docs/Measurement.md)
  - [MeasurementClientBase](docs/MeasurementClientBase.md)
  - [MeasurementClientFull](docs/MeasurementClientFull.md)
  - [MeasurementClientItem](docs/MeasurementClientItem.md)
  - [MeasurementClientMutation](docs/MeasurementClientMutation.md)
+ - [MeasurementEventLink](docs/MeasurementEventLink.md)
+ - [MeasurementEventLinkParameterInfo](docs/MeasurementEventLinkParameterInfo.md)
+ - [MeasurementEventLinks](docs/MeasurementEventLinks.md)
+ - [MeasurementEventSet](docs/MeasurementEventSet.md)
+ - [MeasurementIntegrationPlatform](docs/MeasurementIntegrationPlatform.md)
  - [MeasurementsContainer](docs/MeasurementsContainer.md)
  - [PasswordlessAuthRequest](docs/PasswordlessAuthRequest.md)
  - [PermissionScopes](docs/PermissionScopes.md)
@@ -334,12 +332,13 @@ Class | Method | HTTP request | Description
  - [PopulationSourcePrivateCategorySetSavings](docs/PopulationSourcePrivateCategorySetSavings.md)
  - [PopulationSourcePrivateCategorySetTechLevel](docs/PopulationSourcePrivateCategorySetTechLevel.md)
  - [PopulationSourcePrivateSection](docs/PopulationSourcePrivateSection.md)
+ - [PostalAddress](docs/PostalAddress.md)
  - [PrivateAudienceStats](docs/PrivateAudienceStats.md)
  - [PrivateAudienceStatsAudienceCategories](docs/PrivateAudienceStatsAudienceCategories.md)
- - [QueryCampaignAudienceStats200Response](docs/QueryCampaignAudienceStats200Response.md)
- - [QueryCampaignCountryStats200Response](docs/QueryCampaignCountryStats200Response.md)
- - [QueryCampaignFrequencyStats200Response](docs/QueryCampaignFrequencyStats200Response.md)
- - [QueryCampaignTimingStats200Response](docs/QueryCampaignTimingStats200Response.md)
+ - [QueryStudyAudienceStats200Response](docs/QueryStudyAudienceStats200Response.md)
+ - [QueryStudyCountryStats200Response](docs/QueryStudyCountryStats200Response.md)
+ - [QueryStudyFrequencyStats200Response](docs/QueryStudyFrequencyStats200Response.md)
+ - [QueryStudyTimingStats200Response](docs/QueryStudyTimingStats200Response.md)
  - [RegistrationByIdResponseData](docs/RegistrationByIdResponseData.md)
  - [RegistrationCreationResponseData](docs/RegistrationCreationResponseData.md)
  - [RegistrationRequest](docs/RegistrationRequest.md)
@@ -349,6 +348,21 @@ Class | Method | HTTP request | Description
  - [ResolveAudiencesOfMultipleRequestItem](docs/ResolveAudiencesOfMultipleRequestItem.md)
  - [ResolveAudiencesOfMultipleResponse](docs/ResolveAudiencesOfMultipleResponse.md)
  - [ResolveAudiencesOfMultipleResponseItem](docs/ResolveAudiencesOfMultipleResponseItem.md)
+ - [StudyAudienceStats](docs/StudyAudienceStats.md)
+ - [StudyAux](docs/StudyAux.md)
+ - [StudyBase](docs/StudyBase.md)
+ - [StudyCountryStats](docs/StudyCountryStats.md)
+ - [StudyCreation](docs/StudyCreation.md)
+ - [StudyCreationData](docs/StudyCreationData.md)
+ - [StudyFrequencyStats](docs/StudyFrequencyStats.md)
+ - [StudyFull](docs/StudyFull.md)
+ - [StudyIngestionStatus](docs/StudyIngestionStatus.md)
+ - [StudyItem](docs/StudyItem.md)
+ - [StudyLifecycleStage](docs/StudyLifecycleStage.md)
+ - [StudyLinks](docs/StudyLinks.md)
+ - [StudyMutation](docs/StudyMutation.md)
+ - [StudySummaryStats](docs/StudySummaryStats.md)
+ - [StudyTimingStats](docs/StudyTimingStats.md)
  - [TimestampedObject](docs/TimestampedObject.md)
  - [TimestampedObject1](docs/TimestampedObject1.md)
  - [UserAccountMembership](docs/UserAccountMembership.md)

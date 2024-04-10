@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **AccountId** | Pointer to **string** | ID of the account that this user pertains to. If the user has multiple account memberships, this account ID will represent the primary account of the user.  | [optional] 
 **Roles** | Pointer to [**[]UserAccountRole**](UserAccountRole.md) | The roles that the user has within the account | [optional] 
 **AvatarUrl** | Pointer to **string** | The URL to an avatar of the user | [optional] 
+**LoggedInAt** | Pointer to **time.Time** | The approximate last time that the user logged in | [optional] [readonly] 
 **AccountMemberships** | Pointer to [**[]UserAccountMembership**](UserAccountMembership.md) |  | [optional] [readonly] 
 **IsSuperAdmin** | Pointer to **bool** | Determines if the user is a super admin of Digiseg API services | [optional] 
 **Password** | Pointer to **string** | Password of the user | [optional] 
@@ -156,6 +157,31 @@ SetAvatarUrl sets AvatarUrl field to given value.
 `func (o *UserMutation) HasAvatarUrl() bool`
 
 HasAvatarUrl returns a boolean if a field has been set.
+
+### GetLoggedInAt
+
+`func (o *UserMutation) GetLoggedInAt() time.Time`
+
+GetLoggedInAt returns the LoggedInAt field if non-nil, zero value otherwise.
+
+### GetLoggedInAtOk
+
+`func (o *UserMutation) GetLoggedInAtOk() (*time.Time, bool)`
+
+GetLoggedInAtOk returns a tuple with the LoggedInAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLoggedInAt
+
+`func (o *UserMutation) SetLoggedInAt(v time.Time)`
+
+SetLoggedInAt sets LoggedInAt field to given value.
+
+### HasLoggedInAt
+
+`func (o *UserMutation) HasLoggedInAt() bool`
+
+HasLoggedInAt returns a boolean if a field has been set.
 
 ### GetAccountMemberships
 

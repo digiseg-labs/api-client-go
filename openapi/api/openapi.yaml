@@ -138,16 +138,17 @@ tags:
   name: audiences
   x-displayName: Audiences
 - description: |
-    Campaign- and website tags can be managed and measured in order to evaluate
-    performance, reach and targeting power. Use the campaigns API to create groups
-    of tags, instrument them in your campaign creatives or on a webpage, and access
-    statistics about the impressions, clicks and other events of the campaign.
-  name: campaigns
-  x-displayName: Campaigns
+    Measurement studies are instrumented in online ad campaigns or websites in
+    order to evaluate the performance, reach and targeting power of various audiences.
+    Use the studies API to create studies, instrument them in your campaign creatives
+    or on a webpage, and access statistics about the impressions, actions and other
+    events.
+  name: studies
+  x-displayName: Studies
 - description: |
     Measurement labels can be used for categorization and filtering across all
     measurement activities. At the core, the labels are simple text strings that
-    can be tagged upon e.g. a campaign. By labeling measurement activities, it
+    can be tagged upon e.g. a study. By labeling measurement activities, it
     grants accounts the ability to compare activities with other activities that
     are categorized in similar ways.
   name: measurement_labels
@@ -155,7 +156,7 @@ tags:
 - description: |
     In your Digiseg account you can register measurement clients.
     A measurement clients could be a customer, a brand or any other type
-    of client. This is typically useful when running measurement campaigns or
+    of client. This is typically useful when running measurement studies or
     other measurement activity in service of someone else.
   name: measurement_clients
   x-displayName: Clients / customers
@@ -165,6 +166,8 @@ tags:
     Average Internet Population, made available in the population category `aip`.
   name: populations
   x-displayName: Populations
+- name: usage
+  x-displayName: Usage statistics
 paths:
   /accounts/{account_id}:
     get:
@@ -1016,11 +1019,11 @@ paths:
         source: "fetch(\"https://api.digiseg.net/audiences/\"+user_ip, {\n  \"method\"\
           : \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response =>\
           \ {\n  console.log(response);\n})"
-  /campaigns:
+  /studies:
     get:
       description: |
-        List campaigns that the user has access to
-      operationId: listCampaigns
+        List studies that the user has access to
+      operationId: listStudies
       parameters:
       - description: |
           Defines the field to sort the result items by.
@@ -1040,7 +1043,7 @@ paths:
           - -name
           type: string
         style: form
-      - description: Optional parameter used to filter by campaign label
+      - description: Optional parameter used to filter by study label
         example: CTV
         explode: true
         in: query
@@ -1049,7 +1052,7 @@ paths:
         schema:
           type: string
         style: form
-      - description: Optional parameter used to search for campaigns where the name
+      - description: Optional parameter used to search for studies where the name
           contains a substring (case insensitive)
         example: acme
         explode: true
@@ -1060,7 +1063,7 @@ paths:
           type: string
         style: form
       - description: |
-          Optional parameter used to query campaigns by specific account IDs (only available to super admins).
+          Optional parameter used to query studies by specific account IDs (only available to super admins).
           The value `*` is synonymous for "all accounts".
         examples:
           single:
@@ -1106,35 +1109,35 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listCampaigns_200_response'
+                $ref: '#/components/schemas/listStudies_200_response'
           description: OK
-      summary: List campaigns
+      summary: List studies
       tags:
-      - campaigns
+      - studies
       x-codeSamples:
       - lang: Shell
         source: |-
           curl -H "X-API-KEY: $APIKEY" -X GET \
-          https://api.digiseg.net/campaigns
+          https://api.digiseg.net/studies
       - lang: JavaScript
-        source: "fetch(\"https://api.digiseg.net/campaigns\", {\n  \"method\": \"\
-          GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response => {\n\
-          \  console.log(response);\n})"
+        source: "fetch(\"https://api.digiseg.net/studies\", {\n  \"method\": \"GET\"\
+          , \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response => {\n  console.log(response);\n\
+          })"
     post:
-      description: Create a new campaign
-      operationId: createCampaign
+      description: Create a new study
+      operationId: createStudy
       requestBody:
-        $ref: '#/components/requestBodies/CampaignCreationRequest'
+        $ref: '#/components/requestBodies/StudyCreationRequest'
       responses:
         "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/createCampaign_201_response'
+                $ref: '#/components/schemas/createStudy_201_response'
           description: OK
-      summary: Create campaign
+      summary: Create study
       tags:
-      - campaigns
+      - studies
   /measurement/labels:
     get:
       description: |
@@ -1431,15 +1434,15 @@ paths:
       summary: Upload measurement client logo
       tags:
       - measurement_clients
-  /campaigns/{campaign_id}:
+  /studies/{study_id}:
     delete:
       description: |
-        Deletes a campaign
-      operationId: deleteCampaignById
+        Deletes a study
+      operationId: deleteStudyById
       parameters:
       - explode: false
         in: path
-        name: campaign_id
+        name: study_id
         required: true
         schema:
           type: string
@@ -1447,26 +1450,26 @@ paths:
       responses:
         "204":
           description: Object deleted
-      summary: Delete campaign
+      summary: Delete study
       tags:
-      - campaigns
+      - studies
       x-codeSamples:
       - lang: Shell
         source: |-
           curl -H "X-API-KEY: $APIKEY" -X DELETE \
-          https://api.digiseg.net/campaigns/$CAMPAIGN_ID
+          https://api.digiseg.net/studies/$STUDY_ID
       - lang: JavaScript
-        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id, {\n  \"\
-          method\": \"DELETE\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response\
+        source: "fetch(\"https://api.digiseg.net/studies/\"+study_id, {\n  \"method\"\
+          : \"DELETE\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response\
           \ => {\n  console.log(response);\n})"
     get:
       description: |
-        Get campaign information for a specific campaign
-      operationId: getCampaignById
+        Get study information for a specific study
+      operationId: getStudyById
       parameters:
       - explode: false
         in: path
-        name: campaign_id
+        name: study_id
         required: true
         schema:
           type: string
@@ -1476,53 +1479,53 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/createCampaign_201_response'
+                $ref: '#/components/schemas/createStudy_201_response'
           description: OK
-      summary: Get campaign
+      summary: Get study
       tags:
-      - campaigns
+      - studies
       x-codeSamples:
       - lang: Shell
         source: |-
           curl -H "X-API-KEY: $APIKEY" -X GET \
-          https://api.digiseg.net/campaigns/$CAMPAIGN_ID
+          https://api.digiseg.net/studies/$STUDY_ID
       - lang: JavaScript
-        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id, {\n  \"\
-          method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response\
-          \ => {\n  console.log(response);\n})"
+        source: "fetch(\"https://api.digiseg.net/studies/\"+study_id, {\n  \"method\"\
+          : \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response =>\
+          \ {\n  console.log(response);\n})"
     put:
       description: |
-        Updates properties of a campaign
-      operationId: updateCampaignById
+        Updates properties of a study
+      operationId: updateStudyById
       parameters:
       - explode: false
         in: path
-        name: campaign_id
+        name: study_id
         required: true
         schema:
           type: string
         style: simple
       requestBody:
-        $ref: '#/components/requestBodies/CampaignUpdateRequest'
+        $ref: '#/components/requestBodies/StudyUpdateRequest'
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/createCampaign_201_response'
+                $ref: '#/components/schemas/createStudy_201_response'
           description: OK
-      summary: Update campaign
+      summary: Update study
       tags:
-      - campaigns
-  /campaigns/{campaign_id}/assets/banner_image:
+      - studies
+  /studies/{study_id}/assets/banner_image:
     delete:
       description: |
-        Deletes the banner image for a campaign
-      operationId: deleteCampaignBannerImage
+        Deletes the banner image for a study
+      operationId: deleteStudyBannerImage
       parameters:
       - explode: false
         in: path
-        name: campaign_id
+        name: study_id
         required: true
         schema:
           type: string
@@ -1530,27 +1533,27 @@ paths:
       responses:
         "204":
           description: Object deleted
-      summary: Delete campaign banner image logo
+      summary: Delete study banner image logo
       tags:
-      - campaigns
+      - studies
       x-codeSamples:
       - lang: Shell
         source: |-
           curl -H "X-API-KEY: $APIKEY" -X DELETE \
-          https://api.digiseg.net/campaigns/$CAMPAIGN_ID/assets/banner_image
+          https://api.digiseg.net/studies/$STUDY_ID/assets/banner_image
       - lang: JavaScript
-        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/assets/banner_image\"\
+        source: "fetch(\"https://api.digiseg.net/studies/\"+study_id+\"/assets/banner_image\"\
           , {\n  \"method\": \"DELETE\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
           }).then(response => {\n  console.log(response);\n})"
     get:
       description: |
-        Gets the campaign banner image, if the image is hosted on the Digiseg platform.
-        Refer to the campaign's `banner_image_url` to get a non-authenticated and shareable URL for the logo.
-      operationId: getCampaignBannerImage
+        Gets the study banner image, if the image is hosted on the Digiseg platform.
+        Refer to the study's `banner_image_url` to get a non-authenticated and shareable URL for the logo.
+      operationId: getStudyBannerImage
       parameters:
       - explode: false
         in: path
-        name: campaign_id
+        name: study_id
         required: true
         schema:
           type: string
@@ -1560,26 +1563,26 @@ paths:
           description: OK
         "404":
           description: Not found
-      summary: Get campaign banner image
+      summary: Get study banner image
       tags:
-      - campaigns
+      - studies
       x-codeSamples:
       - lang: Shell
         source: |-
           curl -H "X-API-KEY: $APIKEY" -X GET \
-          https://api.digiseg.net/campaigns/$CAMPAIGN_ID/assets/banner_image
+          https://api.digiseg.net/studies/$STUDY_ID/assets/banner_image
       - lang: JavaScript
-        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/assets/banner_image\"\
+        source: "fetch(\"https://api.digiseg.net/studies/\"+study_id+\"/assets/banner_image\"\
           , {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
           }).then(response => {\n  console.log(response);\n})"
     put:
       description: |
-        Upload a banner image for a campaign
-      operationId: uploadCampaignBannerImage
+        Upload a banner image for a study
+      operationId: uploadStudyBannerImage
       parameters:
       - explode: false
         in: path
-        name: campaign_id
+        name: study_id
         required: true
         schema:
           type: string
@@ -1589,22 +1592,22 @@ paths:
       responses:
         "204":
           description: OK
-      summary: Upload campaign banner image
+      summary: Upload study banner image
       tags:
-      - campaigns
-  /campaigns/{campaign_id}/stats/audiences:
+      - studies
+  /studies/{study_id}/stats/audiences:
     get:
       description: |
-        Query the audience statistics for a campaign, enabling the user
+        Query the audience statistics for a study, enabling the user
         to see the representation of matched household characteristics
         to impressions and clicks. These statistics can be compared to
         the Average Internet Population (globally or for a specific country),
-        or to the audience stats of other campaigns.
-      operationId: queryCampaignAudienceStats
+        or to the audience stats of other studies.
+      operationId: queryStudyAudienceStats
       parameters:
       - explode: false
         in: path
-        name: campaign_id
+        name: study_id
         required: true
         schema:
           type: string
@@ -1614,30 +1617,30 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/queryCampaignAudienceStats_200_response'
+                $ref: '#/components/schemas/queryStudyAudienceStats_200_response'
           description: OK
-      summary: Audience statistics for campaign
+      summary: Audience statistics for study
       tags:
-      - campaigns
+      - studies
       x-codeSamples:
       - lang: Shell
         source: |-
           curl -H "X-API-KEY: $APIKEY" -X GET \
-          https://api.digiseg.net/campaigns/$CAMPAIGN_ID/stats/audiences
+          https://api.digiseg.net/studies/$STUDY_ID/stats/audiences
       - lang: JavaScript
-        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/stats/audiences\"\
+        source: "fetch(\"https://api.digiseg.net/studies/\"+study_id+\"/stats/audiences\"\
           , {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
           }).then(response => {\n  console.log(response);\n})"
-  /campaigns/{campaign_id}/stats/countries:
+  /studies/{study_id}/stats/countries:
     get:
       description: |
-        Query the country statistics for a campaign, enabling the user
-        to see where the campaign is being delivered.
-      operationId: queryCampaignCountryStats
+        Query the country statistics for a study, enabling the user
+        to see where the study is being delivered.
+      operationId: queryStudyCountryStats
       parameters:
       - explode: false
         in: path
-        name: campaign_id
+        name: study_id
         required: true
         schema:
           type: string
@@ -1647,31 +1650,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/queryCampaignCountryStats_200_response'
+                $ref: '#/components/schemas/queryStudyCountryStats_200_response'
           description: OK
-      summary: Country statistics for campaign
+      summary: Country statistics for study
       tags:
-      - campaigns
+      - studies
       x-codeSamples:
       - lang: Shell
         source: |-
           curl -H "X-API-KEY: $APIKEY" -X GET \
-          https://api.digiseg.net/campaigns/$CAMPAIGN_ID/stats/countries
+          https://api.digiseg.net/studies/$STUDY_ID/stats/countries
       - lang: JavaScript
-        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/stats/countries\"\
+        source: "fetch(\"https://api.digiseg.net/studies/\"+study_id+\"/stats/countries\"\
           , {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
           }).then(response => {\n  console.log(response);\n})"
-  /campaigns/{campaign_id}/stats/timing:
+  /studies/{study_id}/stats/timing:
     get:
       description: |
-        Query the timing statistics for a campaign, enabling the user
-        to see campaign performance and delivery figures at different
+        Query the timing statistics for a study, enabling the user
+        to see performance and delivery figures at different
         times of day, days of the week and days of the month.
-      operationId: queryCampaignTimingStats
+      operationId: queryStudyTimingStats
       parameters:
       - explode: false
         in: path
-        name: campaign_id
+        name: study_id
         required: true
         schema:
           type: string
@@ -1681,33 +1684,33 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/queryCampaignTimingStats_200_response'
+                $ref: '#/components/schemas/queryStudyTimingStats_200_response'
           description: OK
-      summary: Timing statistics for campaign
+      summary: Timing statistics for study
       tags:
-      - campaigns
+      - studies
       x-codeSamples:
       - lang: Shell
         source: |-
           curl -H "X-API-KEY: $APIKEY" -X GET \
-          https://api.digiseg.net/campaigns/$CAMPAIGN_ID/stats/timing
+          https://api.digiseg.net/studies/$STUDY_ID/stats/timing
       - lang: JavaScript
-        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/stats/timing\"\
+        source: "fetch(\"https://api.digiseg.net/studies/\"+study_id+\"/stats/timing\"\
           , {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
           }).then(response => {\n  console.log(response);\n})"
-  /campaigns/{campaign_id}/stats/frequencies:
+  /studies/{study_id}/stats/frequencies:
     get:
       description: |
-        Query the frequency statistics for a campaign. Frequency
+        Query the frequency statistics for a study. Frequency
         statistics are helpful to identify the frequency of impressions
-        per user, or distinct reach of a campaign. It can also be helpful
+        per user, or distinct reach of a study. It can also be helpful
         to identify how multiple impressions for the same users may or
         may not generate more clicks.
-      operationId: queryCampaignFrequencyStats
+      operationId: queryStudyFrequencyStats
       parameters:
       - explode: false
         in: path
-        name: campaign_id
+        name: study_id
         required: true
         schema:
           type: string
@@ -1717,18 +1720,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/queryCampaignFrequencyStats_200_response'
+                $ref: '#/components/schemas/queryStudyFrequencyStats_200_response'
           description: OK
-      summary: Frequency statistics for campaign
+      summary: Frequency statistics for study
       tags:
-      - campaigns
+      - studies
       x-codeSamples:
       - lang: Shell
         source: |-
           curl -H "X-API-KEY: $APIKEY" -X GET \
-          https://api.digiseg.net/campaigns/$CAMPAIGN_ID/stats/frequencies
+          https://api.digiseg.net/studies/$STUDY_ID/stats/frequencies
       - lang: JavaScript
-        source: "fetch(\"https://api.digiseg.net/campaigns/\"+campaign_id+\"/stats/frequencies\"\
+        source: "fetch(\"https://api.digiseg.net/studies/\"+study_id+\"/stats/frequencies\"\
           , {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n\
           }).then(response => {\n  console.log(response);\n})"
   /populations/{category_key}:
@@ -1806,6 +1809,133 @@ paths:
         source: "fetch(\"https://api.digiseg.net/populations/\"+category_key+\"/\"\
           +population_key, {\n  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\"\
           : apikey},\n}).then(response => {\n  console.log(response);\n})"
+  /usage/audience_data/monthly:
+    get:
+      description: Provides usage stats on a monthly basis.
+      operationId: listAudienceDataMonthlyUsage
+      parameters:
+      - description: Year to filter by
+        explode: true
+        in: query
+        name: "filter[year]"
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: |
+          Optional parameter used to query usage of specific account IDs (only available to super admins).
+        explode: true
+        in: query
+        name: "filter[account_id]"
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listAudienceDataMonthlyUsage_200_response'
+          description: OK
+      summary: List monthly usage of Audience Data
+      tags:
+      - usage
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/usage/audience_data/monthly
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/usage/audience_data/monthly\", {\n\
+          \  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response\
+          \ => {\n  console.log(response);\n})"
+  /usage/audience_data/daily:
+    get:
+      description: Provides usage stats on a daily basis. Results available for the
+        last 2 months.
+      operationId: listAudienceDataDailyUsage
+      parameters:
+      - description: Date to query from
+        explode: true
+        in: query
+        name: "filter[date][from]"
+        required: false
+        schema:
+          format: date
+          type: string
+        style: form
+      - description: Date to query to
+        explode: true
+        in: query
+        name: "filter[date][to]"
+        required: false
+        schema:
+          format: date
+          type: string
+        style: form
+      - description: |
+          Optional parameter used to query usage of specific account IDs (only available to super admins).
+        explode: true
+        in: query
+        name: "filter[account_id]"
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listAudienceDataDailyUsage_200_response'
+          description: OK
+      summary: List daily usage of Audience Data
+      tags:
+      - usage
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/usage/audience_data/daily
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/usage/audience_data/daily\", {\n\
+          \  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response\
+          \ => {\n  console.log(response);\n})"
+  /usage/audience_data/realtime:
+    get:
+      description: "Provides usage stats on a near-realtime basis. Results available\
+        \ for the last 24 hours, provided with as short delay as possible."
+      operationId: listAudienceDataRealtimeUsage
+      parameters:
+      - description: |
+          Optional parameter used to query usage of specific account IDs (only available to super admins).
+        explode: true
+        in: query
+        name: "filter[account_id]"
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listAudienceDataRealtimeUsage_200_response'
+          description: OK
+      summary: List realtime usage of Audience Data
+      tags:
+      - usage
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/usage/audience_data/realtime
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/usage/audience_data/realtime\", {\n\
+          \  \"method\": \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response\
+          \ => {\n  console.log(response);\n})"
 components:
   requestBodies:
     AccountCreationRequest:
@@ -1868,17 +1998,17 @@ components:
           schema:
             $ref: '#/components/schemas/ResolveAudiencesOfMultipleRequest'
       required: true
-    CampaignCreationRequest:
+    StudyCreationRequest:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/CampaignCreation'
+            $ref: '#/components/schemas/StudyCreation'
       required: true
-    CampaignUpdateRequest:
+    StudyUpdateRequest:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/CampaignMutation'
+            $ref: '#/components/schemas/StudyMutation'
       required: true
     MeasurementClientCreationRequest:
       content:
@@ -1983,17 +2113,17 @@ components:
       description: Bad request
     ObjectDeletedResponse:
       description: Object deleted
-    CampaignListResponse:
+    StudyListResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/listCampaigns_200_response'
+            $ref: '#/components/schemas/listStudies_200_response'
       description: OK
-    CampaignByIdResponse:
+    StudyByIdResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/createCampaign_201_response'
+            $ref: '#/components/schemas/createStudy_201_response'
       description: OK
     MeasurementLabelsResponse:
       content:
@@ -2013,29 +2143,29 @@ components:
           schema:
             $ref: '#/components/schemas/createMeasurementClient_201_response'
       description: OK
-    CampaignAudienceStatsResponse:
+    StudyAudienceStatsResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/queryCampaignAudienceStats_200_response'
+            $ref: '#/components/schemas/queryStudyAudienceStats_200_response'
       description: OK
-    CampaignCountryStatsResponse:
+    StudyCountryStatsResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/queryCampaignCountryStats_200_response'
+            $ref: '#/components/schemas/queryStudyCountryStats_200_response'
       description: OK
-    CampaignTimingStatsResponse:
+    StudyTimingStatsResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/queryCampaignTimingStats_200_response'
+            $ref: '#/components/schemas/queryStudyTimingStats_200_response'
       description: OK
-    CampaignFrequencyStatsResponse:
+    StudyFrequencyStatsResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/queryCampaignFrequencyStats_200_response'
+            $ref: '#/components/schemas/queryStudyFrequencyStats_200_response'
       description: OK
     ListPopulationsResponse:
       content:
@@ -2057,6 +2187,24 @@ components:
               data:
                 $ref: '#/components/schemas/PopulationSource'
             type: object
+      description: OK
+    ListAudienceDataMonthlyUsageResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/listAudienceDataMonthlyUsage_200_response'
+      description: OK
+    ListAudienceDataDailyUsageResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/listAudienceDataDailyUsage_200_response'
+      description: OK
+    ListAudienceDataRealtimeUsageResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/listAudienceDataRealtimeUsage_200_response'
       description: OK
   schemas:
     PasswordlessAuthRequest:
@@ -2187,6 +2335,27 @@ components:
           description: ID of the user who last updated the object
           type: string
       type: object
+    CompanyType:
+      description: A type of company that an account can represent
+      enum:
+      - advertiser
+      - agency
+      - publisher
+      - other
+      type: string
+    CompanySize:
+      description: Describes the size of a company
+      enum:
+      - Self-employed
+      - 1-10 employees
+      - 11-50 employees
+      - 51-200 employees
+      - 201-500 employees
+      - 501-1000 employees
+      - 1001-5000 employees
+      - "5001-10,000 employees"
+      - "10,001+ employees"
+      type: string
     AccountBase:
       properties:
         name:
@@ -2198,6 +2367,29 @@ components:
           example: https://api.digiseg.net/assets/account/ioi4324i2309das/logo?vrft=csdkl232l4pod4
           format: uri
           type: string
+        website_url:
+          description: URL of the account's primary website
+          format: uri
+          type: string
+        billing_country:
+          description: Country code of the account. Requires `owner` role to change.
+          example: DK
+          maxLength: 2
+          type: string
+        company_type:
+          description: |
+            The type of company that the account represents.
+            Note that for forward-compatibility the data type here is simply a string.
+            The values, if present, will however typically originate from the `CompanyType` enum.
+          example: "[\"agency\"]"
+          maxLength: 64
+          type: string
+        company_size:
+          $ref: '#/components/schemas/CompanySize'
+        has_clients:
+          description: "Determines whether the account has clients that they work\
+            \ for, or if their activities are for themselves."
+          type: boolean
         slug:
           deprecated: true
           description: A short human-readable name to identify the account. Must be
@@ -2206,6 +2398,11 @@ components:
           minLength: 4
           pattern: "^[a-z]{4,16}$"
           type: string
+      type: object
+    AccountMutationAux:
+      properties:
+        company_type:
+          $ref: '#/components/schemas/CompanyType'
       type: object
     AccountCreationAux:
       properties:
@@ -2229,11 +2426,47 @@ components:
       - email
       - name
       type: object
+    PostalAddress:
+      example:
+        line1: Gl Kongevej 3B
+        city: Copenhagen
+        postal_code: "1610"
+      properties:
+        line1:
+          description: The first line of the postal address
+          maxLength: 255
+          type: string
+        line2:
+          description: The second line of the postal address
+          maxLength: 255
+          type: string
+        city:
+          description: The city of the billing address
+          maxLength: 128
+          type: string
+        postal_code:
+          description: The postal code of the billing address
+          maxLength: 16
+          type: string
+        state:
+          description: The state of the billing address
+          maxLength: 64
+          type: string
+      type: object
     AccountAux:
       properties:
         owner_id:
-          description: ID of the user who is the ultimate owner of the account
+          deprecated: true
+          description: ID of the user who is the ultimate owner of the account. Deprecated
+            in favor of the `owner` role of the user's account membership.
           type: string
+        billing_email:
+          description: The email address to send billing information to. Requires
+            `owner` role to change.
+          format: email
+          type: string
+        billing_address:
+          $ref: '#/components/schemas/PostalAddress'
       type: object
     AccountItem:
       allOf:
@@ -2243,16 +2476,28 @@ components:
       allOf:
       - $ref: '#/components/schemas/AccountBase'
       - $ref: '#/components/schemas/AccountAux'
+      - $ref: '#/components/schemas/AccountMutationAux'
       - $ref: '#/components/schemas/AccountCreationAux'
     AccountMutation:
       allOf:
       - $ref: '#/components/schemas/AccountBase'
       - $ref: '#/components/schemas/AccountAux'
+      - $ref: '#/components/schemas/AccountMutationAux'
       example:
+        company_type: null
+        website_url: https://openapi-generator.tech
         logo_url: https://api.digiseg.net/assets/account/ioi4324i2309das/logo?vrft=csdkl232l4pod4
+        has_clients: true
         owner_id: owner_id
+        billing_email: billing_email
         name: Example Co.
+        billing_country: DK
+        billing_address:
+          line1: Gl Kongevej 3B
+          city: Copenhagen
+          postal_code: "1610"
         slug: slug
+        company_size: null
     AccountFull:
       allOf:
       - $ref: '#/components/schemas/AccountItem'
@@ -2261,8 +2506,13 @@ components:
       example:
         updated_at: 2000-01-23T04:56:07.000+00:00
         owner_id: owner_id
+        billing_email: billing_email
         updated_by: updated_by
         created_at: 2000-01-23T04:56:07.000+00:00
+        billing_address:
+          line1: Gl Kongevej 3B
+          city: Copenhagen
+          postal_code: "1610"
         created_by: created_by
     AccountLinks:
       example:
@@ -2523,7 +2773,12 @@ components:
       - roles
       type: object
     UserAccountRole:
-      description: Determines the role of a user within an account
+      description: |
+        Determines the role of a user within an account. The permissions of each
+        role are defined to fulfill the following use cases:
+        * `user` is a basic role needed to make use of the platforms primary features.
+        * `admin` is required to perform administrative functions on the account, such as adding members to it. Admin permissions does NOT include removing the account altogether or billing-related actions.
+        * `owner` is required to make changes to account billing, or delete the account.
       enum:
       - owner
       - admin
@@ -2556,6 +2811,11 @@ components:
           description: The URL to an avatar of the user
           example: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
           format: uri
+          type: string
+        logged_in_at:
+          description: The approximate last time that the user logged in
+          format: date-time
+          readOnly: true
           type: string
       type: object
     UserCredentials:
@@ -2600,6 +2860,7 @@ components:
           - null
         name: Casey Doe
         is_super_admin: true
+        logged_in_at: 2000-01-23T04:56:07.000+00:00
         email: casey.doe@example.com
     UserItem:
       allOf:
@@ -2613,6 +2874,7 @@ components:
         - null
         name: Casey Doe
         id: 4k3jKJ9D12kj0S4c
+        logged_in_at: 2000-01-23T04:56:07.000+00:00
         email: casey.doe@example.com
     UserFull:
       allOf:
@@ -3026,31 +3288,31 @@ components:
           example: Lifecycle > Pensioners
           type: string
       type: object
-    CampaignLinks:
+    StudyLinks:
       example:
-        stats_timing: /campaigns/2c9jKJ9D12kj0S4c/stats/timing
-        stats_frequencies: /campaigns/2c9jKJ9D12kj0S4c/stats/frequencies
-        stats_countries: /campaigns/2c9jKJ9D12kj0S4c/stats/countries
-        stats_audiences: /campaigns/2c9jKJ9D12kj0S4c/stats/audiences
+        stats_timing: /studies/2c9jKJ9D12kj0S4c/stats/timing
+        stats_frequencies: /studies/2c9jKJ9D12kj0S4c/stats/frequencies
+        stats_countries: /studies/2c9jKJ9D12kj0S4c/stats/countries
+        stats_audiences: /studies/2c9jKJ9D12kj0S4c/stats/audiences
       properties:
         stats_countries:
-          description: Link to the country statistics for the campaign
-          example: /campaigns/2c9jKJ9D12kj0S4c/stats/countries
+          description: Link to the country statistics for the study
+          example: /studies/2c9jKJ9D12kj0S4c/stats/countries
           format: uri
           type: string
         stats_audiences:
-          description: Link to the audience statistics for the campaign
-          example: /campaigns/2c9jKJ9D12kj0S4c/stats/audiences
+          description: Link to the audience statistics for the study
+          example: /studies/2c9jKJ9D12kj0S4c/stats/audiences
           format: uri
           type: string
         stats_timing:
-          description: Link to the timing statistics for the campaign
-          example: /campaigns/2c9jKJ9D12kj0S4c/stats/timing
+          description: Link to the timing statistics for the study
+          example: /studies/2c9jKJ9D12kj0S4c/stats/timing
           format: uri
           type: string
         stats_frequencies:
-          description: Link to the frequency statistics for the campaign
-          example: /campaigns/2c9jKJ9D12kj0S4c/stats/frequencies
+          description: Link to the frequency statistics for the study
+          example: /studies/2c9jKJ9D12kj0S4c/stats/frequencies
           format: uri
           type: string
       type: object
@@ -3085,28 +3347,28 @@ components:
       - created_at
       - created_by
       type: object
-    CampaignEventLinks:
+    MeasurementEventLinks:
       additionalProperties:
-        $ref: '#/components/schemas/CampaignEventLink'
+        $ref: '#/components/schemas/MeasurementEventLink'
       description: |
-        Links to trigger activity and events in this campaign.
-        Two events are well-known and available in every campaign: impression and click.
+        Links to trigger activity and events in this study.
+        Two events are well-known and available in every study: impression and click.
       example:
         impression:
           link: //subdomain.digiseg.net/path/to/pix.gif
         click:
-          link: //subdomain.digiseg.net/path/to/click
+          link: //subdomain.digiseg.net/path/to/action
           parameters:
             destination:
               description: URL to redirect to
       properties:
         impression:
-          $ref: '#/components/schemas/CampaignEventLink'
+          $ref: '#/components/schemas/MeasurementEventLink'
         click:
-          $ref: '#/components/schemas/CampaignEventLink'
+          $ref: '#/components/schemas/MeasurementEventLink'
       readOnly: true
       type: object
-    CampaignEventLink:
+    MeasurementEventLink:
       properties:
         link:
           description: The base URI of the link to an event
@@ -3114,11 +3376,11 @@ components:
           type: string
         parameters:
           additionalProperties:
-            $ref: '#/components/schemas/CampaignEventLinkParameterInfo'
+            $ref: '#/components/schemas/MeasurementEventLinkParameterInfo'
           description: Describes any parameters that can be added to the event link
           type: object
       type: object
-    CampaignEventLinkParameterInfo:
+    MeasurementEventLinkParameterInfo:
       properties:
         description:
           description: A description of what the parameter is used for
@@ -3175,7 +3437,7 @@ components:
     MeasurementLabels:
       description: |
         A set of labels that users can use to categorize their measurements.
-        Can be used to indicate type of campaign, customer names or other
+        Can be used to indicate type of study, customer names or other
         traits.
       example:
       - Acme
@@ -3184,7 +3446,7 @@ components:
       items:
         type: string
       type: array
-    CampaignBase:
+    StudyBase:
       properties:
         name:
           example: Acme Summer 2024 brand awareness
@@ -3192,7 +3454,7 @@ components:
         labels:
           description: |
             A set of labels that users can use to categorize their measurements.
-            Can be used to indicate type of campaign, customer names or other
+            Can be used to indicate type of study, customer names or other
             traits.
           example:
           - Acme
@@ -3202,34 +3464,33 @@ components:
             type: string
           type: array
         account_id:
-          description: The ID of the account that owns this campaign
+          description: The ID of the account that owns this study
           example: 4k3jKJ9D12kj0S4c
           readOnly: true
           type: string
         start_date:
-          description: The date for which the campaign and its data ingestion will
-            start.
+          description: The date for which the study and its data ingestion will start.
           format: date-time
           readOnly: true
           type: string
         life_cycle_stage:
-          $ref: '#/components/schemas/CampaignLifecycleStage'
+          $ref: '#/components/schemas/StudyLifecycleStage'
         ingestion_status:
-          $ref: '#/components/schemas/CampaignIngestionStatus'
+          $ref: '#/components/schemas/StudyIngestionStatus'
         summary_stats:
-          $ref: '#/components/schemas/CampaignSummaryStats'
+          $ref: '#/components/schemas/StudySummaryStats'
         client:
           $ref: '#/components/schemas/MeasurementClientItem'
       type: object
-    CampaignIngestionStatus:
+    StudyIngestionStatus:
       description: |
-        The status of the data collection of the campaign, indicating whether stats are available and representative.
+        The status of the data collection of the study, indicating whether stats are available and representative.
 
-        * `no_data` means that the campaign has been created but no data has been received.
+        * `no_data` means that the study has been created but no data has been received.
         * `active_ramping_up` means that data has been received, but not enough to provide meaningful stats yet.
-        * `active_fulfilled` means that the campaign has received a good amount of data, but more data can still be added.
-        * `finished_complete` means that the campaign has finished and is no longer open to receive data.
-        * `finished_expired` means that the campaign has finished but not enough data was collected to provide meaningful stats.
+        * `active_fulfilled` means that the study has received a good amount of data, but more data can still be added.
+        * `finished_complete` means that the study has finished and is no longer open to receive data.
+        * `finished_expired` means that the study has finished but not enough data was collected to provide meaningful stats.
       enum:
       - no_data
       - active_ramping_up
@@ -3238,9 +3499,9 @@ components:
       - finished_expired
       readOnly: true
       type: string
-    CampaignLifecycleStage:
+    StudyLifecycleStage:
       description: |
-        The life cycle stage of the campaign.
+        The life cycle stage of the study.
       enum:
       - pending
       - active
@@ -3248,7 +3509,7 @@ components:
       - finished
       readOnly: true
       type: string
-    CampaignSummaryStats:
+    StudySummaryStats:
       example:
         private:
           measurements:
@@ -3290,25 +3551,25 @@ components:
       - not_resolved
       - private
       type: object
-    CampaignAux:
+    StudyAux:
       properties:
         event_links:
-          $ref: '#/components/schemas/CampaignEventLinks'
+          $ref: '#/components/schemas/MeasurementEventLinks'
         banner_image_url:
           description: |
-            The URL to a banner image for the campaign.
-            Note that the banner image is used only for Digiseg campaign reporting and presentation,
+            The URL to a banner image for the study.
+            Note that the banner image is used only for Digiseg study reporting and presentation,
             it does NOT represent any delivered banner ad creatives or similar.
-          example: https://api.digiseg.net/assets/campaigns/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
+          example: https://api.digiseg.net/assets/studies/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
           format: uri
           readOnly: true
           type: string
         integration_platform:
-          $ref: '#/components/schemas/CampaignIntegrationPlatform'
+          $ref: '#/components/schemas/MeasurementIntegrationPlatform'
       type: object
-    CampaignIntegrationPlatform:
+    MeasurementIntegrationPlatform:
       description: |
-        The integration/platform with which a campaign is being delivered
+        The integration/platform with which a study is being delivered
       example:
         id: adf
         name: Adform
@@ -3325,28 +3586,28 @@ components:
           maxLength: 200
           type: string
       type: object
-    CampaignCreationData:
+    StudyCreationData:
       properties:
         event_set:
-          $ref: '#/components/schemas/CampaignEventSet'
+          $ref: '#/components/schemas/MeasurementEventSet'
         client_id:
-          description: The ID of the measurement client that this campaign is for
+          description: The ID of the measurement client that this study is for
           example: kfsdj423jkn243lml423
           type: string
       required:
       - event_set
       type: object
-    CampaignEventSet:
+    MeasurementEventSet:
       description: |
-        The set of events to create for the campaign.
+        The set of events to create for the study.
       enum:
       - impressions_only
       - impressions_and_clicks
       type: string
-    CampaignItem:
+    StudyItem:
       allOf:
       - $ref: '#/components/schemas/IdentifyableObject1'
-      - $ref: '#/components/schemas/CampaignBase'
+      - $ref: '#/components/schemas/StudyBase'
       example:
         account_id: 4k3jKJ9D12kj0S4c
         name: Acme Summer 2024 brand awareness
@@ -3390,33 +3651,33 @@ components:
         - Seasonal
         start_date: 2000-01-23T04:56:07.000+00:00
         ingestion_status: null
-    CampaignFull:
+    StudyFull:
       allOf:
-      - $ref: '#/components/schemas/CampaignItem'
-      - $ref: '#/components/schemas/CampaignAux'
+      - $ref: '#/components/schemas/StudyItem'
+      - $ref: '#/components/schemas/StudyAux'
       - $ref: '#/components/schemas/TimestampedObject1'
       example:
         updated_at: 2000-01-23T04:56:07.000+00:00
         integration_platform:
           id: adf
           name: Adform
-        banner_image_url: https://api.digiseg.net/assets/campaigns/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
+        banner_image_url: https://api.digiseg.net/assets/studies/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
         updated_by: 3u1jKJ9D12kj0S4c
         created_at: 2000-01-23T04:56:07.000+00:00
         event_links:
           impression:
             link: //subdomain.digiseg.net/path/to/pix.gif
           click:
-            link: //subdomain.digiseg.net/path/to/click
+            link: //subdomain.digiseg.net/path/to/action
             parameters:
               destination:
                 description: URL to redirect to
         created_by: 3u1jKJ9D12kj0S4c
-    CampaignCreation:
+    StudyCreation:
       allOf:
-      - $ref: '#/components/schemas/CampaignBase'
-      - $ref: '#/components/schemas/CampaignAux'
-      - $ref: '#/components/schemas/CampaignCreationData'
+      - $ref: '#/components/schemas/StudyBase'
+      - $ref: '#/components/schemas/StudyAux'
+      - $ref: '#/components/schemas/StudyCreationData'
       example:
         integration_platform:
           id: adf
@@ -3428,7 +3689,7 @@ components:
         - Seasonal
         ingestion_status: null
         account_id: 4k3jKJ9D12kj0S4c
-        banner_image_url: https://api.digiseg.net/assets/campaigns/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
+        banner_image_url: https://api.digiseg.net/assets/studies/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
         name: Acme Summer 2024 brand awareness
         summary_stats:
           private:
@@ -3468,23 +3729,23 @@ components:
           impression:
             link: //subdomain.digiseg.net/path/to/pix.gif
           click:
-            link: //subdomain.digiseg.net/path/to/click
+            link: //subdomain.digiseg.net/path/to/action
             parameters:
               destination:
                 description: URL to redirect to
         start_date: 2000-01-23T04:56:07.000+00:00
       required:
       - name
-    CampaignMutation:
+    StudyMutation:
       allOf:
-      - $ref: '#/components/schemas/CampaignBase'
-      - $ref: '#/components/schemas/CampaignAux'
+      - $ref: '#/components/schemas/StudyBase'
+      - $ref: '#/components/schemas/StudyAux'
       example:
         account_id: 4k3jKJ9D12kj0S4c
         integration_platform:
           id: adf
           name: Adform
-        banner_image_url: https://api.digiseg.net/assets/campaigns/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
+        banner_image_url: https://api.digiseg.net/assets/studies/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
         name: Acme Summer 2024 brand awareness
         summary_stats:
           private:
@@ -3523,7 +3784,7 @@ components:
           impression:
             link: //subdomain.digiseg.net/path/to/pix.gif
           click:
-            link: //subdomain.digiseg.net/path/to/click
+            link: //subdomain.digiseg.net/path/to/action
             parameters:
               destination:
                 description: URL to redirect to
@@ -3841,7 +4102,7 @@ components:
       - savings
       - tech_level
       type: object
-    CampaignAudienceStats:
+    StudyAudienceStats:
       example:
         private:
           measurements:
@@ -3952,7 +4213,7 @@ components:
         private:
           $ref: '#/components/schemas/PrivateAudienceStats'
       type: object
-    CampaignCountryStats:
+    StudyCountryStats:
       example:
         predominant_country: DK
         countries:
@@ -4004,7 +4265,7 @@ components:
             conversion_rate: 0.02140972618
       properties:
         predominant_country:
-          description: The country code of the predominant country of the campaign
+          description: The country code of the predominant country of the study
           type: string
         countries:
           description: A listing of each countries observed and the relevant measurements
@@ -4028,7 +4289,7 @@ components:
         - code
         type: object
       - $ref: '#/components/schemas/MeasurementsContainer'
-    CampaignTimingStats:
+    StudyTimingStats:
       example:
         day_of_month:
           "4":
@@ -4124,7 +4385,7 @@ components:
       type: object
     HourOfDayStats:
       description: |
-        Contains statistics about the time of day that campaign activity has been measured.
+        Contains statistics about the time of day that study activity has been measured.
         The 24 hour time format is used to represent measurements for each hour.
         The time zone used to record these measurements is the time zone of the measured
         user, or UTC if the user's location cannot be resolved.
@@ -4208,7 +4469,7 @@ components:
       type: object
     DayOfWeekStats:
       description: |
-        Contains statistics about the week days that campaign activity has been measured.
+        Contains statistics about the week days that study activity has been measured.
         The time zone used to record these measurements is the time zone of the measured
         user, or UTC if the user's location cannot be resolved.
       example:
@@ -4257,7 +4518,7 @@ components:
       type: object
     DayOfMonthStats:
       description: |
-        Contains statistics about the day of the month that campaign activity has been measured.
+        Contains statistics about the day of the month that study activity has been measured.
         The time zone used to record these measurements is the time zone of the measured
         user, or UTC if the user's location cannot be resolved.
       example:
@@ -4354,7 +4615,7 @@ components:
         "31":
           $ref: '#/components/schemas/MeasurementsContainer'
       type: object
-    CampaignFrequencyStats:
+    StudyFrequencyStats:
       example:
         frequencies:
         - frequency: 1
@@ -4390,9 +4651,9 @@ components:
       properties:
         frequency:
           description: |
-            A frequency of campaign impressions to users.
-            * The value 1 means that the campaign has been exposed just once.
-            * The value 2 means that the campaign has been exposed twice.
+            A frequency of study impressions to users.
+            * The value 1 means that the study has been exposed just once.
+            * The value 2 means that the study has been exposed twice.
             * And so on...
           type: integer
         count:
@@ -4683,13 +4944,93 @@ components:
       required:
       - size
       type: object
+    AudienceDataMonthlyUsage:
+      example:
+        month: 3
+        year: 2024
+        usage:
+          records_fulfilled: 858
+          records_processed: 1029
+      properties:
+        year:
+          description: Year number
+          example: 2024
+          type: integer
+        month:
+          description: Month number (1-12)
+          example: 3
+          maximum: 12
+          minimum: 1
+          type: integer
+        usage:
+          $ref: '#/components/schemas/AudienceDataUsage'
+      required:
+      - month
+      - usage
+      - year
+      type: object
+    AudienceDataDailyUsage:
+      example:
+        date: 2000-01-23
+        usage:
+          records_fulfilled: 858
+          records_processed: 1029
+      properties:
+        date:
+          description: Date in ISO 8601 format
+          format: date
+          type: string
+        usage:
+          $ref: '#/components/schemas/AudienceDataUsage'
+      required:
+      - date
+      - usage
+      type: object
+    AudienceDataRealtimeUsage:
+      example:
+        usage:
+          records_fulfilled: 858
+          records_processed: 1029
+        when: 2000-01-23T04:56:07.000+00:00
+      properties:
+        when:
+          description: The point in time of recording the usage data
+          format: date-time
+          type: string
+        usage:
+          $ref: '#/components/schemas/AudienceDataUsage'
+      required:
+      - usage
+      - when
+      type: object
+    AudienceDataUsage:
+      example:
+        records_fulfilled: 858
+        records_processed: 1029
+      properties:
+        records_fulfilled:
+          description: Number of records fulfilled
+          example: 858
+          format: int64
+          type: integer
+        records_processed:
+          description: Number of records processed
+          example: 1029
+          format: int64
+          type: integer
+      type: object
     getAccountById_200_response:
       example:
         data:
           updated_at: 2000-01-23T04:56:07.000+00:00
           owner_id: owner_id
+          billing_email: billing_email
           updated_by: updated_by
           created_at: 2000-01-23T04:56:07.000+00:00
+          billing_address:
+            line1: Gl Kongevej 3B
+            city: Copenhagen
+            postal_code: "1610"
           created_by: created_by
         links:
           users: /accounts/4k3jKJ9D12kj0S4c/users
@@ -4715,6 +5056,7 @@ components:
           - null
           name: Casey Doe
           id: 4k3jKJ9D12kj0S4c
+          logged_in_at: 2000-01-23T04:56:07.000+00:00
           email: casey.doe@example.com
         - account_id: account_id
           avatar_url: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
@@ -4723,6 +5065,7 @@ components:
           - null
           name: Casey Doe
           id: 4k3jKJ9D12kj0S4c
+          logged_in_at: 2000-01-23T04:56:07.000+00:00
           email: casey.doe@example.com
         meta:
           page:
@@ -4847,7 +5190,7 @@ components:
         links:
           $ref: '#/components/schemas/ApiKeyLinks'
       type: object
-    listCampaigns_200_response:
+    listStudies_200_response:
       example:
         data:
         - account_id: 4k3jKJ9D12kj0S4c
@@ -4948,40 +5291,40 @@ components:
           $ref: '#/components/schemas/ListPaginationMeta'
         data:
           items:
-            $ref: '#/components/schemas/CampaignItem'
+            $ref: '#/components/schemas/StudyItem'
           type: array
         links:
           $ref: '#/components/schemas/ListPaginationLinks'
       type: object
-    createCampaign_201_response:
+    createStudy_201_response:
       example:
         data:
           updated_at: 2000-01-23T04:56:07.000+00:00
           integration_platform:
             id: adf
             name: Adform
-          banner_image_url: https://api.digiseg.net/assets/campaigns/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
+          banner_image_url: https://api.digiseg.net/assets/studies/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
           updated_by: 3u1jKJ9D12kj0S4c
           created_at: 2000-01-23T04:56:07.000+00:00
           event_links:
             impression:
               link: //subdomain.digiseg.net/path/to/pix.gif
             click:
-              link: //subdomain.digiseg.net/path/to/click
+              link: //subdomain.digiseg.net/path/to/action
               parameters:
                 destination:
                   description: URL to redirect to
           created_by: 3u1jKJ9D12kj0S4c
         links:
-          stats_timing: /campaigns/2c9jKJ9D12kj0S4c/stats/timing
-          stats_frequencies: /campaigns/2c9jKJ9D12kj0S4c/stats/frequencies
-          stats_countries: /campaigns/2c9jKJ9D12kj0S4c/stats/countries
-          stats_audiences: /campaigns/2c9jKJ9D12kj0S4c/stats/audiences
+          stats_timing: /studies/2c9jKJ9D12kj0S4c/stats/timing
+          stats_frequencies: /studies/2c9jKJ9D12kj0S4c/stats/frequencies
+          stats_countries: /studies/2c9jKJ9D12kj0S4c/stats/countries
+          stats_audiences: /studies/2c9jKJ9D12kj0S4c/stats/audiences
       properties:
         data:
-          $ref: '#/components/schemas/CampaignFull'
+          $ref: '#/components/schemas/StudyFull'
         links:
-          $ref: '#/components/schemas/CampaignLinks'
+          $ref: '#/components/schemas/StudyLinks'
       type: object
     listMeasurementLabels_200_response:
       example:
@@ -4993,7 +5336,7 @@ components:
         data:
           description: |
             A set of labels that users can use to categorize their measurements.
-            Can be used to indicate type of campaign, customer names or other
+            Can be used to indicate type of study, customer names or other
             traits.
           example:
           - Acme
@@ -5046,7 +5389,7 @@ components:
         data:
           $ref: '#/components/schemas/MeasurementClientFull'
       type: object
-    queryCampaignAudienceStats_200_response:
+    queryStudyAudienceStats_200_response:
       example:
         data:
           private:
@@ -5152,9 +5495,9 @@ components:
               conversion_rate: 0.00323
       properties:
         data:
-          $ref: '#/components/schemas/CampaignAudienceStats'
+          $ref: '#/components/schemas/StudyAudienceStats'
       type: object
-    queryCampaignCountryStats_200_response:
+    queryStudyCountryStats_200_response:
       example:
         data:
           predominant_country: DK
@@ -5207,9 +5550,9 @@ components:
               conversion_rate: 0.02140972618
       properties:
         data:
-          $ref: '#/components/schemas/CampaignCountryStats'
+          $ref: '#/components/schemas/StudyCountryStats'
       type: object
-    queryCampaignTimingStats_200_response:
+    queryStudyTimingStats_200_response:
       example:
         data:
           day_of_month:
@@ -5298,9 +5641,9 @@ components:
                 conversion_rate: 0.09933260903
       properties:
         data:
-          $ref: '#/components/schemas/CampaignTimingStats'
+          $ref: '#/components/schemas/StudyTimingStats'
       type: object
-    queryCampaignFrequencyStats_200_response:
+    queryStudyFrequencyStats_200_response:
       example:
         data:
           frequencies:
@@ -5317,7 +5660,7 @@ components:
           count_above_cap: 27
       properties:
         data:
-          $ref: '#/components/schemas/CampaignFrequencyStats'
+          $ref: '#/components/schemas/StudyFrequencyStats'
       type: object
     listPopuplations_200_response:
       example:
@@ -5397,6 +5740,59 @@ components:
       properties:
         data:
           $ref: '#/components/schemas/PopulationFull'
+      type: object
+    listAudienceDataMonthlyUsage_200_response:
+      example:
+        data:
+        - month: 3
+          year: 2024
+          usage:
+            records_fulfilled: 858
+            records_processed: 1029
+        - month: 3
+          year: 2024
+          usage:
+            records_fulfilled: 858
+            records_processed: 1029
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AudienceDataMonthlyUsage'
+          type: array
+      type: object
+    listAudienceDataDailyUsage_200_response:
+      example:
+        data:
+        - date: 2000-01-23
+          usage:
+            records_fulfilled: 858
+            records_processed: 1029
+        - date: 2000-01-23
+          usage:
+            records_fulfilled: 858
+            records_processed: 1029
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AudienceDataDailyUsage'
+          type: array
+      type: object
+    listAudienceDataRealtimeUsage_200_response:
+      example:
+        data:
+        - usage:
+            records_fulfilled: 858
+            records_processed: 1029
+          when: 2000-01-23T04:56:07.000+00:00
+        - usage:
+            records_fulfilled: 858
+            records_processed: 1029
+          when: 2000-01-23T04:56:07.000+00:00
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AudienceDataRealtimeUsage'
+          type: array
       type: object
     PopulationSourcePrivateCategorySet_home_type:
       properties:
@@ -5602,7 +5998,7 @@ x-tagGroups:
   - audiences
 - name: Measurement
   tags:
-  - campaigns
+  - studies
   - measurement_labels
   - measurement_clients
   - populations
@@ -5611,3 +6007,4 @@ x-tagGroups:
   - auth
   - users
   - accounts
+  - usage

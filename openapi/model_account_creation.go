@@ -24,11 +24,23 @@ type AccountCreation struct {
 	Name *string `json:"name,omitempty"`
 	// The URL to the logo of the account
 	LogoUrl *string `json:"logo_url,omitempty"`
+	// URL of the account's primary website
+	WebsiteUrl *string `json:"website_url,omitempty"`
+	// Country code of the account. Requires `owner` role to change.
+	BillingCountry *string `json:"billing_country,omitempty"`
+	CompanyType *CompanyType `json:"company_type,omitempty"`
+	CompanySize *CompanySize `json:"company_size,omitempty"`
+	// Determines whether the account has clients that they work for, or if their activities are for themselves.
+	HasClients *bool `json:"has_clients,omitempty"`
 	// A short human-readable name to identify the account. Must be lower-case and between 4 and 16 characters.
 	// Deprecated
 	Slug *string `json:"slug,omitempty"`
-	// ID of the user who is the ultimate owner of the account
+	// ID of the user who is the ultimate owner of the account. Deprecated in favor of the `owner` role of the user's account membership.
+	// Deprecated
 	OwnerId *string `json:"owner_id,omitempty"`
+	// The email address to send billing information to. Requires `owner` role to change.
+	BillingEmail *string `json:"billing_email,omitempty"`
+	BillingAddress *PostalAddress `json:"billing_address,omitempty"`
 	Owner *AccountOwnerCreation `json:"owner,omitempty"`
 }
 
@@ -113,6 +125,166 @@ func (o *AccountCreation) SetLogoUrl(v string) {
 	o.LogoUrl = &v
 }
 
+// GetWebsiteUrl returns the WebsiteUrl field value if set, zero value otherwise.
+func (o *AccountCreation) GetWebsiteUrl() string {
+	if o == nil || IsNil(o.WebsiteUrl) {
+		var ret string
+		return ret
+	}
+	return *o.WebsiteUrl
+}
+
+// GetWebsiteUrlOk returns a tuple with the WebsiteUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountCreation) GetWebsiteUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.WebsiteUrl) {
+		return nil, false
+	}
+	return o.WebsiteUrl, true
+}
+
+// HasWebsiteUrl returns a boolean if a field has been set.
+func (o *AccountCreation) HasWebsiteUrl() bool {
+	if o != nil && !IsNil(o.WebsiteUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetWebsiteUrl gets a reference to the given string and assigns it to the WebsiteUrl field.
+func (o *AccountCreation) SetWebsiteUrl(v string) {
+	o.WebsiteUrl = &v
+}
+
+// GetBillingCountry returns the BillingCountry field value if set, zero value otherwise.
+func (o *AccountCreation) GetBillingCountry() string {
+	if o == nil || IsNil(o.BillingCountry) {
+		var ret string
+		return ret
+	}
+	return *o.BillingCountry
+}
+
+// GetBillingCountryOk returns a tuple with the BillingCountry field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountCreation) GetBillingCountryOk() (*string, bool) {
+	if o == nil || IsNil(o.BillingCountry) {
+		return nil, false
+	}
+	return o.BillingCountry, true
+}
+
+// HasBillingCountry returns a boolean if a field has been set.
+func (o *AccountCreation) HasBillingCountry() bool {
+	if o != nil && !IsNil(o.BillingCountry) {
+		return true
+	}
+
+	return false
+}
+
+// SetBillingCountry gets a reference to the given string and assigns it to the BillingCountry field.
+func (o *AccountCreation) SetBillingCountry(v string) {
+	o.BillingCountry = &v
+}
+
+// GetCompanyType returns the CompanyType field value if set, zero value otherwise.
+func (o *AccountCreation) GetCompanyType() CompanyType {
+	if o == nil || IsNil(o.CompanyType) {
+		var ret CompanyType
+		return ret
+	}
+	return *o.CompanyType
+}
+
+// GetCompanyTypeOk returns a tuple with the CompanyType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountCreation) GetCompanyTypeOk() (*CompanyType, bool) {
+	if o == nil || IsNil(o.CompanyType) {
+		return nil, false
+	}
+	return o.CompanyType, true
+}
+
+// HasCompanyType returns a boolean if a field has been set.
+func (o *AccountCreation) HasCompanyType() bool {
+	if o != nil && !IsNil(o.CompanyType) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompanyType gets a reference to the given CompanyType and assigns it to the CompanyType field.
+func (o *AccountCreation) SetCompanyType(v CompanyType) {
+	o.CompanyType = &v
+}
+
+// GetCompanySize returns the CompanySize field value if set, zero value otherwise.
+func (o *AccountCreation) GetCompanySize() CompanySize {
+	if o == nil || IsNil(o.CompanySize) {
+		var ret CompanySize
+		return ret
+	}
+	return *o.CompanySize
+}
+
+// GetCompanySizeOk returns a tuple with the CompanySize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountCreation) GetCompanySizeOk() (*CompanySize, bool) {
+	if o == nil || IsNil(o.CompanySize) {
+		return nil, false
+	}
+	return o.CompanySize, true
+}
+
+// HasCompanySize returns a boolean if a field has been set.
+func (o *AccountCreation) HasCompanySize() bool {
+	if o != nil && !IsNil(o.CompanySize) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompanySize gets a reference to the given CompanySize and assigns it to the CompanySize field.
+func (o *AccountCreation) SetCompanySize(v CompanySize) {
+	o.CompanySize = &v
+}
+
+// GetHasClients returns the HasClients field value if set, zero value otherwise.
+func (o *AccountCreation) GetHasClients() bool {
+	if o == nil || IsNil(o.HasClients) {
+		var ret bool
+		return ret
+	}
+	return *o.HasClients
+}
+
+// GetHasClientsOk returns a tuple with the HasClients field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountCreation) GetHasClientsOk() (*bool, bool) {
+	if o == nil || IsNil(o.HasClients) {
+		return nil, false
+	}
+	return o.HasClients, true
+}
+
+// HasHasClients returns a boolean if a field has been set.
+func (o *AccountCreation) HasHasClients() bool {
+	if o != nil && !IsNil(o.HasClients) {
+		return true
+	}
+
+	return false
+}
+
+// SetHasClients gets a reference to the given bool and assigns it to the HasClients field.
+func (o *AccountCreation) SetHasClients(v bool) {
+	o.HasClients = &v
+}
+
 // GetSlug returns the Slug field value if set, zero value otherwise.
 // Deprecated
 func (o *AccountCreation) GetSlug() string {
@@ -149,6 +321,7 @@ func (o *AccountCreation) SetSlug(v string) {
 }
 
 // GetOwnerId returns the OwnerId field value if set, zero value otherwise.
+// Deprecated
 func (o *AccountCreation) GetOwnerId() string {
 	if o == nil || IsNil(o.OwnerId) {
 		var ret string
@@ -159,6 +332,7 @@ func (o *AccountCreation) GetOwnerId() string {
 
 // GetOwnerIdOk returns a tuple with the OwnerId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *AccountCreation) GetOwnerIdOk() (*string, bool) {
 	if o == nil || IsNil(o.OwnerId) {
 		return nil, false
@@ -176,8 +350,73 @@ func (o *AccountCreation) HasOwnerId() bool {
 }
 
 // SetOwnerId gets a reference to the given string and assigns it to the OwnerId field.
+// Deprecated
 func (o *AccountCreation) SetOwnerId(v string) {
 	o.OwnerId = &v
+}
+
+// GetBillingEmail returns the BillingEmail field value if set, zero value otherwise.
+func (o *AccountCreation) GetBillingEmail() string {
+	if o == nil || IsNil(o.BillingEmail) {
+		var ret string
+		return ret
+	}
+	return *o.BillingEmail
+}
+
+// GetBillingEmailOk returns a tuple with the BillingEmail field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountCreation) GetBillingEmailOk() (*string, bool) {
+	if o == nil || IsNil(o.BillingEmail) {
+		return nil, false
+	}
+	return o.BillingEmail, true
+}
+
+// HasBillingEmail returns a boolean if a field has been set.
+func (o *AccountCreation) HasBillingEmail() bool {
+	if o != nil && !IsNil(o.BillingEmail) {
+		return true
+	}
+
+	return false
+}
+
+// SetBillingEmail gets a reference to the given string and assigns it to the BillingEmail field.
+func (o *AccountCreation) SetBillingEmail(v string) {
+	o.BillingEmail = &v
+}
+
+// GetBillingAddress returns the BillingAddress field value if set, zero value otherwise.
+func (o *AccountCreation) GetBillingAddress() PostalAddress {
+	if o == nil || IsNil(o.BillingAddress) {
+		var ret PostalAddress
+		return ret
+	}
+	return *o.BillingAddress
+}
+
+// GetBillingAddressOk returns a tuple with the BillingAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountCreation) GetBillingAddressOk() (*PostalAddress, bool) {
+	if o == nil || IsNil(o.BillingAddress) {
+		return nil, false
+	}
+	return o.BillingAddress, true
+}
+
+// HasBillingAddress returns a boolean if a field has been set.
+func (o *AccountCreation) HasBillingAddress() bool {
+	if o != nil && !IsNil(o.BillingAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetBillingAddress gets a reference to the given PostalAddress and assigns it to the BillingAddress field.
+func (o *AccountCreation) SetBillingAddress(v PostalAddress) {
+	o.BillingAddress = &v
 }
 
 // GetOwner returns the Owner field value if set, zero value otherwise.
@@ -228,11 +467,32 @@ func (o AccountCreation) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LogoUrl) {
 		toSerialize["logo_url"] = o.LogoUrl
 	}
+	if !IsNil(o.WebsiteUrl) {
+		toSerialize["website_url"] = o.WebsiteUrl
+	}
+	if !IsNil(o.BillingCountry) {
+		toSerialize["billing_country"] = o.BillingCountry
+	}
+	if !IsNil(o.CompanyType) {
+		toSerialize["company_type"] = o.CompanyType
+	}
+	if !IsNil(o.CompanySize) {
+		toSerialize["company_size"] = o.CompanySize
+	}
+	if !IsNil(o.HasClients) {
+		toSerialize["has_clients"] = o.HasClients
+	}
 	if !IsNil(o.Slug) {
 		toSerialize["slug"] = o.Slug
 	}
 	if !IsNil(o.OwnerId) {
 		toSerialize["owner_id"] = o.OwnerId
+	}
+	if !IsNil(o.BillingEmail) {
+		toSerialize["billing_email"] = o.BillingEmail
+	}
+	if !IsNil(o.BillingAddress) {
+		toSerialize["billing_address"] = o.BillingAddress
 	}
 	if !IsNil(o.Owner) {
 		toSerialize["owner"] = o.Owner

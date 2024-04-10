@@ -16,7 +16,7 @@ import (
 	"fmt"
 )
 
-// UserAccountRole Determines the role of a user within an account
+// UserAccountRole Determines the role of a user within an account. The permissions of each role are defined to fulfill the following use cases: * `user` is a basic role needed to make use of the platforms primary features. * `admin` is required to perform administrative functions on the account, such as adding members to it. Admin permissions does NOT include removing the account altogether or billing-related actions. * `owner` is required to make changes to account billing, or delete the account. 
 type UserAccountRole string
 
 // List of UserAccountRole

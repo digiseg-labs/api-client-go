@@ -33,6 +33,8 @@ type UserFull struct {
 	Roles []UserAccountRole `json:"roles,omitempty"`
 	// The URL to an avatar of the user
 	AvatarUrl *string `json:"avatar_url,omitempty"`
+	// The approximate last time that the user logged in
+	LoggedInAt *time.Time `json:"logged_in_at,omitempty"`
 	AccountMemberships []UserAccountMembership `json:"account_memberships,omitempty"`
 	// Determines if the user is a super admin of Digiseg API services
 	IsSuperAdmin *bool `json:"is_super_admin,omitempty"`
@@ -255,6 +257,38 @@ func (o *UserFull) SetAvatarUrl(v string) {
 	o.AvatarUrl = &v
 }
 
+// GetLoggedInAt returns the LoggedInAt field value if set, zero value otherwise.
+func (o *UserFull) GetLoggedInAt() time.Time {
+	if o == nil || IsNil(o.LoggedInAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LoggedInAt
+}
+
+// GetLoggedInAtOk returns a tuple with the LoggedInAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UserFull) GetLoggedInAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.LoggedInAt) {
+		return nil, false
+	}
+	return o.LoggedInAt, true
+}
+
+// HasLoggedInAt returns a boolean if a field has been set.
+func (o *UserFull) HasLoggedInAt() bool {
+	if o != nil && !IsNil(o.LoggedInAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetLoggedInAt gets a reference to the given time.Time and assigns it to the LoggedInAt field.
+func (o *UserFull) SetLoggedInAt(v time.Time) {
+	o.LoggedInAt = &v
+}
+
 // GetAccountMemberships returns the AccountMemberships field value if set, zero value otherwise.
 func (o *UserFull) GetAccountMemberships() []UserAccountMembership {
 	if o == nil || IsNil(o.AccountMemberships) {
@@ -474,6 +508,9 @@ func (o UserFull) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AvatarUrl) {
 		toSerialize["avatar_url"] = o.AvatarUrl
+	}
+	if !IsNil(o.LoggedInAt) {
+		toSerialize["logged_in_at"] = o.LoggedInAt
 	}
 	if !IsNil(o.AccountMemberships) {
 		toSerialize["account_memberships"] = o.AccountMemberships

@@ -57,13 +57,15 @@ type APIClient struct {
 
 	AuthAPI *AuthAPIService
 
-	CampaignsAPI *CampaignsAPIService
-
 	MeasurementClientsAPI *MeasurementClientsAPIService
 
 	MeasurementLabelsAPI *MeasurementLabelsAPIService
 
 	PopulationsAPI *PopulationsAPIService
+
+	StudiesAPI *StudiesAPIService
+
+	UsageAPI *UsageAPIService
 
 	UsersAPI *UsersAPIService
 }
@@ -87,10 +89,11 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.AccountsAPI = (*AccountsAPIService)(&c.common)
 	c.AudiencesAPI = (*AudiencesAPIService)(&c.common)
 	c.AuthAPI = (*AuthAPIService)(&c.common)
-	c.CampaignsAPI = (*CampaignsAPIService)(&c.common)
 	c.MeasurementClientsAPI = (*MeasurementClientsAPIService)(&c.common)
 	c.MeasurementLabelsAPI = (*MeasurementLabelsAPIService)(&c.common)
 	c.PopulationsAPI = (*PopulationsAPIService)(&c.common)
+	c.StudiesAPI = (*StudiesAPIService)(&c.common)
+	c.UsageAPI = (*UsageAPIService)(&c.common)
 	c.UsersAPI = (*UsersAPIService)(&c.common)
 
 	return c

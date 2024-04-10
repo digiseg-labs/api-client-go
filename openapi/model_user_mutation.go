@@ -13,6 +13,7 @@ package openapi
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the UserMutation type satisfies the MappedNullable interface at compile time
@@ -30,6 +31,8 @@ type UserMutation struct {
 	Roles []UserAccountRole `json:"roles,omitempty"`
 	// The URL to an avatar of the user
 	AvatarUrl *string `json:"avatar_url,omitempty"`
+	// The approximate last time that the user logged in
+	LoggedInAt *time.Time `json:"logged_in_at,omitempty"`
 	AccountMemberships []UserAccountMembership `json:"account_memberships,omitempty"`
 	// Determines if the user is a super admin of Digiseg API services
 	IsSuperAdmin *bool `json:"is_super_admin,omitempty"`
@@ -214,6 +217,38 @@ func (o *UserMutation) SetAvatarUrl(v string) {
 	o.AvatarUrl = &v
 }
 
+// GetLoggedInAt returns the LoggedInAt field value if set, zero value otherwise.
+func (o *UserMutation) GetLoggedInAt() time.Time {
+	if o == nil || IsNil(o.LoggedInAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LoggedInAt
+}
+
+// GetLoggedInAtOk returns a tuple with the LoggedInAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UserMutation) GetLoggedInAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.LoggedInAt) {
+		return nil, false
+	}
+	return o.LoggedInAt, true
+}
+
+// HasLoggedInAt returns a boolean if a field has been set.
+func (o *UserMutation) HasLoggedInAt() bool {
+	if o != nil && !IsNil(o.LoggedInAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetLoggedInAt gets a reference to the given time.Time and assigns it to the LoggedInAt field.
+func (o *UserMutation) SetLoggedInAt(v time.Time) {
+	o.LoggedInAt = &v
+}
+
 // GetAccountMemberships returns the AccountMemberships field value if set, zero value otherwise.
 func (o *UserMutation) GetAccountMemberships() []UserAccountMembership {
 	if o == nil || IsNil(o.AccountMemberships) {
@@ -334,6 +369,9 @@ func (o UserMutation) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AvatarUrl) {
 		toSerialize["avatar_url"] = o.AvatarUrl
+	}
+	if !IsNil(o.LoggedInAt) {
+		toSerialize["logged_in_at"] = o.LoggedInAt
 	}
 	if !IsNil(o.AccountMemberships) {
 		toSerialize["account_memberships"] = o.AccountMemberships

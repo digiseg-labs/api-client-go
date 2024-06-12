@@ -5,7 +5,7 @@ codegen:
 	openapi-generator generate \
 		-i https://developer.digiseg.net/openapi.json \
 		-g go -o ${GENERATED_DIR} \
-		--additional-properties useTags=false,structPrefix=true,packageName=openapi \
+		--additional-properties useTags=false,structPrefix=true,packageName=openapi,disallowAdditionalPropertiesIfNotPresent=false \
 		--git-user-id digiseg-labs \
 		--git-repo-id api-client-go
 	mv ${GENERATED_DIR}/go.* .

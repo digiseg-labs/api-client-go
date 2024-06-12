@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | Unique ID for the object | [optional] 
+**Id** | Pointer to **string** | Unique ID for the object | [optional] [readonly] 
 **Name** | Pointer to **string** | Human readable name of the API key | [optional] 
 **Status** | Pointer to [**ApiKeyStatus**](ApiKeyStatus.md) |  | [optional] 
 **ExpiresAt** | Pointer to **time.Time** | Optional date/time that the key will expire | [optional] 
@@ -13,10 +13,10 @@ Name | Type | Description | Notes
 **LastUsedAt** | Pointer to **time.Time** | The approximate last time that the API key was used to authenticate API requests | [optional] [readonly] 
 **TokenPrefix** | Pointer to **string** | A prefix of the API key | [optional] [readonly] 
 **Scopes** | Pointer to [**PermissionScopes**](PermissionScopes.md) |  | [optional] 
-**CreatedAt** | Pointer to **time.Time** | Date and time of the object creation | [optional] 
-**CreatedBy** | Pointer to **string** | ID of the user who created the object | [optional] 
-**UpdatedAt** | Pointer to **time.Time** | Date and time of the latest update to the object | [optional] 
-**UpdatedBy** | Pointer to **string** | ID of the user who last updated the object | [optional] 
+**CreatedAt** | Pointer to **time.Time** | Date and time of the object creation | [optional] [readonly] 
+**CreatedBy** | Pointer to **string** | ID of the user who created the object | [optional] [readonly] 
+**UpdatedAt** | Pointer to **time.Time** | Date and time of the latest update to the object | [optional] [readonly] 
+**UpdatedBy** | Pointer to **string** | ID of the user who last updated the object | [optional] [readonly] 
 
 ## Methods
 

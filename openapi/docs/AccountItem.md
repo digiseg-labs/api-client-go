@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | Unique ID for the object | [optional] 
+**Id** | Pointer to **string** | Unique ID for the object | [optional] [readonly] 
 **Name** | Pointer to **string** | Human readable name of the account | [optional] 
 **LogoUrl** | Pointer to **string** | The URL to the logo of the account | [optional] 
 **WebsiteUrl** | Pointer to **string** | URL of the account&#39;s primary website | [optional] 

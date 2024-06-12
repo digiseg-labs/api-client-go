@@ -24,6 +24,10 @@ info:
         <i class="api-client-sdk-logo devicon-python-plain"></i>
         <p>API client for Python</p>
       </a>
+      <a class="api-client-box" href="https://github.com/digiseg-labs/api-client-ts">
+        <i class="api-client-sdk-logo devicon-typescript-plain"></i>
+        <p>API client for TypeScript</p>
+      </a>
       <a class="api-client-box" href="https://github.com/digiseg-labs/api-client-go">
         <i class="api-client-sdk-logo devicon-go-original-wordmark"></i>
         <p>API client for Go</p>
@@ -49,11 +53,11 @@ info:
     |  | savings | b1 | No Savings |
     |  |  | b2 | Smaller Savings |
     |  |  | b3 | Larger Savings |
-    |  | lifecycle | c1 | Young singles and couples |
-    |  |  | c2 | Young couples with children |
-    |  |  | c3 | Families with school children |
-    |  |  | c4 | Older families |
-    |  |  | c5 | Pensioners |
+    |  | lifecycle | c1 | Young couples and singles |
+    |  |  | c2 | Early family life |
+    |  |  | c3 | Middle-aged families |
+    |  |  | c4 | Mature families |
+    |  |  | c5 | Pensioners / Retirees |
     |  | cars | d1 | No cars |
     |  |  | d2 | 1 car |
     |  |  | d3 | 2 or more cars |
@@ -77,9 +81,9 @@ info:
     |  | building_age | k1 | Pre 1945 |
     |  |  | k2 | 1945-1989 |
     |  |  | k3 | 1990 until today |
-    |  | living_space | l1 | Up to 80 m² |
-    |  |  | l2 | 80-119 m² |
-    |  |  | l3 | Above 120 m² |
+    |  | living_space | l1 | Small |
+    |  |  | l2 | Medium |
+    |  |  | l3 | Large |
     |  | tech_level | n1 | Basic |
     |  |  | n2 | Medium |
     |  |  | n3 | High |
@@ -309,6 +313,86 @@ paths:
       summary: Upload account logo
       tags:
       - accounts
+  /accounts/{account_id}/subscriptions:
+    get:
+      description: Get a summary of subscriptions for an account
+      operationId: getAccountSubscriptions
+      parameters:
+      - explode: false
+        in: path
+        name: account_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAccountSubscriptions_200_response'
+          description: OK
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: Get account subscriptions summary
+      tags:
+      - accounts
+      - subscriptions
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X GET \
+          https://api.digiseg.net/accounts/$ACCOUNT_ID/subscriptions
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/accounts/\"+account_id+\"/subscriptions\"\
+          , {\n  \"method\": \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer\
+          \ \" + token},\n}).then(response => {\n  console.log(response);\n})"
+  /accounts/{account_id}/subscriptions/{subscription_id}:
+    get:
+      description: Gets a specific subscription for an account
+      operationId: getAccountSubscriptionById
+      parameters:
+      - explode: false
+        in: path
+        name: account_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: subscription_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAccountSubscriptionById_200_response'
+          description: OK
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+      summary: Get account subscription
+      tags:
+      - accounts
+      - subscriptions
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" -X GET \
+          https://api.digiseg.net/accounts/$ACCOUNT_ID/subscriptions/$SUBSCRIPTION_ID
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/accounts/\"+account_id+\"/subscriptions/\"\
+          +subscription_id, {\n  \"method\": \"GET\", \n  \"headers\": {\"Authorization\"\
+          : \"Bearer \" + token},\n}).then(response => {\n  console.log(response);\n\
+          })"
   /accounts/{account_id}/users:
     get:
       operationId: listUsersByAccountId
@@ -326,7 +410,7 @@ paths:
         name: "filter[platform_roles]"
         required: false
         schema:
-          type: string
+          $ref: '#/components/schemas/UserPlatformRole'
         style: form
       - description: Optional parameter used to search for users where the name contains
           a substring (case insensitive)
@@ -337,6 +421,18 @@ paths:
         required: false
         schema:
           type: string
+        style: form
+      - description: |
+          Defines the field to sort the result items by.
+          Ascending order is applied by default, but the minus character
+          can be used to indicate descending order instead.
+        example: -created_at
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          $ref: '#/components/schemas/UserSortOption'
         style: form
       - description: The desired page size
         explode: true
@@ -449,6 +545,82 @@ paths:
         source: "fetch(\"https://api.digiseg.net/accounts/\"+account_id+\"/apikeys\"\
           , {\n  \"method\": \"GET\", \n  \"headers\": {\"Authorization\": \"Bearer\
           \ \" + token},\n}).then(response => {\n  console.log(response);\n})"
+  /subscription_plans:
+    get:
+      operationId: listSubscriptionPlans
+      parameters:
+      - description: The desired page size
+        explode: true
+        in: query
+        name: "page[size]"
+        required: false
+        schema:
+          default: 100
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: |
+          Optional pagination parameter, indicating the previous cursor value to paginate beyond.
+          The value to provide here is opaque, but can be found in previous requests in the `meta.page.last_cursor` field.
+        explode: true
+        in: query
+        name: "page[after]"
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Optional parameter used to filter on the `is_public` field
+        explode: true
+        in: query
+        name: "filter[is_public]"
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Optional parameter used to filter on the `product_type` field
+        explode: true
+        in: query
+        name: "filter[product_type]"
+        required: false
+        schema:
+          $ref: '#/components/schemas/SubscriptionProductType'
+        style: form
+      - description: Optional parameter used to filter on the list price's currency
+        explode: true
+        in: query
+        name: "filter[list_price.currency]"
+        required: false
+        schema:
+          $ref: '#/components/schemas/SubscriptionPriceCurrency'
+        style: form
+      - description: Optional parameter used to filter on the list price's interval
+        explode: true
+        in: query
+        name: "filter[list_price.interval]"
+        required: false
+        schema:
+          $ref: '#/components/schemas/SubscriptionPriceInterval'
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listSubscriptionPlans_200_response'
+          description: OK
+      summary: List subscription plans
+      tags:
+      - subscriptions
+      x-codeSamples:
+      - lang: Shell
+        source: |-
+          curl -H "X-API-KEY: $APIKEY" -X GET \
+          https://api.digiseg.net/subscription_plans
+      - lang: JavaScript
+        source: "fetch(\"https://api.digiseg.net/subscription_plans\", {\n  \"method\"\
+          : \"GET\", \n  \"headers\": {\"X-API-KEY\": apikey},\n}).then(response =>\
+          \ {\n  console.log(response);\n})"
   /users/{user_id}/apikeys:
     get:
       operationId: listApiKeysByUserId
@@ -1042,6 +1214,15 @@ paths:
           - name
           - -name
           type: string
+        style: form
+      - description: Optional parameter used to filter for example studies
+        explode: true
+        in: query
+        name: "filter[is_example]"
+        required: false
+        schema:
+          default: false
+          type: boolean
         style: form
       - description: Optional parameter used to filter by study label
         example: CTV
@@ -1960,13 +2141,25 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UserMutation'
+            $ref: '#/components/schemas/UserCreation'
       required: true
     UserUpdateRequest:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/UserMutation'
+      required: true
+    AccountSubscriptionCreationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountSubscriptionCreation'
+      required: true
+    SubscriptionPlanCreationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SubscriptionPlanFull'
       required: true
     ApiKeyUpdateRequest:
       content:
@@ -2022,6 +2215,12 @@ components:
           schema:
             $ref: '#/components/schemas/MeasurementClientMutation'
       required: true
+    KeyValuesRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/KeyValues'
+      required: true
   responses:
     RegistrationCreationResponse:
       content:
@@ -2050,6 +2249,33 @@ components:
             properties:
               data:
                 $ref: '#/components/schemas/RegistrationByIdResponseData'
+            type: object
+      description: OK
+    AccountSubscriptionsSummaryResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getAccountSubscriptions_200_response'
+      description: OK
+    ListSubscriptionPlansResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/listSubscriptionPlans_200_response'
+      description: OK
+    AccountSubscriptionByIdResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getAccountSubscriptionById_200_response'
+      description: OK
+    SubscriptionPlanByIdResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: '#/components/schemas/SubscriptionPlanFull'
             type: object
       description: OK
     AccountByIdResponse:
@@ -2206,6 +2432,15 @@ components:
           schema:
             $ref: '#/components/schemas/listAudienceDataRealtimeUsage_200_response'
       description: OK
+    KeyValuesResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: '#/components/schemas/KeyValues'
+            type: object
+      description: OK
   schemas:
     PasswordlessAuthRequest:
       properties:
@@ -2311,11 +2546,22 @@ components:
       required:
       - rangeTruncated
       type: object
+    UserSortOption:
+      default: created_at
+      enum:
+      - created_at
+      - -created_at
+      - name
+      - -name
+      - logged_in_at
+      - -logged_in_at
+      type: string
     IdentifyableObject:
       properties:
         id:
           description: Unique ID for the object
           example: 4k3jKJ9D12kj0S4c
+          readOnly: true
           type: string
       type: object
     TimestampedObject:
@@ -2323,16 +2569,20 @@ components:
         created_at:
           description: Date and time of the object creation
           format: date-time
+          readOnly: true
           type: string
         created_by:
           description: ID of the user who created the object
+          readOnly: true
           type: string
         updated_at:
           description: Date and time of the latest update to the object
           format: date-time
+          readOnly: true
           type: string
         updated_by:
           description: ID of the user who last updated the object
+          readOnly: true
           type: string
       type: object
     CompanyType:
@@ -2341,6 +2591,7 @@ components:
       - advertiser
       - agency
       - publisher
+      - technology_provider
       - other
       type: string
     CompanySize:
@@ -2426,6 +2677,13 @@ components:
       - email
       - name
       type: object
+    UserCreationNotification:
+      properties:
+        notify_user:
+          default: true
+          description: Whether or not to notify the user that they have been registered
+          type: boolean
+      type: object
     PostalAddress:
       example:
         line1: Gl Kongevej 3B
@@ -2467,6 +2725,9 @@ components:
           type: string
         billing_address:
           $ref: '#/components/schemas/PostalAddress'
+        stripe_customer_id:
+          readOnly: true
+          type: string
       type: object
     AccountItem:
       allOf:
@@ -2478,13 +2739,15 @@ components:
       - $ref: '#/components/schemas/AccountAux'
       - $ref: '#/components/schemas/AccountMutationAux'
       - $ref: '#/components/schemas/AccountCreationAux'
+      - $ref: '#/components/schemas/UserCreationNotification'
     AccountMutation:
       allOf:
       - $ref: '#/components/schemas/AccountBase'
       - $ref: '#/components/schemas/AccountAux'
       - $ref: '#/components/schemas/AccountMutationAux'
       example:
-        company_type: null
+        company_type: advertiser
+        stripe_customer_id: stripe_customer_id
         website_url: https://openapi-generator.tech
         logo_url: https://api.digiseg.net/assets/account/ioi4324i2309das/logo?vrft=csdkl232l4pod4
         has_clients: true
@@ -2497,23 +2760,33 @@ components:
           city: Copenhagen
           postal_code: "1610"
         slug: slug
-        company_size: null
+        company_size: Self-employed
     AccountFull:
       allOf:
       - $ref: '#/components/schemas/AccountItem'
       - $ref: '#/components/schemas/AccountAux'
       - $ref: '#/components/schemas/TimestampedObject'
       example:
-        updated_at: 2000-01-23T04:56:07.000+00:00
+        company_type: "[\"agency\"]"
+        logo_url: https://api.digiseg.net/assets/account/ioi4324i2309das/logo?vrft=csdkl232l4pod4
         owner_id: owner_id
-        billing_email: billing_email
-        updated_by: updated_by
+        billing_country: DK
         created_at: 2000-01-23T04:56:07.000+00:00
         billing_address:
           line1: Gl Kongevej 3B
           city: Copenhagen
           postal_code: "1610"
         created_by: created_by
+        stripe_customer_id: stripe_customer_id
+        website_url: https://openapi-generator.tech
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        has_clients: true
+        billing_email: billing_email
+        name: Example Co.
+        updated_by: updated_by
+        id: 4k3jKJ9D12kj0S4c
+        slug: slug
+        company_size: Self-employed
     AccountLinks:
       example:
         users: /accounts/4k3jKJ9D12kj0S4c/users
@@ -2523,6 +2796,430 @@ components:
           example: /accounts/4k3jKJ9D12kj0S4c/users
           format: uri
           type: string
+      type: object
+    LimitedOrFullFeature:
+      enum:
+      - full
+      - limited
+      type: string
+    PlanFeatureSet:
+      example:
+        has_report_customization: true
+        study_event_set: null
+        max_audience_lookups_per_month: 2
+        study_audience_set: full
+        has_audience_recommendations: true
+        max_active_studies: 5
+        max_events_per_study: 5
+        has_report_sharing_clients: true
+        max_users: 6
+        max_clients: 1
+        has_report_sharing_public: true
+      properties:
+        max_users:
+          type: integer
+        max_clients:
+          type: integer
+        max_active_studies:
+          type: integer
+        max_events_per_study:
+          type: integer
+        max_audience_lookups_per_month:
+          type: integer
+        study_audience_set:
+          $ref: '#/components/schemas/LimitedOrFullFeature'
+        study_event_set:
+          $ref: '#/components/schemas/LimitedOrFullFeature'
+        has_audience_recommendations:
+          type: boolean
+        has_report_customization:
+          type: boolean
+        has_report_sharing_clients:
+          type: boolean
+        has_report_sharing_public:
+          type: boolean
+      required:
+      - has_audience_recommendations
+      - has_report_customization
+      - has_report_sharing_clients
+      - has_report_sharing_public
+      - max_active_studies
+      - max_audience_lookups_per_month
+      - max_clients
+      - max_events_per_study
+      - max_users
+      - study_audience_set
+      - study_event_set
+      type: object
+    AccountSubscriptionsSummary:
+      description: Summarizes an account's current subscription(s) and the feature
+        set available
+      example:
+        subscriptions:
+        - end_date: 2000-01-23
+          is_active: true
+          actual_price:
+            amount: 0
+            currency: EUR
+            interval: monthly
+          id: id
+          plan:
+            code: code
+            product_type: base
+            stripe_product_id: stripe_product_id
+            is_public: true
+            id: 4k3jKJ9D12kj0S4c
+            list_price:
+              amount: 0
+              currency: EUR
+              interval: monthly
+            display_name: display_name
+            stripe_price_id: stripe_price_id
+          start_date: 2000-01-23
+          payment_configuration:
+            stripe_subscription_item_id: stripe_subscription_item_id
+            timing: pre
+            stripe_subscription_id: stripe_subscription_id
+            platform: stripe
+        - end_date: 2000-01-23
+          is_active: true
+          actual_price:
+            amount: 0
+            currency: EUR
+            interval: monthly
+          id: id
+          plan:
+            code: code
+            product_type: base
+            stripe_product_id: stripe_product_id
+            is_public: true
+            id: 4k3jKJ9D12kj0S4c
+            list_price:
+              amount: 0
+              currency: EUR
+              interval: monthly
+            display_name: display_name
+            stripe_price_id: stripe_price_id
+          start_date: 2000-01-23
+          payment_configuration:
+            stripe_subscription_item_id: stripe_subscription_item_id
+            timing: pre
+            stripe_subscription_id: stripe_subscription_id
+            platform: stripe
+        account_id: account_id
+        feature_set:
+          has_report_customization: true
+          study_event_set: null
+          max_audience_lookups_per_month: 2
+          study_audience_set: full
+          has_audience_recommendations: true
+          max_active_studies: 5
+          max_events_per_study: 5
+          has_report_sharing_clients: true
+          max_users: 6
+          max_clients: 1
+          has_report_sharing_public: true
+      properties:
+        account_id:
+          description: The ID of the account
+          readOnly: true
+          type: string
+        subscriptions:
+          items:
+            $ref: '#/components/schemas/AccountSubscriptionItem'
+          type: array
+        feature_set:
+          $ref: '#/components/schemas/PlanFeatureSet'
+      required:
+      - account_id
+      - feature_set
+      - subscriptions
+      type: object
+    AccountSubscriptionItem:
+      allOf:
+      - $ref: '#/components/schemas/IdentifyableObject'
+      - $ref: '#/components/schemas/AccountSubscriptionBase'
+      - $ref: '#/components/schemas/AccountSubscriptionItemAux'
+      example:
+        end_date: 2000-01-23
+        is_active: true
+        actual_price:
+          amount: 0
+          currency: EUR
+          interval: monthly
+        id: id
+        plan:
+          code: code
+          product_type: base
+          stripe_product_id: stripe_product_id
+          is_public: true
+          id: 4k3jKJ9D12kj0S4c
+          list_price:
+            amount: 0
+            currency: EUR
+            interval: monthly
+          display_name: display_name
+          stripe_price_id: stripe_price_id
+        start_date: 2000-01-23
+        payment_configuration:
+          stripe_subscription_item_id: stripe_subscription_item_id
+          timing: pre
+          stripe_subscription_id: stripe_subscription_id
+          platform: stripe
+    AccountSubscriptionFull:
+      allOf:
+      - $ref: '#/components/schemas/AccountSubscriptionItem'
+      - $ref: '#/components/schemas/AccountSubscriptionFullAux'
+      - $ref: '#/components/schemas/TimestampedObject'
+      example:
+        end_date: 2000-01-23
+        is_active: true
+        account_id: account_id
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        actual_price:
+          amount: 0
+          currency: EUR
+          interval: monthly
+        updated_by: updated_by
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: id
+        plan:
+          code: code
+          stripe_product_id: stripe_product_id
+          created_at: 2000-01-23T04:56:07.000+00:00
+          list_price:
+            amount: 0
+            currency: EUR
+            interval: monthly
+          display_name: display_name
+          created_by: created_by
+          stripe_price_id: stripe_price_id
+          product_type: base
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          feature_set:
+            has_report_customization: true
+            study_event_set: null
+            max_audience_lookups_per_month: 2
+            study_audience_set: full
+            has_audience_recommendations: true
+            max_active_studies: 5
+            max_events_per_study: 5
+            has_report_sharing_clients: true
+            max_users: 6
+            max_clients: 1
+            has_report_sharing_public: true
+          updated_by: updated_by
+          is_public: true
+          id: id
+        created_by: created_by
+        start_date: 2000-01-23
+        payment_configuration:
+          stripe_subscription_item_id: stripe_subscription_item_id
+          timing: pre
+          stripe_subscription_id: stripe_subscription_id
+          platform: stripe
+    AccountSubscriptionCreation:
+      allOf:
+      - $ref: '#/components/schemas/AccountSubscriptionBase'
+      - properties:
+          plan_id:
+            description: The ID of the plan to subscribe to
+            type: string
+        type: object
+    AccountSubscriptionBase:
+      properties:
+        id:
+          description: The ID of the subscription
+          readOnly: true
+          type: string
+        start_date:
+          format: date
+          type: string
+        end_date:
+          format: date
+          type: string
+        is_active:
+          description: Is the subscription currently active or not?
+          readOnly: true
+          type: boolean
+        actual_price:
+          $ref: '#/components/schemas/SubscriptionPrice'
+        payment_configuration:
+          $ref: '#/components/schemas/AccountSubscriptionPaymentConfiguration'
+      required:
+      - id
+      - is_active
+      - start_date
+      type: object
+    AccountSubscriptionPaymentConfiguration:
+      description: Describes the payment configuration of an account subscription
+      example:
+        stripe_subscription_item_id: stripe_subscription_item_id
+        timing: pre
+        stripe_subscription_id: stripe_subscription_id
+        platform: stripe
+      properties:
+        platform:
+          enum:
+          - stripe
+          - manual
+          type: string
+        timing:
+          description: Is the subscription pre-paid or post-paid?
+          enum:
+          - pre
+          - post
+          type: string
+        stripe_subscription_id:
+          readOnly: true
+          type: string
+        stripe_subscription_item_id:
+          readOnly: true
+          type: string
+      required:
+      - platform
+      - timing
+      type: object
+    AccountSubscriptionItemAux:
+      properties:
+        plan:
+          $ref: '#/components/schemas/SubscriptionPlanItem'
+      type: object
+    AccountSubscriptionFullAux:
+      properties:
+        account_id:
+          description: The ID of the account
+          readOnly: true
+          type: string
+        plan:
+          $ref: '#/components/schemas/SubscriptionPlanFull'
+      required:
+      - account_id
+      - plan
+      type: object
+    SubscriptionPlanItem:
+      allOf:
+      - $ref: '#/components/schemas/IdentifyableObject'
+      - $ref: '#/components/schemas/SubscriptionPlanBase'
+      example:
+        code: code
+        product_type: base
+        stripe_product_id: stripe_product_id
+        is_public: true
+        id: 4k3jKJ9D12kj0S4c
+        list_price:
+          amount: 0
+          currency: EUR
+          interval: monthly
+        display_name: display_name
+        stripe_price_id: stripe_price_id
+    SubscriptionPlanFull:
+      allOf:
+      - $ref: '#/components/schemas/IdentifyableObject'
+      - $ref: '#/components/schemas/TimestampedObject'
+      - $ref: '#/components/schemas/SubscriptionPlanBase'
+      - $ref: '#/components/schemas/SubscriptionPlanAux'
+      example:
+        code: code
+        stripe_product_id: stripe_product_id
+        created_at: 2000-01-23T04:56:07.000+00:00
+        list_price:
+          amount: 0
+          currency: EUR
+          interval: monthly
+        display_name: display_name
+        created_by: created_by
+        stripe_price_id: stripe_price_id
+        product_type: base
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        feature_set:
+          has_report_customization: true
+          study_event_set: null
+          max_audience_lookups_per_month: 2
+          study_audience_set: full
+          has_audience_recommendations: true
+          max_active_studies: 5
+          max_events_per_study: 5
+          has_report_sharing_clients: true
+          max_users: 6
+          max_clients: 1
+          has_report_sharing_public: true
+        updated_by: updated_by
+        is_public: true
+        id: id
+    SubscriptionPlanBase:
+      properties:
+        display_name:
+          description: The display name of the price/plan
+          type: string
+        code:
+          description: "An optional code, typically provided if the plan/price is\
+            \ public and advertised"
+          type: string
+        is_public:
+          description: Is the plan/price a public price or custom?
+          type: boolean
+        product_type:
+          $ref: '#/components/schemas/SubscriptionProductType'
+        list_price:
+          $ref: '#/components/schemas/SubscriptionPrice'
+        stripe_product_id:
+          readOnly: true
+          type: string
+        stripe_price_id:
+          readOnly: true
+          type: string
+      required:
+      - is_public
+      - product_type
+      type: object
+    SubscriptionPrice:
+      example:
+        amount: 0
+        currency: EUR
+        interval: monthly
+      properties:
+        amount:
+          minimum: 0
+          type: integer
+        currency:
+          $ref: '#/components/schemas/SubscriptionPriceCurrency'
+        interval:
+          $ref: '#/components/schemas/SubscriptionPriceInterval'
+      required:
+      - amount
+      - currency
+      - interval
+      type: object
+    SubscriptionPriceInterval:
+      enum:
+      - monthly
+      - annually
+      type: string
+    SubscriptionPriceCurrency:
+      default: EUR
+      description: Currency code for the price
+      enum:
+      - EUR
+      - USD
+      - DKK
+      type: string
+    SubscriptionProductType:
+      enum:
+      - base
+      - add-on
+      type: string
+    SubscriptionPlanAux:
+      description: Defines a subscription plan (a feature set at a given pricing configuration)
+      properties:
+        id:
+          description: The ID of the plan/price that the account is subscribed to
+          readOnly: true
+          type: string
+        feature_set:
+          $ref: '#/components/schemas/PlanFeatureSet'
+      required:
+      - feature_set
       type: object
     PermissionScopes:
       description: "Defines the scopes of a token or API key. If omitted, the default\
@@ -2666,7 +3363,7 @@ components:
           - analytics-impression
           - analytics-click
           - '*'
-        status: null
+        status: enabled
     ApiKeyItem:
       allOf:
       - $ref: '#/components/schemas/IdentifyableObject'
@@ -2679,7 +3376,7 @@ components:
         name: CRM integration key
         token_prefix: token_prefix
         id: 4k3jKJ9D12kj0S4c
-        status: null
+        status: enabled
     ApiKeyMutation:
       allOf:
       - $ref: '#/components/schemas/ApiKeyBase'
@@ -2706,16 +3403,24 @@ components:
           - analytics-impression
           - analytics-click
           - '*'
-        status: null
+        status: enabled
     ApiKeyFull:
       allOf:
       - $ref: '#/components/schemas/ApiKeyItem'
       - $ref: '#/components/schemas/ApiKeyAux'
       - $ref: '#/components/schemas/TimestampedObject'
       example:
-        updated_at: 2000-01-23T04:56:07.000+00:00
-        updated_by: updated_by
         created_at: 2000-01-23T04:56:07.000+00:00
+        created_by: created_by
+        last_used_at: 2000-01-23T04:56:07.000+00:00
+        expires_at: 2000-01-23T04:56:07.000+00:00
+        account_id: account_id
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        user_id: user_id
+        name: CRM integration key
+        token_prefix: token_prefix
+        updated_by: updated_by
+        id: 4k3jKJ9D12kj0S4c
         scopes:
           country_data:
           - '*'
@@ -2731,13 +3436,40 @@ components:
           - analytics-impression
           - analytics-click
           - '*'
-        created_by: created_by
+        status: enabled
     ApiKeyFullWithToken:
       allOf:
       - $ref: '#/components/schemas/ApiKeyToken'
       - $ref: '#/components/schemas/ApiKeyFull'
       example:
+        created_at: 2000-01-23T04:56:07.000+00:00
+        created_by: created_by
         token: 3j51ds3kn4234m23l24km23
+        last_used_at: 2000-01-23T04:56:07.000+00:00
+        expires_at: 2000-01-23T04:56:07.000+00:00
+        account_id: account_id
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        user_id: user_id
+        name: CRM integration key
+        token_prefix: token_prefix
+        updated_by: updated_by
+        id: 4k3jKJ9D12kj0S4c
+        scopes:
+          country_data:
+          - '*'
+          - DE
+          - DK
+          - GB
+          - SE
+          origin_domains:
+          - '*'
+          - https://example.com
+          service_grants:
+          - audience-lookup
+          - analytics-impression
+          - analytics-click
+          - '*'
+        status: enabled
     ApiKeyLinks:
       example:
         user: /user/4k3jKJ9D12kj0S4c
@@ -2772,6 +3504,16 @@ components:
       - account_id
       - roles
       type: object
+    UserPlatformRole:
+      description: |
+        Defines the role of the user in the Digiseg platform. Most users
+        will not have any platform roles, since this is preserved for
+        account-agnostic operational privileges.
+      enum:
+      - super_admin
+      - dev_ops
+      - customer_ops
+      type: string
     UserAccountRole:
       description: |
         Determines the role of a user within an account. The permissions of each
@@ -2832,9 +3574,44 @@ components:
           readOnly: true
           type: array
         is_super_admin:
+          deprecated: true
           description: Determines if the user is a super admin of Digiseg API services
           type: boolean
+        platform_roles:
+          items:
+            $ref: '#/components/schemas/UserPlatformRole'
+          type: array
       type: object
+    UserCreation:
+      allOf:
+      - $ref: '#/components/schemas/UserMutation'
+      - $ref: '#/components/schemas/UserCreationNotification'
+      example:
+        password: password
+        account_id: account_id
+        platform_roles:
+        - super_admin
+        - super_admin
+        notify_user: true
+        avatar_url: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
+        roles:
+        - owner
+        - owner
+        account_memberships:
+        - account_id: account_id
+          account_name: account_name
+          roles:
+          - null
+          - null
+        - account_id: account_id
+          account_name: account_name
+          roles:
+          - null
+          - null
+        name: Casey Doe
+        is_super_admin: true
+        logged_in_at: 2000-01-23T04:56:07.000+00:00
+        email: casey.doe@example.com
     UserMutation:
       allOf:
       - $ref: '#/components/schemas/UserBase'
@@ -2843,10 +3620,13 @@ components:
       example:
         password: password
         account_id: account_id
+        platform_roles:
+        - super_admin
+        - super_admin
         avatar_url: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
         roles:
-        - null
-        - null
+        - owner
+        - owner
         account_memberships:
         - account_id: account_id
           account_name: account_name
@@ -2870,8 +3650,8 @@ components:
         account_id: account_id
         avatar_url: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
         roles:
-        - null
-        - null
+        - owner
+        - owner
         name: Casey Doe
         id: 4k3jKJ9D12kj0S4c
         logged_in_at: 2000-01-23T04:56:07.000+00:00
@@ -2882,6 +3662,17 @@ components:
       - $ref: '#/components/schemas/UserAux'
       - $ref: '#/components/schemas/TimestampedObject'
       example:
+        platform_roles:
+        - super_admin
+        - super_admin
+        roles:
+        - owner
+        - owner
+        created_at: 2000-01-23T04:56:07.000+00:00
+        is_super_admin: true
+        created_by: created_by
+        account_id: account_id
+        avatar_url: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
         updated_at: 2000-01-23T04:56:07.000+00:00
         account_memberships:
         - account_id: account_id
@@ -2894,10 +3685,11 @@ components:
           roles:
           - null
           - null
+        name: Casey Doe
         updated_by: updated_by
-        created_at: 2000-01-23T04:56:07.000+00:00
-        is_super_admin: true
-        created_by: created_by
+        id: 4k3jKJ9D12kj0S4c
+        logged_in_at: 2000-01-23T04:56:07.000+00:00
+        email: casey.doe@example.com
     UserLinks:
       example:
         apikeys: /users/4k3jKJ9D12kj0S4c/apikeys
@@ -3003,6 +3795,22 @@ components:
           format: uri
           type: string
       type: object
+    AudienceExampleInputsResponse:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AudienceExampleInput'
+          type: array
+      required:
+      - data
+      type: object
+    AudienceExampleInput:
+      properties:
+        ip_address:
+          description: The IP address to resolve audiences for
+          example: 1.1.1.1
+          type: string
+      type: object
     ResolveAudiencesOfMultipleRequest:
       example:
         queries:
@@ -3069,7 +3877,7 @@ components:
             code: n1
             name: Tech-Level in Household > Basic
           id: kbj423lt439hcdsijh432i
-          status: null
+          status: resolved
         - audiences:
           - category: home_type
             code: a2
@@ -3093,7 +3901,7 @@ components:
             code: n1
             name: Tech-Level in Household > Basic
           id: kbj423lt439hcdsijh432i
-          status: null
+          status: resolved
       properties:
         results:
           items:
@@ -3125,7 +3933,7 @@ components:
           code: n1
           name: Tech-Level in Household > Basic
         id: kbj423lt439hcdsijh432i
-        status: null
+        status: resolved
       properties:
         id:
           description: The identifier (if provided) of the item as it was provided
@@ -3187,7 +3995,7 @@ components:
         - category: tech_level
           code: n1
           name: Tech-Level in Household > Basic
-        status: null
+        status: resolved
       properties:
         audiences:
           example:
@@ -3287,6 +4095,38 @@ components:
             \ name} > {audience name}\""
           example: Lifecycle > Pensioners
           type: string
+      type: object
+    StudyMeta:
+      example:
+        permissions:
+          get: true
+          delete: true
+          put: true
+      properties:
+        permissions:
+          $ref: '#/components/schemas/StudyPermissions'
+      type: object
+    StudyPermissions:
+      description: Provides information about the current user's permissions of a
+        study
+      example:
+        get: true
+        delete: true
+        put: true
+      properties:
+        get:
+          description: Can the current user GET (read) study information?
+          type: boolean
+        put:
+          description: Can the current user PUT (update) study information?
+          type: boolean
+        delete:
+          description: Can the current user DELETE the study?
+          type: boolean
+      required:
+      - delete
+      - get
+      - put
       type: object
     StudyLinks:
       example:
@@ -3469,9 +4309,12 @@ components:
           readOnly: true
           type: string
         start_date:
-          description: The date for which the study and its data ingestion will start.
+          description: The date for which the study and its data ingestion will start
           format: date-time
-          readOnly: true
+          type: string
+        end_date:
+          description: The date for which the study and its data ingestion will end
+          format: date-time
           type: string
         life_cycle_stage:
           $ref: '#/components/schemas/StudyLifecycleStage'
@@ -3489,12 +4332,14 @@ components:
         * `no_data` means that the study has been created but no data has been received.
         * `active_ramping_up` means that data has been received, but not enough to provide meaningful stats yet.
         * `active_fulfilled` means that the study has received a good amount of data, but more data can still be added.
+        * `paused_limited` means that the study was paused because of exceeded limits (typically when `event_cap` is exceeded)
         * `finished_complete` means that the study has finished and is no longer open to receive data.
         * `finished_expired` means that the study has finished but not enough data was collected to provide meaningful stats.
       enum:
       - no_data
       - active_ramping_up
       - active_fulfilled
+      - paused_limited
       - finished_complete
       - finished_expired
       readOnly: true
@@ -3555,6 +4400,10 @@ components:
       properties:
         event_links:
           $ref: '#/components/schemas/MeasurementEventLinks'
+        event_cap:
+          description: "If present, an upper limit on the number of events that will\
+            \ be processed in this study."
+          type: integer
         banner_image_url:
           description: |
             The URL to a banner image for the study.
@@ -3566,6 +4415,11 @@ components:
           type: string
         integration_platform:
           $ref: '#/components/schemas/MeasurementIntegrationPlatform'
+        is_example:
+          description: "Determines if the study is an example study, used to demonstrate\
+            \ product capabilities"
+          readOnly: true
+          type: boolean
       type: object
     MeasurementIntegrationPlatform:
       description: |
@@ -3609,6 +4463,7 @@ components:
       - $ref: '#/components/schemas/IdentifyableObject1'
       - $ref: '#/components/schemas/StudyBase'
       example:
+        end_date: 2000-01-23T04:56:07.000+00:00
         account_id: 4k3jKJ9D12kj0S4c
         name: Acme Summer 2024 brand awareness
         summary_stats:
@@ -3644,26 +4499,71 @@ components:
           name: Acme Ltd
           logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
         id: 2c9jKJ9D12kj0S4c
-        life_cycle_stage: null
+        life_cycle_stage: pending
         labels:
         - Acme
         - CTV
         - Seasonal
         start_date: 2000-01-23T04:56:07.000+00:00
-        ingestion_status: null
+        ingestion_status: no_data
     StudyFull:
       allOf:
       - $ref: '#/components/schemas/StudyItem'
       - $ref: '#/components/schemas/StudyAux'
       - $ref: '#/components/schemas/TimestampedObject1'
       example:
-        updated_at: 2000-01-23T04:56:07.000+00:00
+        end_date: 2000-01-23T04:56:07.000+00:00
+        is_example: true
         integration_platform:
           id: adf
           name: Adform
-        banner_image_url: https://api.digiseg.net/assets/studies/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
-        updated_by: 3u1jKJ9D12kj0S4c
+        event_cap: 0
         created_at: 2000-01-23T04:56:07.000+00:00
+        created_by: 3u1jKJ9D12kj0S4c
+        labels:
+        - Acme
+        - CTV
+        - Seasonal
+        ingestion_status: no_data
+        account_id: 4k3jKJ9D12kj0S4c
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        banner_image_url: https://api.digiseg.net/assets/studies/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
+        name: Acme Summer 2024 brand awareness
+        summary_stats:
+          private:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323
+          business:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323
+          not_resolved:
+            measurements:
+            - event: impression
+              count: 7280791
+              fraction_of_total: 0.54
+            - event: click
+              count: 23522
+              fraction_of_total: 0.5
+              conversion_rate: 0.00323
+        updated_by: 3u1jKJ9D12kj0S4c
+        client:
+          id: 7c9jKJ9D12kj0S4d
+          name: Acme Ltd
+          logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
+        id: 2c9jKJ9D12kj0S4c
+        life_cycle_stage: pending
         event_links:
           impression:
             link: //subdomain.digiseg.net/path/to/pix.gif
@@ -3672,22 +4572,25 @@ components:
             parameters:
               destination:
                 description: URL to redirect to
-        created_by: 3u1jKJ9D12kj0S4c
+        start_date: 2000-01-23T04:56:07.000+00:00
     StudyCreation:
       allOf:
       - $ref: '#/components/schemas/StudyBase'
       - $ref: '#/components/schemas/StudyAux'
       - $ref: '#/components/schemas/StudyCreationData'
       example:
+        end_date: 2000-01-23T04:56:07.000+00:00
+        is_example: true
         integration_platform:
           id: adf
           name: Adform
+        event_cap: 0
         client_id: kfsdj423jkn243lml423
         labels:
         - Acme
         - CTV
         - Seasonal
-        ingestion_status: null
+        ingestion_status: no_data
         account_id: 4k3jKJ9D12kj0S4c
         banner_image_url: https://api.digiseg.net/assets/studies/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
         name: Acme Summer 2024 brand awareness
@@ -3723,8 +4626,8 @@ components:
           id: 7c9jKJ9D12kj0S4d
           name: Acme Ltd
           logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
-        event_set: null
-        life_cycle_stage: null
+        event_set: impressions_only
+        life_cycle_stage: pending
         event_links:
           impression:
             link: //subdomain.digiseg.net/path/to/pix.gif
@@ -3741,10 +4644,18 @@ components:
       - $ref: '#/components/schemas/StudyBase'
       - $ref: '#/components/schemas/StudyAux'
       example:
-        account_id: 4k3jKJ9D12kj0S4c
+        end_date: 2000-01-23T04:56:07.000+00:00
+        is_example: true
         integration_platform:
           id: adf
           name: Adform
+        event_cap: 0
+        labels:
+        - Acme
+        - CTV
+        - Seasonal
+        ingestion_status: no_data
+        account_id: 4k3jKJ9D12kj0S4c
         banner_image_url: https://api.digiseg.net/assets/studies/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
         name: Acme Summer 2024 brand awareness
         summary_stats:
@@ -3779,7 +4690,7 @@ components:
           id: 7c9jKJ9D12kj0S4d
           name: Acme Ltd
           logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
-        life_cycle_stage: null
+        life_cycle_stage: pending
         event_links:
           impression:
             link: //subdomain.digiseg.net/path/to/pix.gif
@@ -3788,12 +4699,7 @@ components:
             parameters:
               destination:
                 description: URL to redirect to
-        labels:
-        - Acme
-        - CTV
-        - Seasonal
         start_date: 2000-01-23T04:56:07.000+00:00
-        ingestion_status: null
     FractionOfTotal:
       description: |
         The fraction of events that fall within this object compared to the total of the
@@ -5019,19 +5925,34 @@ components:
           format: int64
           type: integer
       type: object
+    KeyValues:
+      additionalProperties:
+        maxLength: 255
+        type: string
+      type: object
     getAccountById_200_response:
       example:
         data:
-          updated_at: 2000-01-23T04:56:07.000+00:00
+          company_type: "[\"agency\"]"
+          logo_url: https://api.digiseg.net/assets/account/ioi4324i2309das/logo?vrft=csdkl232l4pod4
           owner_id: owner_id
-          billing_email: billing_email
-          updated_by: updated_by
+          billing_country: DK
           created_at: 2000-01-23T04:56:07.000+00:00
           billing_address:
             line1: Gl Kongevej 3B
             city: Copenhagen
             postal_code: "1610"
           created_by: created_by
+          stripe_customer_id: stripe_customer_id
+          website_url: https://openapi-generator.tech
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          has_clients: true
+          billing_email: billing_email
+          name: Example Co.
+          updated_by: updated_by
+          id: 4k3jKJ9D12kj0S4c
+          slug: slug
+          company_size: Self-employed
         links:
           users: /accounts/4k3jKJ9D12kj0S4c/users
       properties:
@@ -5046,14 +5967,138 @@ components:
           format: binary
           type: string
       type: object
+    getAccountSubscriptions_200_response:
+      example:
+        data:
+          subscriptions:
+          - end_date: 2000-01-23
+            is_active: true
+            actual_price:
+              amount: 0
+              currency: EUR
+              interval: monthly
+            id: id
+            plan:
+              code: code
+              product_type: base
+              stripe_product_id: stripe_product_id
+              is_public: true
+              id: 4k3jKJ9D12kj0S4c
+              list_price:
+                amount: 0
+                currency: EUR
+                interval: monthly
+              display_name: display_name
+              stripe_price_id: stripe_price_id
+            start_date: 2000-01-23
+            payment_configuration:
+              stripe_subscription_item_id: stripe_subscription_item_id
+              timing: pre
+              stripe_subscription_id: stripe_subscription_id
+              platform: stripe
+          - end_date: 2000-01-23
+            is_active: true
+            actual_price:
+              amount: 0
+              currency: EUR
+              interval: monthly
+            id: id
+            plan:
+              code: code
+              product_type: base
+              stripe_product_id: stripe_product_id
+              is_public: true
+              id: 4k3jKJ9D12kj0S4c
+              list_price:
+                amount: 0
+                currency: EUR
+                interval: monthly
+              display_name: display_name
+              stripe_price_id: stripe_price_id
+            start_date: 2000-01-23
+            payment_configuration:
+              stripe_subscription_item_id: stripe_subscription_item_id
+              timing: pre
+              stripe_subscription_id: stripe_subscription_id
+              platform: stripe
+          account_id: account_id
+          feature_set:
+            has_report_customization: true
+            study_event_set: null
+            max_audience_lookups_per_month: 2
+            study_audience_set: full
+            has_audience_recommendations: true
+            max_active_studies: 5
+            max_events_per_study: 5
+            has_report_sharing_clients: true
+            max_users: 6
+            max_clients: 1
+            has_report_sharing_public: true
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountSubscriptionsSummary'
+      type: object
+    getAccountSubscriptionById_200_response:
+      example:
+        data:
+          end_date: 2000-01-23
+          is_active: true
+          account_id: account_id
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          actual_price:
+            amount: 0
+            currency: EUR
+            interval: monthly
+          updated_by: updated_by
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: id
+          plan:
+            code: code
+            stripe_product_id: stripe_product_id
+            created_at: 2000-01-23T04:56:07.000+00:00
+            list_price:
+              amount: 0
+              currency: EUR
+              interval: monthly
+            display_name: display_name
+            created_by: created_by
+            stripe_price_id: stripe_price_id
+            product_type: base
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            feature_set:
+              has_report_customization: true
+              study_event_set: null
+              max_audience_lookups_per_month: 2
+              study_audience_set: full
+              has_audience_recommendations: true
+              max_active_studies: 5
+              max_events_per_study: 5
+              has_report_sharing_clients: true
+              max_users: 6
+              max_clients: 1
+              has_report_sharing_public: true
+            updated_by: updated_by
+            is_public: true
+            id: id
+          created_by: created_by
+          start_date: 2000-01-23
+          payment_configuration:
+            stripe_subscription_item_id: stripe_subscription_item_id
+            timing: pre
+            stripe_subscription_id: stripe_subscription_id
+            platform: stripe
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountSubscriptionFull'
+      type: object
     listUsersByAccountId_200_response:
       example:
         data:
         - account_id: account_id
           avatar_url: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
           roles:
-          - null
-          - null
+          - owner
+          - owner
           name: Casey Doe
           id: 4k3jKJ9D12kj0S4c
           logged_in_at: 2000-01-23T04:56:07.000+00:00
@@ -5061,8 +6106,8 @@ components:
         - account_id: account_id
           avatar_url: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
           roles:
-          - null
-          - null
+          - owner
+          - owner
           name: Casey Doe
           id: 4k3jKJ9D12kj0S4c
           logged_in_at: 2000-01-23T04:56:07.000+00:00
@@ -5089,6 +6134,17 @@ components:
     createUserInAccount_201_response:
       example:
         data:
+          platform_roles:
+          - super_admin
+          - super_admin
+          roles:
+          - owner
+          - owner
+          created_at: 2000-01-23T04:56:07.000+00:00
+          is_super_admin: true
+          created_by: created_by
+          account_id: account_id
+          avatar_url: https://api.digiseg.net/assets/users/jkfn432jnkfwj43/avatar?vrft=32nfwk4324k3
           updated_at: 2000-01-23T04:56:07.000+00:00
           account_memberships:
           - account_id: account_id
@@ -5101,10 +6157,11 @@ components:
             roles:
             - null
             - null
+          name: Casey Doe
           updated_by: updated_by
-          created_at: 2000-01-23T04:56:07.000+00:00
-          is_super_admin: true
-          created_by: created_by
+          id: 4k3jKJ9D12kj0S4c
+          logged_in_at: 2000-01-23T04:56:07.000+00:00
+          email: casey.doe@example.com
         links:
           apikeys: /users/4k3jKJ9D12kj0S4c/apikeys
           account: /accounts/4k3jKJ9D12kj0S4c
@@ -5124,7 +6181,7 @@ components:
           name: CRM integration key
           token_prefix: token_prefix
           id: 4k3jKJ9D12kj0S4c
-          status: null
+          status: enabled
         - last_used_at: 2000-01-23T04:56:07.000+00:00
           expires_at: 2000-01-23T04:56:07.000+00:00
           account_id: account_id
@@ -5132,7 +6189,7 @@ components:
           name: CRM integration key
           token_prefix: token_prefix
           id: 4k3jKJ9D12kj0S4c
-          status: null
+          status: enabled
         meta:
           page:
             first_cursor: first_cursor
@@ -5152,20 +6209,65 @@ components:
             $ref: '#/components/schemas/ApiKeyItem'
           type: array
       type: object
+    listSubscriptionPlans_200_response:
+      example:
+        data:
+        - code: code
+          product_type: base
+          stripe_product_id: stripe_product_id
+          is_public: true
+          id: 4k3jKJ9D12kj0S4c
+          list_price:
+            amount: 0
+            currency: EUR
+            interval: monthly
+          display_name: display_name
+          stripe_price_id: stripe_price_id
+        - code: code
+          product_type: base
+          stripe_product_id: stripe_product_id
+          is_public: true
+          id: 4k3jKJ9D12kj0S4c
+          list_price:
+            amount: 0
+            currency: EUR
+            interval: monthly
+          display_name: display_name
+          stripe_price_id: stripe_price_id
+        meta:
+          page:
+            first_cursor: first_cursor
+            total: 238
+            last_cursor: last_cursor
+            rangeTruncated: true
+        links:
+          next: /path/to/next_page
+          first: /path/to/first_page
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SubscriptionPlanItem'
+          type: array
+        meta:
+          $ref: '#/components/schemas/ListPaginationMeta'
+        links:
+          $ref: '#/components/schemas/ListPaginationLinks'
+      type: object
     createApiKey_201_response:
       example:
         data:
-          token: 3j51ds3kn4234m23l24km23
-      properties:
-        data:
-          $ref: '#/components/schemas/ApiKeyFullWithToken'
-      type: object
-    getApiKeyById_200_response:
-      example:
-        data:
-          updated_at: 2000-01-23T04:56:07.000+00:00
-          updated_by: updated_by
           created_at: 2000-01-23T04:56:07.000+00:00
+          created_by: created_by
+          token: 3j51ds3kn4234m23l24km23
+          last_used_at: 2000-01-23T04:56:07.000+00:00
+          expires_at: 2000-01-23T04:56:07.000+00:00
+          account_id: account_id
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          user_id: user_id
+          name: CRM integration key
+          token_prefix: token_prefix
+          updated_by: updated_by
+          id: 4k3jKJ9D12kj0S4c
           scopes:
             country_data:
             - '*'
@@ -5181,7 +6283,41 @@ components:
             - analytics-impression
             - analytics-click
             - '*'
+          status: enabled
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiKeyFullWithToken'
+      type: object
+    getApiKeyById_200_response:
+      example:
+        data:
+          created_at: 2000-01-23T04:56:07.000+00:00
           created_by: created_by
+          last_used_at: 2000-01-23T04:56:07.000+00:00
+          expires_at: 2000-01-23T04:56:07.000+00:00
+          account_id: account_id
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          user_id: user_id
+          name: CRM integration key
+          token_prefix: token_prefix
+          updated_by: updated_by
+          id: 4k3jKJ9D12kj0S4c
+          scopes:
+            country_data:
+            - '*'
+            - DE
+            - DK
+            - GB
+            - SE
+            origin_domains:
+            - '*'
+            - https://example.com
+            service_grants:
+            - audience-lookup
+            - analytics-impression
+            - analytics-click
+            - '*'
+          status: enabled
         links:
           user: /user/4k3jKJ9D12kj0S4c
       properties:
@@ -5193,7 +6329,8 @@ components:
     listStudies_200_response:
       example:
         data:
-        - account_id: 4k3jKJ9D12kj0S4c
+        - end_date: 2000-01-23T04:56:07.000+00:00
+          account_id: 4k3jKJ9D12kj0S4c
           name: Acme Summer 2024 brand awareness
           summary_stats:
             private:
@@ -5228,14 +6365,15 @@ components:
             name: Acme Ltd
             logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
           id: 2c9jKJ9D12kj0S4c
-          life_cycle_stage: null
+          life_cycle_stage: pending
           labels:
           - Acme
           - CTV
           - Seasonal
           start_date: 2000-01-23T04:56:07.000+00:00
-          ingestion_status: null
-        - account_id: 4k3jKJ9D12kj0S4c
+          ingestion_status: no_data
+        - end_date: 2000-01-23T04:56:07.000+00:00
+          account_id: 4k3jKJ9D12kj0S4c
           name: Acme Summer 2024 brand awareness
           summary_stats:
             private:
@@ -5270,13 +6408,13 @@ components:
             name: Acme Ltd
             logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
           id: 2c9jKJ9D12kj0S4c
-          life_cycle_stage: null
+          life_cycle_stage: pending
           labels:
           - Acme
           - CTV
           - Seasonal
           start_date: 2000-01-23T04:56:07.000+00:00
-          ingestion_status: null
+          ingestion_status: no_data
         meta:
           page:
             first_cursor: first_cursor
@@ -5299,13 +6437,58 @@ components:
     createStudy_201_response:
       example:
         data:
-          updated_at: 2000-01-23T04:56:07.000+00:00
+          end_date: 2000-01-23T04:56:07.000+00:00
+          is_example: true
           integration_platform:
             id: adf
             name: Adform
-          banner_image_url: https://api.digiseg.net/assets/studies/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
-          updated_by: 3u1jKJ9D12kj0S4c
+          event_cap: 0
           created_at: 2000-01-23T04:56:07.000+00:00
+          created_by: 3u1jKJ9D12kj0S4c
+          labels:
+          - Acme
+          - CTV
+          - Seasonal
+          ingestion_status: no_data
+          account_id: 4k3jKJ9D12kj0S4c
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          banner_image_url: https://api.digiseg.net/assets/studies/7c9jKJ9D12kj0S4d/banner_image?vrft=dsk4j23k4osdk243
+          name: Acme Summer 2024 brand awareness
+          summary_stats:
+            private:
+              measurements:
+              - event: impression
+                count: 7280791
+                fraction_of_total: 0.54
+              - event: click
+                count: 23522
+                fraction_of_total: 0.5
+                conversion_rate: 0.00323
+            business:
+              measurements:
+              - event: impression
+                count: 7280791
+                fraction_of_total: 0.54
+              - event: click
+                count: 23522
+                fraction_of_total: 0.5
+                conversion_rate: 0.00323
+            not_resolved:
+              measurements:
+              - event: impression
+                count: 7280791
+                fraction_of_total: 0.54
+              - event: click
+                count: 23522
+                fraction_of_total: 0.5
+                conversion_rate: 0.00323
+          updated_by: 3u1jKJ9D12kj0S4c
+          client:
+            id: 7c9jKJ9D12kj0S4d
+            name: Acme Ltd
+            logo_url: https://api.digiseg.net/assets/measurement/clients/7c9jKJ9D12kj0S4d/logo?vrft=dsk4j23k4osdk243
+          id: 2c9jKJ9D12kj0S4c
+          life_cycle_stage: pending
           event_links:
             impression:
               link: //subdomain.digiseg.net/path/to/pix.gif
@@ -5314,7 +6497,12 @@ components:
               parameters:
                 destination:
                   description: URL to redirect to
-          created_by: 3u1jKJ9D12kj0S4c
+          start_date: 2000-01-23T04:56:07.000+00:00
+        meta:
+          permissions:
+            get: true
+            delete: true
+            put: true
         links:
           stats_timing: /studies/2c9jKJ9D12kj0S4c/stats/timing
           stats_frequencies: /studies/2c9jKJ9D12kj0S4c/stats/frequencies
@@ -5325,6 +6513,8 @@ components:
           $ref: '#/components/schemas/StudyFull'
         links:
           $ref: '#/components/schemas/StudyLinks'
+        meta:
+          $ref: '#/components/schemas/StudyMeta'
       type: object
     listMeasurementLabels_200_response:
       example:

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | Unique ID for the object | [optional] 
+**Id** | Pointer to **string** | Unique ID for the object | [optional] [readonly] 
 **Email** | Pointer to **string** | The email of the user (used as username when authenticating with password) | [optional] 
 **Name** | Pointer to **string** | Human readable name of the user | [optional] 
 **AccountId** | Pointer to **string** | ID of the account that this user pertains to. If the user has multiple account memberships, this account ID will represent the primary account of the user.  | [optional] 
@@ -13,10 +13,11 @@ Name | Type | Description | Notes
 **LoggedInAt** | Pointer to **time.Time** | The approximate last time that the user logged in | [optional] [readonly] 
 **AccountMemberships** | Pointer to [**[]UserAccountMembership**](UserAccountMembership.md) |  | [optional] [readonly] 
 **IsSuperAdmin** | Pointer to **bool** | Determines if the user is a super admin of Digiseg API services | [optional] 
-**CreatedAt** | Pointer to **time.Time** | Date and time of the object creation | [optional] 
-**CreatedBy** | Pointer to **string** | ID of the user who created the object | [optional] 
-**UpdatedAt** | Pointer to **time.Time** | Date and time of the latest update to the object | [optional] 
-**UpdatedBy** | Pointer to **string** | ID of the user who last updated the object | [optional] 
+**PlatformRoles** | Pointer to [**[]UserPlatformRole**](UserPlatformRole.md) |  | [optional] 
+**CreatedAt** | Pointer to **time.Time** | Date and time of the object creation | [optional] [readonly] 
+**CreatedBy** | Pointer to **string** | ID of the user who created the object | [optional] [readonly] 
+**UpdatedAt** | Pointer to **time.Time** | Date and time of the latest update to the object | [optional] [readonly] 
+**UpdatedBy** | Pointer to **string** | ID of the user who last updated the object | [optional] [readonly] 
 
 ## Methods
 
@@ -261,6 +262,31 @@ SetIsSuperAdmin sets IsSuperAdmin field to given value.
 `func (o *UserFull) HasIsSuperAdmin() bool`
 
 HasIsSuperAdmin returns a boolean if a field has been set.
+
+### GetPlatformRoles
+
+`func (o *UserFull) GetPlatformRoles() []UserPlatformRole`
+
+GetPlatformRoles returns the PlatformRoles field if non-nil, zero value otherwise.
+
+### GetPlatformRolesOk
+
+`func (o *UserFull) GetPlatformRolesOk() (*[]UserPlatformRole, bool)`
+
+GetPlatformRolesOk returns a tuple with the PlatformRoles field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPlatformRoles
+
+`func (o *UserFull) SetPlatformRoles(v []UserPlatformRole)`
+
+SetPlatformRoles sets PlatformRoles field to given value.
+
+### HasPlatformRoles
+
+`func (o *UserFull) HasPlatformRoles() bool`
+
+HasPlatformRoles returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

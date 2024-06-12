@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**CreatedAt** | Pointer to **time.Time** | Date and time of the object creation | [optional] 
-**CreatedBy** | Pointer to **string** | ID of the user who created the object | [optional] 
-**UpdatedAt** | Pointer to **time.Time** | Date and time of the latest update to the object | [optional] 
-**UpdatedBy** | Pointer to **string** | ID of the user who last updated the object | [optional] 
+**CreatedAt** | Pointer to **time.Time** | Date and time of the object creation | [optional] [readonly] 
+**CreatedBy** | Pointer to **string** | ID of the user who created the object | [optional] [readonly] 
+**UpdatedAt** | Pointer to **time.Time** | Date and time of the latest update to the object | [optional] [readonly] 
+**UpdatedBy** | Pointer to **string** | ID of the user who last updated the object | [optional] [readonly] 
 
 ## Methods
 

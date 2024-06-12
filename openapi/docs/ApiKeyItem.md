@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | Unique ID for the object | [optional] 
+**Id** | Pointer to **string** | Unique ID for the object | [optional] [readonly] 
 **Name** | Pointer to **string** | Human readable name of the API key | [optional] 
 **Status** | Pointer to [**ApiKeyStatus**](ApiKeyStatus.md) |  | [optional] 
 **ExpiresAt** | Pointer to **time.Time** | Optional date/time that the key will expire | [optional] 

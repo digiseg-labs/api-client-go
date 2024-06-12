@@ -5,8 +5,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **EventLinks** | Pointer to [**MeasurementEventLinks**](MeasurementEventLinks.md) |  | [optional] 
+**EventCap** | Pointer to **int32** | If present, an upper limit on the number of events that will be processed in this study. | [optional] 
 **BannerImageUrl** | Pointer to **string** | The URL to a banner image for the study. Note that the banner image is used only for Digiseg study reporting and presentation, it does NOT represent any delivered banner ad creatives or similar.  | [optional] [readonly] 
 **IntegrationPlatform** | Pointer to [**MeasurementIntegrationPlatform**](MeasurementIntegrationPlatform.md) |  | [optional] 
+**IsExample** | Pointer to **bool** | Determines if the study is an example study, used to demonstrate product capabilities | [optional] [readonly] 
 
 ## Methods
 
@@ -51,6 +53,31 @@ SetEventLinks sets EventLinks field to given value.
 `func (o *StudyAux) HasEventLinks() bool`
 
 HasEventLinks returns a boolean if a field has been set.
+
+### GetEventCap
+
+`func (o *StudyAux) GetEventCap() int32`
+
+GetEventCap returns the EventCap field if non-nil, zero value otherwise.
+
+### GetEventCapOk
+
+`func (o *StudyAux) GetEventCapOk() (*int32, bool)`
+
+GetEventCapOk returns a tuple with the EventCap field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEventCap
+
+`func (o *StudyAux) SetEventCap(v int32)`
+
+SetEventCap sets EventCap field to given value.
+
+### HasEventCap
+
+`func (o *StudyAux) HasEventCap() bool`
+
+HasEventCap returns a boolean if a field has been set.
 
 ### GetBannerImageUrl
 
@@ -101,6 +128,31 @@ SetIntegrationPlatform sets IntegrationPlatform field to given value.
 `func (o *StudyAux) HasIntegrationPlatform() bool`
 
 HasIntegrationPlatform returns a boolean if a field has been set.
+
+### GetIsExample
+
+`func (o *StudyAux) GetIsExample() bool`
+
+GetIsExample returns the IsExample field if non-nil, zero value otherwise.
+
+### GetIsExampleOk
+
+`func (o *StudyAux) GetIsExampleOk() (*bool, bool)`
+
+GetIsExampleOk returns a tuple with the IsExample field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsExample
+
+`func (o *StudyAux) SetIsExample(v bool)`
+
+SetIsExample sets IsExample field to given value.
+
+### HasIsExample
+
+`func (o *StudyAux) HasIsExample() bool`
+
+HasIsExample returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

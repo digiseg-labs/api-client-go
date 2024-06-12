@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | Unique ID for the object | [optional] 
+**Id** | Pointer to **string** | Unique ID for the object | [optional] [readonly] 
 **Email** | Pointer to **string** | The email of the user (used as username when authenticating with password) | [optional] 
 **Name** | Pointer to **string** | Human readable name of the user | [optional] 
 **AccountId** | Pointer to **string** | ID of the account that this user pertains to. If the user has multiple account memberships, this account ID will represent the primary account of the user.  | [optional] 

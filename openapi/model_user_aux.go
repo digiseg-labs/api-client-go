@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young singles and couples | |  |  | c2 | Young couples with children | |  |  | c3 | Families with school children | |  |  | c4 | Older families | |  |  | c5 | Pensioners | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Up to 80 m² | |  |  | l2 | 80-119 m² | |  |  | l3 | Above 120 m² | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young couples and singles | |  |  | c2 | Early family life | |  |  | c3 | Middle-aged families | |  |  | c4 | Mature families | |  |  | c5 | Pensioners / Retirees | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Small | |  |  | l2 | Medium | |  |  | l3 | Large | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -22,8 +22,13 @@ var _ MappedNullable = &UserAux{}
 type UserAux struct {
 	AccountMemberships []UserAccountMembership `json:"account_memberships,omitempty"`
 	// Determines if the user is a super admin of Digiseg API services
+	// Deprecated
 	IsSuperAdmin *bool `json:"is_super_admin,omitempty"`
+	PlatformRoles []UserPlatformRole `json:"platform_roles,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _UserAux UserAux
 
 // NewUserAux instantiates a new UserAux object
 // This constructor will assign default values to properties that have it defined,
@@ -75,6 +80,7 @@ func (o *UserAux) SetAccountMemberships(v []UserAccountMembership) {
 }
 
 // GetIsSuperAdmin returns the IsSuperAdmin field value if set, zero value otherwise.
+// Deprecated
 func (o *UserAux) GetIsSuperAdmin() bool {
 	if o == nil || IsNil(o.IsSuperAdmin) {
 		var ret bool
@@ -85,6 +91,7 @@ func (o *UserAux) GetIsSuperAdmin() bool {
 
 // GetIsSuperAdminOk returns a tuple with the IsSuperAdmin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *UserAux) GetIsSuperAdminOk() (*bool, bool) {
 	if o == nil || IsNil(o.IsSuperAdmin) {
 		return nil, false
@@ -102,8 +109,41 @@ func (o *UserAux) HasIsSuperAdmin() bool {
 }
 
 // SetIsSuperAdmin gets a reference to the given bool and assigns it to the IsSuperAdmin field.
+// Deprecated
 func (o *UserAux) SetIsSuperAdmin(v bool) {
 	o.IsSuperAdmin = &v
+}
+
+// GetPlatformRoles returns the PlatformRoles field value if set, zero value otherwise.
+func (o *UserAux) GetPlatformRoles() []UserPlatformRole {
+	if o == nil || IsNil(o.PlatformRoles) {
+		var ret []UserPlatformRole
+		return ret
+	}
+	return o.PlatformRoles
+}
+
+// GetPlatformRolesOk returns a tuple with the PlatformRoles field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UserAux) GetPlatformRolesOk() ([]UserPlatformRole, bool) {
+	if o == nil || IsNil(o.PlatformRoles) {
+		return nil, false
+	}
+	return o.PlatformRoles, true
+}
+
+// HasPlatformRoles returns a boolean if a field has been set.
+func (o *UserAux) HasPlatformRoles() bool {
+	if o != nil && !IsNil(o.PlatformRoles) {
+		return true
+	}
+
+	return false
+}
+
+// SetPlatformRoles gets a reference to the given []UserPlatformRole and assigns it to the PlatformRoles field.
+func (o *UserAux) SetPlatformRoles(v []UserPlatformRole) {
+	o.PlatformRoles = v
 }
 
 func (o UserAux) MarshalJSON() ([]byte, error) {
@@ -122,7 +162,38 @@ func (o UserAux) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.IsSuperAdmin) {
 		toSerialize["is_super_admin"] = o.IsSuperAdmin
 	}
+	if !IsNil(o.PlatformRoles) {
+		toSerialize["platform_roles"] = o.PlatformRoles
+	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *UserAux) UnmarshalJSON(data []byte) (err error) {
+	varUserAux := _UserAux{}
+
+	err = json.Unmarshal(data, &varUserAux)
+
+	if err != nil {
+		return err
+	}
+
+	*o = UserAux(varUserAux)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "account_memberships")
+		delete(additionalProperties, "is_super_admin")
+		delete(additionalProperties, "platform_roles")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableUserAux struct {

@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young singles and couples | |  |  | c2 | Young couples with children | |  |  | c3 | Families with school children | |  |  | c4 | Older families | |  |  | c5 | Pensioners | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Up to 80 m² | |  |  | l2 | 80-119 m² | |  |  | l3 | Above 120 m² | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young couples and singles | |  |  | c2 | Early family life | |  |  | c3 | Middle-aged families | |  |  | c4 | Mature families | |  |  | c5 | Pensioners / Retirees | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Small | |  |  | l2 | Medium | |  |  | l3 | Large | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -177,11 +177,11 @@ type UsersAPICreateUserInAccountRequest struct {
 	ctx context.Context
 	ApiService *UsersAPIService
 	accountId string
-	userMutation *UserMutation
+	userCreation *UserCreation
 }
 
-func (r UsersAPICreateUserInAccountRequest) UserMutation(userMutation UserMutation) UsersAPICreateUserInAccountRequest {
-	r.userMutation = &userMutation
+func (r UsersAPICreateUserInAccountRequest) UserCreation(userCreation UserCreation) UsersAPICreateUserInAccountRequest {
+	r.userCreation = &userCreation
 	return r
 }
 
@@ -228,8 +228,8 @@ func (a *UsersAPIService) CreateUserInAccountExecute(r UsersAPICreateUserInAccou
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.userMutation == nil {
-		return localVarReturnValue, nil, reportError("userMutation is required and must be specified")
+	if r.userCreation == nil {
+		return localVarReturnValue, nil, reportError("userCreation is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -250,7 +250,7 @@ func (a *UsersAPIService) CreateUserInAccountExecute(r UsersAPICreateUserInAccou
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.userMutation
+	localVarPostBody = r.userCreation
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1321,14 +1321,15 @@ type UsersAPIListUsersByAccountIdRequest struct {
 	ctx context.Context
 	ApiService *UsersAPIService
 	accountId string
-	filterPlatformRoles *string
+	filterPlatformRoles *UserPlatformRole
 	filterNameContains *string
+	sort *UserSortOption
 	pageSize *int32
 	pageAfter *string
 }
 
 // Filter based on platform roles, e.g. super_admin
-func (r UsersAPIListUsersByAccountIdRequest) FilterPlatformRoles(filterPlatformRoles string) UsersAPIListUsersByAccountIdRequest {
+func (r UsersAPIListUsersByAccountIdRequest) FilterPlatformRoles(filterPlatformRoles UserPlatformRole) UsersAPIListUsersByAccountIdRequest {
 	r.filterPlatformRoles = &filterPlatformRoles
 	return r
 }
@@ -1336,6 +1337,12 @@ func (r UsersAPIListUsersByAccountIdRequest) FilterPlatformRoles(filterPlatformR
 // Optional parameter used to search for users where the name contains a substring (case insensitive)
 func (r UsersAPIListUsersByAccountIdRequest) FilterNameContains(filterNameContains string) UsersAPIListUsersByAccountIdRequest {
 	r.filterNameContains = &filterNameContains
+	return r
+}
+
+// Defines the field to sort the result items by. Ascending order is applied by default, but the minus character can be used to indicate descending order instead. 
+func (r UsersAPIListUsersByAccountIdRequest) Sort(sort UserSortOption) UsersAPIListUsersByAccountIdRequest {
+	r.sort = &sort
 	return r
 }
 
@@ -1397,6 +1404,12 @@ func (a *UsersAPIService) ListUsersByAccountIdExecute(r UsersAPIListUsersByAccou
 	}
 	if r.filterNameContains != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[name][contains]", r.filterNameContains, "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+	} else {
+		var defaultValue UserSortOption = "created_at"
+		r.sort = &defaultValue
 	}
 	if r.pageSize != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page[size]", r.pageSize, "")

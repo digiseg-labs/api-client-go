@@ -361,7 +361,7 @@ Name | Type | Description  | Notes
 
 ## ListStudies
 
-> ListStudies200Response ListStudies(ctx).Sort(sort).FilterLabel(filterLabel).FilterNameContains(filterNameContains).FilterAccountId(filterAccountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
+> ListStudies200Response ListStudies(ctx).Sort(sort).FilterIsExample(filterIsExample).FilterLabel(filterLabel).FilterNameContains(filterNameContains).FilterAccountId(filterAccountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
 
 List studies
 
@@ -381,6 +381,7 @@ import (
 
 func main() {
 	sort := "-created_at" // string | Defines the field to sort the result items by. Ascending order is applied by default, but the minus character can be used to indicate descending order instead.  (optional) (default to "created_at")
+	filterIsExample := true // bool | Optional parameter used to filter for example studies (optional) (default to false)
 	filterLabel := "CTV" // string | Optional parameter used to filter by study label (optional)
 	filterNameContains := "acme" // string | Optional parameter used to search for studies where the name contains a substring (case insensitive) (optional)
 	filterAccountId := "4k3jKJ9D12kj0S4c" // string | Optional parameter used to query studies by specific account IDs (only available to super admins). The value `*` is synonymous for \"all accounts\".  (optional) (default to "The user's account ID")
@@ -389,7 +390,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.StudiesAPI.ListStudies(context.Background()).Sort(sort).FilterLabel(filterLabel).FilterNameContains(filterNameContains).FilterAccountId(filterAccountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
+	resp, r, err := apiClient.StudiesAPI.ListStudies(context.Background()).Sort(sort).FilterIsExample(filterIsExample).FilterLabel(filterLabel).FilterNameContains(filterNameContains).FilterAccountId(filterAccountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `StudiesAPI.ListStudies``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -411,6 +412,7 @@ Other parameters are passed through a pointer to a apiListStudiesRequest struct 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **sort** | **string** | Defines the field to sort the result items by. Ascending order is applied by default, but the minus character can be used to indicate descending order instead.  | [default to &quot;created_at&quot;]
+ **filterIsExample** | **bool** | Optional parameter used to filter for example studies | [default to false]
  **filterLabel** | **string** | Optional parameter used to filter by study label | 
  **filterNameContains** | **string** | Optional parameter used to search for studies where the name contains a substring (case insensitive) | 
  **filterAccountId** | **string** | Optional parameter used to query studies by specific account IDs (only available to super admins). The value &#x60;*&#x60; is synonymous for \&quot;all accounts\&quot;.  | [default to &quot;The user&#39;s account ID&quot;]

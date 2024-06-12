@@ -9,6 +9,8 @@
 
 * `ACTIVE_FULFILLED` (value: `"active_fulfilled"`)
 
+* `PAUSED_LIMITED` (value: `"paused_limited"`)
+
 * `FINISHED_COMPLETE` (value: `"finished_complete"`)
 
 * `FINISHED_EXPIRED` (value: `"finished_expired"`)

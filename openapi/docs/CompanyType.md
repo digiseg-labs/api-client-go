@@ -9,6 +9,8 @@
 
 * `PUBLISHER` (value: `"publisher"`)
 
+* `TECHNOLOGY_PROVIDER` (value: `"technology_provider"`)
+
 * `OTHER` (value: `"other"`)
 
 

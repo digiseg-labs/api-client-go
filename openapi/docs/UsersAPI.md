@@ -95,7 +95,7 @@ Name | Type | Description  | Notes
 
 ## CreateUserInAccount
 
-> CreateUserInAccount201Response CreateUserInAccount(ctx, accountId).UserMutation(userMutation).Execute()
+> CreateUserInAccount201Response CreateUserInAccount(ctx, accountId).UserCreation(userCreation).Execute()
 
 Create user
 
@@ -115,11 +115,11 @@ import (
 
 func main() {
 	accountId := "accountId_example" // string | 
-	userMutation := *openapiclient.NewUserMutation() // UserMutation | 
+	userCreation := *openapiclient.NewUserCreation() // UserCreation | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UsersAPI.CreateUserInAccount(context.Background(), accountId).UserMutation(userMutation).Execute()
+	resp, r, err := apiClient.UsersAPI.CreateUserInAccount(context.Background(), accountId).UserCreation(userCreation).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.CreateUserInAccount``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -145,7 +145,7 @@ Other parameters are passed through a pointer to a apiCreateUserInAccountRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **userMutation** | [**UserMutation**](UserMutation.md) |  | 
+ **userCreation** | [**UserCreation**](UserCreation.md) |  | 
 
 ### Return type
 
@@ -706,7 +706,7 @@ Name | Type | Description  | Notes
 
 ## ListUsersByAccountId
 
-> ListUsersByAccountId200Response ListUsersByAccountId(ctx, accountId).FilterPlatformRoles(filterPlatformRoles).FilterNameContains(filterNameContains).PageSize(pageSize).PageAfter(pageAfter).Execute()
+> ListUsersByAccountId200Response ListUsersByAccountId(ctx, accountId).FilterPlatformRoles(filterPlatformRoles).FilterNameContains(filterNameContains).Sort(sort).PageSize(pageSize).PageAfter(pageAfter).Execute()
 
 List users for account
 
@@ -724,14 +724,15 @@ import (
 
 func main() {
 	accountId := "accountId_example" // string | 
-	filterPlatformRoles := "filterPlatformRoles_example" // string | Filter based on platform roles, e.g. super_admin (optional)
+	filterPlatformRoles := openapiclient.UserPlatformRole("super_admin") // UserPlatformRole | Filter based on platform roles, e.g. super_admin (optional)
 	filterNameContains := "Doe" // string | Optional parameter used to search for users where the name contains a substring (case insensitive) (optional)
+	sort := openapiclient.UserSortOption("created_at") // UserSortOption | Defines the field to sort the result items by. Ascending order is applied by default, but the minus character can be used to indicate descending order instead.  (optional) (default to "created_at")
 	pageSize := int32(56) // int32 | The desired page size (optional) (default to 100)
 	pageAfter := "pageAfter_example" // string | Optional pagination parameter, indicating the previous cursor value to paginate beyond. The value to provide here is opaque, but can be found in previous requests in the `meta.page.last_cursor` field.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UsersAPI.ListUsersByAccountId(context.Background(), accountId).FilterPlatformRoles(filterPlatformRoles).FilterNameContains(filterNameContains).PageSize(pageSize).PageAfter(pageAfter).Execute()
+	resp, r, err := apiClient.UsersAPI.ListUsersByAccountId(context.Background(), accountId).FilterPlatformRoles(filterPlatformRoles).FilterNameContains(filterNameContains).Sort(sort).PageSize(pageSize).PageAfter(pageAfter).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.ListUsersByAccountId``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -757,8 +758,9 @@ Other parameters are passed through a pointer to a apiListUsersByAccountIdReques
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **filterPlatformRoles** | **string** | Filter based on platform roles, e.g. super_admin | 
+ **filterPlatformRoles** | [**UserPlatformRole**](UserPlatformRole.md) | Filter based on platform roles, e.g. super_admin | 
  **filterNameContains** | **string** | Optional parameter used to search for users where the name contains a substring (case insensitive) | 
+ **sort** | [**UserSortOption**](UserSortOption.md) | Defines the field to sort the result items by. Ascending order is applied by default, but the minus character can be used to indicate descending order instead.  | [default to &quot;created_at&quot;]
  **pageSize** | **int32** | The desired page size | [default to 100]
  **pageAfter** | **string** | Optional pagination parameter, indicating the previous cursor value to paginate beyond. The value to provide here is opaque, but can be found in previous requests in the &#x60;meta.page.last_cursor&#x60; field.  | 
 

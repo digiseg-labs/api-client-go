@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Data** | Pointer to [**StudyFull**](StudyFull.md) |  | [optional] 
 **Links** | Pointer to [**StudyLinks**](StudyLinks.md) |  | [optional] 
+**Meta** | Pointer to [**StudyMeta**](StudyMeta.md) |  | [optional] 
 
 ## Methods
 
@@ -75,6 +76,31 @@ SetLinks sets Links field to given value.
 `func (o *CreateStudy201Response) HasLinks() bool`
 
 HasLinks returns a boolean if a field has been set.
+
+### GetMeta
+
+`func (o *CreateStudy201Response) GetMeta() StudyMeta`
+
+GetMeta returns the Meta field if non-nil, zero value otherwise.
+
+### GetMetaOk
+
+`func (o *CreateStudy201Response) GetMetaOk() (*StudyMeta, bool)`
+
+GetMetaOk returns a tuple with the Meta field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMeta
+
+`func (o *CreateStudy201Response) SetMeta(v StudyMeta)`
+
+SetMeta sets Meta field to given value.
+
+### HasMeta
+
+`func (o *CreateStudy201Response) HasMeta() bool`
+
+HasMeta returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

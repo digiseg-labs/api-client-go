@@ -7,14 +7,17 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Labels** | Pointer to **[]string** | A set of labels that users can use to categorize their measurements. Can be used to indicate type of study, customer names or other traits.  | [optional] 
 **AccountId** | Pointer to **string** | The ID of the account that owns this study | [optional] [readonly] 
-**StartDate** | Pointer to **time.Time** | The date for which the study and its data ingestion will start. | [optional] [readonly] 
+**StartDate** | Pointer to **time.Time** | The date for which the study and its data ingestion will start | [optional] 
+**EndDate** | Pointer to **time.Time** | The date for which the study and its data ingestion will end | [optional] 
 **LifeCycleStage** | Pointer to [**StudyLifecycleStage**](StudyLifecycleStage.md) |  | [optional] 
 **IngestionStatus** | Pointer to [**StudyIngestionStatus**](StudyIngestionStatus.md) |  | [optional] 
 **SummaryStats** | Pointer to [**StudySummaryStats**](StudySummaryStats.md) |  | [optional] 
 **Client** | Pointer to [**MeasurementClientItem**](MeasurementClientItem.md) |  | [optional] 
 **EventLinks** | Pointer to [**MeasurementEventLinks**](MeasurementEventLinks.md) |  | [optional] 
+**EventCap** | Pointer to **int32** | If present, an upper limit on the number of events that will be processed in this study. | [optional] 
 **BannerImageUrl** | Pointer to **string** | The URL to a banner image for the study. Note that the banner image is used only for Digiseg study reporting and presentation, it does NOT represent any delivered banner ad creatives or similar.  | [optional] [readonly] 
 **IntegrationPlatform** | Pointer to [**MeasurementIntegrationPlatform**](MeasurementIntegrationPlatform.md) |  | [optional] 
+**IsExample** | Pointer to **bool** | Determines if the study is an example study, used to demonstrate product capabilities | [optional] [readonly] 
 **EventSet** | [**MeasurementEventSet**](MeasurementEventSet.md) |  | 
 **ClientId** | Pointer to **string** | The ID of the measurement client that this study is for | [optional] 
 
@@ -131,6 +134,31 @@ SetStartDate sets StartDate field to given value.
 `func (o *StudyCreation) HasStartDate() bool`
 
 HasStartDate returns a boolean if a field has been set.
+
+### GetEndDate
+
+`func (o *StudyCreation) GetEndDate() time.Time`
+
+GetEndDate returns the EndDate field if non-nil, zero value otherwise.
+
+### GetEndDateOk
+
+`func (o *StudyCreation) GetEndDateOk() (*time.Time, bool)`
+
+GetEndDateOk returns a tuple with the EndDate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEndDate
+
+`func (o *StudyCreation) SetEndDate(v time.Time)`
+
+SetEndDate sets EndDate field to given value.
+
+### HasEndDate
+
+`func (o *StudyCreation) HasEndDate() bool`
+
+HasEndDate returns a boolean if a field has been set.
 
 ### GetLifeCycleStage
 
@@ -257,6 +285,31 @@ SetEventLinks sets EventLinks field to given value.
 
 HasEventLinks returns a boolean if a field has been set.
 
+### GetEventCap
+
+`func (o *StudyCreation) GetEventCap() int32`
+
+GetEventCap returns the EventCap field if non-nil, zero value otherwise.
+
+### GetEventCapOk
+
+`func (o *StudyCreation) GetEventCapOk() (*int32, bool)`
+
+GetEventCapOk returns a tuple with the EventCap field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEventCap
+
+`func (o *StudyCreation) SetEventCap(v int32)`
+
+SetEventCap sets EventCap field to given value.
+
+### HasEventCap
+
+`func (o *StudyCreation) HasEventCap() bool`
+
+HasEventCap returns a boolean if a field has been set.
+
 ### GetBannerImageUrl
 
 `func (o *StudyCreation) GetBannerImageUrl() string`
@@ -306,6 +359,31 @@ SetIntegrationPlatform sets IntegrationPlatform field to given value.
 `func (o *StudyCreation) HasIntegrationPlatform() bool`
 
 HasIntegrationPlatform returns a boolean if a field has been set.
+
+### GetIsExample
+
+`func (o *StudyCreation) GetIsExample() bool`
+
+GetIsExample returns the IsExample field if non-nil, zero value otherwise.
+
+### GetIsExampleOk
+
+`func (o *StudyCreation) GetIsExampleOk() (*bool, bool)`
+
+GetIsExampleOk returns a tuple with the IsExample field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsExample
+
+`func (o *StudyCreation) SetIsExample(v bool)`
+
+SetIsExample sets IsExample field to given value.
+
+### HasIsExample
+
+`func (o *StudyCreation) HasIsExample() bool`
+
+HasIsExample returns a boolean if a field has been set.
 
 ### GetEventSet
 

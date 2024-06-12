@@ -7,7 +7,8 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** |  | [optional] 
 **Labels** | Pointer to **[]string** | A set of labels that users can use to categorize their measurements. Can be used to indicate type of study, customer names or other traits.  | [optional] 
 **AccountId** | Pointer to **string** | The ID of the account that owns this study | [optional] [readonly] 
-**StartDate** | Pointer to **time.Time** | The date for which the study and its data ingestion will start. | [optional] [readonly] 
+**StartDate** | Pointer to **time.Time** | The date for which the study and its data ingestion will start | [optional] 
+**EndDate** | Pointer to **time.Time** | The date for which the study and its data ingestion will end | [optional] 
 **LifeCycleStage** | Pointer to [**StudyLifecycleStage**](StudyLifecycleStage.md) |  | [optional] 
 **IngestionStatus** | Pointer to [**StudyIngestionStatus**](StudyIngestionStatus.md) |  | [optional] 
 **SummaryStats** | Pointer to [**StudySummaryStats**](StudySummaryStats.md) |  | [optional] 
@@ -131,6 +132,31 @@ SetStartDate sets StartDate field to given value.
 `func (o *StudyBase) HasStartDate() bool`
 
 HasStartDate returns a boolean if a field has been set.
+
+### GetEndDate
+
+`func (o *StudyBase) GetEndDate() time.Time`
+
+GetEndDate returns the EndDate field if non-nil, zero value otherwise.
+
+### GetEndDateOk
+
+`func (o *StudyBase) GetEndDateOk() (*time.Time, bool)`
+
+GetEndDateOk returns a tuple with the EndDate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEndDate
+
+`func (o *StudyBase) SetEndDate(v time.Time)`
+
+SetEndDate sets EndDate field to given value.
+
+### HasEndDate
+
+`func (o *StudyBase) HasEndDate() bool`
+
+HasEndDate returns a boolean if a field has been set.
 
 ### GetLifeCycleStage
 

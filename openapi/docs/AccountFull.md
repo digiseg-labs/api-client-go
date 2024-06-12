@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | Unique ID for the object | [optional] 
+**Id** | Pointer to **string** | Unique ID for the object | [optional] [readonly] 
 **Name** | Pointer to **string** | Human readable name of the account | [optional] 
 **LogoUrl** | Pointer to **string** | The URL to the logo of the account | [optional] 
 **WebsiteUrl** | Pointer to **string** | URL of the account&#39;s primary website | [optional] 
@@ -16,10 +16,11 @@ Name | Type | Description | Notes
 **OwnerId** | Pointer to **string** | ID of the user who is the ultimate owner of the account. Deprecated in favor of the &#x60;owner&#x60; role of the user&#39;s account membership. | [optional] 
 **BillingEmail** | Pointer to **string** | The email address to send billing information to. Requires &#x60;owner&#x60; role to change. | [optional] 
 **BillingAddress** | Pointer to [**PostalAddress**](PostalAddress.md) |  | [optional] 
-**CreatedAt** | Pointer to **time.Time** | Date and time of the object creation | [optional] 
-**CreatedBy** | Pointer to **string** | ID of the user who created the object | [optional] 
-**UpdatedAt** | Pointer to **time.Time** | Date and time of the latest update to the object | [optional] 
-**UpdatedBy** | Pointer to **string** | ID of the user who last updated the object | [optional] 
+**StripeCustomerId** | Pointer to **string** |  | [optional] [readonly] 
+**CreatedAt** | Pointer to **time.Time** | Date and time of the object creation | [optional] [readonly] 
+**CreatedBy** | Pointer to **string** | ID of the user who created the object | [optional] [readonly] 
+**UpdatedAt** | Pointer to **time.Time** | Date and time of the latest update to the object | [optional] [readonly] 
+**UpdatedBy** | Pointer to **string** | ID of the user who last updated the object | [optional] [readonly] 
 
 ## Methods
 
@@ -339,6 +340,31 @@ SetBillingAddress sets BillingAddress field to given value.
 `func (o *AccountFull) HasBillingAddress() bool`
 
 HasBillingAddress returns a boolean if a field has been set.
+
+### GetStripeCustomerId
+
+`func (o *AccountFull) GetStripeCustomerId() string`
+
+GetStripeCustomerId returns the StripeCustomerId field if non-nil, zero value otherwise.
+
+### GetStripeCustomerIdOk
+
+`func (o *AccountFull) GetStripeCustomerIdOk() (*string, bool)`
+
+GetStripeCustomerIdOk returns a tuple with the StripeCustomerId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStripeCustomerId
+
+`func (o *AccountFull) SetStripeCustomerId(v string)`
+
+SetStripeCustomerId sets StripeCustomerId field to given value.
+
+### HasStripeCustomerId
+
+`func (o *AccountFull) HasStripeCustomerId() bool`
+
+HasStripeCustomerId returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

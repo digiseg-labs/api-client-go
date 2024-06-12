@@ -15,7 +15,9 @@ Name | Type | Description | Notes
 **OwnerId** | Pointer to **string** | ID of the user who is the ultimate owner of the account. Deprecated in favor of the &#x60;owner&#x60; role of the user&#39;s account membership. | [optional] 
 **BillingEmail** | Pointer to **string** | The email address to send billing information to. Requires &#x60;owner&#x60; role to change. | [optional] 
 **BillingAddress** | Pointer to [**PostalAddress**](PostalAddress.md) |  | [optional] 
+**StripeCustomerId** | Pointer to **string** |  | [optional] [readonly] 
 **Owner** | Pointer to [**AccountOwnerCreation**](AccountOwnerCreation.md) |  | [optional] 
+**NotifyUser** | Pointer to **bool** | Whether or not to notify the user that they have been registered | [optional] [default to true]
 
 ## Methods
 
@@ -311,6 +313,31 @@ SetBillingAddress sets BillingAddress field to given value.
 
 HasBillingAddress returns a boolean if a field has been set.
 
+### GetStripeCustomerId
+
+`func (o *AccountCreation) GetStripeCustomerId() string`
+
+GetStripeCustomerId returns the StripeCustomerId field if non-nil, zero value otherwise.
+
+### GetStripeCustomerIdOk
+
+`func (o *AccountCreation) GetStripeCustomerIdOk() (*string, bool)`
+
+GetStripeCustomerIdOk returns a tuple with the StripeCustomerId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStripeCustomerId
+
+`func (o *AccountCreation) SetStripeCustomerId(v string)`
+
+SetStripeCustomerId sets StripeCustomerId field to given value.
+
+### HasStripeCustomerId
+
+`func (o *AccountCreation) HasStripeCustomerId() bool`
+
+HasStripeCustomerId returns a boolean if a field has been set.
+
 ### GetOwner
 
 `func (o *AccountCreation) GetOwner() AccountOwnerCreation`
@@ -335,6 +362,31 @@ SetOwner sets Owner field to given value.
 `func (o *AccountCreation) HasOwner() bool`
 
 HasOwner returns a boolean if a field has been set.
+
+### GetNotifyUser
+
+`func (o *AccountCreation) GetNotifyUser() bool`
+
+GetNotifyUser returns the NotifyUser field if non-nil, zero value otherwise.
+
+### GetNotifyUserOk
+
+`func (o *AccountCreation) GetNotifyUserOk() (*bool, bool)`
+
+GetNotifyUserOk returns a tuple with the NotifyUser field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNotifyUser
+
+`func (o *AccountCreation) SetNotifyUser(v bool)`
+
+SetNotifyUser sets NotifyUser field to given value.
+
+### HasNotifyUser
+
+`func (o *AccountCreation) HasNotifyUser() bool`
+
+HasNotifyUser returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

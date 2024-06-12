@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **LoggedInAt** | Pointer to **time.Time** | The approximate last time that the user logged in | [optional] [readonly] 
 **AccountMemberships** | Pointer to [**[]UserAccountMembership**](UserAccountMembership.md) |  | [optional] [readonly] 
 **IsSuperAdmin** | Pointer to **bool** | Determines if the user is a super admin of Digiseg API services | [optional] 
+**PlatformRoles** | Pointer to [**[]UserPlatformRole**](UserPlatformRole.md) |  | [optional] 
 **Password** | Pointer to **string** | Password of the user | [optional] 
 
 ## Methods
@@ -232,6 +233,31 @@ SetIsSuperAdmin sets IsSuperAdmin field to given value.
 `func (o *UserMutation) HasIsSuperAdmin() bool`
 
 HasIsSuperAdmin returns a boolean if a field has been set.
+
+### GetPlatformRoles
+
+`func (o *UserMutation) GetPlatformRoles() []UserPlatformRole`
+
+GetPlatformRoles returns the PlatformRoles field if non-nil, zero value otherwise.
+
+### GetPlatformRolesOk
+
+`func (o *UserMutation) GetPlatformRolesOk() (*[]UserPlatformRole, bool)`
+
+GetPlatformRolesOk returns a tuple with the PlatformRoles field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPlatformRoles
+
+`func (o *UserMutation) SetPlatformRoles(v []UserPlatformRole)`
+
+SetPlatformRoles sets PlatformRoles field to given value.
+
+### HasPlatformRoles
+
+`func (o *UserMutation) HasPlatformRoles() bool`
+
+HasPlatformRoles returns a boolean if a field has been set.
 
 ### GetPassword
 

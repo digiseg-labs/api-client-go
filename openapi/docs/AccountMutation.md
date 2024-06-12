@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **OwnerId** | Pointer to **string** | ID of the user who is the ultimate owner of the account. Deprecated in favor of the &#x60;owner&#x60; role of the user&#39;s account membership. | [optional] 
 **BillingEmail** | Pointer to **string** | The email address to send billing information to. Requires &#x60;owner&#x60; role to change. | [optional] 
 **BillingAddress** | Pointer to [**PostalAddress**](PostalAddress.md) |  | [optional] 
+**StripeCustomerId** | Pointer to **string** |  | [optional] [readonly] 
 
 ## Methods
 
@@ -309,6 +310,31 @@ SetBillingAddress sets BillingAddress field to given value.
 `func (o *AccountMutation) HasBillingAddress() bool`
 
 HasBillingAddress returns a boolean if a field has been set.
+
+### GetStripeCustomerId
+
+`func (o *AccountMutation) GetStripeCustomerId() string`
+
+GetStripeCustomerId returns the StripeCustomerId field if non-nil, zero value otherwise.
+
+### GetStripeCustomerIdOk
+
+`func (o *AccountMutation) GetStripeCustomerIdOk() (*string, bool)`
+
+GetStripeCustomerIdOk returns a tuple with the StripeCustomerId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStripeCustomerId
+
+`func (o *AccountMutation) SetStripeCustomerId(v string)`
+
+SetStripeCustomerId sets StripeCustomerId field to given value.
+
+### HasStripeCustomerId
+
+`func (o *AccountMutation) HasStripeCustomerId() bool`
+
+HasStripeCustomerId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

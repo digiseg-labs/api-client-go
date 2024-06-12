@@ -8,6 +8,8 @@ Method | HTTP request | Description
 [**DeleteAccountLogo**](AccountsAPI.md#DeleteAccountLogo) | **Delete** /accounts/{account_id}/assets/logo | Delete account logo
 [**GetAccountById**](AccountsAPI.md#GetAccountById) | **Get** /accounts/{account_id} | Get account
 [**GetAccountLogo**](AccountsAPI.md#GetAccountLogo) | **Get** /accounts/{account_id}/assets/logo | Get account logo
+[**GetAccountSubscriptionById**](AccountsAPI.md#GetAccountSubscriptionById) | **Get** /accounts/{account_id}/subscriptions/{subscription_id} | Get account subscription
+[**GetAccountSubscriptions**](AccountsAPI.md#GetAccountSubscriptions) | **Get** /accounts/{account_id}/subscriptions | Get account subscriptions summary
 [**ListApiKeysByAccountId**](AccountsAPI.md#ListApiKeysByAccountId) | **Get** /accounts/{account_id}/apikeys | List API keys for account
 [**ListUsersByAccountId**](AccountsAPI.md#ListUsersByAccountId) | **Get** /accounts/{account_id}/users | List users for account
 [**UpdateAccountById**](AccountsAPI.md#UpdateAccountById) | **Put** /accounts/{account_id} | Update account
@@ -17,7 +19,7 @@ Method | HTTP request | Description
 
 ## CreateUserInAccount
 
-> CreateUserInAccount201Response CreateUserInAccount(ctx, accountId).UserMutation(userMutation).Execute()
+> CreateUserInAccount201Response CreateUserInAccount(ctx, accountId).UserCreation(userCreation).Execute()
 
 Create user
 
@@ -37,11 +39,11 @@ import (
 
 func main() {
 	accountId := "accountId_example" // string | 
-	userMutation := *openapiclient.NewUserMutation() // UserMutation | 
+	userCreation := *openapiclient.NewUserCreation() // UserCreation | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AccountsAPI.CreateUserInAccount(context.Background(), accountId).UserMutation(userMutation).Execute()
+	resp, r, err := apiClient.AccountsAPI.CreateUserInAccount(context.Background(), accountId).UserCreation(userCreation).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AccountsAPI.CreateUserInAccount``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -67,7 +69,7 @@ Other parameters are passed through a pointer to a apiCreateUserInAccountRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **userMutation** | [**UserMutation**](UserMutation.md) |  | 
+ **userCreation** | [**UserCreation**](UserCreation.md) |  | 
 
 ### Return type
 
@@ -291,6 +293,149 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetAccountSubscriptionById
+
+> GetAccountSubscriptionById200Response GetAccountSubscriptionById(ctx, accountId, subscriptionId).Execute()
+
+Get account subscription
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	accountId := "accountId_example" // string | 
+	subscriptionId := "subscriptionId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AccountsAPI.GetAccountSubscriptionById(context.Background(), accountId, subscriptionId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AccountsAPI.GetAccountSubscriptionById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAccountSubscriptionById`: GetAccountSubscriptionById200Response
+	fmt.Fprintf(os.Stdout, "Response from `AccountsAPI.GetAccountSubscriptionById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**accountId** | **string** |  | 
+**subscriptionId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAccountSubscriptionByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**GetAccountSubscriptionById200Response**](GetAccountSubscriptionById200Response.md)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetAccountSubscriptions
+
+> GetAccountSubscriptions200Response GetAccountSubscriptions(ctx, accountId).Execute()
+
+Get account subscriptions summary
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	accountId := "accountId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AccountsAPI.GetAccountSubscriptions(context.Background(), accountId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AccountsAPI.GetAccountSubscriptions``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAccountSubscriptions`: GetAccountSubscriptions200Response
+	fmt.Fprintf(os.Stdout, "Response from `AccountsAPI.GetAccountSubscriptions`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**accountId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAccountSubscriptionsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**GetAccountSubscriptions200Response**](GetAccountSubscriptions200Response.md)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListApiKeysByAccountId
 
 > ListApiKeysByAccountId200Response ListApiKeysByAccountId(ctx, accountId).Execute()
@@ -361,7 +506,7 @@ Name | Type | Description  | Notes
 
 ## ListUsersByAccountId
 
-> ListUsersByAccountId200Response ListUsersByAccountId(ctx, accountId).FilterPlatformRoles(filterPlatformRoles).FilterNameContains(filterNameContains).PageSize(pageSize).PageAfter(pageAfter).Execute()
+> ListUsersByAccountId200Response ListUsersByAccountId(ctx, accountId).FilterPlatformRoles(filterPlatformRoles).FilterNameContains(filterNameContains).Sort(sort).PageSize(pageSize).PageAfter(pageAfter).Execute()
 
 List users for account
 
@@ -379,14 +524,15 @@ import (
 
 func main() {
 	accountId := "accountId_example" // string | 
-	filterPlatformRoles := "filterPlatformRoles_example" // string | Filter based on platform roles, e.g. super_admin (optional)
+	filterPlatformRoles := openapiclient.UserPlatformRole("super_admin") // UserPlatformRole | Filter based on platform roles, e.g. super_admin (optional)
 	filterNameContains := "Doe" // string | Optional parameter used to search for users where the name contains a substring (case insensitive) (optional)
+	sort := openapiclient.UserSortOption("created_at") // UserSortOption | Defines the field to sort the result items by. Ascending order is applied by default, but the minus character can be used to indicate descending order instead.  (optional) (default to "created_at")
 	pageSize := int32(56) // int32 | The desired page size (optional) (default to 100)
 	pageAfter := "pageAfter_example" // string | Optional pagination parameter, indicating the previous cursor value to paginate beyond. The value to provide here is opaque, but can be found in previous requests in the `meta.page.last_cursor` field.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AccountsAPI.ListUsersByAccountId(context.Background(), accountId).FilterPlatformRoles(filterPlatformRoles).FilterNameContains(filterNameContains).PageSize(pageSize).PageAfter(pageAfter).Execute()
+	resp, r, err := apiClient.AccountsAPI.ListUsersByAccountId(context.Background(), accountId).FilterPlatformRoles(filterPlatformRoles).FilterNameContains(filterNameContains).Sort(sort).PageSize(pageSize).PageAfter(pageAfter).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AccountsAPI.ListUsersByAccountId``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -412,8 +558,9 @@ Other parameters are passed through a pointer to a apiListUsersByAccountIdReques
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **filterPlatformRoles** | **string** | Filter based on platform roles, e.g. super_admin | 
+ **filterPlatformRoles** | [**UserPlatformRole**](UserPlatformRole.md) | Filter based on platform roles, e.g. super_admin | 
  **filterNameContains** | **string** | Optional parameter used to search for users where the name contains a substring (case insensitive) | 
+ **sort** | [**UserSortOption**](UserSortOption.md) | Defines the field to sort the result items by. Ascending order is applied by default, but the minus character can be used to indicate descending order instead.  | [default to &quot;created_at&quot;]
  **pageSize** | **int32** | The desired page size | [default to 100]
  **pageAfter** | **string** | Optional pagination parameter, indicating the previous cursor value to paginate beyond. The value to provide here is opaque, but can be found in previous requests in the &#x60;meta.page.last_cursor&#x60; field.  | 
 

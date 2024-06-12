@@ -8,14 +8,17 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** |  | [optional] 
 **Labels** | Pointer to **[]string** | A set of labels that users can use to categorize their measurements. Can be used to indicate type of study, customer names or other traits.  | [optional] 
 **AccountId** | Pointer to **string** | The ID of the account that owns this study | [optional] [readonly] 
-**StartDate** | Pointer to **time.Time** | The date for which the study and its data ingestion will start. | [optional] [readonly] 
+**StartDate** | Pointer to **time.Time** | The date for which the study and its data ingestion will start | [optional] 
+**EndDate** | Pointer to **time.Time** | The date for which the study and its data ingestion will end | [optional] 
 **LifeCycleStage** | Pointer to [**StudyLifecycleStage**](StudyLifecycleStage.md) |  | [optional] 
 **IngestionStatus** | Pointer to [**StudyIngestionStatus**](StudyIngestionStatus.md) |  | [optional] 
 **SummaryStats** | Pointer to [**StudySummaryStats**](StudySummaryStats.md) |  | [optional] 
 **Client** | Pointer to [**MeasurementClientItem**](MeasurementClientItem.md) |  | [optional] 
 **EventLinks** | Pointer to [**MeasurementEventLinks**](MeasurementEventLinks.md) |  | [optional] 
+**EventCap** | Pointer to **int32** | If present, an upper limit on the number of events that will be processed in this study. | [optional] 
 **BannerImageUrl** | Pointer to **string** | The URL to a banner image for the study. Note that the banner image is used only for Digiseg study reporting and presentation, it does NOT represent any delivered banner ad creatives or similar.  | [optional] [readonly] 
 **IntegrationPlatform** | Pointer to [**MeasurementIntegrationPlatform**](MeasurementIntegrationPlatform.md) |  | [optional] 
+**IsExample** | Pointer to **bool** | Determines if the study is an example study, used to demonstrate product capabilities | [optional] [readonly] 
 **CreatedAt** | **time.Time** | Date and time of the object creation | 
 **CreatedBy** | **string** | ID of the user who created the object | 
 **UpdatedAt** | Pointer to **time.Time** | Date and time of the latest update to the object | [optional] 
@@ -160,6 +163,31 @@ SetStartDate sets StartDate field to given value.
 
 HasStartDate returns a boolean if a field has been set.
 
+### GetEndDate
+
+`func (o *StudyFull) GetEndDate() time.Time`
+
+GetEndDate returns the EndDate field if non-nil, zero value otherwise.
+
+### GetEndDateOk
+
+`func (o *StudyFull) GetEndDateOk() (*time.Time, bool)`
+
+GetEndDateOk returns a tuple with the EndDate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEndDate
+
+`func (o *StudyFull) SetEndDate(v time.Time)`
+
+SetEndDate sets EndDate field to given value.
+
+### HasEndDate
+
+`func (o *StudyFull) HasEndDate() bool`
+
+HasEndDate returns a boolean if a field has been set.
+
 ### GetLifeCycleStage
 
 `func (o *StudyFull) GetLifeCycleStage() StudyLifecycleStage`
@@ -285,6 +313,31 @@ SetEventLinks sets EventLinks field to given value.
 
 HasEventLinks returns a boolean if a field has been set.
 
+### GetEventCap
+
+`func (o *StudyFull) GetEventCap() int32`
+
+GetEventCap returns the EventCap field if non-nil, zero value otherwise.
+
+### GetEventCapOk
+
+`func (o *StudyFull) GetEventCapOk() (*int32, bool)`
+
+GetEventCapOk returns a tuple with the EventCap field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEventCap
+
+`func (o *StudyFull) SetEventCap(v int32)`
+
+SetEventCap sets EventCap field to given value.
+
+### HasEventCap
+
+`func (o *StudyFull) HasEventCap() bool`
+
+HasEventCap returns a boolean if a field has been set.
+
 ### GetBannerImageUrl
 
 `func (o *StudyFull) GetBannerImageUrl() string`
@@ -334,6 +387,31 @@ SetIntegrationPlatform sets IntegrationPlatform field to given value.
 `func (o *StudyFull) HasIntegrationPlatform() bool`
 
 HasIntegrationPlatform returns a boolean if a field has been set.
+
+### GetIsExample
+
+`func (o *StudyFull) GetIsExample() bool`
+
+GetIsExample returns the IsExample field if non-nil, zero value otherwise.
+
+### GetIsExampleOk
+
+`func (o *StudyFull) GetIsExampleOk() (*bool, bool)`
+
+GetIsExampleOk returns a tuple with the IsExample field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsExample
+
+`func (o *StudyFull) SetIsExample(v bool)`
+
+SetIsExample sets IsExample field to given value.
+
+### HasIsExample
+
+`func (o *StudyFull) HasIsExample() bool`
+
+HasIsExample returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

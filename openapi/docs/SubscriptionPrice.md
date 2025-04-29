@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Amount** | **int32** |  | 
-**Currency** | [**SubscriptionPriceCurrency**](SubscriptionPriceCurrency.md) |  | [default to EUR]
+**Currency** | [**SubscriptionPriceCurrency**](SubscriptionPriceCurrency.md) |  | [default to SUBSCRIPTIONPRICECURRENCY_EUR]
 **Interval** | [**SubscriptionPriceInterval**](SubscriptionPriceInterval.md) |  | 
 
 ## Methods

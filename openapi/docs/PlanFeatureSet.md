@@ -7,8 +7,9 @@ Name | Type | Description | Notes
 **MaxUsers** | **int32** |  | 
 **MaxClients** | **int32** |  | 
 **MaxActiveStudies** | **int32** |  | 
-**MaxEventsPerStudy** | **int32** |  | 
-**MaxAudienceLookupsPerMonth** | **int32** |  | 
+**MaxEventsPerStudy** | **int64** |  | 
+**MaxStudyEventsPerMonth** | **int64** |  | 
+**MaxAudienceLookupsPerMonth** | **int64** |  | 
 **StudyAudienceSet** | [**LimitedOrFullFeature**](LimitedOrFullFeature.md) |  | 
 **StudyEventSet** | [**LimitedOrFullFeature**](LimitedOrFullFeature.md) |  | 
 **HasAudienceRecommendations** | **bool** |  | 
@@ -20,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewPlanFeatureSet
 
-`func NewPlanFeatureSet(maxUsers int32, maxClients int32, maxActiveStudies int32, maxEventsPerStudy int32, maxAudienceLookupsPerMonth int32, studyAudienceSet LimitedOrFullFeature, studyEventSet LimitedOrFullFeature, hasAudienceRecommendations bool, hasReportCustomization bool, hasReportSharingClients bool, hasReportSharingPublic bool, ) *PlanFeatureSet`
+`func NewPlanFeatureSet(maxUsers int32, maxClients int32, maxActiveStudies int32, maxEventsPerStudy int64, maxStudyEventsPerMonth int64, maxAudienceLookupsPerMonth int64, studyAudienceSet LimitedOrFullFeature, studyEventSet LimitedOrFullFeature, hasAudienceRecommendations bool, hasReportCustomization bool, hasReportSharingClients bool, hasReportSharingPublic bool, ) *PlanFeatureSet`
 
 NewPlanFeatureSet instantiates a new PlanFeatureSet object
 This constructor will assign default values to properties that have it defined,
@@ -97,40 +98,60 @@ SetMaxActiveStudies sets MaxActiveStudies field to given value.
 
 ### GetMaxEventsPerStudy
 
-`func (o *PlanFeatureSet) GetMaxEventsPerStudy() int32`
+`func (o *PlanFeatureSet) GetMaxEventsPerStudy() int64`
 
 GetMaxEventsPerStudy returns the MaxEventsPerStudy field if non-nil, zero value otherwise.
 
 ### GetMaxEventsPerStudyOk
 
-`func (o *PlanFeatureSet) GetMaxEventsPerStudyOk() (*int32, bool)`
+`func (o *PlanFeatureSet) GetMaxEventsPerStudyOk() (*int64, bool)`
 
 GetMaxEventsPerStudyOk returns a tuple with the MaxEventsPerStudy field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMaxEventsPerStudy
 
-`func (o *PlanFeatureSet) SetMaxEventsPerStudy(v int32)`
+`func (o *PlanFeatureSet) SetMaxEventsPerStudy(v int64)`
 
 SetMaxEventsPerStudy sets MaxEventsPerStudy field to given value.
 
 
+### GetMaxStudyEventsPerMonth
+
+`func (o *PlanFeatureSet) GetMaxStudyEventsPerMonth() int64`
+
+GetMaxStudyEventsPerMonth returns the MaxStudyEventsPerMonth field if non-nil, zero value otherwise.
+
+### GetMaxStudyEventsPerMonthOk
+
+`func (o *PlanFeatureSet) GetMaxStudyEventsPerMonthOk() (*int64, bool)`
+
+GetMaxStudyEventsPerMonthOk returns a tuple with the MaxStudyEventsPerMonth field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMaxStudyEventsPerMonth
+
+`func (o *PlanFeatureSet) SetMaxStudyEventsPerMonth(v int64)`
+
+SetMaxStudyEventsPerMonth sets MaxStudyEventsPerMonth field to given value.
+
+
 ### GetMaxAudienceLookupsPerMonth
 
-`func (o *PlanFeatureSet) GetMaxAudienceLookupsPerMonth() int32`
+`func (o *PlanFeatureSet) GetMaxAudienceLookupsPerMonth() int64`
 
 GetMaxAudienceLookupsPerMonth returns the MaxAudienceLookupsPerMonth field if non-nil, zero value otherwise.
 
 ### GetMaxAudienceLookupsPerMonthOk
 
-`func (o *PlanFeatureSet) GetMaxAudienceLookupsPerMonthOk() (*int32, bool)`
+`func (o *PlanFeatureSet) GetMaxAudienceLookupsPerMonthOk() (*int64, bool)`
 
 GetMaxAudienceLookupsPerMonthOk returns a tuple with the MaxAudienceLookupsPerMonth field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMaxAudienceLookupsPerMonth
 
-`func (o *PlanFeatureSet) SetMaxAudienceLookupsPerMonth(v int32)`
+`func (o *PlanFeatureSet) SetMaxAudienceLookupsPerMonth(v int64)`
 
 SetMaxAudienceLookupsPerMonth sets MaxAudienceLookupsPerMonth field to given value.
 

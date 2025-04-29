@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young couples and singles | |  |  | c2 | Early family life | |  |  | c3 | Middle-aged families | |  |  | c4 | Mature families | |  |  | c5 | Pensioners / Retirees | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Small | |  |  | l2 | Medium | |  |  | l3 | Large | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -18,12 +18,153 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 	"os"
 )
 
 
 // StudiesAPIService StudiesAPI service
 type StudiesAPIService service
+
+type StudiesAPICreateSharedReportRequest struct {
+	ctx context.Context
+	ApiService *StudiesAPIService
+	studyId string
+	sharedReportCreation *SharedReportCreation
+}
+
+func (r StudiesAPICreateSharedReportRequest) SharedReportCreation(sharedReportCreation SharedReportCreation) StudiesAPICreateSharedReportRequest {
+	r.sharedReportCreation = &sharedReportCreation
+	return r
+}
+
+func (r StudiesAPICreateSharedReportRequest) Execute() (*CreateSharedReport201Response, *http.Response, error) {
+	return r.ApiService.CreateSharedReportExecute(r)
+}
+
+/*
+CreateSharedReport Create shared report
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param studyId
+ @return StudiesAPICreateSharedReportRequest
+*/
+func (a *StudiesAPIService) CreateSharedReport(ctx context.Context, studyId string) StudiesAPICreateSharedReportRequest {
+	return StudiesAPICreateSharedReportRequest{
+		ApiService: a,
+		ctx: ctx,
+		studyId: studyId,
+	}
+}
+
+// Execute executes the request
+//  @return CreateSharedReport201Response
+func (a *StudiesAPIService) CreateSharedReportExecute(r StudiesAPICreateSharedReportRequest) (*CreateSharedReport201Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateSharedReport201Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StudiesAPIService.CreateSharedReport")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/studies/{study_id}/shared_reports"
+	localVarPath = strings.Replace(localVarPath, "{"+"study_id"+"}", url.PathEscape(parameterValueToString(r.studyId, "studyId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.sharedReportCreation == nil {
+		return localVarReturnValue, nil, reportError("sharedReportCreation is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.sharedReportCreation
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type StudiesAPICreateStudyRequest struct {
 	ctx context.Context
@@ -161,6 +302,260 @@ func (a *StudiesAPIService) CreateStudyExecute(r StudiesAPICreateStudyRequest) (
 	}
 
 	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type StudiesAPICreateStudyEventRequest struct {
+	ctx context.Context
+	ApiService *StudiesAPIService
+	studyId string
+	studyEventCreation *StudyEventCreation
+}
+
+func (r StudiesAPICreateStudyEventRequest) StudyEventCreation(studyEventCreation StudyEventCreation) StudiesAPICreateStudyEventRequest {
+	r.studyEventCreation = &studyEventCreation
+	return r
+}
+
+func (r StudiesAPICreateStudyEventRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CreateStudyEventExecute(r)
+}
+
+/*
+CreateStudyEvent Create study event
+
+Create an event (such as an impression or click) and ingest it into the study.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param studyId
+ @return StudiesAPICreateStudyEventRequest
+*/
+func (a *StudiesAPIService) CreateStudyEvent(ctx context.Context, studyId string) StudiesAPICreateStudyEventRequest {
+	return StudiesAPICreateStudyEventRequest{
+		ApiService: a,
+		ctx: ctx,
+		studyId: studyId,
+	}
+}
+
+// Execute executes the request
+func (a *StudiesAPIService) CreateStudyEventExecute(r StudiesAPICreateStudyEventRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StudiesAPIService.CreateStudyEvent")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/studies/{study_id}/events"
+	localVarPath = strings.Replace(localVarPath, "{"+"study_id"+"}", url.PathEscape(parameterValueToString(r.studyId, "studyId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.studyEventCreation == nil {
+		return nil, reportError("studyEventCreation is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.studyEventCreation
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type StudiesAPIDeleteSharedReportByIdRequest struct {
+	ctx context.Context
+	ApiService *StudiesAPIService
+	studyId string
+	reportId string
+}
+
+func (r StudiesAPIDeleteSharedReportByIdRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteSharedReportByIdExecute(r)
+}
+
+/*
+DeleteSharedReportById Delete shared report
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param studyId
+ @param reportId
+ @return StudiesAPIDeleteSharedReportByIdRequest
+*/
+func (a *StudiesAPIService) DeleteSharedReportById(ctx context.Context, studyId string, reportId string) StudiesAPIDeleteSharedReportByIdRequest {
+	return StudiesAPIDeleteSharedReportByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		studyId: studyId,
+		reportId: reportId,
+	}
+}
+
+// Execute executes the request
+func (a *StudiesAPIService) DeleteSharedReportByIdExecute(r StudiesAPIDeleteSharedReportByIdRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StudiesAPIService.DeleteSharedReportById")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/studies/{study_id}/shared_reports/{report_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"study_id"+"}", url.PathEscape(parameterValueToString(r.studyId, "studyId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"report_id"+"}", url.PathEscape(parameterValueToString(r.reportId, "reportId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
 }
 
 type StudiesAPIDeleteStudyBannerImageRequest struct {
@@ -403,6 +798,139 @@ func (a *StudiesAPIService) DeleteStudyByIdExecute(r StudiesAPIDeleteStudyByIdRe
 	}
 
 	return localVarHTTPResponse, nil
+}
+
+type StudiesAPIGetSharedReportByIdRequest struct {
+	ctx context.Context
+	ApiService *StudiesAPIService
+	studyId string
+	reportId string
+}
+
+func (r StudiesAPIGetSharedReportByIdRequest) Execute() (*CreateSharedReport201Response, *http.Response, error) {
+	return r.ApiService.GetSharedReportByIdExecute(r)
+}
+
+/*
+GetSharedReportById Get shared report
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param studyId
+ @param reportId
+ @return StudiesAPIGetSharedReportByIdRequest
+*/
+func (a *StudiesAPIService) GetSharedReportById(ctx context.Context, studyId string, reportId string) StudiesAPIGetSharedReportByIdRequest {
+	return StudiesAPIGetSharedReportByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		studyId: studyId,
+		reportId: reportId,
+	}
+}
+
+// Execute executes the request
+//  @return CreateSharedReport201Response
+func (a *StudiesAPIService) GetSharedReportByIdExecute(r StudiesAPIGetSharedReportByIdRequest) (*CreateSharedReport201Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateSharedReport201Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StudiesAPIService.GetSharedReportById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/studies/{study_id}/shared_reports/{report_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"study_id"+"}", url.PathEscape(parameterValueToString(r.studyId, "studyId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"report_id"+"}", url.PathEscape(parameterValueToString(r.reportId, "reportId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type StudiesAPIGetStudyBannerImageRequest struct {
@@ -659,13 +1187,148 @@ func (a *StudiesAPIService) GetStudyByIdExecute(r StudiesAPIGetStudyByIdRequest)
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type StudiesAPIListSharedReportsByStudyIdRequest struct {
+	ctx context.Context
+	ApiService *StudiesAPIService
+	studyId string
+}
+
+func (r StudiesAPIListSharedReportsByStudyIdRequest) Execute() (*ListSharedReportsByStudyId200Response, *http.Response, error) {
+	return r.ApiService.ListSharedReportsByStudyIdExecute(r)
+}
+
+/*
+ListSharedReportsByStudyId Get shared reports for a study
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param studyId
+ @return StudiesAPIListSharedReportsByStudyIdRequest
+*/
+func (a *StudiesAPIService) ListSharedReportsByStudyId(ctx context.Context, studyId string) StudiesAPIListSharedReportsByStudyIdRequest {
+	return StudiesAPIListSharedReportsByStudyIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		studyId: studyId,
+	}
+}
+
+// Execute executes the request
+//  @return ListSharedReportsByStudyId200Response
+func (a *StudiesAPIService) ListSharedReportsByStudyIdExecute(r StudiesAPIListSharedReportsByStudyIdRequest) (*ListSharedReportsByStudyId200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListSharedReportsByStudyId200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StudiesAPIService.ListSharedReportsByStudyId")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/studies/{study_id}/shared_reports"
+	localVarPath = strings.Replace(localVarPath, "{"+"study_id"+"}", url.PathEscape(parameterValueToString(r.studyId, "studyId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type StudiesAPIListStudiesRequest struct {
 	ctx context.Context
 	ApiService *StudiesAPIService
 	sort *string
+	filterLifeCycleStage *StudyLifecycleStage
 	filterIsExample *bool
 	filterLabel *string
 	filterNameContains *string
+	filterStartDateAfter *time.Time
+	filterStartDateBefore *time.Time
+	filterEndDate *time.Time
+	filterCreatedAtAfter *time.Time
+	filterCreatedAtBefore *time.Time
 	filterAccountId *string
 	pageSize *int32
 	pageAfter *string
@@ -674,6 +1337,12 @@ type StudiesAPIListStudiesRequest struct {
 // Defines the field to sort the result items by. Ascending order is applied by default, but the minus character can be used to indicate descending order instead. 
 func (r StudiesAPIListStudiesRequest) Sort(sort string) StudiesAPIListStudiesRequest {
 	r.sort = &sort
+	return r
+}
+
+// Optional parameter used to filter studies by their life cycle stage
+func (r StudiesAPIListStudiesRequest) FilterLifeCycleStage(filterLifeCycleStage StudyLifecycleStage) StudiesAPIListStudiesRequest {
+	r.filterLifeCycleStage = &filterLifeCycleStage
 	return r
 }
 
@@ -692,6 +1361,36 @@ func (r StudiesAPIListStudiesRequest) FilterLabel(filterLabel string) StudiesAPI
 // Optional parameter used to search for studies where the name contains a substring (case insensitive)
 func (r StudiesAPIListStudiesRequest) FilterNameContains(filterNameContains string) StudiesAPIListStudiesRequest {
 	r.filterNameContains = &filterNameContains
+	return r
+}
+
+// Optional parameter used to search for studies that have started after a specific date
+func (r StudiesAPIListStudiesRequest) FilterStartDateAfter(filterStartDateAfter time.Time) StudiesAPIListStudiesRequest {
+	r.filterStartDateAfter = &filterStartDateAfter
+	return r
+}
+
+// Optional parameter used to search for studies that have start before a specific date
+func (r StudiesAPIListStudiesRequest) FilterStartDateBefore(filterStartDateBefore time.Time) StudiesAPIListStudiesRequest {
+	r.filterStartDateBefore = &filterStartDateBefore
+	return r
+}
+
+// Optional parameter used to search for studies that have a specific end date
+func (r StudiesAPIListStudiesRequest) FilterEndDate(filterEndDate time.Time) StudiesAPIListStudiesRequest {
+	r.filterEndDate = &filterEndDate
+	return r
+}
+
+// Optional parameter used to search for studies that have been created after a specific date
+func (r StudiesAPIListStudiesRequest) FilterCreatedAtAfter(filterCreatedAtAfter time.Time) StudiesAPIListStudiesRequest {
+	r.filterCreatedAtAfter = &filterCreatedAtAfter
+	return r
+}
+
+// Optional parameter used to search for studies that have been created before a specific date
+func (r StudiesAPIListStudiesRequest) FilterCreatedAtBefore(filterCreatedAtBefore time.Time) StudiesAPIListStudiesRequest {
+	r.filterCreatedAtBefore = &filterCreatedAtBefore
 	return r
 }
 
@@ -755,37 +1454,55 @@ func (a *StudiesAPIService) ListStudiesExecute(r StudiesAPIListStudiesRequest) (
 	localVarFormParams := url.Values{}
 
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	} else {
 		var defaultValue string = "created_at"
 		r.sort = &defaultValue
 	}
+	if r.filterLifeCycleStage != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[life_cycle_stage]", r.filterLifeCycleStage, "form", "")
+	}
 	if r.filterIsExample != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[is_example]", r.filterIsExample, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[is_example]", r.filterIsExample, "form", "")
 	} else {
 		var defaultValue bool = false
 		r.filterIsExample = &defaultValue
 	}
 	if r.filterLabel != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[label]", r.filterLabel, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[label]", r.filterLabel, "form", "")
 	}
 	if r.filterNameContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[name][contains]", r.filterNameContains, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[name][contains]", r.filterNameContains, "form", "")
+	}
+	if r.filterStartDateAfter != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[start_date][after]", r.filterStartDateAfter, "form", "")
+	}
+	if r.filterStartDateBefore != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[start_date][before]", r.filterStartDateBefore, "form", "")
+	}
+	if r.filterEndDate != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[end_date]", r.filterEndDate, "form", "")
+	}
+	if r.filterCreatedAtAfter != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[created_at][after]", r.filterCreatedAtAfter, "form", "")
+	}
+	if r.filterCreatedAtBefore != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[created_at][before]", r.filterCreatedAtBefore, "form", "")
 	}
 	if r.filterAccountId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[account_id]", r.filterAccountId, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[account_id]", r.filterAccountId, "form", "")
 	} else {
 		var defaultValue string = "The user's account ID"
 		r.filterAccountId = &defaultValue
 	}
 	if r.pageSize != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "page[size]", r.pageSize, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page[size]", r.pageSize, "form", "")
 	} else {
 		var defaultValue int32 = 100
 		r.pageSize = &defaultValue
 	}
 	if r.pageAfter != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "page[after]", r.pageAfter, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page[after]", r.pageAfter, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1138,6 +1855,138 @@ func (a *StudiesAPIService) QueryStudyCountryStatsExecute(r StudiesAPIQueryStudy
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type StudiesAPIQueryStudyDeviceStatsRequest struct {
+	ctx context.Context
+	ApiService *StudiesAPIService
+	studyId string
+}
+
+func (r StudiesAPIQueryStudyDeviceStatsRequest) Execute() (*QueryStudyDeviceStats200Response, *http.Response, error) {
+	return r.ApiService.QueryStudyDeviceStatsExecute(r)
+}
+
+/*
+QueryStudyDeviceStats Device statistics for study
+
+Query the device statistics for a study.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param studyId
+ @return StudiesAPIQueryStudyDeviceStatsRequest
+*/
+func (a *StudiesAPIService) QueryStudyDeviceStats(ctx context.Context, studyId string) StudiesAPIQueryStudyDeviceStatsRequest {
+	return StudiesAPIQueryStudyDeviceStatsRequest{
+		ApiService: a,
+		ctx: ctx,
+		studyId: studyId,
+	}
+}
+
+// Execute executes the request
+//  @return QueryStudyDeviceStats200Response
+func (a *StudiesAPIService) QueryStudyDeviceStatsExecute(r StudiesAPIQueryStudyDeviceStatsRequest) (*QueryStudyDeviceStats200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *QueryStudyDeviceStats200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StudiesAPIService.QueryStudyDeviceStats")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/studies/{study_id}/stats/devices"
+	localVarPath = strings.Replace(localVarPath, "{"+"study_id"+"}", url.PathEscape(parameterValueToString(r.studyId, "studyId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type StudiesAPIQueryStudyFrequencyStatsRequest struct {
 	ctx context.Context
 	ApiService *StudiesAPIService
@@ -1152,9 +2001,9 @@ func (r StudiesAPIQueryStudyFrequencyStatsRequest) Execute() (*QueryStudyFrequen
 QueryStudyFrequencyStats Frequency statistics for study
 
 Query the frequency statistics for a study. Frequency
-statistics are helpful to identify the frequency of impressions
+statistics are helpful to identify the frequency of events
 per user, or distinct reach of a study. It can also be helpful
-to identify how multiple impressions for the same users may or
+to identify how multiple events for the same users may or
 may not generate more clicks.
 
 
@@ -1192,6 +2041,156 @@ func (a *StudiesAPIService) QueryStudyFrequencyStatsExecute(r StudiesAPIQueryStu
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type StudiesAPIQueryStudyTimelineStatsRequest struct {
+	ctx context.Context
+	ApiService *StudiesAPIService
+	studyId string
+	fromDate *string
+	toDate *string
+}
+
+func (r StudiesAPIQueryStudyTimelineStatsRequest) FromDate(fromDate string) StudiesAPIQueryStudyTimelineStatsRequest {
+	r.fromDate = &fromDate
+	return r
+}
+
+func (r StudiesAPIQueryStudyTimelineStatsRequest) ToDate(toDate string) StudiesAPIQueryStudyTimelineStatsRequest {
+	r.toDate = &toDate
+	return r
+}
+
+func (r StudiesAPIQueryStudyTimelineStatsRequest) Execute() (*QueryStudyTimelineStats200Response, *http.Response, error) {
+	return r.ApiService.QueryStudyTimelineStatsExecute(r)
+}
+
+/*
+QueryStudyTimelineStats Timeline statistics for study
+
+Query the timeline statistics for a study.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param studyId
+ @return StudiesAPIQueryStudyTimelineStatsRequest
+*/
+func (a *StudiesAPIService) QueryStudyTimelineStats(ctx context.Context, studyId string) StudiesAPIQueryStudyTimelineStatsRequest {
+	return StudiesAPIQueryStudyTimelineStatsRequest{
+		ApiService: a,
+		ctx: ctx,
+		studyId: studyId,
+	}
+}
+
+// Execute executes the request
+//  @return QueryStudyTimelineStats200Response
+func (a *StudiesAPIService) QueryStudyTimelineStatsExecute(r StudiesAPIQueryStudyTimelineStatsRequest) (*QueryStudyTimelineStats200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *QueryStudyTimelineStats200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StudiesAPIService.QueryStudyTimelineStats")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/studies/{study_id}/stats/timeline"
+	localVarPath = strings.Replace(localVarPath, "{"+"study_id"+"}", url.PathEscape(parameterValueToString(r.studyId, "studyId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.fromDate != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "from_date", r.fromDate, "form", "")
+	}
+	if r.toDate != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "to_date", r.toDate, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

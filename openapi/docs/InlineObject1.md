@@ -1,78 +1,78 @@
-# CreateUserInAccount201Response
+# InlineObject1
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**UserFull**](UserFull.md) |  | [optional] 
-**Links** | Pointer to [**UserLinks**](UserLinks.md) |  | [optional] 
+**Data** | Pointer to [**RegistrationVerificationResponseData**](RegistrationVerificationResponseData.md) |  | [optional] 
+**Links** | Pointer to [**RegistrationVerificationResponseLinks**](RegistrationVerificationResponseLinks.md) |  | [optional] 
 
 ## Methods
 
-### NewCreateUserInAccount201Response
+### NewInlineObject1
 
-`func NewCreateUserInAccount201Response() *CreateUserInAccount201Response`
+`func NewInlineObject1() *InlineObject1`
 
-NewCreateUserInAccount201Response instantiates a new CreateUserInAccount201Response object
+NewInlineObject1 instantiates a new InlineObject1 object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewCreateUserInAccount201ResponseWithDefaults
+### NewInlineObject1WithDefaults
 
-`func NewCreateUserInAccount201ResponseWithDefaults() *CreateUserInAccount201Response`
+`func NewInlineObject1WithDefaults() *InlineObject1`
 
-NewCreateUserInAccount201ResponseWithDefaults instantiates a new CreateUserInAccount201Response object
+NewInlineObject1WithDefaults instantiates a new InlineObject1 object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *CreateUserInAccount201Response) GetData() UserFull`
+`func (o *InlineObject1) GetData() RegistrationVerificationResponseData`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *CreateUserInAccount201Response) GetDataOk() (*UserFull, bool)`
+`func (o *InlineObject1) GetDataOk() (*RegistrationVerificationResponseData, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *CreateUserInAccount201Response) SetData(v UserFull)`
+`func (o *InlineObject1) SetData(v RegistrationVerificationResponseData)`
 
 SetData sets Data field to given value.
 
 ### HasData
 
-`func (o *CreateUserInAccount201Response) HasData() bool`
+`func (o *InlineObject1) HasData() bool`
 
 HasData returns a boolean if a field has been set.
 
 ### GetLinks
 
-`func (o *CreateUserInAccount201Response) GetLinks() UserLinks`
+`func (o *InlineObject1) GetLinks() RegistrationVerificationResponseLinks`
 
 GetLinks returns the Links field if non-nil, zero value otherwise.
 
 ### GetLinksOk
 
-`func (o *CreateUserInAccount201Response) GetLinksOk() (*UserLinks, bool)`
+`func (o *InlineObject1) GetLinksOk() (*RegistrationVerificationResponseLinks, bool)`
 
 GetLinksOk returns a tuple with the Links field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLinks
 
-`func (o *CreateUserInAccount201Response) SetLinks(v UserLinks)`
+`func (o *InlineObject1) SetLinks(v RegistrationVerificationResponseLinks)`
 
 SetLinks sets Links field to given value.
 
 ### HasLinks
 
-`func (o *CreateUserInAccount201Response) HasLinks() bool`
+`func (o *InlineObject1) HasLinks() bool`
 
 HasLinks returns a boolean if a field has been set.
 

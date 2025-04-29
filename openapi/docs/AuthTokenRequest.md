@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Username** | **string** | The username (typically an email address) of the user to authenticate | 
 **Otp** | Pointer to **string** | A one-time password provided to perform passwordless auth | [optional] 
 **Password** | Pointer to **string** | The password for the given username | [optional] 
+**AccountId** | Pointer to **string** | Optional account_id to authenticate for, if the user has multiple account memberships | [optional] 
 **RefreshToken** | Pointer to **string** | A previously issued refresh token for the given username | [optional] 
 **Scopes** | Pointer to [**PermissionScopes**](PermissionScopes.md) |  | [optional] 
 
@@ -98,6 +99,31 @@ SetPassword sets Password field to given value.
 `func (o *AuthTokenRequest) HasPassword() bool`
 
 HasPassword returns a boolean if a field has been set.
+
+### GetAccountId
+
+`func (o *AuthTokenRequest) GetAccountId() string`
+
+GetAccountId returns the AccountId field if non-nil, zero value otherwise.
+
+### GetAccountIdOk
+
+`func (o *AuthTokenRequest) GetAccountIdOk() (*string, bool)`
+
+GetAccountIdOk returns a tuple with the AccountId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccountId
+
+`func (o *AuthTokenRequest) SetAccountId(v string)`
+
+SetAccountId sets AccountId field to given value.
+
+### HasAccountId
+
+`func (o *AuthTokenRequest) HasAccountId() bool`
+
+HasAccountId returns a boolean if a field has been set.
 
 ### GetRefreshToken
 

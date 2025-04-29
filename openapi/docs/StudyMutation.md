@@ -18,6 +18,8 @@ Name | Type | Description | Notes
 **BannerImageUrl** | Pointer to **string** | The URL to a banner image for the study. Note that the banner image is used only for Digiseg study reporting and presentation, it does NOT represent any delivered banner ad creatives or similar.  | [optional] [readonly] 
 **IntegrationPlatform** | Pointer to [**MeasurementIntegrationPlatform**](MeasurementIntegrationPlatform.md) |  | [optional] 
 **IsExample** | Pointer to **bool** | Determines if the study is an example study, used to demonstrate product capabilities | [optional] [readonly] 
+**EventSet** | Pointer to [**MeasurementEventSet**](MeasurementEventSet.md) |  | [optional] 
+**ClientId** | Pointer to **string** | The ID of the measurement client that this study is for | [optional] 
 
 ## Methods
 
@@ -387,6 +389,56 @@ SetIsExample sets IsExample field to given value.
 `func (o *StudyMutation) HasIsExample() bool`
 
 HasIsExample returns a boolean if a field has been set.
+
+### GetEventSet
+
+`func (o *StudyMutation) GetEventSet() MeasurementEventSet`
+
+GetEventSet returns the EventSet field if non-nil, zero value otherwise.
+
+### GetEventSetOk
+
+`func (o *StudyMutation) GetEventSetOk() (*MeasurementEventSet, bool)`
+
+GetEventSetOk returns a tuple with the EventSet field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEventSet
+
+`func (o *StudyMutation) SetEventSet(v MeasurementEventSet)`
+
+SetEventSet sets EventSet field to given value.
+
+### HasEventSet
+
+`func (o *StudyMutation) HasEventSet() bool`
+
+HasEventSet returns a boolean if a field has been set.
+
+### GetClientId
+
+`func (o *StudyMutation) GetClientId() string`
+
+GetClientId returns the ClientId field if non-nil, zero value otherwise.
+
+### GetClientIdOk
+
+`func (o *StudyMutation) GetClientIdOk() (*string, bool)`
+
+GetClientIdOk returns a tuple with the ClientId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetClientId
+
+`func (o *StudyMutation) SetClientId(v string)`
+
+SetClientId sets ClientId field to given value.
+
+### HasClientId
+
+`func (o *StudyMutation) HasClientId() bool`
+
+HasClientId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

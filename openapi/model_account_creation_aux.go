@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young couples and singles | |  |  | c2 | Early family life | |  |  | c3 | Middle-aged families | |  |  | c4 | Mature families | |  |  | c5 | Pensioners / Retirees | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Small | |  |  | l2 | Medium | |  |  | l3 | Large | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -21,6 +21,12 @@ var _ MappedNullable = &AccountCreationAux{}
 // AccountCreationAux struct for AccountCreationAux
 type AccountCreationAux struct {
 	Owner *AccountOwnerCreation `json:"owner,omitempty"`
+	// ID of the user who is the ultimate owner of the account. Deprecated in favor of the `owner` role of the user's account membership.
+	// Deprecated
+	OwnerId *string `json:"owner_id,omitempty"`
+	// The email address to send billing information to. Requires `owner` role to change.
+	BillingEmail *string `json:"billing_email,omitempty"`
+	BillingAddress *PostalAddress `json:"billing_address,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -75,6 +81,105 @@ func (o *AccountCreationAux) SetOwner(v AccountOwnerCreation) {
 	o.Owner = &v
 }
 
+// GetOwnerId returns the OwnerId field value if set, zero value otherwise.
+// Deprecated
+func (o *AccountCreationAux) GetOwnerId() string {
+	if o == nil || IsNil(o.OwnerId) {
+		var ret string
+		return ret
+	}
+	return *o.OwnerId
+}
+
+// GetOwnerIdOk returns a tuple with the OwnerId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *AccountCreationAux) GetOwnerIdOk() (*string, bool) {
+	if o == nil || IsNil(o.OwnerId) {
+		return nil, false
+	}
+	return o.OwnerId, true
+}
+
+// HasOwnerId returns a boolean if a field has been set.
+func (o *AccountCreationAux) HasOwnerId() bool {
+	if o != nil && !IsNil(o.OwnerId) {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnerId gets a reference to the given string and assigns it to the OwnerId field.
+// Deprecated
+func (o *AccountCreationAux) SetOwnerId(v string) {
+	o.OwnerId = &v
+}
+
+// GetBillingEmail returns the BillingEmail field value if set, zero value otherwise.
+func (o *AccountCreationAux) GetBillingEmail() string {
+	if o == nil || IsNil(o.BillingEmail) {
+		var ret string
+		return ret
+	}
+	return *o.BillingEmail
+}
+
+// GetBillingEmailOk returns a tuple with the BillingEmail field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountCreationAux) GetBillingEmailOk() (*string, bool) {
+	if o == nil || IsNil(o.BillingEmail) {
+		return nil, false
+	}
+	return o.BillingEmail, true
+}
+
+// HasBillingEmail returns a boolean if a field has been set.
+func (o *AccountCreationAux) HasBillingEmail() bool {
+	if o != nil && !IsNil(o.BillingEmail) {
+		return true
+	}
+
+	return false
+}
+
+// SetBillingEmail gets a reference to the given string and assigns it to the BillingEmail field.
+func (o *AccountCreationAux) SetBillingEmail(v string) {
+	o.BillingEmail = &v
+}
+
+// GetBillingAddress returns the BillingAddress field value if set, zero value otherwise.
+func (o *AccountCreationAux) GetBillingAddress() PostalAddress {
+	if o == nil || IsNil(o.BillingAddress) {
+		var ret PostalAddress
+		return ret
+	}
+	return *o.BillingAddress
+}
+
+// GetBillingAddressOk returns a tuple with the BillingAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountCreationAux) GetBillingAddressOk() (*PostalAddress, bool) {
+	if o == nil || IsNil(o.BillingAddress) {
+		return nil, false
+	}
+	return o.BillingAddress, true
+}
+
+// HasBillingAddress returns a boolean if a field has been set.
+func (o *AccountCreationAux) HasBillingAddress() bool {
+	if o != nil && !IsNil(o.BillingAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetBillingAddress gets a reference to the given PostalAddress and assigns it to the BillingAddress field.
+func (o *AccountCreationAux) SetBillingAddress(v PostalAddress) {
+	o.BillingAddress = &v
+}
+
 func (o AccountCreationAux) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -87,6 +192,15 @@ func (o AccountCreationAux) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Owner) {
 		toSerialize["owner"] = o.Owner
+	}
+	if !IsNil(o.OwnerId) {
+		toSerialize["owner_id"] = o.OwnerId
+	}
+	if !IsNil(o.BillingEmail) {
+		toSerialize["billing_email"] = o.BillingEmail
+	}
+	if !IsNil(o.BillingAddress) {
+		toSerialize["billing_address"] = o.BillingAddress
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -111,6 +225,9 @@ func (o *AccountCreationAux) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "owner")
+		delete(additionalProperties, "owner_id")
+		delete(additionalProperties, "billing_email")
+		delete(additionalProperties, "billing_address")
 		o.AdditionalProperties = additionalProperties
 	}
 

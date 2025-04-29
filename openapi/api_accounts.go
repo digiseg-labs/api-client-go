@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young couples and singles | |  |  | c2 | Early family life | |  |  | c3 | Middle-aged families | |  |  | c4 | Mature families | |  |  | c5 | Pensioners / Retirees | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Small | |  |  | l2 | Medium | |  |  | l3 | Large | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -25,34 +25,34 @@ import (
 // AccountsAPIService AccountsAPI service
 type AccountsAPIService service
 
-type AccountsAPICreateUserInAccountRequest struct {
+type AccountsAPIAddUserToAccountRequest struct {
 	ctx context.Context
 	ApiService *AccountsAPIService
 	accountId string
-	userCreation *UserCreation
+	accountUserAddition *AccountUserAddition
 }
 
-func (r AccountsAPICreateUserInAccountRequest) UserCreation(userCreation UserCreation) AccountsAPICreateUserInAccountRequest {
-	r.userCreation = &userCreation
+func (r AccountsAPIAddUserToAccountRequest) AccountUserAddition(accountUserAddition AccountUserAddition) AccountsAPIAddUserToAccountRequest {
+	r.accountUserAddition = &accountUserAddition
 	return r
 }
 
-func (r AccountsAPICreateUserInAccountRequest) Execute() (*CreateUserInAccount201Response, *http.Response, error) {
-	return r.ApiService.CreateUserInAccountExecute(r)
+func (r AccountsAPIAddUserToAccountRequest) Execute() (*AddUserToAccount201Response, *http.Response, error) {
+	return r.ApiService.AddUserToAccountExecute(r)
 }
 
 /*
-CreateUserInAccount Create user
+AddUserToAccount Add user to account
 
-Create a user within the referenced account.
+Adds a user to the referenced account.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param accountId
- @return AccountsAPICreateUserInAccountRequest
+ @return AccountsAPIAddUserToAccountRequest
 */
-func (a *AccountsAPIService) CreateUserInAccount(ctx context.Context, accountId string) AccountsAPICreateUserInAccountRequest {
-	return AccountsAPICreateUserInAccountRequest{
+func (a *AccountsAPIService) AddUserToAccount(ctx context.Context, accountId string) AccountsAPIAddUserToAccountRequest {
+	return AccountsAPIAddUserToAccountRequest{
 		ApiService: a,
 		ctx: ctx,
 		accountId: accountId,
@@ -60,16 +60,16 @@ func (a *AccountsAPIService) CreateUserInAccount(ctx context.Context, accountId 
 }
 
 // Execute executes the request
-//  @return CreateUserInAccount201Response
-func (a *AccountsAPIService) CreateUserInAccountExecute(r AccountsAPICreateUserInAccountRequest) (*CreateUserInAccount201Response, *http.Response, error) {
+//  @return AddUserToAccount201Response
+func (a *AccountsAPIService) AddUserToAccountExecute(r AccountsAPIAddUserToAccountRequest) (*AddUserToAccount201Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *CreateUserInAccount201Response
+		localVarReturnValue  *AddUserToAccount201Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.CreateUserInAccount")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.AddUserToAccount")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -80,8 +80,8 @@ func (a *AccountsAPIService) CreateUserInAccountExecute(r AccountsAPICreateUserI
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.userCreation == nil {
-		return localVarReturnValue, nil, reportError("userCreation is required and must be specified")
+	if r.accountUserAddition == nil {
+		return localVarReturnValue, nil, reportError("accountUserAddition is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -102,7 +102,143 @@ func (a *AccountsAPIService) CreateUserInAccountExecute(r AccountsAPICreateUserI
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.userCreation
+	localVarPostBody = r.accountUserAddition
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type AccountsAPICreateAccountRequest struct {
+	ctx context.Context
+	ApiService *AccountsAPIService
+	accountCreation *AccountCreation
+}
+
+func (r AccountsAPICreateAccountRequest) AccountCreation(accountCreation AccountCreation) AccountsAPICreateAccountRequest {
+	r.accountCreation = &accountCreation
+	return r
+}
+
+func (r AccountsAPICreateAccountRequest) Execute() (*CreateAccount201Response, *http.Response, error) {
+	return r.ApiService.CreateAccountExecute(r)
+}
+
+/*
+CreateAccount Create account
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return AccountsAPICreateAccountRequest
+*/
+func (a *AccountsAPIService) CreateAccount(ctx context.Context) AccountsAPICreateAccountRequest {
+	return AccountsAPICreateAccountRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return CreateAccount201Response
+func (a *AccountsAPIService) CreateAccountExecute(r AccountsAPICreateAccountRequest) (*CreateAccount201Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateAccount201Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.CreateAccount")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/accounts"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.accountCreation == nil {
+		return localVarReturnValue, nil, reportError("accountCreation is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.accountCreation
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -293,9 +429,16 @@ type AccountsAPIGetAccountByIdRequest struct {
 	ctx context.Context
 	ApiService *AccountsAPIService
 	accountId string
+	include *[]AccountIncludeParam
 }
 
-func (r AccountsAPIGetAccountByIdRequest) Execute() (*GetAccountById200Response, *http.Response, error) {
+// Optional parameter used to define aux properties to load in the response
+func (r AccountsAPIGetAccountByIdRequest) Include(include []AccountIncludeParam) AccountsAPIGetAccountByIdRequest {
+	r.include = &include
+	return r
+}
+
+func (r AccountsAPIGetAccountByIdRequest) Execute() (*CreateAccount201Response, *http.Response, error) {
 	return r.ApiService.GetAccountByIdExecute(r)
 }
 
@@ -315,13 +458,13 @@ func (a *AccountsAPIService) GetAccountById(ctx context.Context, accountId strin
 }
 
 // Execute executes the request
-//  @return GetAccountById200Response
-func (a *AccountsAPIService) GetAccountByIdExecute(r AccountsAPIGetAccountByIdRequest) (*GetAccountById200Response, *http.Response, error) {
+//  @return CreateAccount201Response
+func (a *AccountsAPIService) GetAccountByIdExecute(r AccountsAPIGetAccountByIdRequest) (*CreateAccount201Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetAccountById200Response
+		localVarReturnValue  *CreateAccount201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.GetAccountById")
@@ -336,6 +479,9 @@ func (a *AccountsAPIService) GetAccountByIdExecute(r AccountsAPIGetAccountByIdRe
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.include != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "include", r.include, "form", "csv")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -806,6 +952,139 @@ func (a *AccountsAPIService) GetAccountSubscriptionsExecute(r AccountsAPIGetAcco
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type AccountsAPIGetUserAccountMembershipRequest struct {
+	ctx context.Context
+	ApiService *AccountsAPIService
+	accountId string
+	userId string
+}
+
+func (r AccountsAPIGetUserAccountMembershipRequest) Execute() (*GetUserAccountMembership200Response, *http.Response, error) {
+	return r.ApiService.GetUserAccountMembershipExecute(r)
+}
+
+/*
+GetUserAccountMembership Get a user's membership with an account
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param accountId
+ @param userId
+ @return AccountsAPIGetUserAccountMembershipRequest
+*/
+func (a *AccountsAPIService) GetUserAccountMembership(ctx context.Context, accountId string, userId string) AccountsAPIGetUserAccountMembershipRequest {
+	return AccountsAPIGetUserAccountMembershipRequest{
+		ApiService: a,
+		ctx: ctx,
+		accountId: accountId,
+		userId: userId,
+	}
+}
+
+// Execute executes the request
+//  @return GetUserAccountMembership200Response
+func (a *AccountsAPIService) GetUserAccountMembershipExecute(r AccountsAPIGetUserAccountMembershipRequest) (*GetUserAccountMembership200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetUserAccountMembership200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.GetUserAccountMembership")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/accounts/{account_id}/users/{user_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"account_id"+"}", url.PathEscape(parameterValueToString(r.accountId, "accountId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"user_id"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type AccountsAPIListApiKeysByAccountIdRequest struct {
 	ctx context.Context
 	ApiService *AccountsAPIService
@@ -940,6 +1219,7 @@ type AccountsAPIListUsersByAccountIdRequest struct {
 	ApiService *AccountsAPIService
 	accountId string
 	filterPlatformRoles *UserPlatformRole
+	filterAccountRoles *UserAccountRole
 	filterNameContains *string
 	sort *UserSortOption
 	pageSize *int32
@@ -949,6 +1229,12 @@ type AccountsAPIListUsersByAccountIdRequest struct {
 // Filter based on platform roles, e.g. super_admin
 func (r AccountsAPIListUsersByAccountIdRequest) FilterPlatformRoles(filterPlatformRoles UserPlatformRole) AccountsAPIListUsersByAccountIdRequest {
 	r.filterPlatformRoles = &filterPlatformRoles
+	return r
+}
+
+// Filter based on account roles, e.g. &#x60;owner&#x60;
+func (r AccountsAPIListUsersByAccountIdRequest) FilterAccountRoles(filterAccountRoles UserAccountRole) AccountsAPIListUsersByAccountIdRequest {
+	r.filterAccountRoles = &filterAccountRoles
 	return r
 }
 
@@ -1018,25 +1304,28 @@ func (a *AccountsAPIService) ListUsersByAccountIdExecute(r AccountsAPIListUsersB
 	localVarFormParams := url.Values{}
 
 	if r.filterPlatformRoles != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[platform_roles]", r.filterPlatformRoles, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[platform_roles]", r.filterPlatformRoles, "form", "")
+	}
+	if r.filterAccountRoles != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[account_roles]", r.filterAccountRoles, "form", "")
 	}
 	if r.filterNameContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[name][contains]", r.filterNameContains, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[name][contains]", r.filterNameContains, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	} else {
 		var defaultValue UserSortOption = "created_at"
 		r.sort = &defaultValue
 	}
 	if r.pageSize != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "page[size]", r.pageSize, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page[size]", r.pageSize, "form", "")
 	} else {
 		var defaultValue int32 = 100
 		r.pageSize = &defaultValue
 	}
 	if r.pageAfter != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "page[after]", r.pageAfter, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page[after]", r.pageAfter, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1120,6 +1409,131 @@ func (a *AccountsAPIService) ListUsersByAccountIdExecute(r AccountsAPIListUsersB
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type AccountsAPIRemoveUserFromAccountRequest struct {
+	ctx context.Context
+	ApiService *AccountsAPIService
+	accountId string
+	userId string
+}
+
+func (r AccountsAPIRemoveUserFromAccountRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RemoveUserFromAccountExecute(r)
+}
+
+/*
+RemoveUserFromAccount Remove user from account
+
+Removes a user from the referenced account.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param accountId
+ @param userId
+ @return AccountsAPIRemoveUserFromAccountRequest
+*/
+func (a *AccountsAPIService) RemoveUserFromAccount(ctx context.Context, accountId string, userId string) AccountsAPIRemoveUserFromAccountRequest {
+	return AccountsAPIRemoveUserFromAccountRequest{
+		ApiService: a,
+		ctx: ctx,
+		accountId: accountId,
+		userId: userId,
+	}
+}
+
+// Execute executes the request
+func (a *AccountsAPIService) RemoveUserFromAccountExecute(r AccountsAPIRemoveUserFromAccountRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.RemoveUserFromAccount")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/accounts/{account_id}/users/{user_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"account_id"+"}", url.PathEscape(parameterValueToString(r.accountId, "accountId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"user_id"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type AccountsAPIUpdateAccountByIdRequest struct {
 	ctx context.Context
 	ApiService *AccountsAPIService
@@ -1132,7 +1546,7 @@ func (r AccountsAPIUpdateAccountByIdRequest) AccountMutation(accountMutation Acc
 	return r
 }
 
-func (r AccountsAPIUpdateAccountByIdRequest) Execute() (*GetAccountById200Response, *http.Response, error) {
+func (r AccountsAPIUpdateAccountByIdRequest) Execute() (*CreateAccount201Response, *http.Response, error) {
 	return r.ApiService.UpdateAccountByIdExecute(r)
 }
 
@@ -1152,13 +1566,13 @@ func (a *AccountsAPIService) UpdateAccountById(ctx context.Context, accountId st
 }
 
 // Execute executes the request
-//  @return GetAccountById200Response
-func (a *AccountsAPIService) UpdateAccountByIdExecute(r AccountsAPIUpdateAccountByIdRequest) (*GetAccountById200Response, *http.Response, error) {
+//  @return CreateAccount201Response
+func (a *AccountsAPIService) UpdateAccountByIdExecute(r AccountsAPIUpdateAccountByIdRequest) (*CreateAccount201Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetAccountById200Response
+		localVarReturnValue  *CreateAccount201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.UpdateAccountById")
@@ -1195,6 +1609,150 @@ func (a *AccountsAPIService) UpdateAccountByIdExecute(r AccountsAPIUpdateAccount
 	}
 	// body params
 	localVarPostBody = r.accountMutation
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type AccountsAPIUpdateUserAccountMembershipRequest struct {
+	ctx context.Context
+	ApiService *AccountsAPIService
+	accountId string
+	userId string
+	userAccountMembershipUpdate *UserAccountMembershipUpdate
+}
+
+func (r AccountsAPIUpdateUserAccountMembershipRequest) UserAccountMembershipUpdate(userAccountMembershipUpdate UserAccountMembershipUpdate) AccountsAPIUpdateUserAccountMembershipRequest {
+	r.userAccountMembershipUpdate = &userAccountMembershipUpdate
+	return r
+}
+
+func (r AccountsAPIUpdateUserAccountMembershipRequest) Execute() (*GetUserAccountMembership200Response, *http.Response, error) {
+	return r.ApiService.UpdateUserAccountMembershipExecute(r)
+}
+
+/*
+UpdateUserAccountMembership Update a user's membership with an account
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param accountId
+ @param userId
+ @return AccountsAPIUpdateUserAccountMembershipRequest
+*/
+func (a *AccountsAPIService) UpdateUserAccountMembership(ctx context.Context, accountId string, userId string) AccountsAPIUpdateUserAccountMembershipRequest {
+	return AccountsAPIUpdateUserAccountMembershipRequest{
+		ApiService: a,
+		ctx: ctx,
+		accountId: accountId,
+		userId: userId,
+	}
+}
+
+// Execute executes the request
+//  @return GetUserAccountMembership200Response
+func (a *AccountsAPIService) UpdateUserAccountMembershipExecute(r AccountsAPIUpdateUserAccountMembershipRequest) (*GetUserAccountMembership200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetUserAccountMembership200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.UpdateUserAccountMembership")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/accounts/{account_id}/users/{user_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"account_id"+"}", url.PathEscape(parameterValueToString(r.accountId, "accountId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"user_id"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.userAccountMembershipUpdate == nil {
+		return localVarReturnValue, nil, reportError("userAccountMembershipUpdate is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.userAccountMembershipUpdate
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

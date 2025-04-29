@@ -16,7 +16,12 @@ Name | Type | Description | Notes
 **OwnerId** | Pointer to **string** | ID of the user who is the ultimate owner of the account. Deprecated in favor of the &#x60;owner&#x60; role of the user&#39;s account membership. | [optional] 
 **BillingEmail** | Pointer to **string** | The email address to send billing information to. Requires &#x60;owner&#x60; role to change. | [optional] 
 **BillingAddress** | Pointer to [**PostalAddress**](PostalAddress.md) |  | [optional] 
+**BillingTaxIds** | Pointer to [**[]TaxId**](TaxId.md) | A list of Tax IDs used by the account, for billing purposes. | [optional] [readonly] 
+**BillingCurrency** | Pointer to [**SubscriptionPriceCurrency**](SubscriptionPriceCurrency.md) |  | [optional] [default to SUBSCRIPTIONPRICECURRENCY_EUR]
+**BillingName** | Pointer to **string** | An optional official name to use for billing purposes. Requires &#x60;owner&#x60; role to change. | [optional] 
 **StripeCustomerId** | Pointer to **string** |  | [optional] [readonly] 
+**FeatureSet** | Pointer to [**PlanFeatureSet**](PlanFeatureSet.md) |  | [optional] 
+**Subscriptions** | Pointer to [**[]AccountSubscriptionItem**](AccountSubscriptionItem.md) |  | [optional] [readonly] 
 **CreatedAt** | Pointer to **time.Time** | Date and time of the object creation | [optional] [readonly] 
 **CreatedBy** | Pointer to **string** | ID of the user who created the object | [optional] [readonly] 
 **UpdatedAt** | Pointer to **time.Time** | Date and time of the latest update to the object | [optional] [readonly] 
@@ -341,6 +346,81 @@ SetBillingAddress sets BillingAddress field to given value.
 
 HasBillingAddress returns a boolean if a field has been set.
 
+### GetBillingTaxIds
+
+`func (o *AccountFull) GetBillingTaxIds() []TaxId`
+
+GetBillingTaxIds returns the BillingTaxIds field if non-nil, zero value otherwise.
+
+### GetBillingTaxIdsOk
+
+`func (o *AccountFull) GetBillingTaxIdsOk() (*[]TaxId, bool)`
+
+GetBillingTaxIdsOk returns a tuple with the BillingTaxIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBillingTaxIds
+
+`func (o *AccountFull) SetBillingTaxIds(v []TaxId)`
+
+SetBillingTaxIds sets BillingTaxIds field to given value.
+
+### HasBillingTaxIds
+
+`func (o *AccountFull) HasBillingTaxIds() bool`
+
+HasBillingTaxIds returns a boolean if a field has been set.
+
+### GetBillingCurrency
+
+`func (o *AccountFull) GetBillingCurrency() SubscriptionPriceCurrency`
+
+GetBillingCurrency returns the BillingCurrency field if non-nil, zero value otherwise.
+
+### GetBillingCurrencyOk
+
+`func (o *AccountFull) GetBillingCurrencyOk() (*SubscriptionPriceCurrency, bool)`
+
+GetBillingCurrencyOk returns a tuple with the BillingCurrency field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBillingCurrency
+
+`func (o *AccountFull) SetBillingCurrency(v SubscriptionPriceCurrency)`
+
+SetBillingCurrency sets BillingCurrency field to given value.
+
+### HasBillingCurrency
+
+`func (o *AccountFull) HasBillingCurrency() bool`
+
+HasBillingCurrency returns a boolean if a field has been set.
+
+### GetBillingName
+
+`func (o *AccountFull) GetBillingName() string`
+
+GetBillingName returns the BillingName field if non-nil, zero value otherwise.
+
+### GetBillingNameOk
+
+`func (o *AccountFull) GetBillingNameOk() (*string, bool)`
+
+GetBillingNameOk returns a tuple with the BillingName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBillingName
+
+`func (o *AccountFull) SetBillingName(v string)`
+
+SetBillingName sets BillingName field to given value.
+
+### HasBillingName
+
+`func (o *AccountFull) HasBillingName() bool`
+
+HasBillingName returns a boolean if a field has been set.
+
 ### GetStripeCustomerId
 
 `func (o *AccountFull) GetStripeCustomerId() string`
@@ -365,6 +445,56 @@ SetStripeCustomerId sets StripeCustomerId field to given value.
 `func (o *AccountFull) HasStripeCustomerId() bool`
 
 HasStripeCustomerId returns a boolean if a field has been set.
+
+### GetFeatureSet
+
+`func (o *AccountFull) GetFeatureSet() PlanFeatureSet`
+
+GetFeatureSet returns the FeatureSet field if non-nil, zero value otherwise.
+
+### GetFeatureSetOk
+
+`func (o *AccountFull) GetFeatureSetOk() (*PlanFeatureSet, bool)`
+
+GetFeatureSetOk returns a tuple with the FeatureSet field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFeatureSet
+
+`func (o *AccountFull) SetFeatureSet(v PlanFeatureSet)`
+
+SetFeatureSet sets FeatureSet field to given value.
+
+### HasFeatureSet
+
+`func (o *AccountFull) HasFeatureSet() bool`
+
+HasFeatureSet returns a boolean if a field has been set.
+
+### GetSubscriptions
+
+`func (o *AccountFull) GetSubscriptions() []AccountSubscriptionItem`
+
+GetSubscriptions returns the Subscriptions field if non-nil, zero value otherwise.
+
+### GetSubscriptionsOk
+
+`func (o *AccountFull) GetSubscriptionsOk() (*[]AccountSubscriptionItem, bool)`
+
+GetSubscriptionsOk returns a tuple with the Subscriptions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubscriptions
+
+`func (o *AccountFull) SetSubscriptions(v []AccountSubscriptionItem)`
+
+SetSubscriptions sets Subscriptions field to given value.
+
+### HasSubscriptions
+
+`func (o *AccountFull) HasSubscriptions() bool`
+
+HasSubscriptions returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

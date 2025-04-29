@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young couples and singles | |  |  | c2 | Early family life | |  |  | c3 | Middle-aged families | |  |  | c4 | Mature families | |  |  | c5 | Pensioners / Retirees | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Small | |  |  | l2 | Medium | |  |  | l3 | Large | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -20,11 +20,15 @@ var _ MappedNullable = &StudyFrequencyStats{}
 
 // StudyFrequencyStats struct for StudyFrequencyStats
 type StudyFrequencyStats struct {
-	// The average frequency of impressions per user. 
+	// The event that is represented in this frequency stats. Current values include `all` (all events), `impression` or `click`
+	EventType *string `json:"event_type,omitempty"`
+	// Optionally an array of additional frequency stats for more fine-grained event types
+	SubFrequencies []StudyFrequencyStats `json:"sub_frequencies,omitempty"`
+	// The average frequency of events per user. 
 	AverageFrequency *float32 `json:"average_frequency,omitempty"`
 	// A listing of frequencies observed and the relevant measurements for each. The returned list may be truncated to cut off the \"long tail\" of frequency values. 
 	Frequencies []FrequencyStats `json:"frequencies,omitempty"`
-	// The number of users that have generated impressions at a frequency value greater than those represented in `frequencies`. 
+	// The number of users that have generated events at a frequency value greater than those represented in `frequencies`. 
 	CountAboveCap *int32 `json:"count_above_cap,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -46,6 +50,70 @@ func NewStudyFrequencyStats() *StudyFrequencyStats {
 func NewStudyFrequencyStatsWithDefaults() *StudyFrequencyStats {
 	this := StudyFrequencyStats{}
 	return &this
+}
+
+// GetEventType returns the EventType field value if set, zero value otherwise.
+func (o *StudyFrequencyStats) GetEventType() string {
+	if o == nil || IsNil(o.EventType) {
+		var ret string
+		return ret
+	}
+	return *o.EventType
+}
+
+// GetEventTypeOk returns a tuple with the EventType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StudyFrequencyStats) GetEventTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.EventType) {
+		return nil, false
+	}
+	return o.EventType, true
+}
+
+// HasEventType returns a boolean if a field has been set.
+func (o *StudyFrequencyStats) HasEventType() bool {
+	if o != nil && !IsNil(o.EventType) {
+		return true
+	}
+
+	return false
+}
+
+// SetEventType gets a reference to the given string and assigns it to the EventType field.
+func (o *StudyFrequencyStats) SetEventType(v string) {
+	o.EventType = &v
+}
+
+// GetSubFrequencies returns the SubFrequencies field value if set, zero value otherwise.
+func (o *StudyFrequencyStats) GetSubFrequencies() []StudyFrequencyStats {
+	if o == nil || IsNil(o.SubFrequencies) {
+		var ret []StudyFrequencyStats
+		return ret
+	}
+	return o.SubFrequencies
+}
+
+// GetSubFrequenciesOk returns a tuple with the SubFrequencies field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StudyFrequencyStats) GetSubFrequenciesOk() ([]StudyFrequencyStats, bool) {
+	if o == nil || IsNil(o.SubFrequencies) {
+		return nil, false
+	}
+	return o.SubFrequencies, true
+}
+
+// HasSubFrequencies returns a boolean if a field has been set.
+func (o *StudyFrequencyStats) HasSubFrequencies() bool {
+	if o != nil && !IsNil(o.SubFrequencies) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubFrequencies gets a reference to the given []StudyFrequencyStats and assigns it to the SubFrequencies field.
+func (o *StudyFrequencyStats) SetSubFrequencies(v []StudyFrequencyStats) {
+	o.SubFrequencies = v
 }
 
 // GetAverageFrequency returns the AverageFrequency field value if set, zero value otherwise.
@@ -154,6 +222,12 @@ func (o StudyFrequencyStats) MarshalJSON() ([]byte, error) {
 
 func (o StudyFrequencyStats) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.EventType) {
+		toSerialize["event_type"] = o.EventType
+	}
+	if !IsNil(o.SubFrequencies) {
+		toSerialize["sub_frequencies"] = o.SubFrequencies
+	}
 	if !IsNil(o.AverageFrequency) {
 		toSerialize["average_frequency"] = o.AverageFrequency
 	}
@@ -185,6 +259,8 @@ func (o *StudyFrequencyStats) UnmarshalJSON(data []byte) (err error) {
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "event_type")
+		delete(additionalProperties, "sub_frequencies")
 		delete(additionalProperties, "average_frequency")
 		delete(additionalProperties, "frequencies")
 		delete(additionalProperties, "count_above_cap")

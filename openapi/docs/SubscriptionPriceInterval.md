@@ -3,6 +3,10 @@
 ## Enum
 
 
+* `DAILY` (value: `"daily"`)
+
+* `WEEKLY` (value: `"weekly"`)
+
 * `MONTHLY` (value: `"monthly"`)
 
 * `ANNUALLY` (value: `"annually"`)

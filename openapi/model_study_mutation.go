@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young couples and singles | |  |  | c2 | Early family life | |  |  | c3 | Middle-aged families | |  |  | c4 | Mature families | |  |  | c5 | Pensioners / Retirees | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Small | |  |  | l2 | Medium | |  |  | l3 | Large | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -42,6 +42,9 @@ type StudyMutation struct {
 	IntegrationPlatform *MeasurementIntegrationPlatform `json:"integration_platform,omitempty"`
 	// Determines if the study is an example study, used to demonstrate product capabilities
 	IsExample *bool `json:"is_example,omitempty"`
+	EventSet *MeasurementEventSet `json:"event_set,omitempty"`
+	// The ID of the measurement client that this study is for
+	ClientId *string `json:"client_id,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -512,6 +515,70 @@ func (o *StudyMutation) SetIsExample(v bool) {
 	o.IsExample = &v
 }
 
+// GetEventSet returns the EventSet field value if set, zero value otherwise.
+func (o *StudyMutation) GetEventSet() MeasurementEventSet {
+	if o == nil || IsNil(o.EventSet) {
+		var ret MeasurementEventSet
+		return ret
+	}
+	return *o.EventSet
+}
+
+// GetEventSetOk returns a tuple with the EventSet field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StudyMutation) GetEventSetOk() (*MeasurementEventSet, bool) {
+	if o == nil || IsNil(o.EventSet) {
+		return nil, false
+	}
+	return o.EventSet, true
+}
+
+// HasEventSet returns a boolean if a field has been set.
+func (o *StudyMutation) HasEventSet() bool {
+	if o != nil && !IsNil(o.EventSet) {
+		return true
+	}
+
+	return false
+}
+
+// SetEventSet gets a reference to the given MeasurementEventSet and assigns it to the EventSet field.
+func (o *StudyMutation) SetEventSet(v MeasurementEventSet) {
+	o.EventSet = &v
+}
+
+// GetClientId returns the ClientId field value if set, zero value otherwise.
+func (o *StudyMutation) GetClientId() string {
+	if o == nil || IsNil(o.ClientId) {
+		var ret string
+		return ret
+	}
+	return *o.ClientId
+}
+
+// GetClientIdOk returns a tuple with the ClientId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StudyMutation) GetClientIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ClientId) {
+		return nil, false
+	}
+	return o.ClientId, true
+}
+
+// HasClientId returns a boolean if a field has been set.
+func (o *StudyMutation) HasClientId() bool {
+	if o != nil && !IsNil(o.ClientId) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientId gets a reference to the given string and assigns it to the ClientId field.
+func (o *StudyMutation) SetClientId(v string) {
+	o.ClientId = &v
+}
+
 func (o StudyMutation) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -564,6 +631,12 @@ func (o StudyMutation) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.IsExample) {
 		toSerialize["is_example"] = o.IsExample
 	}
+	if !IsNil(o.EventSet) {
+		toSerialize["event_set"] = o.EventSet
+	}
+	if !IsNil(o.ClientId) {
+		toSerialize["client_id"] = o.ClientId
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -600,6 +673,8 @@ func (o *StudyMutation) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "banner_image_url")
 		delete(additionalProperties, "integration_platform")
 		delete(additionalProperties, "is_example")
+		delete(additionalProperties, "event_set")
+		delete(additionalProperties, "client_id")
 		o.AdditionalProperties = additionalProperties
 	}
 

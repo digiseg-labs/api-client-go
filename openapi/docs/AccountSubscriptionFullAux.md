@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AccountId** | **string** | The ID of the account | [readonly] 
 **Plan** | [**SubscriptionPlanFull**](SubscriptionPlanFull.md) |  | 
+**LastPaidAt** | Pointer to **time.Time** | Timestamp of the last processed payment | [optional] 
 
 ## Methods
 
@@ -65,6 +66,31 @@ and a boolean to check if the value has been set.
 
 SetPlan sets Plan field to given value.
 
+
+### GetLastPaidAt
+
+`func (o *AccountSubscriptionFullAux) GetLastPaidAt() time.Time`
+
+GetLastPaidAt returns the LastPaidAt field if non-nil, zero value otherwise.
+
+### GetLastPaidAtOk
+
+`func (o *AccountSubscriptionFullAux) GetLastPaidAtOk() (*time.Time, bool)`
+
+GetLastPaidAtOk returns a tuple with the LastPaidAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastPaidAt
+
+`func (o *AccountSubscriptionFullAux) SetLastPaidAt(v time.Time)`
+
+SetLastPaidAt sets LastPaidAt field to given value.
+
+### HasLastPaidAt
+
+`func (o *AccountSubscriptionFullAux) HasLastPaidAt() bool`
+
+HasLastPaidAt returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

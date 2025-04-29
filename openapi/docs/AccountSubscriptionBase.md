@@ -5,9 +5,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** | The ID of the subscription | [readonly] 
-**StartDate** | **string** |  | 
-**EndDate** | Pointer to **string** |  | [optional] 
+**StartDate** | **string** | Start date (inclusive) of the subscription | 
+**EndDate** | Pointer to **string** | End date (inclusive) of the subscription | [optional] 
 **IsActive** | **bool** | Is the subscription currently active or not? | [readonly] 
+**CancelledAt** | Pointer to **time.Time** | Time of cancelling the subscription, if it has been cancelled. Note that a cancelled subscription may still be active, if it has been prepaid for the current period.  | [optional] [readonly] 
 **ActualPrice** | Pointer to [**SubscriptionPrice**](SubscriptionPrice.md) |  | [optional] 
 **PaymentConfiguration** | Pointer to [**AccountSubscriptionPaymentConfiguration**](AccountSubscriptionPaymentConfiguration.md) |  | [optional] 
 
@@ -114,6 +115,31 @@ and a boolean to check if the value has been set.
 
 SetIsActive sets IsActive field to given value.
 
+
+### GetCancelledAt
+
+`func (o *AccountSubscriptionBase) GetCancelledAt() time.Time`
+
+GetCancelledAt returns the CancelledAt field if non-nil, zero value otherwise.
+
+### GetCancelledAtOk
+
+`func (o *AccountSubscriptionBase) GetCancelledAtOk() (*time.Time, bool)`
+
+GetCancelledAtOk returns a tuple with the CancelledAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCancelledAt
+
+`func (o *AccountSubscriptionBase) SetCancelledAt(v time.Time)`
+
+SetCancelledAt sets CancelledAt field to given value.
+
+### HasCancelledAt
+
+`func (o *AccountSubscriptionBase) HasCancelledAt() bool`
+
+HasCancelledAt returns a boolean if a field has been set.
 
 ### GetActualPrice
 

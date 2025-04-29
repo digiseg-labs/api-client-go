@@ -360,7 +360,7 @@ Name | Type | Description  | Notes
 
 ## ListApiKeysByUserId
 
-> ListApiKeysByAccountId200Response ListApiKeysByUserId(ctx, userId).Execute()
+> ListApiKeysByAccountId200Response ListApiKeysByUserId(ctx, userId).FilterAccountId(filterAccountId).Execute()
 
 List API keys for user
 
@@ -378,10 +378,11 @@ import (
 
 func main() {
 	userId := "userId_example" // string | 
+	filterAccountId := "filterAccountId_example" // string | Filter by specific account id (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthAPI.ListApiKeysByUserId(context.Background(), userId).Execute()
+	resp, r, err := apiClient.AuthAPI.ListApiKeysByUserId(context.Background(), userId).FilterAccountId(filterAccountId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.ListApiKeysByUserId``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -407,6 +408,7 @@ Other parameters are passed through a pointer to a apiListApiKeysByUserIdRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **filterAccountId** | **string** | Filter by specific account id | 
 
 ### Return type
 

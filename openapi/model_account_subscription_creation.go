@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young couples and singles | |  |  | c2 | Early family life | |  |  | c3 | Middle-aged families | |  |  | c4 | Mature families | |  |  | c5 | Pensioners / Retirees | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Small | |  |  | l2 | Medium | |  |  | l3 | Large | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -13,6 +13,7 @@ package openapi
 
 import (
 	"encoding/json"
+	"time"
 	"fmt"
 )
 
@@ -23,14 +24,18 @@ var _ MappedNullable = &AccountSubscriptionCreation{}
 type AccountSubscriptionCreation struct {
 	// The ID of the subscription
 	Id string `json:"id"`
+	// Start date (inclusive) of the subscription
 	StartDate string `json:"start_date"`
+	// End date (inclusive) of the subscription
 	EndDate *string `json:"end_date,omitempty"`
 	// Is the subscription currently active or not?
 	IsActive bool `json:"is_active"`
+	// Time of cancelling the subscription, if it has been cancelled. Note that a cancelled subscription may still be active, if it has been prepaid for the current period. 
+	CancelledAt *time.Time `json:"cancelled_at,omitempty"`
 	ActualPrice *SubscriptionPrice `json:"actual_price,omitempty"`
 	PaymentConfiguration *AccountSubscriptionPaymentConfiguration `json:"payment_configuration,omitempty"`
 	// The ID of the plan to subscribe to
-	PlanId *string `json:"plan_id,omitempty"`
+	PlanId string `json:"plan_id"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -40,11 +45,12 @@ type _AccountSubscriptionCreation AccountSubscriptionCreation
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAccountSubscriptionCreation(id string, startDate string, isActive bool) *AccountSubscriptionCreation {
+func NewAccountSubscriptionCreation(id string, startDate string, isActive bool, planId string) *AccountSubscriptionCreation {
 	this := AccountSubscriptionCreation{}
 	this.Id = id
 	this.StartDate = startDate
 	this.IsActive = isActive
+	this.PlanId = planId
 	return &this
 }
 
@@ -160,6 +166,38 @@ func (o *AccountSubscriptionCreation) SetIsActive(v bool) {
 	o.IsActive = v
 }
 
+// GetCancelledAt returns the CancelledAt field value if set, zero value otherwise.
+func (o *AccountSubscriptionCreation) GetCancelledAt() time.Time {
+	if o == nil || IsNil(o.CancelledAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.CancelledAt
+}
+
+// GetCancelledAtOk returns a tuple with the CancelledAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountSubscriptionCreation) GetCancelledAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.CancelledAt) {
+		return nil, false
+	}
+	return o.CancelledAt, true
+}
+
+// HasCancelledAt returns a boolean if a field has been set.
+func (o *AccountSubscriptionCreation) HasCancelledAt() bool {
+	if o != nil && !IsNil(o.CancelledAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCancelledAt gets a reference to the given time.Time and assigns it to the CancelledAt field.
+func (o *AccountSubscriptionCreation) SetCancelledAt(v time.Time) {
+	o.CancelledAt = &v
+}
+
 // GetActualPrice returns the ActualPrice field value if set, zero value otherwise.
 func (o *AccountSubscriptionCreation) GetActualPrice() SubscriptionPrice {
 	if o == nil || IsNil(o.ActualPrice) {
@@ -224,36 +262,28 @@ func (o *AccountSubscriptionCreation) SetPaymentConfiguration(v AccountSubscript
 	o.PaymentConfiguration = &v
 }
 
-// GetPlanId returns the PlanId field value if set, zero value otherwise.
+// GetPlanId returns the PlanId field value
 func (o *AccountSubscriptionCreation) GetPlanId() string {
-	if o == nil || IsNil(o.PlanId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.PlanId
+
+	return o.PlanId
 }
 
-// GetPlanIdOk returns a tuple with the PlanId field value if set, nil otherwise
+// GetPlanIdOk returns a tuple with the PlanId field value
 // and a boolean to check if the value has been set.
 func (o *AccountSubscriptionCreation) GetPlanIdOk() (*string, bool) {
-	if o == nil || IsNil(o.PlanId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.PlanId, true
+	return &o.PlanId, true
 }
 
-// HasPlanId returns a boolean if a field has been set.
-func (o *AccountSubscriptionCreation) HasPlanId() bool {
-	if o != nil && !IsNil(o.PlanId) {
-		return true
-	}
-
-	return false
-}
-
-// SetPlanId gets a reference to the given string and assigns it to the PlanId field.
+// SetPlanId sets field value
 func (o *AccountSubscriptionCreation) SetPlanId(v string) {
-	o.PlanId = &v
+	o.PlanId = v
 }
 
 func (o AccountSubscriptionCreation) MarshalJSON() ([]byte, error) {
@@ -272,15 +302,16 @@ func (o AccountSubscriptionCreation) ToMap() (map[string]interface{}, error) {
 		toSerialize["end_date"] = o.EndDate
 	}
 	toSerialize["is_active"] = o.IsActive
+	if !IsNil(o.CancelledAt) {
+		toSerialize["cancelled_at"] = o.CancelledAt
+	}
 	if !IsNil(o.ActualPrice) {
 		toSerialize["actual_price"] = o.ActualPrice
 	}
 	if !IsNil(o.PaymentConfiguration) {
 		toSerialize["payment_configuration"] = o.PaymentConfiguration
 	}
-	if !IsNil(o.PlanId) {
-		toSerialize["plan_id"] = o.PlanId
-	}
+	toSerialize["plan_id"] = o.PlanId
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -297,6 +328,7 @@ func (o *AccountSubscriptionCreation) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"start_date",
 		"is_active",
+		"plan_id",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -330,6 +362,7 @@ func (o *AccountSubscriptionCreation) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "start_date")
 		delete(additionalProperties, "end_date")
 		delete(additionalProperties, "is_active")
+		delete(additionalProperties, "cancelled_at")
 		delete(additionalProperties, "actual_price")
 		delete(additionalProperties, "payment_configuration")
 		delete(additionalProperties, "plan_id")

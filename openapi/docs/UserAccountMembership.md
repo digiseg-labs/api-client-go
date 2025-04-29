@@ -7,6 +7,9 @@ Name | Type | Description | Notes
 **AccountId** | **string** | The ID of the account | 
 **AccountName** | Pointer to **string** | The name of the account | [optional] 
 **Roles** | [**[]UserAccountRole**](UserAccountRole.md) | The roles that the user has within the account | 
+**Account** | Pointer to [**AccountFull**](AccountFull.md) |  | [optional] 
+**FeatureSet** | Pointer to [**PlanFeatureSet**](PlanFeatureSet.md) |  | [optional] 
+**Subscriptions** | Pointer to [**[]AccountSubscriptionItem**](AccountSubscriptionItem.md) |  | [optional] [readonly] 
 
 ## Methods
 
@@ -91,6 +94,81 @@ and a boolean to check if the value has been set.
 
 SetRoles sets Roles field to given value.
 
+
+### GetAccount
+
+`func (o *UserAccountMembership) GetAccount() AccountFull`
+
+GetAccount returns the Account field if non-nil, zero value otherwise.
+
+### GetAccountOk
+
+`func (o *UserAccountMembership) GetAccountOk() (*AccountFull, bool)`
+
+GetAccountOk returns a tuple with the Account field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccount
+
+`func (o *UserAccountMembership) SetAccount(v AccountFull)`
+
+SetAccount sets Account field to given value.
+
+### HasAccount
+
+`func (o *UserAccountMembership) HasAccount() bool`
+
+HasAccount returns a boolean if a field has been set.
+
+### GetFeatureSet
+
+`func (o *UserAccountMembership) GetFeatureSet() PlanFeatureSet`
+
+GetFeatureSet returns the FeatureSet field if non-nil, zero value otherwise.
+
+### GetFeatureSetOk
+
+`func (o *UserAccountMembership) GetFeatureSetOk() (*PlanFeatureSet, bool)`
+
+GetFeatureSetOk returns a tuple with the FeatureSet field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFeatureSet
+
+`func (o *UserAccountMembership) SetFeatureSet(v PlanFeatureSet)`
+
+SetFeatureSet sets FeatureSet field to given value.
+
+### HasFeatureSet
+
+`func (o *UserAccountMembership) HasFeatureSet() bool`
+
+HasFeatureSet returns a boolean if a field has been set.
+
+### GetSubscriptions
+
+`func (o *UserAccountMembership) GetSubscriptions() []AccountSubscriptionItem`
+
+GetSubscriptions returns the Subscriptions field if non-nil, zero value otherwise.
+
+### GetSubscriptionsOk
+
+`func (o *UserAccountMembership) GetSubscriptionsOk() (*[]AccountSubscriptionItem, bool)`
+
+GetSubscriptionsOk returns a tuple with the Subscriptions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubscriptions
+
+`func (o *UserAccountMembership) SetSubscriptions(v []AccountSubscriptionItem)`
+
+SetSubscriptions sets Subscriptions field to given value.
+
+### HasSubscriptions
+
+`func (o *UserAccountMembership) HasSubscriptions() bool`
+
+HasSubscriptions returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

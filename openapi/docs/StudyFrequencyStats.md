@@ -4,9 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AverageFrequency** | Pointer to **float32** | The average frequency of impressions per user.  | [optional] 
+**EventType** | Pointer to **string** | The event that is represented in this frequency stats. Current values include &#x60;all&#x60; (all events), &#x60;impression&#x60; or &#x60;click&#x60; | [optional] 
+**SubFrequencies** | Pointer to [**[]StudyFrequencyStats**](StudyFrequencyStats.md) | Optionally an array of additional frequency stats for more fine-grained event types | [optional] 
+**AverageFrequency** | Pointer to **float32** | The average frequency of events per user.  | [optional] 
 **Frequencies** | Pointer to [**[]FrequencyStats**](FrequencyStats.md) | A listing of frequencies observed and the relevant measurements for each. The returned list may be truncated to cut off the \&quot;long tail\&quot; of frequency values.  | [optional] 
-**CountAboveCap** | Pointer to **int32** | The number of users that have generated impressions at a frequency value greater than those represented in &#x60;frequencies&#x60;.  | [optional] 
+**CountAboveCap** | Pointer to **int32** | The number of users that have generated events at a frequency value greater than those represented in &#x60;frequencies&#x60;.  | [optional] 
 
 ## Methods
 
@@ -26,6 +28,56 @@ will change when the set of required properties is changed
 NewStudyFrequencyStatsWithDefaults instantiates a new StudyFrequencyStats object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetEventType
+
+`func (o *StudyFrequencyStats) GetEventType() string`
+
+GetEventType returns the EventType field if non-nil, zero value otherwise.
+
+### GetEventTypeOk
+
+`func (o *StudyFrequencyStats) GetEventTypeOk() (*string, bool)`
+
+GetEventTypeOk returns a tuple with the EventType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEventType
+
+`func (o *StudyFrequencyStats) SetEventType(v string)`
+
+SetEventType sets EventType field to given value.
+
+### HasEventType
+
+`func (o *StudyFrequencyStats) HasEventType() bool`
+
+HasEventType returns a boolean if a field has been set.
+
+### GetSubFrequencies
+
+`func (o *StudyFrequencyStats) GetSubFrequencies() []StudyFrequencyStats`
+
+GetSubFrequencies returns the SubFrequencies field if non-nil, zero value otherwise.
+
+### GetSubFrequenciesOk
+
+`func (o *StudyFrequencyStats) GetSubFrequenciesOk() (*[]StudyFrequencyStats, bool)`
+
+GetSubFrequenciesOk returns a tuple with the SubFrequencies field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubFrequencies
+
+`func (o *StudyFrequencyStats) SetSubFrequencies(v []StudyFrequencyStats)`
+
+SetSubFrequencies sets SubFrequencies field to given value.
+
+### HasSubFrequencies
+
+`func (o *StudyFrequencyStats) HasSubFrequencies() bool`
+
+HasSubFrequencies returns a boolean if a field has been set.
 
 ### GetAverageFrequency
 

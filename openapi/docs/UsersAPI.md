@@ -4,21 +4,96 @@ All URIs are relative to *https://api.digiseg.net*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**AddUserToAccount**](UsersAPI.md#AddUserToAccount) | **Post** /accounts/{account_id}/users | Add user to account
 [**CreateApiKey**](UsersAPI.md#CreateApiKey) | **Post** /users/{user_id}/apikeys | Create API key
-[**CreateUserInAccount**](UsersAPI.md#CreateUserInAccount) | **Post** /accounts/{account_id}/users | Create user
 [**DeleteApiKeyById**](UsersAPI.md#DeleteApiKeyById) | **Delete** /users/{user_id}/apikeys/{key_id} | Delete API key
 [**DeleteUserAvatar**](UsersAPI.md#DeleteUserAvatar) | **Delete** /users/{user_id}/assets/avatar | Delete user avatar
 [**DeleteUserById**](UsersAPI.md#DeleteUserById) | **Delete** /users/{user_id} | Delete user
 [**GetApiKeyById**](UsersAPI.md#GetApiKeyById) | **Get** /users/{user_id}/apikeys/{key_id} | Get API key
 [**GetCurrentUser**](UsersAPI.md#GetCurrentUser) | **Get** /user | Get current user
+[**GetUserAccountMembership**](UsersAPI.md#GetUserAccountMembership) | **Get** /accounts/{account_id}/users/{user_id} | Get a user&#39;s membership with an account
 [**GetUserAvatar**](UsersAPI.md#GetUserAvatar) | **Get** /users/{user_id}/assets/avatar | Get user avatar
 [**GetUserById**](UsersAPI.md#GetUserById) | **Get** /users/{user_id} | Get user
 [**ListApiKeysByUserId**](UsersAPI.md#ListApiKeysByUserId) | **Get** /users/{user_id}/apikeys | List API keys for user
 [**ListUsersByAccountId**](UsersAPI.md#ListUsersByAccountId) | **Get** /accounts/{account_id}/users | List users for account
+[**RemoveUserFromAccount**](UsersAPI.md#RemoveUserFromAccount) | **Delete** /accounts/{account_id}/users/{user_id} | Remove user from account
 [**UpdateApiKeyById**](UsersAPI.md#UpdateApiKeyById) | **Put** /users/{user_id}/apikeys/{key_id} | Update API key
+[**UpdateUserAccountMembership**](UsersAPI.md#UpdateUserAccountMembership) | **Put** /accounts/{account_id}/users/{user_id} | Update a user&#39;s membership with an account
 [**UpdateUserById**](UsersAPI.md#UpdateUserById) | **Put** /users/{user_id} | Update user
 [**UploadUserAvatar**](UsersAPI.md#UploadUserAvatar) | **Put** /users/{user_id}/assets/avatar | Upload user avatar
 
+
+
+## AddUserToAccount
+
+> AddUserToAccount201Response AddUserToAccount(ctx, accountId).AccountUserAddition(accountUserAddition).Execute()
+
+Add user to account
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	accountId := "accountId_example" // string | 
+	accountUserAddition := *openapiclient.NewAccountUserAddition("casey.doe@example.com") // AccountUserAddition | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.AddUserToAccount(context.Background(), accountId).AccountUserAddition(accountUserAddition).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.AddUserToAccount``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AddUserToAccount`: AddUserToAccount201Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.AddUserToAccount`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**accountId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAddUserToAccountRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **accountUserAddition** | [**AccountUserAddition**](AccountUserAddition.md) |  | 
+
+### Return type
+
+[**AddUserToAccount201Response**](AddUserToAccount201Response.md)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateApiKey
@@ -78,78 +153,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**CreateApiKey201Response**](CreateApiKey201Response.md)
-
-### Authorization
-
-[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## CreateUserInAccount
-
-> CreateUserInAccount201Response CreateUserInAccount(ctx, accountId).UserCreation(userCreation).Execute()
-
-Create user
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/digiseg-labs/api-client-go"
-)
-
-func main() {
-	accountId := "accountId_example" // string | 
-	userCreation := *openapiclient.NewUserCreation() // UserCreation | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UsersAPI.CreateUserInAccount(context.Background(), accountId).UserCreation(userCreation).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.CreateUserInAccount``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `CreateUserInAccount`: CreateUserInAccount201Response
-	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.CreateUserInAccount`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountId** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiCreateUserInAccountRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **userCreation** | [**UserCreation**](UserCreation.md) |  | 
-
-### Return type
-
-[**CreateUserInAccount201Response**](CreateUserInAccount201Response.md)
 
 ### Authorization
 
@@ -441,7 +444,7 @@ Name | Type | Description  | Notes
 
 ## GetCurrentUser
 
-> CreateUserInAccount201Response GetCurrentUser(ctx).Execute()
+> AddUserToAccount201Response GetCurrentUser(ctx).Include(include).Execute()
 
 Get current user
 
@@ -460,31 +463,107 @@ import (
 )
 
 func main() {
+	include := []openapiclient.UserIncludeParam{openapiclient.UserIncludeParam("none")} // []UserIncludeParam | Optional parameter used to define aux properties to load in the response (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UsersAPI.GetCurrentUser(context.Background()).Execute()
+	resp, r, err := apiClient.UsersAPI.GetCurrentUser(context.Background()).Include(include).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetCurrentUser``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetCurrentUser`: CreateUserInAccount201Response
+	// response from `GetCurrentUser`: AddUserToAccount201Response
 	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetCurrentUser`: %v\n", resp)
 }
 ```
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetCurrentUserRequest struct via the builder pattern
 
 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **include** | [**[]UserIncludeParam**](UserIncludeParam.md) | Optional parameter used to define aux properties to load in the response | 
+
 ### Return type
 
-[**CreateUserInAccount201Response**](CreateUserInAccount201Response.md)
+[**AddUserToAccount201Response**](AddUserToAccount201Response.md)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetUserAccountMembership
+
+> GetUserAccountMembership200Response GetUserAccountMembership(ctx, accountId, userId).Execute()
+
+Get a user's membership with an account
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	accountId := "accountId_example" // string | 
+	userId := "userId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.GetUserAccountMembership(context.Background(), accountId, userId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetUserAccountMembership``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetUserAccountMembership`: GetUserAccountMembership200Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetUserAccountMembership`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**accountId** | **string** |  | 
+**userId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetUserAccountMembershipRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**GetUserAccountMembership200Response**](GetUserAccountMembership200Response.md)
 
 ### Authorization
 
@@ -570,7 +649,7 @@ Name | Type | Description  | Notes
 
 ## GetUserById
 
-> CreateUserInAccount201Response GetUserById(ctx, userId).Execute()
+> AddUserToAccount201Response GetUserById(ctx, userId).Include(include).Execute()
 
 Get user
 
@@ -588,15 +667,16 @@ import (
 
 func main() {
 	userId := "userId_example" // string | 
+	include := []openapiclient.UserIncludeParam{openapiclient.UserIncludeParam("none")} // []UserIncludeParam | Optional parameter used to define aux properties to load in the response (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UsersAPI.GetUserById(context.Background(), userId).Execute()
+	resp, r, err := apiClient.UsersAPI.GetUserById(context.Background(), userId).Include(include).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetUserById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetUserById`: CreateUserInAccount201Response
+	// response from `GetUserById`: AddUserToAccount201Response
 	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetUserById`: %v\n", resp)
 }
 ```
@@ -617,10 +697,11 @@ Other parameters are passed through a pointer to a apiGetUserByIdRequest struct 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **include** | [**[]UserIncludeParam**](UserIncludeParam.md) | Optional parameter used to define aux properties to load in the response | 
 
 ### Return type
 
-[**CreateUserInAccount201Response**](CreateUserInAccount201Response.md)
+[**AddUserToAccount201Response**](AddUserToAccount201Response.md)
 
 ### Authorization
 
@@ -638,7 +719,7 @@ Name | Type | Description  | Notes
 
 ## ListApiKeysByUserId
 
-> ListApiKeysByAccountId200Response ListApiKeysByUserId(ctx, userId).Execute()
+> ListApiKeysByAccountId200Response ListApiKeysByUserId(ctx, userId).FilterAccountId(filterAccountId).Execute()
 
 List API keys for user
 
@@ -656,10 +737,11 @@ import (
 
 func main() {
 	userId := "userId_example" // string | 
+	filterAccountId := "filterAccountId_example" // string | Filter by specific account id (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UsersAPI.ListApiKeysByUserId(context.Background(), userId).Execute()
+	resp, r, err := apiClient.UsersAPI.ListApiKeysByUserId(context.Background(), userId).FilterAccountId(filterAccountId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.ListApiKeysByUserId``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -685,6 +767,7 @@ Other parameters are passed through a pointer to a apiListApiKeysByUserIdRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **filterAccountId** | **string** | Filter by specific account id | 
 
 ### Return type
 
@@ -706,7 +789,7 @@ Name | Type | Description  | Notes
 
 ## ListUsersByAccountId
 
-> ListUsersByAccountId200Response ListUsersByAccountId(ctx, accountId).FilterPlatformRoles(filterPlatformRoles).FilterNameContains(filterNameContains).Sort(sort).PageSize(pageSize).PageAfter(pageAfter).Execute()
+> ListUsersByAccountId200Response ListUsersByAccountId(ctx, accountId).FilterPlatformRoles(filterPlatformRoles).FilterAccountRoles(filterAccountRoles).FilterNameContains(filterNameContains).Sort(sort).PageSize(pageSize).PageAfter(pageAfter).Execute()
 
 List users for account
 
@@ -725,6 +808,7 @@ import (
 func main() {
 	accountId := "accountId_example" // string | 
 	filterPlatformRoles := openapiclient.UserPlatformRole("super_admin") // UserPlatformRole | Filter based on platform roles, e.g. super_admin (optional)
+	filterAccountRoles := openapiclient.UserAccountRole("owner") // UserAccountRole | Filter based on account roles, e.g. `owner` (optional)
 	filterNameContains := "Doe" // string | Optional parameter used to search for users where the name contains a substring (case insensitive) (optional)
 	sort := openapiclient.UserSortOption("created_at") // UserSortOption | Defines the field to sort the result items by. Ascending order is applied by default, but the minus character can be used to indicate descending order instead.  (optional) (default to "created_at")
 	pageSize := int32(56) // int32 | The desired page size (optional) (default to 100)
@@ -732,7 +816,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UsersAPI.ListUsersByAccountId(context.Background(), accountId).FilterPlatformRoles(filterPlatformRoles).FilterNameContains(filterNameContains).Sort(sort).PageSize(pageSize).PageAfter(pageAfter).Execute()
+	resp, r, err := apiClient.UsersAPI.ListUsersByAccountId(context.Background(), accountId).FilterPlatformRoles(filterPlatformRoles).FilterAccountRoles(filterAccountRoles).FilterNameContains(filterNameContains).Sort(sort).PageSize(pageSize).PageAfter(pageAfter).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.ListUsersByAccountId``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -759,6 +843,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **filterPlatformRoles** | [**UserPlatformRole**](UserPlatformRole.md) | Filter based on platform roles, e.g. super_admin | 
+ **filterAccountRoles** | [**UserAccountRole**](UserAccountRole.md) | Filter based on account roles, e.g. &#x60;owner&#x60; | 
  **filterNameContains** | **string** | Optional parameter used to search for users where the name contains a substring (case insensitive) | 
  **sort** | [**UserSortOption**](UserSortOption.md) | Defines the field to sort the result items by. Ascending order is applied by default, but the minus character can be used to indicate descending order instead.  | [default to &quot;created_at&quot;]
  **pageSize** | **int32** | The desired page size | [default to 100]
@@ -776,6 +861,77 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RemoveUserFromAccount
+
+> RemoveUserFromAccount(ctx, accountId, userId).Execute()
+
+Remove user from account
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	accountId := "accountId_example" // string | 
+	userId := "userId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.UsersAPI.RemoveUserFromAccount(context.Background(), accountId, userId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.RemoveUserFromAccount``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**accountId** | **string** |  | 
+**userId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRemoveUserFromAccountRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -855,9 +1011,82 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## UpdateUserAccountMembership
+
+> GetUserAccountMembership200Response UpdateUserAccountMembership(ctx, accountId, userId).UserAccountMembershipUpdate(userAccountMembershipUpdate).Execute()
+
+Update a user's membership with an account
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	accountId := "accountId_example" // string | 
+	userId := "userId_example" // string | 
+	userAccountMembershipUpdate := *openapiclient.NewUserAccountMembershipUpdate([]openapiclient.UserAccountRole{openapiclient.UserAccountRole("owner")}) // UserAccountMembershipUpdate | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.UpdateUserAccountMembership(context.Background(), accountId, userId).UserAccountMembershipUpdate(userAccountMembershipUpdate).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.UpdateUserAccountMembership``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateUserAccountMembership`: GetUserAccountMembership200Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.UpdateUserAccountMembership`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**accountId** | **string** |  | 
+**userId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateUserAccountMembershipRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **userAccountMembershipUpdate** | [**UserAccountMembershipUpdate**](UserAccountMembershipUpdate.md) |  | 
+
+### Return type
+
+[**GetUserAccountMembership200Response**](GetUserAccountMembership200Response.md)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## UpdateUserById
 
-> CreateUserInAccount201Response UpdateUserById(ctx, userId).UserMutation(userMutation).Execute()
+> AddUserToAccount201Response UpdateUserById(ctx, userId).UserMutation(userMutation).Execute()
 
 Update user
 
@@ -884,7 +1113,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.UpdateUserById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `UpdateUserById`: CreateUserInAccount201Response
+	// response from `UpdateUserById`: AddUserToAccount201Response
 	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.UpdateUserById`: %v\n", resp)
 }
 ```
@@ -909,7 +1138,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateUserInAccount201Response**](CreateUserInAccount201Response.md)
+[**AddUserToAccount201Response**](AddUserToAccount201Response.md)
 
 ### Authorization
 

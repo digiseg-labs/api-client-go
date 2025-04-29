@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" />  ## Audience taxonomy  Digiseg audiences are grouped into private and business audiences. In each group there are categories that then contain the audiences. The API endpoints that communicate audiences and household characteristics, audience codes are being used.  The following table can be used as a reference for audience codes. Note that Digiseg will at times update names of audiences for purposes of internationalization, clarity or other such purposes - but the codes will remain as-is and should be considered a stable point of reference for the audience.  | Group | Category | Audience Code | Audience Name | |-------|----------|---------------|---------------| | private | home_type | a1 | Apartment | |  |  | a2 | House | |  | savings | b1 | No Savings | |  |  | b2 | Smaller Savings | |  |  | b3 | Larger Savings | |  | lifecycle | c1 | Young couples and singles | |  |  | c2 | Early family life | |  |  | c3 | Middle-aged families | |  |  | c4 | Mature families | |  |  | c5 | Pensioners / Retirees | |  | cars | d1 | No cars | |  |  | d2 | 1 car | |  |  | d3 | 2 or more cars | |  | children | e1 | No children | |  |  | e2 | 1 child | |  |  | e3 | 2 or more children | |  | education | f1 | Basic | |  |  | f2 | Medium | |  |  | f3 | Higher | |  | neighbourhood_type | g1 | Countryside | |  |  | g2 | Village | |  |  | g3 | Suburban | |  |  | g4 | City | |  | income | h1 | Lowest 20% | |  |  | h2 | Lowest 20-40% | |  |  | h3 | Middle 40-60% | |  |  | h4 | Highest 60-80% | |  |  | h5 | Top 20% | |  | home_ownership | j1 | Rent | |  |  | j2 | Own | |  | building_age | k1 | Pre 1945 | |  |  | k2 | 1945-1989 | |  |  | k3 | 1990 until today | |  | living_space | l1 | Small | |  |  | l2 | Medium | |  |  | l3 | Large | |  | tech_level | n1 | Basic | |  |  | n2 | Medium | |  |  | n3 | High | | business | size | ba1 | Small Business | |  |  | ba2 | Medium Business | |  |  | ba3 | Larger Business |  There is also an interactive [Audience builder](https://digiseg.io/cookieless-audience-builder/) which lets you discover the targeting reach and power of combining various household characteristics into composite audiences. 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -24,8 +24,9 @@ type PlanFeatureSet struct {
 	MaxUsers int32 `json:"max_users"`
 	MaxClients int32 `json:"max_clients"`
 	MaxActiveStudies int32 `json:"max_active_studies"`
-	MaxEventsPerStudy int32 `json:"max_events_per_study"`
-	MaxAudienceLookupsPerMonth int32 `json:"max_audience_lookups_per_month"`
+	MaxEventsPerStudy int64 `json:"max_events_per_study"`
+	MaxStudyEventsPerMonth int64 `json:"max_study_events_per_month"`
+	MaxAudienceLookupsPerMonth int64 `json:"max_audience_lookups_per_month"`
 	StudyAudienceSet LimitedOrFullFeature `json:"study_audience_set"`
 	StudyEventSet LimitedOrFullFeature `json:"study_event_set"`
 	HasAudienceRecommendations bool `json:"has_audience_recommendations"`
@@ -41,12 +42,13 @@ type _PlanFeatureSet PlanFeatureSet
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPlanFeatureSet(maxUsers int32, maxClients int32, maxActiveStudies int32, maxEventsPerStudy int32, maxAudienceLookupsPerMonth int32, studyAudienceSet LimitedOrFullFeature, studyEventSet LimitedOrFullFeature, hasAudienceRecommendations bool, hasReportCustomization bool, hasReportSharingClients bool, hasReportSharingPublic bool) *PlanFeatureSet {
+func NewPlanFeatureSet(maxUsers int32, maxClients int32, maxActiveStudies int32, maxEventsPerStudy int64, maxStudyEventsPerMonth int64, maxAudienceLookupsPerMonth int64, studyAudienceSet LimitedOrFullFeature, studyEventSet LimitedOrFullFeature, hasAudienceRecommendations bool, hasReportCustomization bool, hasReportSharingClients bool, hasReportSharingPublic bool) *PlanFeatureSet {
 	this := PlanFeatureSet{}
 	this.MaxUsers = maxUsers
 	this.MaxClients = maxClients
 	this.MaxActiveStudies = maxActiveStudies
 	this.MaxEventsPerStudy = maxEventsPerStudy
+	this.MaxStudyEventsPerMonth = maxStudyEventsPerMonth
 	this.MaxAudienceLookupsPerMonth = maxAudienceLookupsPerMonth
 	this.StudyAudienceSet = studyAudienceSet
 	this.StudyEventSet = studyEventSet
@@ -138,9 +140,9 @@ func (o *PlanFeatureSet) SetMaxActiveStudies(v int32) {
 }
 
 // GetMaxEventsPerStudy returns the MaxEventsPerStudy field value
-func (o *PlanFeatureSet) GetMaxEventsPerStudy() int32 {
+func (o *PlanFeatureSet) GetMaxEventsPerStudy() int64 {
 	if o == nil {
-		var ret int32
+		var ret int64
 		return ret
 	}
 
@@ -149,7 +151,7 @@ func (o *PlanFeatureSet) GetMaxEventsPerStudy() int32 {
 
 // GetMaxEventsPerStudyOk returns a tuple with the MaxEventsPerStudy field value
 // and a boolean to check if the value has been set.
-func (o *PlanFeatureSet) GetMaxEventsPerStudyOk() (*int32, bool) {
+func (o *PlanFeatureSet) GetMaxEventsPerStudyOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -157,14 +159,38 @@ func (o *PlanFeatureSet) GetMaxEventsPerStudyOk() (*int32, bool) {
 }
 
 // SetMaxEventsPerStudy sets field value
-func (o *PlanFeatureSet) SetMaxEventsPerStudy(v int32) {
+func (o *PlanFeatureSet) SetMaxEventsPerStudy(v int64) {
 	o.MaxEventsPerStudy = v
 }
 
-// GetMaxAudienceLookupsPerMonth returns the MaxAudienceLookupsPerMonth field value
-func (o *PlanFeatureSet) GetMaxAudienceLookupsPerMonth() int32 {
+// GetMaxStudyEventsPerMonth returns the MaxStudyEventsPerMonth field value
+func (o *PlanFeatureSet) GetMaxStudyEventsPerMonth() int64 {
 	if o == nil {
-		var ret int32
+		var ret int64
+		return ret
+	}
+
+	return o.MaxStudyEventsPerMonth
+}
+
+// GetMaxStudyEventsPerMonthOk returns a tuple with the MaxStudyEventsPerMonth field value
+// and a boolean to check if the value has been set.
+func (o *PlanFeatureSet) GetMaxStudyEventsPerMonthOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.MaxStudyEventsPerMonth, true
+}
+
+// SetMaxStudyEventsPerMonth sets field value
+func (o *PlanFeatureSet) SetMaxStudyEventsPerMonth(v int64) {
+	o.MaxStudyEventsPerMonth = v
+}
+
+// GetMaxAudienceLookupsPerMonth returns the MaxAudienceLookupsPerMonth field value
+func (o *PlanFeatureSet) GetMaxAudienceLookupsPerMonth() int64 {
+	if o == nil {
+		var ret int64
 		return ret
 	}
 
@@ -173,7 +199,7 @@ func (o *PlanFeatureSet) GetMaxAudienceLookupsPerMonth() int32 {
 
 // GetMaxAudienceLookupsPerMonthOk returns a tuple with the MaxAudienceLookupsPerMonth field value
 // and a boolean to check if the value has been set.
-func (o *PlanFeatureSet) GetMaxAudienceLookupsPerMonthOk() (*int32, bool) {
+func (o *PlanFeatureSet) GetMaxAudienceLookupsPerMonthOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -181,7 +207,7 @@ func (o *PlanFeatureSet) GetMaxAudienceLookupsPerMonthOk() (*int32, bool) {
 }
 
 // SetMaxAudienceLookupsPerMonth sets field value
-func (o *PlanFeatureSet) SetMaxAudienceLookupsPerMonth(v int32) {
+func (o *PlanFeatureSet) SetMaxAudienceLookupsPerMonth(v int64) {
 	o.MaxAudienceLookupsPerMonth = v
 }
 
@@ -343,6 +369,7 @@ func (o PlanFeatureSet) ToMap() (map[string]interface{}, error) {
 	toSerialize["max_clients"] = o.MaxClients
 	toSerialize["max_active_studies"] = o.MaxActiveStudies
 	toSerialize["max_events_per_study"] = o.MaxEventsPerStudy
+	toSerialize["max_study_events_per_month"] = o.MaxStudyEventsPerMonth
 	toSerialize["max_audience_lookups_per_month"] = o.MaxAudienceLookupsPerMonth
 	toSerialize["study_audience_set"] = o.StudyAudienceSet
 	toSerialize["study_event_set"] = o.StudyEventSet
@@ -367,6 +394,7 @@ func (o *PlanFeatureSet) UnmarshalJSON(data []byte) (err error) {
 		"max_clients",
 		"max_active_studies",
 		"max_events_per_study",
+		"max_study_events_per_month",
 		"max_audience_lookups_per_month",
 		"study_audience_set",
 		"study_event_set",
@@ -407,6 +435,7 @@ func (o *PlanFeatureSet) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "max_clients")
 		delete(additionalProperties, "max_active_studies")
 		delete(additionalProperties, "max_events_per_study")
+		delete(additionalProperties, "max_study_events_per_month")
 		delete(additionalProperties, "max_audience_lookups_per_month")
 		delete(additionalProperties, "study_audience_set")
 		delete(additionalProperties, "study_event_set")

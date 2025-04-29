@@ -12,11 +12,10 @@ Name | Type | Description | Notes
 **CompanySize** | Pointer to [**CompanySize**](CompanySize.md) |  | [optional] 
 **HasClients** | Pointer to **bool** | Determines whether the account has clients that they work for, or if their activities are for themselves. | [optional] 
 **Slug** | Pointer to **string** | A short human-readable name to identify the account. Must be lower-case and between 4 and 16 characters. | [optional] 
+**Owner** | Pointer to [**AccountOwnerCreation**](AccountOwnerCreation.md) |  | [optional] 
 **OwnerId** | Pointer to **string** | ID of the user who is the ultimate owner of the account. Deprecated in favor of the &#x60;owner&#x60; role of the user&#39;s account membership. | [optional] 
 **BillingEmail** | Pointer to **string** | The email address to send billing information to. Requires &#x60;owner&#x60; role to change. | [optional] 
 **BillingAddress** | Pointer to [**PostalAddress**](PostalAddress.md) |  | [optional] 
-**StripeCustomerId** | Pointer to **string** |  | [optional] [readonly] 
-**Owner** | Pointer to [**AccountOwnerCreation**](AccountOwnerCreation.md) |  | [optional] 
 **NotifyUser** | Pointer to **bool** | Whether or not to notify the user that they have been registered | [optional] [default to true]
 
 ## Methods
@@ -238,6 +237,31 @@ SetSlug sets Slug field to given value.
 
 HasSlug returns a boolean if a field has been set.
 
+### GetOwner
+
+`func (o *AccountCreation) GetOwner() AccountOwnerCreation`
+
+GetOwner returns the Owner field if non-nil, zero value otherwise.
+
+### GetOwnerOk
+
+`func (o *AccountCreation) GetOwnerOk() (*AccountOwnerCreation, bool)`
+
+GetOwnerOk returns a tuple with the Owner field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwner
+
+`func (o *AccountCreation) SetOwner(v AccountOwnerCreation)`
+
+SetOwner sets Owner field to given value.
+
+### HasOwner
+
+`func (o *AccountCreation) HasOwner() bool`
+
+HasOwner returns a boolean if a field has been set.
+
 ### GetOwnerId
 
 `func (o *AccountCreation) GetOwnerId() string`
@@ -312,56 +336,6 @@ SetBillingAddress sets BillingAddress field to given value.
 `func (o *AccountCreation) HasBillingAddress() bool`
 
 HasBillingAddress returns a boolean if a field has been set.
-
-### GetStripeCustomerId
-
-`func (o *AccountCreation) GetStripeCustomerId() string`
-
-GetStripeCustomerId returns the StripeCustomerId field if non-nil, zero value otherwise.
-
-### GetStripeCustomerIdOk
-
-`func (o *AccountCreation) GetStripeCustomerIdOk() (*string, bool)`
-
-GetStripeCustomerIdOk returns a tuple with the StripeCustomerId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetStripeCustomerId
-
-`func (o *AccountCreation) SetStripeCustomerId(v string)`
-
-SetStripeCustomerId sets StripeCustomerId field to given value.
-
-### HasStripeCustomerId
-
-`func (o *AccountCreation) HasStripeCustomerId() bool`
-
-HasStripeCustomerId returns a boolean if a field has been set.
-
-### GetOwner
-
-`func (o *AccountCreation) GetOwner() AccountOwnerCreation`
-
-GetOwner returns the Owner field if non-nil, zero value otherwise.
-
-### GetOwnerOk
-
-`func (o *AccountCreation) GetOwnerOk() (*AccountOwnerCreation, bool)`
-
-GetOwnerOk returns a tuple with the Owner field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetOwner
-
-`func (o *AccountCreation) SetOwner(v AccountOwnerCreation)`
-
-SetOwner sets Owner field to given value.
-
-### HasOwner
-
-`func (o *AccountCreation) HasOwner() bool`
-
-HasOwner returns a boolean if a field has been set.
 
 ### GetNotifyUser
 

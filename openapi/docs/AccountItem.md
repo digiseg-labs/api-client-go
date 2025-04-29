@@ -13,6 +13,8 @@ Name | Type | Description | Notes
 **CompanySize** | Pointer to [**CompanySize**](CompanySize.md) |  | [optional] 
 **HasClients** | Pointer to **bool** | Determines whether the account has clients that they work for, or if their activities are for themselves. | [optional] 
 **Slug** | Pointer to **string** | A short human-readable name to identify the account. Must be lower-case and between 4 and 16 characters. | [optional] 
+**FeatureSet** | Pointer to [**PlanFeatureSet**](PlanFeatureSet.md) |  | [optional] 
+**Subscriptions** | Pointer to [**[]AccountSubscriptionItem**](AccountSubscriptionItem.md) |  | [optional] [readonly] 
 
 ## Methods
 
@@ -257,6 +259,56 @@ SetSlug sets Slug field to given value.
 `func (o *AccountItem) HasSlug() bool`
 
 HasSlug returns a boolean if a field has been set.
+
+### GetFeatureSet
+
+`func (o *AccountItem) GetFeatureSet() PlanFeatureSet`
+
+GetFeatureSet returns the FeatureSet field if non-nil, zero value otherwise.
+
+### GetFeatureSetOk
+
+`func (o *AccountItem) GetFeatureSetOk() (*PlanFeatureSet, bool)`
+
+GetFeatureSetOk returns a tuple with the FeatureSet field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFeatureSet
+
+`func (o *AccountItem) SetFeatureSet(v PlanFeatureSet)`
+
+SetFeatureSet sets FeatureSet field to given value.
+
+### HasFeatureSet
+
+`func (o *AccountItem) HasFeatureSet() bool`
+
+HasFeatureSet returns a boolean if a field has been set.
+
+### GetSubscriptions
+
+`func (o *AccountItem) GetSubscriptions() []AccountSubscriptionItem`
+
+GetSubscriptions returns the Subscriptions field if non-nil, zero value otherwise.
+
+### GetSubscriptionsOk
+
+`func (o *AccountItem) GetSubscriptionsOk() (*[]AccountSubscriptionItem, bool)`
+
+GetSubscriptionsOk returns a tuple with the Subscriptions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubscriptions
+
+`func (o *AccountItem) SetSubscriptions(v []AccountSubscriptionItem)`
+
+SetSubscriptions sets Subscriptions field to given value.
+
+### HasSubscriptions
+
+`func (o *AccountItem) HasSubscriptions() bool`
+
+HasSubscriptions returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

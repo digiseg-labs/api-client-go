@@ -15,6 +15,9 @@ Name | Type | Description | Notes
 **OwnerId** | Pointer to **string** | ID of the user who is the ultimate owner of the account. Deprecated in favor of the &#x60;owner&#x60; role of the user&#39;s account membership. | [optional] 
 **BillingEmail** | Pointer to **string** | The email address to send billing information to. Requires &#x60;owner&#x60; role to change. | [optional] 
 **BillingAddress** | Pointer to [**PostalAddress**](PostalAddress.md) |  | [optional] 
+**BillingTaxIds** | Pointer to [**[]TaxId**](TaxId.md) | A list of Tax IDs used by the account, for billing purposes. | [optional] [readonly] 
+**BillingCurrency** | Pointer to [**SubscriptionPriceCurrency**](SubscriptionPriceCurrency.md) |  | [optional] [default to SUBSCRIPTIONPRICECURRENCY_EUR]
+**BillingName** | Pointer to **string** | An optional official name to use for billing purposes. Requires &#x60;owner&#x60; role to change. | [optional] 
 **StripeCustomerId** | Pointer to **string** |  | [optional] [readonly] 
 
 ## Methods
@@ -310,6 +313,81 @@ SetBillingAddress sets BillingAddress field to given value.
 `func (o *AccountMutation) HasBillingAddress() bool`
 
 HasBillingAddress returns a boolean if a field has been set.
+
+### GetBillingTaxIds
+
+`func (o *AccountMutation) GetBillingTaxIds() []TaxId`
+
+GetBillingTaxIds returns the BillingTaxIds field if non-nil, zero value otherwise.
+
+### GetBillingTaxIdsOk
+
+`func (o *AccountMutation) GetBillingTaxIdsOk() (*[]TaxId, bool)`
+
+GetBillingTaxIdsOk returns a tuple with the BillingTaxIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBillingTaxIds
+
+`func (o *AccountMutation) SetBillingTaxIds(v []TaxId)`
+
+SetBillingTaxIds sets BillingTaxIds field to given value.
+
+### HasBillingTaxIds
+
+`func (o *AccountMutation) HasBillingTaxIds() bool`
+
+HasBillingTaxIds returns a boolean if a field has been set.
+
+### GetBillingCurrency
+
+`func (o *AccountMutation) GetBillingCurrency() SubscriptionPriceCurrency`
+
+GetBillingCurrency returns the BillingCurrency field if non-nil, zero value otherwise.
+
+### GetBillingCurrencyOk
+
+`func (o *AccountMutation) GetBillingCurrencyOk() (*SubscriptionPriceCurrency, bool)`
+
+GetBillingCurrencyOk returns a tuple with the BillingCurrency field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBillingCurrency
+
+`func (o *AccountMutation) SetBillingCurrency(v SubscriptionPriceCurrency)`
+
+SetBillingCurrency sets BillingCurrency field to given value.
+
+### HasBillingCurrency
+
+`func (o *AccountMutation) HasBillingCurrency() bool`
+
+HasBillingCurrency returns a boolean if a field has been set.
+
+### GetBillingName
+
+`func (o *AccountMutation) GetBillingName() string`
+
+GetBillingName returns the BillingName field if non-nil, zero value otherwise.
+
+### GetBillingNameOk
+
+`func (o *AccountMutation) GetBillingNameOk() (*string, bool)`
+
+GetBillingNameOk returns a tuple with the BillingName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBillingName
+
+`func (o *AccountMutation) SetBillingName(v string)`
+
+SetBillingName sets BillingName field to given value.
+
+### HasBillingName
+
+`func (o *AccountMutation) HasBillingName() bool`
+
+HasBillingName returns a boolean if a field has been set.
 
 ### GetStripeCustomerId
 

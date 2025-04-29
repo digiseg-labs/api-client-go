@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**GetAccountSubscriptionById**](SubscriptionsAPI.md#GetAccountSubscriptionById) | **Get** /accounts/{account_id}/subscriptions/{subscription_id} | Get account subscription
 [**GetAccountSubscriptions**](SubscriptionsAPI.md#GetAccountSubscriptions) | **Get** /accounts/{account_id}/subscriptions | Get account subscriptions summary
+[**ListSubscriptionOffers**](SubscriptionsAPI.md#ListSubscriptionOffers) | **Get** /subscription_offers | List subscription offers
 [**ListSubscriptionPlans**](SubscriptionsAPI.md#ListSubscriptionPlans) | **Get** /subscription_plans | List subscription plans
 
 
@@ -153,6 +154,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListSubscriptionOffers
+
+> ListSubscriptionOffers200Response ListSubscriptionOffers(ctx).FilterAccountId(filterAccountId).Execute()
+
+List subscription offers
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+	filterAccountId := "filterAccountId_example" // string | Optional parameter used to filter on the account ID (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.SubscriptionsAPI.ListSubscriptionOffers(context.Background()).FilterAccountId(filterAccountId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `SubscriptionsAPI.ListSubscriptionOffers``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListSubscriptionOffers`: ListSubscriptionOffers200Response
+	fmt.Fprintf(os.Stdout, "Response from `SubscriptionsAPI.ListSubscriptionOffers`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListSubscriptionOffersRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **filterAccountId** | **string** | Optional parameter used to filter on the account ID | 
+
+### Return type
+
+[**ListSubscriptionOffers200Response**](ListSubscriptionOffers200Response.md)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListSubscriptionPlans
 
 > ListSubscriptionPlans200Response ListSubscriptionPlans(ctx).PageSize(pageSize).PageAfter(pageAfter).FilterIsPublic(filterIsPublic).FilterProductType(filterProductType).FilterListPriceCurrency(filterListPriceCurrency).FilterListPriceInterval(filterListPriceInterval).Execute()
@@ -177,7 +242,7 @@ func main() {
 	filterIsPublic := true // bool | Optional parameter used to filter on the `is_public` field (optional)
 	filterProductType := openapiclient.SubscriptionProductType("base") // SubscriptionProductType | Optional parameter used to filter on the `product_type` field (optional)
 	filterListPriceCurrency := openapiclient.SubscriptionPriceCurrency("EUR") // SubscriptionPriceCurrency | Optional parameter used to filter on the list price's currency (optional) (default to "EUR")
-	filterListPriceInterval := openapiclient.SubscriptionPriceInterval("monthly") // SubscriptionPriceInterval | Optional parameter used to filter on the list price's interval (optional)
+	filterListPriceInterval := openapiclient.SubscriptionPriceInterval("daily") // SubscriptionPriceInterval | Optional parameter used to filter on the list price's interval (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

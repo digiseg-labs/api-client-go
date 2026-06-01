@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Meta** | Pointer to [**AudienceSetListResponseMeta**](AudienceSetListResponseMeta.md) |  | [optional] 
-**Data** | Pointer to [**[]AudienceSetItem**](AudienceSetItem.md) |  | [optional] 
+**Meta** | Pointer to [**CategoryListResponseMeta**](CategoryListResponseMeta.md) |  | [optional] 
+**Data** | Pointer to [**[]AudienceCategoryItem**](AudienceCategoryItem.md) |  | [optional] 
 
 ## Methods
 
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetMeta
 
-`func (o *ListAudiences200Response) GetMeta() AudienceSetListResponseMeta`
+`func (o *ListAudiences200Response) GetMeta() CategoryListResponseMeta`
 
 GetMeta returns the Meta field if non-nil, zero value otherwise.
 
 ### GetMetaOk
 
-`func (o *ListAudiences200Response) GetMetaOk() (*AudienceSetListResponseMeta, bool)`
+`func (o *ListAudiences200Response) GetMetaOk() (*CategoryListResponseMeta, bool)`
 
 GetMetaOk returns a tuple with the Meta field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMeta
 
-`func (o *ListAudiences200Response) SetMeta(v AudienceSetListResponseMeta)`
+`func (o *ListAudiences200Response) SetMeta(v CategoryListResponseMeta)`
 
 SetMeta sets Meta field to given value.
 
@@ -53,20 +53,20 @@ HasMeta returns a boolean if a field has been set.
 
 ### GetData
 
-`func (o *ListAudiences200Response) GetData() []AudienceSetItem`
+`func (o *ListAudiences200Response) GetData() []AudienceCategoryItem`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *ListAudiences200Response) GetDataOk() (*[]AudienceSetItem, bool)`
+`func (o *ListAudiences200Response) GetDataOk() (*[]AudienceCategoryItem, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *ListAudiences200Response) SetData(v []AudienceSetItem)`
+`func (o *ListAudiences200Response) SetData(v []AudienceCategoryItem)`
 
 SetData sets Data field to given value.
 

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**SubscriptionPlanFull**](SubscriptionPlanFull.md) |  | [optional] 
+**Data** | Pointer to [**RegistrationByIdResponseData**](RegistrationByIdResponseData.md) |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *InlineObject3) GetData() SubscriptionPlanFull`
+`func (o *InlineObject3) GetData() RegistrationByIdResponseData`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *InlineObject3) GetDataOk() (*SubscriptionPlanFull, bool)`
+`func (o *InlineObject3) GetDataOk() (*RegistrationByIdResponseData, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *InlineObject3) SetData(v SubscriptionPlanFull)`
+`func (o *InlineObject3) SetData(v RegistrationByIdResponseData)`
 
 SetData sets Data field to given value.
 

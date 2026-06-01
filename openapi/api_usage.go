@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for<br/>Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for<br/>TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for<br/>Go</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-dotnet\">     <i class=\"api-client-sdk-logo devicon-dot-net-plain\"></i>     <p>API client for<br/>.NET</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -17,73 +17,78 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 
 // UsageAPIService UsageAPI service
 type UsageAPIService service
 
-type UsageAPIListAudienceDataDailyUsageRequest struct {
+type UsageAPIListDataDailyUsageRequest struct {
 	ctx context.Context
 	ApiService *UsageAPIService
+	data string
 	filterDateFrom *string
 	filterDateTo *string
 	filterAccountId *string
 }
 
 // Date to query from
-func (r UsageAPIListAudienceDataDailyUsageRequest) FilterDateFrom(filterDateFrom string) UsageAPIListAudienceDataDailyUsageRequest {
+func (r UsageAPIListDataDailyUsageRequest) FilterDateFrom(filterDateFrom string) UsageAPIListDataDailyUsageRequest {
 	r.filterDateFrom = &filterDateFrom
 	return r
 }
 
 // Date to query to
-func (r UsageAPIListAudienceDataDailyUsageRequest) FilterDateTo(filterDateTo string) UsageAPIListAudienceDataDailyUsageRequest {
+func (r UsageAPIListDataDailyUsageRequest) FilterDateTo(filterDateTo string) UsageAPIListDataDailyUsageRequest {
 	r.filterDateTo = &filterDateTo
 	return r
 }
 
 // Optional parameter used to query usage of specific account IDs (only available to super admins). 
-func (r UsageAPIListAudienceDataDailyUsageRequest) FilterAccountId(filterAccountId string) UsageAPIListAudienceDataDailyUsageRequest {
+func (r UsageAPIListDataDailyUsageRequest) FilterAccountId(filterAccountId string) UsageAPIListDataDailyUsageRequest {
 	r.filterAccountId = &filterAccountId
 	return r
 }
 
-func (r UsageAPIListAudienceDataDailyUsageRequest) Execute() (*ListAudienceDataDailyUsage200Response, *http.Response, error) {
-	return r.ApiService.ListAudienceDataDailyUsageExecute(r)
+func (r UsageAPIListDataDailyUsageRequest) Execute() (*ListDataDailyUsage200Response, *http.Response, error) {
+	return r.ApiService.ListDataDailyUsageExecute(r)
 }
 
 /*
-ListAudienceDataDailyUsage List daily usage of Audience Data
+ListDataDailyUsage List daily usage of Audience Data
 
 Provides usage stats on a daily basis. Results available for the last 2 months.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return UsageAPIListAudienceDataDailyUsageRequest
+ @param data
+ @return UsageAPIListDataDailyUsageRequest
 */
-func (a *UsageAPIService) ListAudienceDataDailyUsage(ctx context.Context) UsageAPIListAudienceDataDailyUsageRequest {
-	return UsageAPIListAudienceDataDailyUsageRequest{
+func (a *UsageAPIService) ListDataDailyUsage(ctx context.Context, data string) UsageAPIListDataDailyUsageRequest {
+	return UsageAPIListDataDailyUsageRequest{
 		ApiService: a,
 		ctx: ctx,
+		data: data,
 	}
 }
 
 // Execute executes the request
-//  @return ListAudienceDataDailyUsage200Response
-func (a *UsageAPIService) ListAudienceDataDailyUsageExecute(r UsageAPIListAudienceDataDailyUsageRequest) (*ListAudienceDataDailyUsage200Response, *http.Response, error) {
+//  @return ListDataDailyUsage200Response
+func (a *UsageAPIService) ListDataDailyUsageExecute(r UsageAPIListDataDailyUsageRequest) (*ListDataDailyUsage200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListAudienceDataDailyUsage200Response
+		localVarReturnValue  *ListDataDailyUsage200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsageAPIService.ListAudienceDataDailyUsage")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsageAPIService.ListDataDailyUsage")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/usage/audience_data/daily"
+	localVarPath := localBasePath + "/usage/{data}/daily"
+	localVarPath = strings.Replace(localVarPath, "{"+"data"+"}", url.PathEscape(parameterValueToString(r.data, "data")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -180,60 +185,64 @@ func (a *UsageAPIService) ListAudienceDataDailyUsageExecute(r UsageAPIListAudien
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type UsageAPIListAudienceDataMonthlyUsageRequest struct {
+type UsageAPIListDataMonthlyUsageRequest struct {
 	ctx context.Context
 	ApiService *UsageAPIService
+	data string
 	filterYear *int32
 	filterAccountId *string
 }
 
 // Year to filter by
-func (r UsageAPIListAudienceDataMonthlyUsageRequest) FilterYear(filterYear int32) UsageAPIListAudienceDataMonthlyUsageRequest {
+func (r UsageAPIListDataMonthlyUsageRequest) FilterYear(filterYear int32) UsageAPIListDataMonthlyUsageRequest {
 	r.filterYear = &filterYear
 	return r
 }
 
 // Optional parameter used to query usage of specific account IDs (only available to super admins). 
-func (r UsageAPIListAudienceDataMonthlyUsageRequest) FilterAccountId(filterAccountId string) UsageAPIListAudienceDataMonthlyUsageRequest {
+func (r UsageAPIListDataMonthlyUsageRequest) FilterAccountId(filterAccountId string) UsageAPIListDataMonthlyUsageRequest {
 	r.filterAccountId = &filterAccountId
 	return r
 }
 
-func (r UsageAPIListAudienceDataMonthlyUsageRequest) Execute() (*ListAudienceDataMonthlyUsage200Response, *http.Response, error) {
-	return r.ApiService.ListAudienceDataMonthlyUsageExecute(r)
+func (r UsageAPIListDataMonthlyUsageRequest) Execute() (*ListDataMonthlyUsage200Response, *http.Response, error) {
+	return r.ApiService.ListDataMonthlyUsageExecute(r)
 }
 
 /*
-ListAudienceDataMonthlyUsage List monthly usage of Audience Data
+ListDataMonthlyUsage List monthly usage of Audience Data
 
 Provides usage stats on a monthly basis.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return UsageAPIListAudienceDataMonthlyUsageRequest
+ @param data
+ @return UsageAPIListDataMonthlyUsageRequest
 */
-func (a *UsageAPIService) ListAudienceDataMonthlyUsage(ctx context.Context) UsageAPIListAudienceDataMonthlyUsageRequest {
-	return UsageAPIListAudienceDataMonthlyUsageRequest{
+func (a *UsageAPIService) ListDataMonthlyUsage(ctx context.Context, data string) UsageAPIListDataMonthlyUsageRequest {
+	return UsageAPIListDataMonthlyUsageRequest{
 		ApiService: a,
 		ctx: ctx,
+		data: data,
 	}
 }
 
 // Execute executes the request
-//  @return ListAudienceDataMonthlyUsage200Response
-func (a *UsageAPIService) ListAudienceDataMonthlyUsageExecute(r UsageAPIListAudienceDataMonthlyUsageRequest) (*ListAudienceDataMonthlyUsage200Response, *http.Response, error) {
+//  @return ListDataMonthlyUsage200Response
+func (a *UsageAPIService) ListDataMonthlyUsageExecute(r UsageAPIListDataMonthlyUsageRequest) (*ListDataMonthlyUsage200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListAudienceDataMonthlyUsage200Response
+		localVarReturnValue  *ListDataMonthlyUsage200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsageAPIService.ListAudienceDataMonthlyUsage")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsageAPIService.ListDataMonthlyUsage")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/usage/audience_data/monthly"
+	localVarPath := localBasePath + "/usage/{data}/monthly"
+	localVarPath = strings.Replace(localVarPath, "{"+"data"+"}", url.PathEscape(parameterValueToString(r.data, "data")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -327,24 +336,25 @@ func (a *UsageAPIService) ListAudienceDataMonthlyUsageExecute(r UsageAPIListAudi
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type UsageAPIListAudienceDataRealtimeUsageRequest struct {
+type UsageAPIListDataRealtimeUsageRequest struct {
 	ctx context.Context
 	ApiService *UsageAPIService
+	data string
 	filterAccountId *string
 }
 
 // Optional parameter used to query usage of specific account IDs (only available to super admins). 
-func (r UsageAPIListAudienceDataRealtimeUsageRequest) FilterAccountId(filterAccountId string) UsageAPIListAudienceDataRealtimeUsageRequest {
+func (r UsageAPIListDataRealtimeUsageRequest) FilterAccountId(filterAccountId string) UsageAPIListDataRealtimeUsageRequest {
 	r.filterAccountId = &filterAccountId
 	return r
 }
 
-func (r UsageAPIListAudienceDataRealtimeUsageRequest) Execute() (*ListAudienceDataRealtimeUsage200Response, *http.Response, error) {
-	return r.ApiService.ListAudienceDataRealtimeUsageExecute(r)
+func (r UsageAPIListDataRealtimeUsageRequest) Execute() (*ListDataRealtimeUsage200Response, *http.Response, error) {
+	return r.ApiService.ListDataRealtimeUsageExecute(r)
 }
 
 /*
-ListAudienceDataRealtimeUsage List realtime usage of Audience Data
+ListDataRealtimeUsage List realtime usage of Audience Data
 
 Provides usage stats on a near-realtime basis.
 Results available for the last 24 hours, provided with as short delay as possible.
@@ -352,31 +362,34 @@ The results will be returned in usage objects, each representing 5 minutes of no
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return UsageAPIListAudienceDataRealtimeUsageRequest
+ @param data
+ @return UsageAPIListDataRealtimeUsageRequest
 */
-func (a *UsageAPIService) ListAudienceDataRealtimeUsage(ctx context.Context) UsageAPIListAudienceDataRealtimeUsageRequest {
-	return UsageAPIListAudienceDataRealtimeUsageRequest{
+func (a *UsageAPIService) ListDataRealtimeUsage(ctx context.Context, data string) UsageAPIListDataRealtimeUsageRequest {
+	return UsageAPIListDataRealtimeUsageRequest{
 		ApiService: a,
 		ctx: ctx,
+		data: data,
 	}
 }
 
 // Execute executes the request
-//  @return ListAudienceDataRealtimeUsage200Response
-func (a *UsageAPIService) ListAudienceDataRealtimeUsageExecute(r UsageAPIListAudienceDataRealtimeUsageRequest) (*ListAudienceDataRealtimeUsage200Response, *http.Response, error) {
+//  @return ListDataRealtimeUsage200Response
+func (a *UsageAPIService) ListDataRealtimeUsageExecute(r UsageAPIListDataRealtimeUsageRequest) (*ListDataRealtimeUsage200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListAudienceDataRealtimeUsage200Response
+		localVarReturnValue  *ListDataRealtimeUsage200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsageAPIService.ListAudienceDataRealtimeUsage")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsageAPIService.ListDataRealtimeUsage")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/usage/audience_data/realtime"
+	localVarPath := localBasePath + "/usage/{data}/realtime"
+	localVarPath = strings.Replace(localVarPath, "{"+"data"+"}", url.PathEscape(parameterValueToString(r.data, "data")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

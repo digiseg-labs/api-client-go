@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **BillingCurrency** | Pointer to [**SubscriptionPriceCurrency**](SubscriptionPriceCurrency.md) |  | [optional] [default to SUBSCRIPTIONPRICECURRENCY_EUR]
 **BillingName** | Pointer to **string** | An optional official name to use for billing purposes. Requires &#x60;owner&#x60; role to change. | [optional] 
 **StripeCustomerId** | Pointer to **string** |  | [optional] [readonly] 
+**IsReseller** | Pointer to **bool** |  | [optional] [readonly] 
+**ResellerAccountId** | Pointer to **string** |  | [optional] [readonly] 
 
 ## Methods
 
@@ -205,6 +207,56 @@ SetStripeCustomerId sets StripeCustomerId field to given value.
 `func (o *AccountAux) HasStripeCustomerId() bool`
 
 HasStripeCustomerId returns a boolean if a field has been set.
+
+### GetIsReseller
+
+`func (o *AccountAux) GetIsReseller() bool`
+
+GetIsReseller returns the IsReseller field if non-nil, zero value otherwise.
+
+### GetIsResellerOk
+
+`func (o *AccountAux) GetIsResellerOk() (*bool, bool)`
+
+GetIsResellerOk returns a tuple with the IsReseller field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsReseller
+
+`func (o *AccountAux) SetIsReseller(v bool)`
+
+SetIsReseller sets IsReseller field to given value.
+
+### HasIsReseller
+
+`func (o *AccountAux) HasIsReseller() bool`
+
+HasIsReseller returns a boolean if a field has been set.
+
+### GetResellerAccountId
+
+`func (o *AccountAux) GetResellerAccountId() string`
+
+GetResellerAccountId returns the ResellerAccountId field if non-nil, zero value otherwise.
+
+### GetResellerAccountIdOk
+
+`func (o *AccountAux) GetResellerAccountIdOk() (*string, bool)`
+
+GetResellerAccountIdOk returns a tuple with the ResellerAccountId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResellerAccountId
+
+`func (o *AccountAux) SetResellerAccountId(v string)`
+
+SetResellerAccountId sets ResellerAccountId field to given value.
+
+### HasResellerAccountId
+
+`func (o *AccountAux) HasResellerAccountId() bool`
+
+HasResellerAccountId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

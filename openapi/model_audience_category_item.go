@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for<br/>Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for<br/>TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for<br/>Go</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-dotnet\">     <i class=\"api-client-sdk-logo devicon-dot-net-plain\"></i>     <p>API client for<br/>.NET</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -25,6 +25,8 @@ type AudienceCategoryItem struct {
 	Code string `json:"code"`
 	DisplayName string `json:"display_name"`
 	Audiences []AudienceItem `json:"audiences"`
+	// A list of labels associated with the audience category
+	Labels []string `json:"labels"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -34,11 +36,12 @@ type _AudienceCategoryItem AudienceCategoryItem
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAudienceCategoryItem(code string, displayName string, audiences []AudienceItem) *AudienceCategoryItem {
+func NewAudienceCategoryItem(code string, displayName string, audiences []AudienceItem, labels []string) *AudienceCategoryItem {
 	this := AudienceCategoryItem{}
 	this.Code = code
 	this.DisplayName = displayName
 	this.Audiences = audiences
+	this.Labels = labels
 	return &this
 }
 
@@ -122,6 +125,30 @@ func (o *AudienceCategoryItem) SetAudiences(v []AudienceItem) {
 	o.Audiences = v
 }
 
+// GetLabels returns the Labels field value
+func (o *AudienceCategoryItem) GetLabels() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.Labels
+}
+
+// GetLabelsOk returns a tuple with the Labels field value
+// and a boolean to check if the value has been set.
+func (o *AudienceCategoryItem) GetLabelsOk() ([]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Labels, true
+}
+
+// SetLabels sets field value
+func (o *AudienceCategoryItem) SetLabels(v []string) {
+	o.Labels = v
+}
+
 func (o AudienceCategoryItem) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -135,6 +162,7 @@ func (o AudienceCategoryItem) ToMap() (map[string]interface{}, error) {
 	toSerialize["code"] = o.Code
 	toSerialize["display_name"] = o.DisplayName
 	toSerialize["audiences"] = o.Audiences
+	toSerialize["labels"] = o.Labels
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -151,6 +179,7 @@ func (o *AudienceCategoryItem) UnmarshalJSON(data []byte) (err error) {
 		"code",
 		"display_name",
 		"audiences",
+		"labels",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -183,6 +212,7 @@ func (o *AudienceCategoryItem) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "code")
 		delete(additionalProperties, "display_name")
 		delete(additionalProperties, "audiences")
+		delete(additionalProperties, "labels")
 		o.AdditionalProperties = additionalProperties
 	}
 

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**RegistrationCreationResponseData**](RegistrationCreationResponseData.md) |  | [optional] 
+**Data** | Pointer to [**OAuthRegistrationResponseData**](OAuthRegistrationResponseData.md) |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *InlineObject) GetData() RegistrationCreationResponseData`
+`func (o *InlineObject) GetData() OAuthRegistrationResponseData`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *InlineObject) GetDataOk() (*RegistrationCreationResponseData, bool)`
+`func (o *InlineObject) GetDataOk() (*OAuthRegistrationResponseData, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *InlineObject) SetData(v RegistrationCreationResponseData)`
+`func (o *InlineObject) SetData(v OAuthRegistrationResponseData)`
 
 SetData sets Data field to given value.
 

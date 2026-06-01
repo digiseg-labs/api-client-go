@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**AudienceRecommendationResponseMessage**](AudienceRecommendationResponseMessage.md) |  | [optional] 
+**Data** | Pointer to **map[string]string** |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *InlineObject12) GetData() AudienceRecommendationResponseMessage`
+`func (o *InlineObject12) GetData() map[string]string`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *InlineObject12) GetDataOk() (*AudienceRecommendationResponseMessage, bool)`
+`func (o *InlineObject12) GetDataOk() (*map[string]string, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *InlineObject12) SetData(v AudienceRecommendationResponseMessage)`
+`func (o *InlineObject12) SetData(v map[string]string)`
 
 SetData sets Data field to given value.
 

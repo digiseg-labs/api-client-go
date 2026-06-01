@@ -9,13 +9,13 @@ Name | Type | Description | Notes
 **AccountId** | Pointer to **string** | The ID of the account that owns this study | [optional] [readonly] 
 **StartDate** | Pointer to **time.Time** | The date for which the study and its data ingestion will start | [optional] 
 **EndDate** | Pointer to **time.Time** | The date for which the study and its data ingestion will end | [optional] 
+**BannerImageUrl** | Pointer to **string** | The URL to a banner image for the study. Note that the banner image is used only for Digiseg study reporting and presentation, it does NOT represent any delivered banner ad creatives or similar.  | [optional] [readonly] 
 **LifeCycleStage** | Pointer to [**StudyLifecycleStage**](StudyLifecycleStage.md) |  | [optional] 
 **IngestionStatus** | Pointer to [**StudyIngestionStatus**](StudyIngestionStatus.md) |  | [optional] 
 **SummaryStats** | Pointer to [**StudySummaryStats**](StudySummaryStats.md) |  | [optional] 
 **Client** | Pointer to [**MeasurementClientItem**](MeasurementClientItem.md) |  | [optional] 
 **EventLinks** | Pointer to [**MeasurementEventLinks**](MeasurementEventLinks.md) |  | [optional] 
 **EventCap** | Pointer to **int32** | If present, an upper limit on the number of events that will be processed in this study. | [optional] 
-**BannerImageUrl** | Pointer to **string** | The URL to a banner image for the study. Note that the banner image is used only for Digiseg study reporting and presentation, it does NOT represent any delivered banner ad creatives or similar.  | [optional] [readonly] 
 **IntegrationPlatform** | Pointer to [**MeasurementIntegrationPlatform**](MeasurementIntegrationPlatform.md) |  | [optional] 
 **IsExample** | Pointer to **bool** | Determines if the study is an example study, used to demonstrate product capabilities | [optional] [readonly] 
 **EventSet** | Pointer to [**MeasurementEventSet**](MeasurementEventSet.md) |  | [optional] 
@@ -164,6 +164,31 @@ SetEndDate sets EndDate field to given value.
 `func (o *StudyMutation) HasEndDate() bool`
 
 HasEndDate returns a boolean if a field has been set.
+
+### GetBannerImageUrl
+
+`func (o *StudyMutation) GetBannerImageUrl() string`
+
+GetBannerImageUrl returns the BannerImageUrl field if non-nil, zero value otherwise.
+
+### GetBannerImageUrlOk
+
+`func (o *StudyMutation) GetBannerImageUrlOk() (*string, bool)`
+
+GetBannerImageUrlOk returns a tuple with the BannerImageUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBannerImageUrl
+
+`func (o *StudyMutation) SetBannerImageUrl(v string)`
+
+SetBannerImageUrl sets BannerImageUrl field to given value.
+
+### HasBannerImageUrl
+
+`func (o *StudyMutation) HasBannerImageUrl() bool`
+
+HasBannerImageUrl returns a boolean if a field has been set.
 
 ### GetLifeCycleStage
 
@@ -314,31 +339,6 @@ SetEventCap sets EventCap field to given value.
 `func (o *StudyMutation) HasEventCap() bool`
 
 HasEventCap returns a boolean if a field has been set.
-
-### GetBannerImageUrl
-
-`func (o *StudyMutation) GetBannerImageUrl() string`
-
-GetBannerImageUrl returns the BannerImageUrl field if non-nil, zero value otherwise.
-
-### GetBannerImageUrlOk
-
-`func (o *StudyMutation) GetBannerImageUrlOk() (*string, bool)`
-
-GetBannerImageUrlOk returns a tuple with the BannerImageUrl field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetBannerImageUrl
-
-`func (o *StudyMutation) SetBannerImageUrl(v string)`
-
-SetBannerImageUrl sets BannerImageUrl field to given value.
-
-### HasBannerImageUrl
-
-`func (o *StudyMutation) HasBannerImageUrl() bool`
-
-HasBannerImageUrl returns a boolean if a field has been set.
 
 ### GetIntegrationPlatform
 

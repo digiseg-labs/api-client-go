@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | Pointer to **string** | Human readable name of the account | [optional] 
+**CustomPlatformUrl** | Pointer to **string** | Custom platform URL for the account | [optional] [readonly] 
 **LogoUrl** | Pointer to **string** | The URL to the logo of the account | [optional] 
 **WebsiteUrl** | Pointer to **string** | URL of the account&#39;s primary website | [optional] 
 **BillingCountry** | Pointer to **string** | Country code of the account. Requires &#x60;owner&#x60; role to change. | [optional] 
@@ -56,6 +57,31 @@ SetName sets Name field to given value.
 `func (o *AccountBase) HasName() bool`
 
 HasName returns a boolean if a field has been set.
+
+### GetCustomPlatformUrl
+
+`func (o *AccountBase) GetCustomPlatformUrl() string`
+
+GetCustomPlatformUrl returns the CustomPlatformUrl field if non-nil, zero value otherwise.
+
+### GetCustomPlatformUrlOk
+
+`func (o *AccountBase) GetCustomPlatformUrlOk() (*string, bool)`
+
+GetCustomPlatformUrlOk returns a tuple with the CustomPlatformUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomPlatformUrl
+
+`func (o *AccountBase) SetCustomPlatformUrl(v string)`
+
+SetCustomPlatformUrl sets CustomPlatformUrl field to given value.
+
+### HasCustomPlatformUrl
+
+`func (o *AccountBase) HasCustomPlatformUrl() bool`
+
+HasCustomPlatformUrl returns a boolean if a field has been set.
 
 ### GetLogoUrl
 

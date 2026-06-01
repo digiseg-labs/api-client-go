@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for<br/>Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for<br/>TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for<br/>Go</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-dotnet\">     <i class=\"api-client-sdk-logo devicon-dot-net-plain\"></i>     <p>API client for<br/>.NET</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -20,9 +20,7 @@ var _ MappedNullable = &InlineObject5{}
 
 // InlineObject5 struct for InlineObject5
 type InlineObject5 struct {
-	Meta *ListPaginationMeta `json:"meta,omitempty"`
-	Links *ListPaginationLinks `json:"links,omitempty"`
-	Data []AccountItem `json:"data,omitempty"`
+	Data *SubscriptionOfferFull `json:"data,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -45,82 +43,18 @@ func NewInlineObject5WithDefaults() *InlineObject5 {
 	return &this
 }
 
-// GetMeta returns the Meta field value if set, zero value otherwise.
-func (o *InlineObject5) GetMeta() ListPaginationMeta {
-	if o == nil || IsNil(o.Meta) {
-		var ret ListPaginationMeta
-		return ret
-	}
-	return *o.Meta
-}
-
-// GetMetaOk returns a tuple with the Meta field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *InlineObject5) GetMetaOk() (*ListPaginationMeta, bool) {
-	if o == nil || IsNil(o.Meta) {
-		return nil, false
-	}
-	return o.Meta, true
-}
-
-// HasMeta returns a boolean if a field has been set.
-func (o *InlineObject5) HasMeta() bool {
-	if o != nil && !IsNil(o.Meta) {
-		return true
-	}
-
-	return false
-}
-
-// SetMeta gets a reference to the given ListPaginationMeta and assigns it to the Meta field.
-func (o *InlineObject5) SetMeta(v ListPaginationMeta) {
-	o.Meta = &v
-}
-
-// GetLinks returns the Links field value if set, zero value otherwise.
-func (o *InlineObject5) GetLinks() ListPaginationLinks {
-	if o == nil || IsNil(o.Links) {
-		var ret ListPaginationLinks
-		return ret
-	}
-	return *o.Links
-}
-
-// GetLinksOk returns a tuple with the Links field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *InlineObject5) GetLinksOk() (*ListPaginationLinks, bool) {
-	if o == nil || IsNil(o.Links) {
-		return nil, false
-	}
-	return o.Links, true
-}
-
-// HasLinks returns a boolean if a field has been set.
-func (o *InlineObject5) HasLinks() bool {
-	if o != nil && !IsNil(o.Links) {
-		return true
-	}
-
-	return false
-}
-
-// SetLinks gets a reference to the given ListPaginationLinks and assigns it to the Links field.
-func (o *InlineObject5) SetLinks(v ListPaginationLinks) {
-	o.Links = &v
-}
-
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *InlineObject5) GetData() []AccountItem {
+func (o *InlineObject5) GetData() SubscriptionOfferFull {
 	if o == nil || IsNil(o.Data) {
-		var ret []AccountItem
+		var ret SubscriptionOfferFull
 		return ret
 	}
-	return o.Data
+	return *o.Data
 }
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineObject5) GetDataOk() ([]AccountItem, bool) {
+func (o *InlineObject5) GetDataOk() (*SubscriptionOfferFull, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -136,9 +70,9 @@ func (o *InlineObject5) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given []AccountItem and assigns it to the Data field.
-func (o *InlineObject5) SetData(v []AccountItem) {
-	o.Data = v
+// SetData gets a reference to the given SubscriptionOfferFull and assigns it to the Data field.
+func (o *InlineObject5) SetData(v SubscriptionOfferFull) {
+	o.Data = &v
 }
 
 func (o InlineObject5) MarshalJSON() ([]byte, error) {
@@ -151,12 +85,6 @@ func (o InlineObject5) MarshalJSON() ([]byte, error) {
 
 func (o InlineObject5) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Meta) {
-		toSerialize["meta"] = o.Meta
-	}
-	if !IsNil(o.Links) {
-		toSerialize["links"] = o.Links
-	}
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
@@ -182,8 +110,6 @@ func (o *InlineObject5) UnmarshalJSON(data []byte) (err error) {
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
-		delete(additionalProperties, "meta")
-		delete(additionalProperties, "links")
 		delete(additionalProperties, "data")
 		o.AdditionalProperties = additionalProperties
 	}

@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**GetAccountSubscriptionById**](SubscriptionsAPI.md#GetAccountSubscriptionById) | **Get** /accounts/{account_id}/subscriptions/{subscription_id} | Get account subscription
 [**GetAccountSubscriptions**](SubscriptionsAPI.md#GetAccountSubscriptions) | **Get** /accounts/{account_id}/subscriptions | Get account subscriptions summary
+[**GetSubscriptionPlanFree**](SubscriptionsAPI.md#GetSubscriptionPlanFree) | **Get** /subscription_plans/free | Gets the default/free subscription plan
 [**ListSubscriptionOffers**](SubscriptionsAPI.md#ListSubscriptionOffers) | **Get** /subscription_offers | List subscription offers
 [**ListSubscriptionPlans**](SubscriptionsAPI.md#ListSubscriptionPlans) | **Get** /subscription_plans | List subscription plans
 
@@ -139,6 +140,65 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetAccountSubscriptions200Response**](GetAccountSubscriptions200Response.md)
+
+### Authorization
+
+[oAuth](../README.md#oAuth), [bearerAuth](../README.md#bearerAuth), [apiKeyHeaderAuth](../README.md#apiKeyHeaderAuth), [apiKeyQueryParamAuth](../README.md#apiKeyQueryParamAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetSubscriptionPlanFree
+
+> GetSubscriptionPlanFree200Response GetSubscriptionPlanFree(ctx).Execute()
+
+Gets the default/free subscription plan
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/digiseg-labs/api-client-go"
+)
+
+func main() {
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.SubscriptionsAPI.GetSubscriptionPlanFree(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `SubscriptionsAPI.GetSubscriptionPlanFree``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSubscriptionPlanFree`: GetSubscriptionPlanFree200Response
+	fmt.Fprintf(os.Stdout, "Response from `SubscriptionsAPI.GetSubscriptionPlanFree`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSubscriptionPlanFreeRequest struct via the builder pattern
+
+
+### Return type
+
+[**GetSubscriptionPlanFree200Response**](GetSubscriptionPlanFree200Response.md)
 
 ### Authorization
 

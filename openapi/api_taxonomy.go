@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for<br/>Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for<br/>TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for<br/>Go</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-dotnet\">     <i class=\"api-client-sdk-logo devicon-dot-net-plain\"></i>     <p>API client for<br/>.NET</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -17,11 +17,310 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 
 // TaxonomyAPIService TaxonomyAPI service
 type TaxonomyAPIService service
+
+type TaxonomyAPIGetAudienceRequest struct {
+	ctx context.Context
+	ApiService *TaxonomyAPIService
+	audienceCode string
+	platform *string
+	country *string
+}
+
+// A platform code to apply for platform-specific audience codes
+func (r TaxonomyAPIGetAudienceRequest) Platform(platform string) TaxonomyAPIGetAudienceRequest {
+	r.platform = &platform
+	return r
+}
+
+// A country code to apply for platform-specific and country-specific audience codes
+func (r TaxonomyAPIGetAudienceRequest) Country(country string) TaxonomyAPIGetAudienceRequest {
+	r.country = &country
+	return r
+}
+
+func (r TaxonomyAPIGetAudienceRequest) Execute() (*AudienceResponse1, *http.Response, error) {
+	return r.ApiService.GetAudienceExecute(r)
+}
+
+/*
+GetAudience Get an audience by its code
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param audienceCode The code of the audience to retrieve
+ @return TaxonomyAPIGetAudienceRequest
+*/
+func (a *TaxonomyAPIService) GetAudience(ctx context.Context, audienceCode string) TaxonomyAPIGetAudienceRequest {
+	return TaxonomyAPIGetAudienceRequest{
+		ApiService: a,
+		ctx: ctx,
+		audienceCode: audienceCode,
+	}
+}
+
+// Execute executes the request
+//  @return AudienceResponse1
+func (a *TaxonomyAPIService) GetAudienceExecute(r TaxonomyAPIGetAudienceRequest) (*AudienceResponse1, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AudienceResponse1
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TaxonomyAPIService.GetAudience")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/taxonomy/audiences/{audience_code}"
+	localVarPath = strings.Replace(localVarPath, "{"+"audience_code"+"}", url.PathEscape(parameterValueToString(r.audienceCode, "audienceCode")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.platform != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "platform", r.platform, "form", "")
+	}
+	if r.country != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "country", r.country, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type TaxonomyAPIGetCategoryRequest struct {
+	ctx context.Context
+	ApiService *TaxonomyAPIService
+	categoryCode string
+	platform *string
+	country *string
+}
+
+// A platform code to apply for platform-specific audience codes
+func (r TaxonomyAPIGetCategoryRequest) Platform(platform string) TaxonomyAPIGetCategoryRequest {
+	r.platform = &platform
+	return r
+}
+
+// A country code to apply for platform-specific and country-specific audience codes
+func (r TaxonomyAPIGetCategoryRequest) Country(country string) TaxonomyAPIGetCategoryRequest {
+	r.country = &country
+	return r
+}
+
+func (r TaxonomyAPIGetCategoryRequest) Execute() (*CategoryResponse, *http.Response, error) {
+	return r.ApiService.GetCategoryExecute(r)
+}
+
+/*
+GetCategory Get a category by its code
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param categoryCode The code of the category to retrieve
+ @return TaxonomyAPIGetCategoryRequest
+*/
+func (a *TaxonomyAPIService) GetCategory(ctx context.Context, categoryCode string) TaxonomyAPIGetCategoryRequest {
+	return TaxonomyAPIGetCategoryRequest{
+		ApiService: a,
+		ctx: ctx,
+		categoryCode: categoryCode,
+	}
+}
+
+// Execute executes the request
+//  @return CategoryResponse
+func (a *TaxonomyAPIService) GetCategoryExecute(r TaxonomyAPIGetCategoryRequest) (*CategoryResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CategoryResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TaxonomyAPIService.GetCategory")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/taxonomy/categories/{category_code}"
+	localVarPath = strings.Replace(localVarPath, "{"+"category_code"+"}", url.PathEscape(parameterValueToString(r.categoryCode, "categoryCode")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.platform != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "platform", r.platform, "form", "")
+	}
+	if r.country != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "country", r.country, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeaderAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyQueryParamAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_key", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type TaxonomyAPIListAudiencePlatformsRequest struct {
 	ctx context.Context
@@ -153,6 +452,11 @@ type TaxonomyAPIListAudiencesRequest struct {
 	ApiService *TaxonomyAPIService
 	platform *string
 	country *string
+	pageSize *int32
+	pageAfter *string
+	sort *string
+	filter *string
+	labels *string
 }
 
 // A platform code to apply for platform-specific audience codes
@@ -167,12 +471,47 @@ func (r TaxonomyAPIListAudiencesRequest) Country(country string) TaxonomyAPIList
 	return r
 }
 
+// Number of items to return per page
+func (r TaxonomyAPIListAudiencesRequest) PageSize(pageSize int32) TaxonomyAPIListAudiencesRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+// Cursor for pagination to get the next page of results
+func (r TaxonomyAPIListAudiencesRequest) PageAfter(pageAfter string) TaxonomyAPIListAudiencesRequest {
+	r.pageAfter = &pageAfter
+	return r
+}
+
+// Sort order for audiences (by code) and categories (by display name) - either ascending (default) or descending.
+func (r TaxonomyAPIListAudiencesRequest) Sort(sort string) TaxonomyAPIListAudiencesRequest {
+	r.sort = &sort
+	return r
+}
+
+// Optional parameter used to search for categories and audiences where the name contains a substring (case insensitive)
+func (r TaxonomyAPIListAudiencesRequest) Filter(filter string) TaxonomyAPIListAudiencesRequest {
+	r.filter = &filter
+	return r
+}
+
+// Optional parameter used to filter categories and audiences by labels. Multiple labels can be provided, separated by commas. When multiple labels are provided, only categories and audiences that have all of the specified labels will be returned.
+func (r TaxonomyAPIListAudiencesRequest) Labels(labels string) TaxonomyAPIListAudiencesRequest {
+	r.labels = &labels
+	return r
+}
+
 func (r TaxonomyAPIListAudiencesRequest) Execute() (*ListAudiences200Response, *http.Response, error) {
 	return r.ApiService.ListAudiencesExecute(r)
 }
 
 /*
 ListAudiences List audiences
+
+Returns a list of audiences. When `flat=false` (default), audiences are organized by sets (core, composite, IAB, ctv and brand).
+When `flat=true`, audiences are returned as a flat list of categories.
+Pagination is supported via the `page[size]` and `page[after]` parameters - when provided, pagination metadata is included in the response.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return TaxonomyAPIListAudiencesRequest
@@ -210,6 +549,21 @@ func (a *TaxonomyAPIService) ListAudiencesExecute(r TaxonomyAPIListAudiencesRequ
 	}
 	if r.country != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "country", r.country, "form", "")
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page[size]", r.pageSize, "form", "")
+	}
+	if r.pageAfter != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page[after]", r.pageAfter, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.filter != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter", r.filter, "form", "")
+	}
+	if r.labels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "labels", r.labels, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

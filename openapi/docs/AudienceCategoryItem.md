@@ -7,12 +7,13 @@ Name | Type | Description | Notes
 **Code** | **string** | A code used to represent the audience category | 
 **DisplayName** | **string** |  | 
 **Audiences** | [**[]AudienceItem**](AudienceItem.md) |  | 
+**Labels** | **[]string** | A list of labels associated with the audience category | 
 
 ## Methods
 
 ### NewAudienceCategoryItem
 
-`func NewAudienceCategoryItem(code string, displayName string, audiences []AudienceItem, ) *AudienceCategoryItem`
+`func NewAudienceCategoryItem(code string, displayName string, audiences []AudienceItem, labels []string, ) *AudienceCategoryItem`
 
 NewAudienceCategoryItem instantiates a new AudienceCategoryItem object
 This constructor will assign default values to properties that have it defined,
@@ -85,6 +86,26 @@ and a boolean to check if the value has been set.
 `func (o *AudienceCategoryItem) SetAudiences(v []AudienceItem)`
 
 SetAudiences sets Audiences field to given value.
+
+
+### GetLabels
+
+`func (o *AudienceCategoryItem) GetLabels() []string`
+
+GetLabels returns the Labels field if non-nil, zero value otherwise.
+
+### GetLabelsOk
+
+`func (o *AudienceCategoryItem) GetLabelsOk() (*[]string, bool)`
+
+GetLabelsOk returns a tuple with the Labels field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLabels
+
+`func (o *AudienceCategoryItem) SetLabels(v []string)`
+
+SetLabels sets Labels field to given value.
 
 
 

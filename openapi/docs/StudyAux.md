@@ -6,7 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **EventLinks** | Pointer to [**MeasurementEventLinks**](MeasurementEventLinks.md) |  | [optional] 
 **EventCap** | Pointer to **int32** | If present, an upper limit on the number of events that will be processed in this study. | [optional] 
-**BannerImageUrl** | Pointer to **string** | The URL to a banner image for the study. Note that the banner image is used only for Digiseg study reporting and presentation, it does NOT represent any delivered banner ad creatives or similar.  | [optional] [readonly] 
 **IntegrationPlatform** | Pointer to [**MeasurementIntegrationPlatform**](MeasurementIntegrationPlatform.md) |  | [optional] 
 **IsExample** | Pointer to **bool** | Determines if the study is an example study, used to demonstrate product capabilities | [optional] [readonly] 
 
@@ -78,31 +77,6 @@ SetEventCap sets EventCap field to given value.
 `func (o *StudyAux) HasEventCap() bool`
 
 HasEventCap returns a boolean if a field has been set.
-
-### GetBannerImageUrl
-
-`func (o *StudyAux) GetBannerImageUrl() string`
-
-GetBannerImageUrl returns the BannerImageUrl field if non-nil, zero value otherwise.
-
-### GetBannerImageUrlOk
-
-`func (o *StudyAux) GetBannerImageUrlOk() (*string, bool)`
-
-GetBannerImageUrlOk returns a tuple with the BannerImageUrl field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetBannerImageUrl
-
-`func (o *StudyAux) SetBannerImageUrl(v string)`
-
-SetBannerImageUrl sets BannerImageUrl field to given value.
-
-### HasBannerImageUrl
-
-`func (o *StudyAux) HasBannerImageUrl() bool`
-
-HasBannerImageUrl returns a boolean if a field has been set.
 
 ### GetIntegrationPlatform
 

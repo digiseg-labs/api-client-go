@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **MaxClients** | **int32** |  | 
 **MaxActiveStudies** | **int32** |  | 
 **MaxEventsPerStudy** | **int64** |  | 
-**MaxStudyEventsPerMonth** | **int64** |  | 
+**MaxStudyEventsPerMonth** | Pointer to **int64** |  | [optional] 
 **MaxAudienceLookupsPerMonth** | **int64** |  | 
 **StudyAudienceSet** | [**LimitedOrFullFeature**](LimitedOrFullFeature.md) |  | 
 **StudyEventSet** | [**LimitedOrFullFeature**](LimitedOrFullFeature.md) |  | 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewPlanFeatureSet
 
-`func NewPlanFeatureSet(maxUsers int32, maxClients int32, maxActiveStudies int32, maxEventsPerStudy int64, maxStudyEventsPerMonth int64, maxAudienceLookupsPerMonth int64, studyAudienceSet LimitedOrFullFeature, studyEventSet LimitedOrFullFeature, hasAudienceRecommendations bool, hasReportCustomization bool, hasReportSharingClients bool, hasReportSharingPublic bool, ) *PlanFeatureSet`
+`func NewPlanFeatureSet(maxUsers int32, maxClients int32, maxActiveStudies int32, maxEventsPerStudy int64, maxAudienceLookupsPerMonth int64, studyAudienceSet LimitedOrFullFeature, studyEventSet LimitedOrFullFeature, hasAudienceRecommendations bool, hasReportCustomization bool, hasReportSharingClients bool, hasReportSharingPublic bool, ) *PlanFeatureSet`
 
 NewPlanFeatureSet instantiates a new PlanFeatureSet object
 This constructor will assign default values to properties that have it defined,
@@ -135,6 +135,11 @@ and a boolean to check if the value has been set.
 
 SetMaxStudyEventsPerMonth sets MaxStudyEventsPerMonth field to given value.
 
+### HasMaxStudyEventsPerMonth
+
+`func (o *PlanFeatureSet) HasMaxStudyEventsPerMonth() bool`
+
+HasMaxStudyEventsPerMonth returns a boolean if a field has been set.
 
 ### GetMaxAudienceLookupsPerMonth
 

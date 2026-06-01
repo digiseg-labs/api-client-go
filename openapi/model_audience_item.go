@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for<br/>Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for<br/>TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for<br/>Go</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-dotnet\">     <i class=\"api-client-sdk-logo devicon-dot-net-plain\"></i>     <p>API client for<br/>.NET</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -26,11 +26,14 @@ type AudienceItem struct {
 	DisplayName string `json:"display_name"`
 	// A textual description of the audience
 	Description *string `json:"description,omitempty"`
-	// A list of audience codes that this audience is composed from
-	Composition []string `json:"composition,omitempty"`
+	// A single-letter identifier for the audience (e.g., A, B, C) used for simplified display
+	Identifier *string `json:"identifier,omitempty"`
 	// Platform-specific code, provided when `platform` (and `country` if needed for the platform) is provided
 	PlatformCode *string `json:"platform_code,omitempty"`
+	// A list of labels associated with the audience
+	Labels []string `json:"labels"`
 	ReachStats *AudienceReachStats `json:"reach_stats,omitempty"`
+	Category *AudienceCategoryRef `json:"category,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -40,10 +43,11 @@ type _AudienceItem AudienceItem
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAudienceItem(code string, displayName string) *AudienceItem {
+func NewAudienceItem(code string, displayName string, labels []string) *AudienceItem {
 	this := AudienceItem{}
 	this.Code = code
 	this.DisplayName = displayName
+	this.Labels = labels
 	return &this
 }
 
@@ -135,36 +139,36 @@ func (o *AudienceItem) SetDescription(v string) {
 	o.Description = &v
 }
 
-// GetComposition returns the Composition field value if set, zero value otherwise.
-func (o *AudienceItem) GetComposition() []string {
-	if o == nil || IsNil(o.Composition) {
-		var ret []string
+// GetIdentifier returns the Identifier field value if set, zero value otherwise.
+func (o *AudienceItem) GetIdentifier() string {
+	if o == nil || IsNil(o.Identifier) {
+		var ret string
 		return ret
 	}
-	return o.Composition
+	return *o.Identifier
 }
 
-// GetCompositionOk returns a tuple with the Composition field value if set, nil otherwise
+// GetIdentifierOk returns a tuple with the Identifier field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AudienceItem) GetCompositionOk() ([]string, bool) {
-	if o == nil || IsNil(o.Composition) {
+func (o *AudienceItem) GetIdentifierOk() (*string, bool) {
+	if o == nil || IsNil(o.Identifier) {
 		return nil, false
 	}
-	return o.Composition, true
+	return o.Identifier, true
 }
 
-// HasComposition returns a boolean if a field has been set.
-func (o *AudienceItem) HasComposition() bool {
-	if o != nil && !IsNil(o.Composition) {
+// HasIdentifier returns a boolean if a field has been set.
+func (o *AudienceItem) HasIdentifier() bool {
+	if o != nil && !IsNil(o.Identifier) {
 		return true
 	}
 
 	return false
 }
 
-// SetComposition gets a reference to the given []string and assigns it to the Composition field.
-func (o *AudienceItem) SetComposition(v []string) {
-	o.Composition = v
+// SetIdentifier gets a reference to the given string and assigns it to the Identifier field.
+func (o *AudienceItem) SetIdentifier(v string) {
+	o.Identifier = &v
 }
 
 // GetPlatformCode returns the PlatformCode field value if set, zero value otherwise.
@@ -199,6 +203,30 @@ func (o *AudienceItem) SetPlatformCode(v string) {
 	o.PlatformCode = &v
 }
 
+// GetLabels returns the Labels field value
+func (o *AudienceItem) GetLabels() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.Labels
+}
+
+// GetLabelsOk returns a tuple with the Labels field value
+// and a boolean to check if the value has been set.
+func (o *AudienceItem) GetLabelsOk() ([]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Labels, true
+}
+
+// SetLabels sets field value
+func (o *AudienceItem) SetLabels(v []string) {
+	o.Labels = v
+}
+
 // GetReachStats returns the ReachStats field value if set, zero value otherwise.
 func (o *AudienceItem) GetReachStats() AudienceReachStats {
 	if o == nil || IsNil(o.ReachStats) {
@@ -231,6 +259,38 @@ func (o *AudienceItem) SetReachStats(v AudienceReachStats) {
 	o.ReachStats = &v
 }
 
+// GetCategory returns the Category field value if set, zero value otherwise.
+func (o *AudienceItem) GetCategory() AudienceCategoryRef {
+	if o == nil || IsNil(o.Category) {
+		var ret AudienceCategoryRef
+		return ret
+	}
+	return *o.Category
+}
+
+// GetCategoryOk returns a tuple with the Category field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AudienceItem) GetCategoryOk() (*AudienceCategoryRef, bool) {
+	if o == nil || IsNil(o.Category) {
+		return nil, false
+	}
+	return o.Category, true
+}
+
+// HasCategory returns a boolean if a field has been set.
+func (o *AudienceItem) HasCategory() bool {
+	if o != nil && !IsNil(o.Category) {
+		return true
+	}
+
+	return false
+}
+
+// SetCategory gets a reference to the given AudienceCategoryRef and assigns it to the Category field.
+func (o *AudienceItem) SetCategory(v AudienceCategoryRef) {
+	o.Category = &v
+}
+
 func (o AudienceItem) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -246,14 +306,18 @@ func (o AudienceItem) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	if !IsNil(o.Composition) {
-		toSerialize["composition"] = o.Composition
+	if !IsNil(o.Identifier) {
+		toSerialize["identifier"] = o.Identifier
 	}
 	if !IsNil(o.PlatformCode) {
 		toSerialize["platform_code"] = o.PlatformCode
 	}
+	toSerialize["labels"] = o.Labels
 	if !IsNil(o.ReachStats) {
 		toSerialize["reach_stats"] = o.ReachStats
+	}
+	if !IsNil(o.Category) {
+		toSerialize["category"] = o.Category
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -270,6 +334,7 @@ func (o *AudienceItem) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"code",
 		"display_name",
+		"labels",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -302,9 +367,11 @@ func (o *AudienceItem) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "code")
 		delete(additionalProperties, "display_name")
 		delete(additionalProperties, "description")
-		delete(additionalProperties, "composition")
+		delete(additionalProperties, "identifier")
 		delete(additionalProperties, "platform_code")
+		delete(additionalProperties, "labels")
 		delete(additionalProperties, "reach_stats")
+		delete(additionalProperties, "category")
 		o.AdditionalProperties = additionalProperties
 	}
 

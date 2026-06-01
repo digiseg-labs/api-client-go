@@ -7,6 +7,12 @@
 
 * `COMPOSITE` (value: `"composite"`)
 
+* `IAB` (value: `"iab"`)
+
+* `CTV` (value: `"ctv"`)
+
+* `BRAND` (value: `"brand"`)
+
 * `NAME` (value: `"name"`)
 
 * `CATEGORY` (value: `"category"`)

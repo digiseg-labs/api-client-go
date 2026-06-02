@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**PopulationSource**](PopulationSource.md) |  | [optional] 
+**Data** | Pointer to [**StudyOlapQueryResult**](StudyOlapQueryResult.md) |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *InlineObject10) GetData() PopulationSource`
+`func (o *InlineObject10) GetData() StudyOlapQueryResult`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *InlineObject10) GetDataOk() (*PopulationSource, bool)`
+`func (o *InlineObject10) GetDataOk() (*StudyOlapQueryResult, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *InlineObject10) SetData(v PopulationSource)`
+`func (o *InlineObject10) SetData(v StudyOlapQueryResult)`
 
 SetData sets Data field to given value.
 

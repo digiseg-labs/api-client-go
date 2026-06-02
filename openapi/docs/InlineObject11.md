@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to **map[string]string** |  | [optional] 
+**Data** | Pointer to [**PopulationSource**](PopulationSource.md) |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *InlineObject11) GetData() map[string]string`
+`func (o *InlineObject11) GetData() PopulationSource`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *InlineObject11) GetDataOk() (*map[string]string, bool)`
+`func (o *InlineObject11) GetDataOk() (*PopulationSource, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *InlineObject11) SetData(v map[string]string)`
+`func (o *InlineObject11) SetData(v PopulationSource)`
 
 SetData sets Data field to given value.
 

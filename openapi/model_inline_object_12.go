@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for<br/>Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for<br/>TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for<br/>Go</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-dotnet\">     <i class=\"api-client-sdk-logo devicon-dot-net-plain\"></i>     <p>API client for<br/>.NET</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -20,7 +20,7 @@ var _ MappedNullable = &InlineObject12{}
 
 // InlineObject12 struct for InlineObject12
 type InlineObject12 struct {
-	Data *AudienceRecommendationResponseMessage `json:"data,omitempty"`
+	Data *map[string]string `json:"data,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -44,9 +44,9 @@ func NewInlineObject12WithDefaults() *InlineObject12 {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *InlineObject12) GetData() AudienceRecommendationResponseMessage {
+func (o *InlineObject12) GetData() map[string]string {
 	if o == nil || IsNil(o.Data) {
-		var ret AudienceRecommendationResponseMessage
+		var ret map[string]string
 		return ret
 	}
 	return *o.Data
@@ -54,7 +54,7 @@ func (o *InlineObject12) GetData() AudienceRecommendationResponseMessage {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineObject12) GetDataOk() (*AudienceRecommendationResponseMessage, bool) {
+func (o *InlineObject12) GetDataOk() (*map[string]string, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -70,8 +70,8 @@ func (o *InlineObject12) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given AudienceRecommendationResponseMessage and assigns it to the Data field.
-func (o *InlineObject12) SetData(v AudienceRecommendationResponseMessage) {
+// SetData gets a reference to the given map[string]string and assigns it to the Data field.
+func (o *InlineObject12) SetData(v map[string]string) {
 	o.Data = &v
 }
 

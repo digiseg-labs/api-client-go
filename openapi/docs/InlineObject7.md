@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**AccountStripeBillingInfo**](AccountStripeBillingInfo.md) |  | [optional] 
+**Data** | Pointer to [**StripeAccountSubscriptionCheckoutSession**](StripeAccountSubscriptionCheckoutSession.md) |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *InlineObject7) GetData() AccountStripeBillingInfo`
+`func (o *InlineObject7) GetData() StripeAccountSubscriptionCheckoutSession`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *InlineObject7) GetDataOk() (*AccountStripeBillingInfo, bool)`
+`func (o *InlineObject7) GetDataOk() (*StripeAccountSubscriptionCheckoutSession, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *InlineObject7) SetData(v AccountStripeBillingInfo)`
+`func (o *InlineObject7) SetData(v StripeAccountSubscriptionCheckoutSession)`
 
 SetData sets Data field to given value.
 

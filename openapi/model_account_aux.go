@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for<br/>Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for<br/>TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for<br/>Go</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-dotnet\">     <i class=\"api-client-sdk-logo devicon-dot-net-plain\"></i>     <p>API client for<br/>.NET</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -32,6 +32,8 @@ type AccountAux struct {
 	// An optional official name to use for billing purposes. Requires `owner` role to change.
 	BillingName *string `json:"billing_name,omitempty"`
 	StripeCustomerId *string `json:"stripe_customer_id,omitempty"`
+	IsReseller *bool `json:"is_reseller,omitempty"`
+	ResellerAccountId *string `json:"reseller_account_id,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -285,6 +287,70 @@ func (o *AccountAux) SetStripeCustomerId(v string) {
 	o.StripeCustomerId = &v
 }
 
+// GetIsReseller returns the IsReseller field value if set, zero value otherwise.
+func (o *AccountAux) GetIsReseller() bool {
+	if o == nil || IsNil(o.IsReseller) {
+		var ret bool
+		return ret
+	}
+	return *o.IsReseller
+}
+
+// GetIsResellerOk returns a tuple with the IsReseller field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountAux) GetIsResellerOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsReseller) {
+		return nil, false
+	}
+	return o.IsReseller, true
+}
+
+// HasIsReseller returns a boolean if a field has been set.
+func (o *AccountAux) HasIsReseller() bool {
+	if o != nil && !IsNil(o.IsReseller) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsReseller gets a reference to the given bool and assigns it to the IsReseller field.
+func (o *AccountAux) SetIsReseller(v bool) {
+	o.IsReseller = &v
+}
+
+// GetResellerAccountId returns the ResellerAccountId field value if set, zero value otherwise.
+func (o *AccountAux) GetResellerAccountId() string {
+	if o == nil || IsNil(o.ResellerAccountId) {
+		var ret string
+		return ret
+	}
+	return *o.ResellerAccountId
+}
+
+// GetResellerAccountIdOk returns a tuple with the ResellerAccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountAux) GetResellerAccountIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ResellerAccountId) {
+		return nil, false
+	}
+	return o.ResellerAccountId, true
+}
+
+// HasResellerAccountId returns a boolean if a field has been set.
+func (o *AccountAux) HasResellerAccountId() bool {
+	if o != nil && !IsNil(o.ResellerAccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetResellerAccountId gets a reference to the given string and assigns it to the ResellerAccountId field.
+func (o *AccountAux) SetResellerAccountId(v string) {
+	o.ResellerAccountId = &v
+}
+
 func (o AccountAux) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -316,6 +382,12 @@ func (o AccountAux) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.StripeCustomerId) {
 		toSerialize["stripe_customer_id"] = o.StripeCustomerId
 	}
+	if !IsNil(o.IsReseller) {
+		toSerialize["is_reseller"] = o.IsReseller
+	}
+	if !IsNil(o.ResellerAccountId) {
+		toSerialize["reseller_account_id"] = o.ResellerAccountId
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -345,6 +417,8 @@ func (o *AccountAux) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "billing_currency")
 		delete(additionalProperties, "billing_name")
 		delete(additionalProperties, "stripe_customer_id")
+		delete(additionalProperties, "is_reseller")
+		delete(additionalProperties, "reseller_account_id")
 		o.AdditionalProperties = additionalProperties
 	}
 

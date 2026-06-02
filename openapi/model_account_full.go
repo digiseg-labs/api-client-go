@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for<br/>Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for<br/>TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for<br/>Go</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-dotnet\">     <i class=\"api-client-sdk-logo devicon-dot-net-plain\"></i>     <p>API client for<br/>.NET</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -25,6 +25,8 @@ type AccountFull struct {
 	Id *string `json:"id,omitempty"`
 	// Human readable name of the account
 	Name *string `json:"name,omitempty"`
+	// Custom platform URL for the account
+	CustomPlatformUrl *string `json:"custom_platform_url,omitempty"`
 	// The URL to the logo of the account
 	LogoUrl *string `json:"logo_url,omitempty"`
 	// URL of the account's primary website
@@ -51,6 +53,8 @@ type AccountFull struct {
 	// An optional official name to use for billing purposes. Requires `owner` role to change.
 	BillingName *string `json:"billing_name,omitempty"`
 	StripeCustomerId *string `json:"stripe_customer_id,omitempty"`
+	IsReseller *bool `json:"is_reseller,omitempty"`
+	ResellerAccountId *string `json:"reseller_account_id,omitempty"`
 	FeatureSet *PlanFeatureSet `json:"feature_set,omitempty"`
 	Subscriptions []AccountSubscriptionItem `json:"subscriptions,omitempty"`
 	// Date and time of the object creation
@@ -149,6 +153,38 @@ func (o *AccountFull) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *AccountFull) SetName(v string) {
 	o.Name = &v
+}
+
+// GetCustomPlatformUrl returns the CustomPlatformUrl field value if set, zero value otherwise.
+func (o *AccountFull) GetCustomPlatformUrl() string {
+	if o == nil || IsNil(o.CustomPlatformUrl) {
+		var ret string
+		return ret
+	}
+	return *o.CustomPlatformUrl
+}
+
+// GetCustomPlatformUrlOk returns a tuple with the CustomPlatformUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountFull) GetCustomPlatformUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.CustomPlatformUrl) {
+		return nil, false
+	}
+	return o.CustomPlatformUrl, true
+}
+
+// HasCustomPlatformUrl returns a boolean if a field has been set.
+func (o *AccountFull) HasCustomPlatformUrl() bool {
+	if o != nil && !IsNil(o.CustomPlatformUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomPlatformUrl gets a reference to the given string and assigns it to the CustomPlatformUrl field.
+func (o *AccountFull) SetCustomPlatformUrl(v string) {
+	o.CustomPlatformUrl = &v
 }
 
 // GetLogoUrl returns the LogoUrl field value if set, zero value otherwise.
@@ -605,6 +641,70 @@ func (o *AccountFull) SetStripeCustomerId(v string) {
 	o.StripeCustomerId = &v
 }
 
+// GetIsReseller returns the IsReseller field value if set, zero value otherwise.
+func (o *AccountFull) GetIsReseller() bool {
+	if o == nil || IsNil(o.IsReseller) {
+		var ret bool
+		return ret
+	}
+	return *o.IsReseller
+}
+
+// GetIsResellerOk returns a tuple with the IsReseller field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountFull) GetIsResellerOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsReseller) {
+		return nil, false
+	}
+	return o.IsReseller, true
+}
+
+// HasIsReseller returns a boolean if a field has been set.
+func (o *AccountFull) HasIsReseller() bool {
+	if o != nil && !IsNil(o.IsReseller) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsReseller gets a reference to the given bool and assigns it to the IsReseller field.
+func (o *AccountFull) SetIsReseller(v bool) {
+	o.IsReseller = &v
+}
+
+// GetResellerAccountId returns the ResellerAccountId field value if set, zero value otherwise.
+func (o *AccountFull) GetResellerAccountId() string {
+	if o == nil || IsNil(o.ResellerAccountId) {
+		var ret string
+		return ret
+	}
+	return *o.ResellerAccountId
+}
+
+// GetResellerAccountIdOk returns a tuple with the ResellerAccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountFull) GetResellerAccountIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ResellerAccountId) {
+		return nil, false
+	}
+	return o.ResellerAccountId, true
+}
+
+// HasResellerAccountId returns a boolean if a field has been set.
+func (o *AccountFull) HasResellerAccountId() bool {
+	if o != nil && !IsNil(o.ResellerAccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetResellerAccountId gets a reference to the given string and assigns it to the ResellerAccountId field.
+func (o *AccountFull) SetResellerAccountId(v string) {
+	o.ResellerAccountId = &v
+}
+
 // GetFeatureSet returns the FeatureSet field value if set, zero value otherwise.
 func (o *AccountFull) GetFeatureSet() PlanFeatureSet {
 	if o == nil || IsNil(o.FeatureSet) {
@@ -813,6 +913,9 @@ func (o AccountFull) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
+	if !IsNil(o.CustomPlatformUrl) {
+		toSerialize["custom_platform_url"] = o.CustomPlatformUrl
+	}
 	if !IsNil(o.LogoUrl) {
 		toSerialize["logo_url"] = o.LogoUrl
 	}
@@ -854,6 +957,12 @@ func (o AccountFull) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.StripeCustomerId) {
 		toSerialize["stripe_customer_id"] = o.StripeCustomerId
+	}
+	if !IsNil(o.IsReseller) {
+		toSerialize["is_reseller"] = o.IsReseller
+	}
+	if !IsNil(o.ResellerAccountId) {
+		toSerialize["reseller_account_id"] = o.ResellerAccountId
 	}
 	if !IsNil(o.FeatureSet) {
 		toSerialize["feature_set"] = o.FeatureSet
@@ -897,6 +1006,7 @@ func (o *AccountFull) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "name")
+		delete(additionalProperties, "custom_platform_url")
 		delete(additionalProperties, "logo_url")
 		delete(additionalProperties, "website_url")
 		delete(additionalProperties, "billing_country")
@@ -911,6 +1021,8 @@ func (o *AccountFull) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "billing_currency")
 		delete(additionalProperties, "billing_name")
 		delete(additionalProperties, "stripe_customer_id")
+		delete(additionalProperties, "is_reseller")
+		delete(additionalProperties, "reseller_account_id")
 		delete(additionalProperties, "feature_set")
 		delete(additionalProperties, "subscriptions")
 		delete(additionalProperties, "created_at")

@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for<br/>Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for<br/>TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for<br/>Go</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-dotnet\">     <i class=\"api-client-sdk-logo devicon-dot-net-plain\"></i>     <p>API client for<br/>.NET</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -80,6 +80,7 @@ func (a *MeasurementLabelsAPIService) ListMeasurementLabelsExecute(r Measurement
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[account_id]", r.filterAccountId, "form", "")
 	} else {
 		var defaultValue string = "The user's account ID"
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[account_id]", defaultValue, "form", "")
 		r.filterAccountId = &defaultValue
 	}
 	// to determine the Content-Type header

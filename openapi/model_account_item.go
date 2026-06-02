@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for<br/>Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for<br/>TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for<br/>Go</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-dotnet\">     <i class=\"api-client-sdk-logo devicon-dot-net-plain\"></i>     <p>API client for<br/>.NET</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -24,6 +24,8 @@ type AccountItem struct {
 	Id *string `json:"id,omitempty"`
 	// Human readable name of the account
 	Name *string `json:"name,omitempty"`
+	// Custom platform URL for the account
+	CustomPlatformUrl *string `json:"custom_platform_url,omitempty"`
 	// The URL to the logo of the account
 	LogoUrl *string `json:"logo_url,omitempty"`
 	// URL of the account's primary website
@@ -124,6 +126,38 @@ func (o *AccountItem) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *AccountItem) SetName(v string) {
 	o.Name = &v
+}
+
+// GetCustomPlatformUrl returns the CustomPlatformUrl field value if set, zero value otherwise.
+func (o *AccountItem) GetCustomPlatformUrl() string {
+	if o == nil || IsNil(o.CustomPlatformUrl) {
+		var ret string
+		return ret
+	}
+	return *o.CustomPlatformUrl
+}
+
+// GetCustomPlatformUrlOk returns a tuple with the CustomPlatformUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountItem) GetCustomPlatformUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.CustomPlatformUrl) {
+		return nil, false
+	}
+	return o.CustomPlatformUrl, true
+}
+
+// HasCustomPlatformUrl returns a boolean if a field has been set.
+func (o *AccountItem) HasCustomPlatformUrl() bool {
+	if o != nil && !IsNil(o.CustomPlatformUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomPlatformUrl gets a reference to the given string and assigns it to the CustomPlatformUrl field.
+func (o *AccountItem) SetCustomPlatformUrl(v string) {
+	o.CustomPlatformUrl = &v
 }
 
 // GetLogoUrl returns the LogoUrl field value if set, zero value otherwise.
@@ -433,6 +467,9 @@ func (o AccountItem) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
+	if !IsNil(o.CustomPlatformUrl) {
+		toSerialize["custom_platform_url"] = o.CustomPlatformUrl
+	}
 	if !IsNil(o.LogoUrl) {
 		toSerialize["logo_url"] = o.LogoUrl
 	}
@@ -484,6 +521,7 @@ func (o *AccountItem) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "name")
+		delete(additionalProperties, "custom_platform_url")
 		delete(additionalProperties, "logo_url")
 		delete(additionalProperties, "website_url")
 		delete(additionalProperties, "billing_country")

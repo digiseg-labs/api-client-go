@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for<br/>Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for<br/>TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for<br/>Go</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-dotnet\">     <i class=\"api-client-sdk-logo devicon-dot-net-plain\"></i>     <p>API client for<br/>.NET</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -13,145 +13,124 @@ package openapi
 
 import (
 	"encoding/json"
+	"fmt"
+	"gopkg.in/validator.v2"
 )
 
-// checks if the ListAudiences200Response type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &ListAudiences200Response{}
-
-// ListAudiences200Response struct for ListAudiences200Response
+// ListAudiences200Response - struct for ListAudiences200Response
 type ListAudiences200Response struct {
-	Meta *AudienceSetListResponseMeta `json:"meta,omitempty"`
-	Data []AudienceSetItem `json:"data,omitempty"`
-	AdditionalProperties map[string]interface{}
+	ListAudiences200ResponseOneOf *ListAudiences200ResponseOneOf
+	ListAudiences200ResponseOneOf1 *ListAudiences200ResponseOneOf1
 }
 
-type _ListAudiences200Response ListAudiences200Response
-
-// NewListAudiences200Response instantiates a new ListAudiences200Response object
-// This constructor will assign default values to properties that have it defined,
-// and makes sure properties required by API are set, but the set of arguments
-// will change when the set of required properties is changed
-func NewListAudiences200Response() *ListAudiences200Response {
-	this := ListAudiences200Response{}
-	return &this
-}
-
-// NewListAudiences200ResponseWithDefaults instantiates a new ListAudiences200Response object
-// This constructor will only assign default values to properties that have it defined,
-// but it doesn't guarantee that properties required by API are set
-func NewListAudiences200ResponseWithDefaults() *ListAudiences200Response {
-	this := ListAudiences200Response{}
-	return &this
-}
-
-// GetMeta returns the Meta field value if set, zero value otherwise.
-func (o *ListAudiences200Response) GetMeta() AudienceSetListResponseMeta {
-	if o == nil || IsNil(o.Meta) {
-		var ret AudienceSetListResponseMeta
-		return ret
+// ListAudiences200ResponseOneOfAsListAudiences200Response is a convenience function that returns ListAudiences200ResponseOneOf wrapped in ListAudiences200Response
+func ListAudiences200ResponseOneOfAsListAudiences200Response(v *ListAudiences200ResponseOneOf) ListAudiences200Response {
+	return ListAudiences200Response{
+		ListAudiences200ResponseOneOf: v,
 	}
-	return *o.Meta
 }
 
-// GetMetaOk returns a tuple with the Meta field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ListAudiences200Response) GetMetaOk() (*AudienceSetListResponseMeta, bool) {
-	if o == nil || IsNil(o.Meta) {
-		return nil, false
+// ListAudiences200ResponseOneOf1AsListAudiences200Response is a convenience function that returns ListAudiences200ResponseOneOf1 wrapped in ListAudiences200Response
+func ListAudiences200ResponseOneOf1AsListAudiences200Response(v *ListAudiences200ResponseOneOf1) ListAudiences200Response {
+	return ListAudiences200Response{
+		ListAudiences200ResponseOneOf1: v,
 	}
-	return o.Meta, true
 }
 
-// HasMeta returns a boolean if a field has been set.
-func (o *ListAudiences200Response) HasMeta() bool {
-	if o != nil && !IsNil(o.Meta) {
-		return true
+
+// Unmarshal JSON data into one of the pointers in the struct
+func (dst *ListAudiences200Response) UnmarshalJSON(data []byte) error {
+	var err error
+	match := 0
+	// try to unmarshal data into ListAudiences200ResponseOneOf
+	err = newStrictDecoder(data).Decode(&dst.ListAudiences200ResponseOneOf)
+	if err == nil {
+		jsonListAudiences200ResponseOneOf, _ := json.Marshal(dst.ListAudiences200ResponseOneOf)
+		if string(jsonListAudiences200ResponseOneOf) == "{}" { // empty struct
+			dst.ListAudiences200ResponseOneOf = nil
+		} else {
+			if err = validator.Validate(dst.ListAudiences200ResponseOneOf); err != nil {
+				dst.ListAudiences200ResponseOneOf = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.ListAudiences200ResponseOneOf = nil
 	}
 
-	return false
+	// try to unmarshal data into ListAudiences200ResponseOneOf1
+	err = newStrictDecoder(data).Decode(&dst.ListAudiences200ResponseOneOf1)
+	if err == nil {
+		jsonListAudiences200ResponseOneOf1, _ := json.Marshal(dst.ListAudiences200ResponseOneOf1)
+		if string(jsonListAudiences200ResponseOneOf1) == "{}" { // empty struct
+			dst.ListAudiences200ResponseOneOf1 = nil
+		} else {
+			if err = validator.Validate(dst.ListAudiences200ResponseOneOf1); err != nil {
+				dst.ListAudiences200ResponseOneOf1 = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.ListAudiences200ResponseOneOf1 = nil
+	}
+
+	if match > 1 { // more than 1 match
+		// reset to nil
+		dst.ListAudiences200ResponseOneOf = nil
+		dst.ListAudiences200ResponseOneOf1 = nil
+
+		return fmt.Errorf("data matches more than one schema in oneOf(ListAudiences200Response)")
+	} else if match == 1 {
+		return nil // exactly one match
+	} else { // no match
+		return fmt.Errorf("data failed to match schemas in oneOf(ListAudiences200Response)")
+	}
 }
 
-// SetMeta gets a reference to the given AudienceSetListResponseMeta and assigns it to the Meta field.
-func (o *ListAudiences200Response) SetMeta(v AudienceSetListResponseMeta) {
-	o.Meta = &v
+// Marshal data from the first non-nil pointers in the struct to JSON
+func (src ListAudiences200Response) MarshalJSON() ([]byte, error) {
+	if src.ListAudiences200ResponseOneOf != nil {
+		return json.Marshal(&src.ListAudiences200ResponseOneOf)
+	}
+
+	if src.ListAudiences200ResponseOneOf1 != nil {
+		return json.Marshal(&src.ListAudiences200ResponseOneOf1)
+	}
+
+	return nil, nil // no data in oneOf schemas
 }
 
-// GetData returns the Data field value if set, zero value otherwise.
-func (o *ListAudiences200Response) GetData() []AudienceSetItem {
-	if o == nil || IsNil(o.Data) {
-		var ret []AudienceSetItem
-		return ret
+// Get the actual instance
+func (obj *ListAudiences200Response) GetActualInstance() (interface{}) {
+	if obj == nil {
+		return nil
 	}
-	return o.Data
+	if obj.ListAudiences200ResponseOneOf != nil {
+		return obj.ListAudiences200ResponseOneOf
+	}
+
+	if obj.ListAudiences200ResponseOneOf1 != nil {
+		return obj.ListAudiences200ResponseOneOf1
+	}
+
+	// all schemas are nil
+	return nil
 }
 
-// GetDataOk returns a tuple with the Data field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ListAudiences200Response) GetDataOk() ([]AudienceSetItem, bool) {
-	if o == nil || IsNil(o.Data) {
-		return nil, false
-	}
-	return o.Data, true
-}
-
-// HasData returns a boolean if a field has been set.
-func (o *ListAudiences200Response) HasData() bool {
-	if o != nil && !IsNil(o.Data) {
-		return true
+// Get the actual instance value
+func (obj ListAudiences200Response) GetActualInstanceValue() (interface{}) {
+	if obj.ListAudiences200ResponseOneOf != nil {
+		return *obj.ListAudiences200ResponseOneOf
 	}
 
-	return false
-}
-
-// SetData gets a reference to the given []AudienceSetItem and assigns it to the Data field.
-func (o *ListAudiences200Response) SetData(v []AudienceSetItem) {
-	o.Data = v
-}
-
-func (o ListAudiences200Response) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
-func (o ListAudiences200Response) ToMap() (map[string]interface{}, error) {
-	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Meta) {
-		toSerialize["meta"] = o.Meta
-	}
-	if !IsNil(o.Data) {
-		toSerialize["data"] = o.Data
+	if obj.ListAudiences200ResponseOneOf1 != nil {
+		return *obj.ListAudiences200ResponseOneOf1
 	}
 
-	for key, value := range o.AdditionalProperties {
-		toSerialize[key] = value
-	}
-
-	return toSerialize, nil
-}
-
-func (o *ListAudiences200Response) UnmarshalJSON(data []byte) (err error) {
-	varListAudiences200Response := _ListAudiences200Response{}
-
-	err = json.Unmarshal(data, &varListAudiences200Response)
-
-	if err != nil {
-		return err
-	}
-
-	*o = ListAudiences200Response(varListAudiences200Response)
-
-	additionalProperties := make(map[string]interface{})
-
-	if err = json.Unmarshal(data, &additionalProperties); err == nil {
-		delete(additionalProperties, "meta")
-		delete(additionalProperties, "data")
-		o.AdditionalProperties = additionalProperties
-	}
-
-	return err
+	// all schemas are nil
+	return nil
 }
 
 type NullableListAudiences200Response struct {

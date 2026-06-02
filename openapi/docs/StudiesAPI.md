@@ -716,7 +716,7 @@ Name | Type | Description  | Notes
 
 ## ListStudies
 
-> ListStudies200Response ListStudies(ctx).Sort(sort).FilterLifeCycleStage(filterLifeCycleStage).FilterIsExample(filterIsExample).FilterLabel(filterLabel).FilterNameContains(filterNameContains).FilterStartDateAfter(filterStartDateAfter).FilterStartDateBefore(filterStartDateBefore).FilterEndDate(filterEndDate).FilterCreatedAtAfter(filterCreatedAtAfter).FilterCreatedAtBefore(filterCreatedAtBefore).FilterAccountId(filterAccountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
+> ListStudies200Response ListStudies(ctx).Sort(sort).FilterLifeCycleStage(filterLifeCycleStage).FilterLifeCycleStageNot(filterLifeCycleStageNot).FilterIsExample(filterIsExample).FilterLabel(filterLabel).FilterNameContains(filterNameContains).FilterStartDateAfter(filterStartDateAfter).FilterStartDateBefore(filterStartDateBefore).FilterEndDate(filterEndDate).FilterCreatedAtAfter(filterCreatedAtAfter).FilterCreatedAtBefore(filterCreatedAtBefore).FilterAccountId(filterAccountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
 
 List studies
 
@@ -738,6 +738,7 @@ import (
 func main() {
 	sort := "-created_at" // string | Defines the field to sort the result items by. Ascending order is applied by default, but the minus character can be used to indicate descending order instead.  (optional) (default to "created_at")
 	filterLifeCycleStage := openapiclient.StudyLifecycleStage("pending") // StudyLifecycleStage | Optional parameter used to filter studies by their life cycle stage (optional)
+	filterLifeCycleStageNot := openapiclient.StudyLifecycleStage("pending") // StudyLifecycleStage | Optional parameter used to filter studies that do NOT match a specific life cycle stage (optional)
 	filterIsExample := true // bool | Optional parameter used to filter for example studies (optional) (default to false)
 	filterLabel := "CTV" // string | Optional parameter used to filter by study label (optional)
 	filterNameContains := "acme" // string | Optional parameter used to search for studies where the name contains a substring (case insensitive) (optional)
@@ -752,7 +753,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.StudiesAPI.ListStudies(context.Background()).Sort(sort).FilterLifeCycleStage(filterLifeCycleStage).FilterIsExample(filterIsExample).FilterLabel(filterLabel).FilterNameContains(filterNameContains).FilterStartDateAfter(filterStartDateAfter).FilterStartDateBefore(filterStartDateBefore).FilterEndDate(filterEndDate).FilterCreatedAtAfter(filterCreatedAtAfter).FilterCreatedAtBefore(filterCreatedAtBefore).FilterAccountId(filterAccountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
+	resp, r, err := apiClient.StudiesAPI.ListStudies(context.Background()).Sort(sort).FilterLifeCycleStage(filterLifeCycleStage).FilterLifeCycleStageNot(filterLifeCycleStageNot).FilterIsExample(filterIsExample).FilterLabel(filterLabel).FilterNameContains(filterNameContains).FilterStartDateAfter(filterStartDateAfter).FilterStartDateBefore(filterStartDateBefore).FilterEndDate(filterEndDate).FilterCreatedAtAfter(filterCreatedAtAfter).FilterCreatedAtBefore(filterCreatedAtBefore).FilterAccountId(filterAccountId).PageSize(pageSize).PageAfter(pageAfter).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `StudiesAPI.ListStudies``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -775,6 +776,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **sort** | **string** | Defines the field to sort the result items by. Ascending order is applied by default, but the minus character can be used to indicate descending order instead.  | [default to &quot;created_at&quot;]
  **filterLifeCycleStage** | [**StudyLifecycleStage**](StudyLifecycleStage.md) | Optional parameter used to filter studies by their life cycle stage | 
+ **filterLifeCycleStageNot** | [**StudyLifecycleStage**](StudyLifecycleStage.md) | Optional parameter used to filter studies that do NOT match a specific life cycle stage | 
  **filterIsExample** | **bool** | Optional parameter used to filter for example studies | [default to false]
  **filterLabel** | **string** | Optional parameter used to filter by study label | 
  **filterNameContains** | **string** | Optional parameter used to search for studies where the name contains a substring (case insensitive) | 
@@ -1017,7 +1019,7 @@ Name | Type | Description  | Notes
 
 ## QueryStudyFrequencyStats
 
-> QueryStudyFrequencyStats200Response QueryStudyFrequencyStats(ctx, studyId).Execute()
+> QueryStudyFrequencyStats200Response QueryStudyFrequencyStats(ctx, studyId).Limit(limit).Execute()
 
 Frequency statistics for study
 
@@ -1037,10 +1039,11 @@ import (
 
 func main() {
 	studyId := "studyId_example" // string | 
+	limit := int32(56) // int32 | The maximum frequency to query. Frequencies above this will be counted against the `count_above_cap` result. (optional) (default to 10)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.StudiesAPI.QueryStudyFrequencyStats(context.Background(), studyId).Execute()
+	resp, r, err := apiClient.StudiesAPI.QueryStudyFrequencyStats(context.Background(), studyId).Limit(limit).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `StudiesAPI.QueryStudyFrequencyStats``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1066,6 +1069,7 @@ Other parameters are passed through a pointer to a apiQueryStudyFrequencyStatsRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **limit** | **int32** | The maximum frequency to query. Frequencies above this will be counted against the &#x60;count_above_cap&#x60; result. | [default to 10]
 
 ### Return type
 

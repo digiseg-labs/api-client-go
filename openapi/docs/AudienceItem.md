@@ -7,15 +7,17 @@ Name | Type | Description | Notes
 **Code** | **string** | A code used to represent the audience | 
 **DisplayName** | **string** |  | 
 **Description** | Pointer to **string** | A textual description of the audience | [optional] 
-**Composition** | Pointer to **[]string** | A list of audience codes that this audience is composed from | [optional] 
+**Identifier** | Pointer to **string** | A single-letter identifier for the audience (e.g., A, B, C) used for simplified display | [optional] 
 **PlatformCode** | Pointer to **string** | Platform-specific code, provided when &#x60;platform&#x60; (and &#x60;country&#x60; if needed for the platform) is provided | [optional] 
+**Labels** | **[]string** | A list of labels associated with the audience | 
 **ReachStats** | Pointer to [**AudienceReachStats**](AudienceReachStats.md) |  | [optional] 
+**Category** | Pointer to [**AudienceCategoryRef**](AudienceCategoryRef.md) |  | [optional] 
 
 ## Methods
 
 ### NewAudienceItem
 
-`func NewAudienceItem(code string, displayName string, ) *AudienceItem`
+`func NewAudienceItem(code string, displayName string, labels []string, ) *AudienceItem`
 
 NewAudienceItem instantiates a new AudienceItem object
 This constructor will assign default values to properties that have it defined,
@@ -95,30 +97,30 @@ SetDescription sets Description field to given value.
 
 HasDescription returns a boolean if a field has been set.
 
-### GetComposition
+### GetIdentifier
 
-`func (o *AudienceItem) GetComposition() []string`
+`func (o *AudienceItem) GetIdentifier() string`
 
-GetComposition returns the Composition field if non-nil, zero value otherwise.
+GetIdentifier returns the Identifier field if non-nil, zero value otherwise.
 
-### GetCompositionOk
+### GetIdentifierOk
 
-`func (o *AudienceItem) GetCompositionOk() (*[]string, bool)`
+`func (o *AudienceItem) GetIdentifierOk() (*string, bool)`
 
-GetCompositionOk returns a tuple with the Composition field if it's non-nil, zero value otherwise
+GetIdentifierOk returns a tuple with the Identifier field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetComposition
+### SetIdentifier
 
-`func (o *AudienceItem) SetComposition(v []string)`
+`func (o *AudienceItem) SetIdentifier(v string)`
 
-SetComposition sets Composition field to given value.
+SetIdentifier sets Identifier field to given value.
 
-### HasComposition
+### HasIdentifier
 
-`func (o *AudienceItem) HasComposition() bool`
+`func (o *AudienceItem) HasIdentifier() bool`
 
-HasComposition returns a boolean if a field has been set.
+HasIdentifier returns a boolean if a field has been set.
 
 ### GetPlatformCode
 
@@ -145,6 +147,26 @@ SetPlatformCode sets PlatformCode field to given value.
 
 HasPlatformCode returns a boolean if a field has been set.
 
+### GetLabels
+
+`func (o *AudienceItem) GetLabels() []string`
+
+GetLabels returns the Labels field if non-nil, zero value otherwise.
+
+### GetLabelsOk
+
+`func (o *AudienceItem) GetLabelsOk() (*[]string, bool)`
+
+GetLabelsOk returns a tuple with the Labels field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLabels
+
+`func (o *AudienceItem) SetLabels(v []string)`
+
+SetLabels sets Labels field to given value.
+
+
 ### GetReachStats
 
 `func (o *AudienceItem) GetReachStats() AudienceReachStats`
@@ -169,6 +191,31 @@ SetReachStats sets ReachStats field to given value.
 `func (o *AudienceItem) HasReachStats() bool`
 
 HasReachStats returns a boolean if a field has been set.
+
+### GetCategory
+
+`func (o *AudienceItem) GetCategory() AudienceCategoryRef`
+
+GetCategory returns the Category field if non-nil, zero value otherwise.
+
+### GetCategoryOk
+
+`func (o *AudienceItem) GetCategoryOk() (*AudienceCategoryRef, bool)`
+
+GetCategoryOk returns a tuple with the Category field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCategory
+
+`func (o *AudienceItem) SetCategory(v AudienceCategoryRef)`
+
+SetCategory sets Category field to given value.
+
+### HasCategory
+
+`func (o *AudienceItem) HasCategory() bool`
+
+HasCategory returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

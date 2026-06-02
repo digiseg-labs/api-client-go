@@ -4,15 +4,15 @@ All URIs are relative to *https://api.digiseg.net*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ListAudienceDataDailyUsage**](UsageAPI.md#ListAudienceDataDailyUsage) | **Get** /usage/audience_data/daily | List daily usage of Audience Data
-[**ListAudienceDataMonthlyUsage**](UsageAPI.md#ListAudienceDataMonthlyUsage) | **Get** /usage/audience_data/monthly | List monthly usage of Audience Data
-[**ListAudienceDataRealtimeUsage**](UsageAPI.md#ListAudienceDataRealtimeUsage) | **Get** /usage/audience_data/realtime | List realtime usage of Audience Data
+[**ListDataDailyUsage**](UsageAPI.md#ListDataDailyUsage) | **Get** /usage/{data}/daily | List daily usage of Audience Data
+[**ListDataMonthlyUsage**](UsageAPI.md#ListDataMonthlyUsage) | **Get** /usage/{data}/monthly | List monthly usage of Audience Data
+[**ListDataRealtimeUsage**](UsageAPI.md#ListDataRealtimeUsage) | **Get** /usage/{data}/realtime | List realtime usage of Audience Data
 
 
 
-## ListAudienceDataDailyUsage
+## ListDataDailyUsage
 
-> ListAudienceDataDailyUsage200Response ListAudienceDataDailyUsage(ctx).FilterDateFrom(filterDateFrom).FilterDateTo(filterDateTo).FilterAccountId(filterAccountId).Execute()
+> ListDataDailyUsage200Response ListDataDailyUsage(ctx, data).FilterDateFrom(filterDateFrom).FilterDateTo(filterDateTo).FilterAccountId(filterAccountId).Execute()
 
 List daily usage of Audience Data
 
@@ -32,40 +32,46 @@ import (
 )
 
 func main() {
+	data := "data_example" // string | 
 	filterDateFrom := time.Now() // string | Date to query from (optional)
 	filterDateTo := time.Now() // string | Date to query to (optional)
 	filterAccountId := "filterAccountId_example" // string | Optional parameter used to query usage of specific account IDs (only available to super admins).  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UsageAPI.ListAudienceDataDailyUsage(context.Background()).FilterDateFrom(filterDateFrom).FilterDateTo(filterDateTo).FilterAccountId(filterAccountId).Execute()
+	resp, r, err := apiClient.UsageAPI.ListDataDailyUsage(context.Background(), data).FilterDateFrom(filterDateFrom).FilterDateTo(filterDateTo).FilterAccountId(filterAccountId).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `UsageAPI.ListAudienceDataDailyUsage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `UsageAPI.ListDataDailyUsage``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ListAudienceDataDailyUsage`: ListAudienceDataDailyUsage200Response
-	fmt.Fprintf(os.Stdout, "Response from `UsageAPI.ListAudienceDataDailyUsage`: %v\n", resp)
+	// response from `ListDataDailyUsage`: ListDataDailyUsage200Response
+	fmt.Fprintf(os.Stdout, "Response from `UsageAPI.ListDataDailyUsage`: %v\n", resp)
 }
 ```
 
 ### Path Parameters
 
 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**data** | **string** |  | 
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiListAudienceDataDailyUsageRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListDataDailyUsageRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+
  **filterDateFrom** | **string** | Date to query from | 
  **filterDateTo** | **string** | Date to query to | 
  **filterAccountId** | **string** | Optional parameter used to query usage of specific account IDs (only available to super admins).  | 
 
 ### Return type
 
-[**ListAudienceDataDailyUsage200Response**](ListAudienceDataDailyUsage200Response.md)
+[**ListDataDailyUsage200Response**](ListDataDailyUsage200Response.md)
 
 ### Authorization
 
@@ -81,9 +87,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ListAudienceDataMonthlyUsage
+## ListDataMonthlyUsage
 
-> ListAudienceDataMonthlyUsage200Response ListAudienceDataMonthlyUsage(ctx).FilterYear(filterYear).FilterAccountId(filterAccountId).Execute()
+> ListDataMonthlyUsage200Response ListDataMonthlyUsage(ctx, data).FilterYear(filterYear).FilterAccountId(filterAccountId).Execute()
 
 List monthly usage of Audience Data
 
@@ -102,38 +108,44 @@ import (
 )
 
 func main() {
+	data := "data_example" // string | 
 	filterYear := int32(56) // int32 | Year to filter by (optional)
 	filterAccountId := "filterAccountId_example" // string | Optional parameter used to query usage of specific account IDs (only available to super admins).  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UsageAPI.ListAudienceDataMonthlyUsage(context.Background()).FilterYear(filterYear).FilterAccountId(filterAccountId).Execute()
+	resp, r, err := apiClient.UsageAPI.ListDataMonthlyUsage(context.Background(), data).FilterYear(filterYear).FilterAccountId(filterAccountId).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `UsageAPI.ListAudienceDataMonthlyUsage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `UsageAPI.ListDataMonthlyUsage``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ListAudienceDataMonthlyUsage`: ListAudienceDataMonthlyUsage200Response
-	fmt.Fprintf(os.Stdout, "Response from `UsageAPI.ListAudienceDataMonthlyUsage`: %v\n", resp)
+	// response from `ListDataMonthlyUsage`: ListDataMonthlyUsage200Response
+	fmt.Fprintf(os.Stdout, "Response from `UsageAPI.ListDataMonthlyUsage`: %v\n", resp)
 }
 ```
 
 ### Path Parameters
 
 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**data** | **string** |  | 
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiListAudienceDataMonthlyUsageRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListDataMonthlyUsageRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+
  **filterYear** | **int32** | Year to filter by | 
  **filterAccountId** | **string** | Optional parameter used to query usage of specific account IDs (only available to super admins).  | 
 
 ### Return type
 
-[**ListAudienceDataMonthlyUsage200Response**](ListAudienceDataMonthlyUsage200Response.md)
+[**ListDataMonthlyUsage200Response**](ListDataMonthlyUsage200Response.md)
 
 ### Authorization
 
@@ -149,9 +161,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ListAudienceDataRealtimeUsage
+## ListDataRealtimeUsage
 
-> ListAudienceDataRealtimeUsage200Response ListAudienceDataRealtimeUsage(ctx).FilterAccountId(filterAccountId).Execute()
+> ListDataRealtimeUsage200Response ListDataRealtimeUsage(ctx, data).FilterAccountId(filterAccountId).Execute()
 
 List realtime usage of Audience Data
 
@@ -170,36 +182,42 @@ import (
 )
 
 func main() {
+	data := "data_example" // string | 
 	filterAccountId := "filterAccountId_example" // string | Optional parameter used to query usage of specific account IDs (only available to super admins).  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UsageAPI.ListAudienceDataRealtimeUsage(context.Background()).FilterAccountId(filterAccountId).Execute()
+	resp, r, err := apiClient.UsageAPI.ListDataRealtimeUsage(context.Background(), data).FilterAccountId(filterAccountId).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `UsageAPI.ListAudienceDataRealtimeUsage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `UsageAPI.ListDataRealtimeUsage``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ListAudienceDataRealtimeUsage`: ListAudienceDataRealtimeUsage200Response
-	fmt.Fprintf(os.Stdout, "Response from `UsageAPI.ListAudienceDataRealtimeUsage`: %v\n", resp)
+	// response from `ListDataRealtimeUsage`: ListDataRealtimeUsage200Response
+	fmt.Fprintf(os.Stdout, "Response from `UsageAPI.ListDataRealtimeUsage`: %v\n", resp)
 }
 ```
 
 ### Path Parameters
 
 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**data** | **string** |  | 
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiListAudienceDataRealtimeUsageRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListDataRealtimeUsageRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+
  **filterAccountId** | **string** | Optional parameter used to query usage of specific account IDs (only available to super admins).  | 
 
 ### Return type
 
-[**ListAudienceDataRealtimeUsage200Response**](ListAudienceDataRealtimeUsage200Response.md)
+[**ListDataRealtimeUsage200Response**](ListDataRealtimeUsage200Response.md)
 
 ### Authorization
 

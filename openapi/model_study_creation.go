@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for<br/>Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for<br/>TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for<br/>Go</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-dotnet\">     <i class=\"api-client-sdk-logo devicon-dot-net-plain\"></i>     <p>API client for<br/>.NET</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -31,6 +31,8 @@ type StudyCreation struct {
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// The date for which the study and its data ingestion will end
 	EndDate *time.Time `json:"end_date,omitempty"`
+	// The URL to a banner image for the study. Note that the banner image is used only for Digiseg study reporting and presentation, it does NOT represent any delivered banner ad creatives or similar. 
+	BannerImageUrl *string `json:"banner_image_url,omitempty"`
 	LifeCycleStage *StudyLifecycleStage `json:"life_cycle_stage,omitempty"`
 	IngestionStatus *StudyIngestionStatus `json:"ingestion_status,omitempty"`
 	SummaryStats *StudySummaryStats `json:"summary_stats,omitempty"`
@@ -38,8 +40,6 @@ type StudyCreation struct {
 	EventLinks *MeasurementEventLinks `json:"event_links,omitempty"`
 	// If present, an upper limit on the number of events that will be processed in this study.
 	EventCap *int32 `json:"event_cap,omitempty"`
-	// The URL to a banner image for the study. Note that the banner image is used only for Digiseg study reporting and presentation, it does NOT represent any delivered banner ad creatives or similar. 
-	BannerImageUrl *string `json:"banner_image_url,omitempty"`
 	IntegrationPlatform *MeasurementIntegrationPlatform `json:"integration_platform,omitempty"`
 	// Determines if the study is an example study, used to demonstrate product capabilities
 	IsExample *bool `json:"is_example,omitempty"`
@@ -220,6 +220,38 @@ func (o *StudyCreation) HasEndDate() bool {
 // SetEndDate gets a reference to the given time.Time and assigns it to the EndDate field.
 func (o *StudyCreation) SetEndDate(v time.Time) {
 	o.EndDate = &v
+}
+
+// GetBannerImageUrl returns the BannerImageUrl field value if set, zero value otherwise.
+func (o *StudyCreation) GetBannerImageUrl() string {
+	if o == nil || IsNil(o.BannerImageUrl) {
+		var ret string
+		return ret
+	}
+	return *o.BannerImageUrl
+}
+
+// GetBannerImageUrlOk returns a tuple with the BannerImageUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StudyCreation) GetBannerImageUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.BannerImageUrl) {
+		return nil, false
+	}
+	return o.BannerImageUrl, true
+}
+
+// HasBannerImageUrl returns a boolean if a field has been set.
+func (o *StudyCreation) HasBannerImageUrl() bool {
+	if o != nil && !IsNil(o.BannerImageUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetBannerImageUrl gets a reference to the given string and assigns it to the BannerImageUrl field.
+func (o *StudyCreation) SetBannerImageUrl(v string) {
+	o.BannerImageUrl = &v
 }
 
 // GetLifeCycleStage returns the LifeCycleStage field value if set, zero value otherwise.
@@ -414,38 +446,6 @@ func (o *StudyCreation) SetEventCap(v int32) {
 	o.EventCap = &v
 }
 
-// GetBannerImageUrl returns the BannerImageUrl field value if set, zero value otherwise.
-func (o *StudyCreation) GetBannerImageUrl() string {
-	if o == nil || IsNil(o.BannerImageUrl) {
-		var ret string
-		return ret
-	}
-	return *o.BannerImageUrl
-}
-
-// GetBannerImageUrlOk returns a tuple with the BannerImageUrl field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *StudyCreation) GetBannerImageUrlOk() (*string, bool) {
-	if o == nil || IsNil(o.BannerImageUrl) {
-		return nil, false
-	}
-	return o.BannerImageUrl, true
-}
-
-// HasBannerImageUrl returns a boolean if a field has been set.
-func (o *StudyCreation) HasBannerImageUrl() bool {
-	if o != nil && !IsNil(o.BannerImageUrl) {
-		return true
-	}
-
-	return false
-}
-
-// SetBannerImageUrl gets a reference to the given string and assigns it to the BannerImageUrl field.
-func (o *StudyCreation) SetBannerImageUrl(v string) {
-	o.BannerImageUrl = &v
-}
-
 // GetIntegrationPlatform returns the IntegrationPlatform field value if set, zero value otherwise.
 func (o *StudyCreation) GetIntegrationPlatform() MeasurementIntegrationPlatform {
 	if o == nil || IsNil(o.IntegrationPlatform) {
@@ -589,6 +589,9 @@ func (o StudyCreation) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EndDate) {
 		toSerialize["end_date"] = o.EndDate
 	}
+	if !IsNil(o.BannerImageUrl) {
+		toSerialize["banner_image_url"] = o.BannerImageUrl
+	}
 	if !IsNil(o.LifeCycleStage) {
 		toSerialize["life_cycle_stage"] = o.LifeCycleStage
 	}
@@ -606,9 +609,6 @@ func (o StudyCreation) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EventCap) {
 		toSerialize["event_cap"] = o.EventCap
-	}
-	if !IsNil(o.BannerImageUrl) {
-		toSerialize["banner_image_url"] = o.BannerImageUrl
 	}
 	if !IsNil(o.IntegrationPlatform) {
 		toSerialize["integration_platform"] = o.IntegrationPlatform
@@ -669,13 +669,13 @@ func (o *StudyCreation) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "account_id")
 		delete(additionalProperties, "start_date")
 		delete(additionalProperties, "end_date")
+		delete(additionalProperties, "banner_image_url")
 		delete(additionalProperties, "life_cycle_stage")
 		delete(additionalProperties, "ingestion_status")
 		delete(additionalProperties, "summary_stats")
 		delete(additionalProperties, "client")
 		delete(additionalProperties, "event_links")
 		delete(additionalProperties, "event_cap")
-		delete(additionalProperties, "banner_image_url")
 		delete(additionalProperties, "integration_platform")
 		delete(additionalProperties, "is_example")
 		delete(additionalProperties, "event_set")

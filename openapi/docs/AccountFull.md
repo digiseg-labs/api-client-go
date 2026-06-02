@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** | Unique ID for the object | [optional] [readonly] 
 **Name** | Pointer to **string** | Human readable name of the account | [optional] 
+**CustomPlatformUrl** | Pointer to **string** | Custom platform URL for the account | [optional] [readonly] 
 **LogoUrl** | Pointer to **string** | The URL to the logo of the account | [optional] 
 **WebsiteUrl** | Pointer to **string** | URL of the account&#39;s primary website | [optional] 
 **BillingCountry** | Pointer to **string** | Country code of the account. Requires &#x60;owner&#x60; role to change. | [optional] 
@@ -20,6 +21,8 @@ Name | Type | Description | Notes
 **BillingCurrency** | Pointer to [**SubscriptionPriceCurrency**](SubscriptionPriceCurrency.md) |  | [optional] [default to SUBSCRIPTIONPRICECURRENCY_EUR]
 **BillingName** | Pointer to **string** | An optional official name to use for billing purposes. Requires &#x60;owner&#x60; role to change. | [optional] 
 **StripeCustomerId** | Pointer to **string** |  | [optional] [readonly] 
+**IsReseller** | Pointer to **bool** |  | [optional] [readonly] 
+**ResellerAccountId** | Pointer to **string** |  | [optional] [readonly] 
 **FeatureSet** | Pointer to [**PlanFeatureSet**](PlanFeatureSet.md) |  | [optional] 
 **Subscriptions** | Pointer to [**[]AccountSubscriptionItem**](AccountSubscriptionItem.md) |  | [optional] [readonly] 
 **CreatedAt** | Pointer to **time.Time** | Date and time of the object creation | [optional] [readonly] 
@@ -95,6 +98,31 @@ SetName sets Name field to given value.
 `func (o *AccountFull) HasName() bool`
 
 HasName returns a boolean if a field has been set.
+
+### GetCustomPlatformUrl
+
+`func (o *AccountFull) GetCustomPlatformUrl() string`
+
+GetCustomPlatformUrl returns the CustomPlatformUrl field if non-nil, zero value otherwise.
+
+### GetCustomPlatformUrlOk
+
+`func (o *AccountFull) GetCustomPlatformUrlOk() (*string, bool)`
+
+GetCustomPlatformUrlOk returns a tuple with the CustomPlatformUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomPlatformUrl
+
+`func (o *AccountFull) SetCustomPlatformUrl(v string)`
+
+SetCustomPlatformUrl sets CustomPlatformUrl field to given value.
+
+### HasCustomPlatformUrl
+
+`func (o *AccountFull) HasCustomPlatformUrl() bool`
+
+HasCustomPlatformUrl returns a boolean if a field has been set.
 
 ### GetLogoUrl
 
@@ -445,6 +473,56 @@ SetStripeCustomerId sets StripeCustomerId field to given value.
 `func (o *AccountFull) HasStripeCustomerId() bool`
 
 HasStripeCustomerId returns a boolean if a field has been set.
+
+### GetIsReseller
+
+`func (o *AccountFull) GetIsReseller() bool`
+
+GetIsReseller returns the IsReseller field if non-nil, zero value otherwise.
+
+### GetIsResellerOk
+
+`func (o *AccountFull) GetIsResellerOk() (*bool, bool)`
+
+GetIsResellerOk returns a tuple with the IsReseller field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsReseller
+
+`func (o *AccountFull) SetIsReseller(v bool)`
+
+SetIsReseller sets IsReseller field to given value.
+
+### HasIsReseller
+
+`func (o *AccountFull) HasIsReseller() bool`
+
+HasIsReseller returns a boolean if a field has been set.
+
+### GetResellerAccountId
+
+`func (o *AccountFull) GetResellerAccountId() string`
+
+GetResellerAccountId returns the ResellerAccountId field if non-nil, zero value otherwise.
+
+### GetResellerAccountIdOk
+
+`func (o *AccountFull) GetResellerAccountIdOk() (*string, bool)`
+
+GetResellerAccountIdOk returns a tuple with the ResellerAccountId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResellerAccountId
+
+`func (o *AccountFull) SetResellerAccountId(v string)`
+
+SetResellerAccountId sets ResellerAccountId field to given value.
+
+### HasResellerAccountId
+
+`func (o *AccountFull) HasResellerAccountId() bool`
+
+HasResellerAccountId returns a boolean if a field has been set.
 
 ### GetFeatureSet
 

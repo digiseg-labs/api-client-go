@@ -1,7 +1,7 @@
 /*
 Digiseg API
 
-### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for Go</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
+### Digiseg API documentation  # Introduction  This API let you harness the power of Digisegs powerful and tracking-free segmentation engine.  Audiences by Digiseg are available in 50+ countries, probablistically mapping neighborhood characteristics to the IP addresses observed on the internet - Household targeting & measurement for the post-cookie world.  ## Developer SDKs  In addition to using these APIs directly through any HTTP client, we provide a set of API client SDKs for popular programming languages:  <div class=\"api-clients\">   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-python\">     <i class=\"api-client-sdk-logo devicon-python-plain\"></i>     <p>API client for<br/>Python</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-ts\">     <i class=\"api-client-sdk-logo devicon-typescript-plain\"></i>     <p>API client for<br/>TypeScript</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-go\">     <i class=\"api-client-sdk-logo devicon-go-original-wordmark\"></i>     <p>API client for<br/>Go</p>   </a>   <a class=\"api-client-box\" href=\"https://github.com/digiseg-labs/api-client-dotnet\">     <i class=\"api-client-sdk-logo devicon-dot-net-plain\"></i>     <p>API client for<br/>.NET</p>   </a> </div> <div class=\"api-clients-breaker\" /> 
 
 API version: 1.0.0
 Contact: support@digiseg.io
@@ -20,7 +20,7 @@ var _ MappedNullable = &InlineObject8{}
 
 // InlineObject8 struct for InlineObject8
 type InlineObject8 struct {
-	Data *SharedReportPublicData `json:"data,omitempty"`
+	Data *AccountStripeBillingInfo `json:"data,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -44,9 +44,9 @@ func NewInlineObject8WithDefaults() *InlineObject8 {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *InlineObject8) GetData() SharedReportPublicData {
+func (o *InlineObject8) GetData() AccountStripeBillingInfo {
 	if o == nil || IsNil(o.Data) {
-		var ret SharedReportPublicData
+		var ret AccountStripeBillingInfo
 		return ret
 	}
 	return *o.Data
@@ -54,7 +54,7 @@ func (o *InlineObject8) GetData() SharedReportPublicData {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineObject8) GetDataOk() (*SharedReportPublicData, bool) {
+func (o *InlineObject8) GetDataOk() (*AccountStripeBillingInfo, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -70,8 +70,8 @@ func (o *InlineObject8) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given SharedReportPublicData and assigns it to the Data field.
-func (o *InlineObject8) SetData(v SharedReportPublicData) {
+// SetData gets a reference to the given AccountStripeBillingInfo and assigns it to the Data field.
+func (o *InlineObject8) SetData(v AccountStripeBillingInfo) {
 	o.Data = &v
 }
 
